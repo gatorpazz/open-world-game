@@ -1,19 +1,17 @@
-[gd_resource type="Resource" script_class="CreatureDef" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="CreatureDef" format=3 uid="uid://dtk7o3flxjssq"]
 
-[ext_resource type="Script" path="res://scripts/resources/creature_def.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="2"]
+[ext_resource type="Script" uid="uid://birpg7rvprvph" path="res://scripts/resources/creature_def.gd" id="1"]
+[ext_resource type="Script" uid="uid://dx1oucens0iwx" path="res://scripts/resources/item_stack.gd" id="2"]
 [ext_resource type="Resource" path="res://data/items/iron_sword.tres" id="3"]
 [ext_resource type="Resource" path="res://data/items/flawed_gem.tres" id="4"]
 
 [sub_resource type="Resource" id="loot_1"]
 script = ExtResource("2")
 item = ExtResource("3")
-count = 1
 
 [sub_resource type="Resource" id="loot_2"]
 script = ExtResource("2")
 item = ExtResource("4")
-count = 1
 
 [resource]
 script = ExtResource("1")
@@ -26,6 +24,5 @@ armor = 5
 attack_reach = 2.0
 attack_cooldown = 2.0
 move_speed = 3.0
-detect_radius = 10.0
 leash_radius = 18.0
 loot = Array[ExtResource("2")]([SubResource("loot_1"), SubResource("loot_2")])

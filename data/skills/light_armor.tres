@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SkillDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/skill_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"light_armor"
+display_name = "Light Armor"
+governing_attribute = &"speed"
+archetype = &"stealth"
+description = "Moving and fighting effectively in light, flexible armor."

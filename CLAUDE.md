@@ -65,4 +65,4 @@ Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same com
 
 ## Current focus
 
-Phase 1, spec 001: character stats system (`docs/specs/001-character-stats.md`). The character sheet is the spine of the game — build it clean.
+Phase 1, spec 004: combat v1 (`docs/specs/004-combat.md`) — melee with physical hit detection, stamina, passive block, creatures + basic AI. Specs 001–003 are complete; combat consumes all three, so regressions there break here.

@@ -36,6 +36,16 @@ func change_scene(scene_path: String, spawn_point: StringName) -> void:
 	_change_scene_now.call_deferred(scene_path, spawn_point)
 
 
+## Death reload (spec 004): re-enter the current world at its default
+## spawn. World state resets while the persistent identity survives —
+## spec 007 (save/load) replaces this with load-last-save.
+func reload_current_scene() -> void:
+	if current_world == null or current_world.scene_file_path.is_empty():
+		push_warning("reload_current_scene: no reloadable current world")
+		return
+	change_scene(current_world.scene_file_path, &"default")
+
+
 ## Instances a fresh player at the named spawn marker and injects the
 ## persistent identity — before add_child, so the player's components skip
 ## building defaults in _ready.

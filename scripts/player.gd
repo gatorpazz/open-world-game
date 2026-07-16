@@ -12,6 +12,7 @@ extends CharacterBody3D
 @onready var detector: InteractionDetector = $Head/Camera3D/InteractionDetector
 @onready var hud_prompt: HudPrompt = $HUD/HudPrompt
 @onready var hud_bars: HudBars = $HUD/HudBars
+@onready var death_overlay: DeathOverlay = $HUD/DeathOverlay
 @onready var stats: StatsComponent = $Stats
 @onready var inventory_component: InventoryComponent = $Inventory
 @onready var combat: PlayerCombat = $Combat
@@ -34,6 +35,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	detector.target_changed.connect(hud_prompt.set_target)
 	hud_bars.bind(stats)
+	combat.died.connect(death_overlay.open)
 
 
 func _unhandled_input(event: InputEvent) -> void:

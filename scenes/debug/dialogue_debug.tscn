@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/debug/dialogue_debug.gd" id="1_debug_root"]
+[ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="2_npc"]
+[ext_resource type="Resource" path="res://data/npcs/hunald.tres" id="3_hunald"]
+[ext_resource type="Resource" path="res://data/npcs/seld.tres" id="4_seld"]
+[ext_resource type="Resource" path="res://data/npcs/maera.tres" id="5_maera"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_item.tscn" id="6_world_item"]
+[ext_resource type="Resource" path="res://data/items/rat_pelt.tres" id="7_rat_pelt"]
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="8_transition_door"]
+
+[sub_resource type="StandardMaterial3D" id="mat_floor"]
+albedo_color = Color(0.3, 0.4, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="mesh_floor"]
+material = SubResource("mat_floor")
+size = Vector3(24, 1, 24)
+
+[sub_resource type="BoxShape3D" id="shape_floor"]
+size = Vector3(24, 1, 24)
+
+[node name="DialogueDebug" type="Node3D"]
+script = ExtResource("1_debug_root")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("mesh_floor")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("shape_floor")
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
+
+[node name="from_interior" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -4)
+
+[node name="Hunald" parent="." instance=ExtResource("2_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+def = ExtResource("3_hunald")
+
+[node name="Seld" parent="." instance=ExtResource("2_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+def = ExtResource("4_seld")
+
+[node name="Maera" parent="." instance=ExtResource("2_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+def = ExtResource("5_maera")
+
+[node name="RatPelt" parent="." instance=ExtResource("6_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+item = ExtResource("7_rat_pelt")
+
+[node name="DoorToInterior" parent="." instance=ExtResource("8_transition_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -6)
+target_scene = "res://scenes/debug/dialogue_debug_interior.tscn"
+spawn_point = &"from_exterior"
+
+[node name="DebugHud" type="CanvasLayer" parent="."]
+
+[node name="DebugLabel" type="Label" parent="DebugHud"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 700.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(1, 1, 0.6, 1)

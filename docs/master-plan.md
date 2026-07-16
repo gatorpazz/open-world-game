@@ -49,7 +49,7 @@ Spec queue (one spec = one reviewable unit of work):
 | 002 | Items & inventory (equipment slots, weight vs. carry capacity) | ✅ complete |
 | 003 | Interaction system (raycast interact: doors, containers, pickups, NPCs) | ✅ complete |
 | 004 | Combat v1 (melee, stamina costs, damage, basic enemy AI) | ✅ complete |
-| 005 | Dialogue system (topic-based, data-driven) + journal | queued |
+| 005 | Dialogue system (topic-based, data-driven) + journal | ✅ complete |
 | 006 | Quest system (quest resources, stages, journal integration) | queued |
 | 007 | Save/load | queued |
 | 008 | Magic v1 (evocation / mending / warding) | queued |
@@ -108,4 +108,4 @@ The scope budget in §3 fully present · a new player can finish the main quest 
 
 ## 9. Current Status
 
-**As of July 16, 2026:** Phase 1 underway — specs 001 (character stats), 002 (items & inventory), 003 (interaction system), and 004 (combat v1: physical hit resolution, stamina, passive block, `CreatureDef` + 3 starter creatures with idle/wander/chase/attack AI, container loot drops, death = scene reload until 007) are implemented with debug scenes and a passing test suite (178 tests / 19 scripts). Spec 005 (topic-based dialogue + journal) is written and ready to implement (`docs/specs/005-dialogue-and-journal.md`). Next up: implement it. Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.
+**As of July 16, 2026:** Phase 1 underway — specs 001 (character stats), 002 (items & inventory), 003 (interaction system), 004 (combat v1), and 005 (topic-based dialogue with keyword unlocking + journal: NPCDef/DialogueTopicDef/JournalEntryDef content types, validated `[[keyword]]` markup, Journal on `Game`, dialogue + journal panels, TalkStub superseded by the def-driven `Npc`) are implemented with debug scenes and a passing test suite (239 tests / 27 scripts). Next up: write spec 006 (quest system: quest resources, stages, journal integration). Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.

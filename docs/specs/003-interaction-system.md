@@ -39,7 +39,7 @@ This means scene transitions are trivially safe (nothing to carry but two resour
 | `WorldContainer` (`scenes/world/world_container.tscn`) | owns its own `Inventory` resource (002 reuse), contents authored in-editor; verb "open"; opens `container_panel.tscn`: item list, Take, Take All, Close. Take-only in v1. Contents persist while the scene is loaded. *(Amendment: named `WorldContainer`, not `Container` — Godot reserves `Container` for its built-in GUI class.)* |
 | `HingedDoor` | verb "use"; toggles open/closed (simple rotation tween); blocks/unblocks nav later. |
 | `TransitionDoor` | exported `target_scene: String`, `spawn_point: StringName`; verb "use"; calls `Game.change_scene(...)`. This is the Morrowind load-door: interiors are separate scenes. |
-| `TalkStub` | verb "talk"; emits `talk_requested(npc_name)` and shows a placeholder line. Spec 005 replaces the guts, not the wiring. |
+| `TalkStub` | verb "talk"; emits `talk_requested(npc_name)` and shows a placeholder line. Spec 005 replaces the guts, not the wiring. *(Amendment, spec 005: superseded by the def-driven `Npc` — the Interactable/talk-verb wiring is unchanged, but the consumer-less `talk_requested` signal and the `npc_name` export are gone; like `WorldContainer`, the NPC owns and opens its own panel.)* |
 
 ## Architecture
 

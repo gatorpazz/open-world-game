@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://scripts/world/talk_stub.gd" id="1_talk_stub"]
+[ext_resource type="Script" path="res://scripts/world/npc.gd" id="1_npc"]
 [ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="2_interactable"]
 
 [sub_resource type="StandardMaterial3D" id="mat_npc"]
@@ -15,8 +15,8 @@ height = 1.8
 radius = 0.35
 height = 1.8
 
-[node name="TalkStub" type="StaticBody3D"]
-script = ExtResource("1_talk_stub")
+[node name="Npc" type="StaticBody3D"]
+script = ExtResource("1_npc")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

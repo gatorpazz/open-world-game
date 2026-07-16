@@ -21,6 +21,7 @@ A solo-developed, AI-assisted open-world RPG in the spirit of Morrowind's design
 | 2026-07 | **PC-first** (Steam + itch.io); GPL-platform constraints irrelevant on this path but consoles still out of scope | Solo scope control; core audience is on PC |
 | 2026-07 | **Text-first dialogue** with short voiced barks at most | Authentic to inspiration; enormous cost/scope savings |
 | 2026-07 | Derived stats always computed, never accrued | Kills retroactive-bonus bugs; respec-friendly |
+| 2026-07 | **`Game` autoload** owns persistent identity (character sheet, inventory) and scene changes — the sanctioned exception to autoloads-last-resort | Cross-scene persistence needs exactly one owner; access rule in CLAUDE.md keeps it from becoming a global grab-bag |
 
 *(Append new rows as decisions land. A decision isn't made until it's in this table.)*
 
@@ -42,10 +43,10 @@ Spec queue (one spec = one reviewable unit of work):
 
 | # | spec | status |
 |---|---|---|
-| 001 | Character stats system | in progress |
-| 002 | Items & inventory (equipment slots, weight vs. carry capacity) | queued |
-| 003 | Interaction system (raycast interact: doors, containers, pickups, NPCs) | queued |
-| 004 | Combat v1 (melee, stamina costs, damage, basic enemy AI) | queued |
+| 001 | Character stats system | ✅ complete |
+| 002 | Items & inventory (equipment slots, weight vs. carry capacity) | ✅ complete |
+| 003 | Interaction system (raycast interact: doors, containers, pickups, NPCs) | ✅ complete |
+| 004 | Combat v1 (melee, stamina costs, damage, basic enemy AI) | next — spec not yet written |
 | 005 | Dialogue system (topic-based, data-driven) + journal | queued |
 | 006 | Quest system (quest resources, stages, journal integration) | queued |
 | 007 | Save/load | queued |
@@ -105,4 +106,4 @@ The scope budget in §3 fully present · a new player can finish the main quest 
 
 ## 9. Current Status
 
-**As of July 15, 2026:** Phase 1 underway. Spec 001 (character stats) being implemented by Claude Code. Next up: spec 002 (items & inventory). Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.
+**As of July 16, 2026:** Phase 1 underway — specs 001 (character stats), 002 (items & inventory), and 003 (interaction system: pickups, containers, hinged/transition doors, NPC talk stub) are implemented with debug scenes and a passing test suite (121 tests / 14 scripts). A `Game` autoload now owns persistent identity and scene changes (added for spec 003's cross-scene door transitions). Next up: write and implement spec 004 (combat v1). Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.

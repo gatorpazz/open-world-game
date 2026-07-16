@@ -27,3 +27,6 @@ extends Resource
 
 @export_group("Movement")
 @export var encumbered_speed_multiplier: float = 0.25
+
+@export_group("Interaction")
+@export var interact_range: float = 2.5

@@ -140,7 +140,7 @@ func test_topic_appears_only_after_its_keyword_was_displayed() -> void:
 		&"rumor": _topic(&"rumor", [_response("Heard about [[rumor]]? Now you have.")]),
 	}
 	assert_eq(DialogueEvaluator.available_topics(topics, &"seld", _journal, _inventory).size(), 0)
-	DialogueEvaluator.apply_effects(topics[&"rumor"].responses[0], _journal, _inventory)
+	DialogueEvaluator.apply_effects(topics[&"rumor"].responses[0], _journal)
 	var available := DialogueEvaluator.available_topics(topics, &"seld", _journal, _inventory)
 	assert_eq(available, [topics[&"rumor"]], "displaying the keyword at one NPC unlocks it at all")
 
@@ -150,7 +150,7 @@ func test_topic_appears_only_after_its_keyword_was_displayed() -> void:
 
 func test_apply_effects_learns_exactly_the_marked_topics() -> void:
 	var response := _response("Talk of [[topic_a]] and [[topic_b|that other thing]].")
-	var report := DialogueEvaluator.apply_effects(response, _journal, _inventory)
+	var report := DialogueEvaluator.apply_effects(response, _journal)
 	assert_eq(_journal.known_topics, [&"topic_a", &"topic_b"] as Array[StringName])
 	assert_eq(report.new_topics, [&"topic_a", &"topic_b"] as Array[StringName])
 
@@ -158,7 +158,7 @@ func test_apply_effects_learns_exactly_the_marked_topics() -> void:
 func test_apply_effects_reports_only_new_learns() -> void:
 	_journal.learn_topic(&"topic_a")
 	var response := _response("About [[topic_a]] and [[topic_b]].")
-	var report := DialogueEvaluator.apply_effects(response, _journal, _inventory)
+	var report := DialogueEvaluator.apply_effects(response, _journal)
 	assert_eq(report.new_topics, [&"topic_b"] as Array[StringName])
 	assert_eq(_journal.known_topics.size(), 2)
 
@@ -166,19 +166,12 @@ func test_apply_effects_reports_only_new_learns() -> void:
 func test_apply_effects_adds_journal_entry_once_across_repeats() -> void:
 	var response := _response("Something happened.")
 	response.journal_entry = &"a_deed"
-	var first := DialogueEvaluator.apply_effects(response, _journal, _inventory)
+	var first := DialogueEvaluator.apply_effects(response, _journal)
 	assert_eq(first.journal_entry_added, &"a_deed")
-	var second := DialogueEvaluator.apply_effects(response, _journal, _inventory)
+	var second := DialogueEvaluator.apply_effects(response, _journal)
 	assert_eq(second.journal_entry_added, &"", "repeat adds nothing and reports nothing")
 	assert_eq(_journal.entries, [&"a_deed"] as Array[StringName])
 
-
-func test_apply_effects_takes_and_gives_on_the_same_inventory() -> void:
-	var draught := load("res://data/items/healing_draught.tres") as ItemDef
-	_inventory.add_item(_pelt, 1)
-	var response := _response("A fair trade.")
-	response.take_items = [_stack(_pelt, 1)] as Array[ItemStack]
-	response.give_items = [_stack(draught, 2)] as Array[ItemStack]
-	DialogueEvaluator.apply_effects(response, _journal, _inventory)
-	assert_eq(_inventory.count_of(_pelt), 0, "the pelt was taken")
-	assert_eq(_inventory.count_of(draught), 2, "the draughts were given")
+# Item effects (take_items/give_items) are deliberately NOT applied by
+# DialogueEvaluator — DialoguePanel routes them through InventoryComponent
+# so the player-side signals fire. Covered in tests/scenes/test_npc_dialogue.gd.

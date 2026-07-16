@@ -1,6 +1,8 @@
 extends GutTest
 ## Unit tests for DialogueMarkup (spec 005, acceptance criterion 1).
 
+const NO_NAMES: Dictionary[StringName, String] = {}
+
 # --- extract_topic_ids ---
 
 
@@ -30,7 +32,7 @@ func test_ignores_non_markup_brackets() -> void:
 
 
 func test_renders_display_name_for_plain_markup() -> void:
-	var names := {&"the_village": "The Village"}
+	var names: Dictionary[StringName, String] = {&"the_village": "The Village"}
 	var bbcode := DialogueMarkup.to_bbcode("Ask about [[the_village]].", names)
 	var expected := (
 		"Ask about [url=the_village][color=%s]The Village[/color][/url]."
@@ -40,7 +42,7 @@ func test_renders_display_name_for_plain_markup() -> void:
 
 
 func test_renders_custom_label_over_display_name() -> void:
-	var names := {&"bog_hounds": "Bog Hounds"}
+	var names: Dictionary[StringName, String] = {&"bog_hounds": "Bog Hounds"}
 	var bbcode := DialogueMarkup.to_bbcode("Those [[bog_hounds|hounds]] again.", names)
 	assert_string_contains(bbcode, "[url=bog_hounds]")
 	assert_string_contains(bbcode, "]hounds[/color]")
@@ -48,17 +50,17 @@ func test_renders_custom_label_over_display_name() -> void:
 
 
 func test_falls_back_to_raw_id_when_display_name_unknown() -> void:
-	var bbcode := DialogueMarkup.to_bbcode("About [[mystery_topic]].", {})
+	var bbcode := DialogueMarkup.to_bbcode("About [[mystery_topic]].", NO_NAMES)
 	assert_string_contains(bbcode, "]mystery_topic[/color]")
 
 
 func test_text_without_markup_passes_through_unchanged() -> void:
 	var text := "No keywords here, just [brackets] and words."
-	assert_eq(DialogueMarkup.to_bbcode(text, {}), text)
+	assert_eq(DialogueMarkup.to_bbcode(text, NO_NAMES), text)
 
 
 func test_renders_multiple_keywords_preserving_surrounding_text() -> void:
-	var names := {&"a_topic": "A Topic", &"b_topic": "B Topic"}
+	var names: Dictionary[StringName, String] = {&"a_topic": "A Topic", &"b_topic": "B Topic"}
 	var bbcode := DialogueMarkup.to_bbcode("First [[a_topic]], then [[b_topic]]!", names)
 	assert_string_starts_with(bbcode, "First [url=a_topic]")
 	assert_string_contains(bbcode, ", then [url=b_topic]")

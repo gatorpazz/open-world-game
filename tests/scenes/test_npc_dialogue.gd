@@ -7,6 +7,9 @@ extends GutTest
 const NPC_SCENE := preload("res://scenes/world/npc.tscn")
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const HUNALD := preload("res://data/npcs/hunald.tres")
+const SELD := preload("res://data/npcs/seld.tres")
+const RAT_PELT := preload("res://data/items/rat_pelt.tres")
+const HEALING_DRAUGHT := preload("res://data/items/healing_draught.tres")
 
 var _player: Player
 var _npc: Npc
@@ -96,6 +99,39 @@ func test_journal_gated_response_variant_on_second_ask() -> void:
 		"So you've been asking around",
 		"the requires_journal response wins once the entry is held"
 	)
+
+
+func test_item_exchange_goes_through_the_component_and_its_signals() -> void:
+	# Seld's a_small_favor: hidden without a pelt, then takes it, gives a
+	# draught, and writes the journal. Routed through InventoryComponent so
+	# item_added / item_removed fire (the ContainerPanel precedent).
+	var seld: Npc = NPC_SCENE.instantiate()
+	seld.def = SELD
+	add_child_autofree(seld)
+	seld.interactable.interact(_player)
+	var panel: DialoguePanel = seld._panel
+	var listed := func(list: ItemList) -> Array:
+		var names := []
+		for index: int in list.item_count:
+			names.append(list.get_item_text(index))
+		return names
+	assert_false(
+		listed.call(panel.topic_list).has("a small favor"),
+		"the favor is hidden until the player holds a rat pelt"
+	)
+	_player.inventory_component.add_item(RAT_PELT, 1)
+	watch_signals(_player.inventory_component)
+	panel.show_topic(&"a_small_favor")
+	assert_signal_emitted_with_parameters(
+		_player.inventory_component, "item_removed", [RAT_PELT, 1]
+	)
+	assert_signal_emitted_with_parameters(
+		_player.inventory_component, "item_added", [HEALING_DRAUGHT, 1]
+	)
+	assert_eq(_player.inventory_component.inventory.count_of(RAT_PELT), 0)
+	assert_eq(_player.inventory_component.inventory.count_of(HEALING_DRAUGHT), 1)
+	assert_true(_player.journal.has_entry(&"selds_ferry_favor"))
+	panel.close()
 
 
 func test_dialogue_pauses_and_close_restores() -> void:

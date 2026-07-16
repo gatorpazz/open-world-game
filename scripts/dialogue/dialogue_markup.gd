@@ -19,7 +19,7 @@ static var _regex := RegEx.create_from_string(MARKUP_PATTERN)
 ## in data files; at runtime it just isn't a keyword).
 static func extract_topic_ids(text: String) -> Array[StringName]:
 	var ids: Array[StringName] = []
-	for found in _regex.search_all(text):
+	for found: RegExMatch in _regex.search_all(text):
 		var id := StringName(found.get_string(1))
 		if not ids.has(id):
 			ids.append(id)
@@ -30,10 +30,10 @@ static func extract_topic_ids(text: String) -> Array[StringName]:
 ## keyword becomes [url=id]-wrapped highlighted text. The label is the
 ## custom |text if present, else the topic's display name from the lookup,
 ## else the raw id. Text without markup passes through unchanged.
-static func to_bbcode(text: String, display_names: Dictionary) -> String:
+static func to_bbcode(text: String, display_names: Dictionary[StringName, String]) -> String:
 	var result := ""
 	var cursor := 0
-	for found in _regex.search_all(text):
+	for found: RegExMatch in _regex.search_all(text):
 		result += text.substr(cursor, found.get_start() - cursor)
 		var id := StringName(found.get_string(1))
 		var label := found.get_string(2)

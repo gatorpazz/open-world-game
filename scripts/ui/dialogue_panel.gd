@@ -64,7 +64,8 @@ func show_topic(topic_id: StringName) -> void:
 	if response == null:
 		return
 	transcript.append_text(DialogueMarkup.to_bbcode(response.text, _display_names) + "\n\n")
-	var report := DialogueEvaluator.apply_effects(response, _journal, inventory)
+	var report := DialogueEvaluator.apply_effects(response, _journal)
+	_apply_item_effects(response)
 	_append_notices(response, report)
 	_rebuild_topic_list()
 
@@ -75,6 +76,16 @@ func _on_topic_clicked(index: int, _at_position: Vector2, _mouse_button_index: i
 
 func _on_keyword_clicked(meta: Variant) -> void:
 	show_topic(StringName(String(meta)))
+
+
+## Item exchanges go through the component, not the raw Inventory, so the
+## player-side signals fire (the ContainerPanel precedent). pick_response's
+## implicit take_items condition guarantees the take succeeds.
+func _apply_item_effects(response: DialogueResponse) -> void:
+	for stack: ItemStack in response.take_items:
+		_inventory_component.remove_item(stack.item, stack.count)
+	for stack: ItemStack in response.give_items:
+		_inventory_component.add_item(stack.item, stack.count)
 
 
 func _rebuild_topic_list() -> void:

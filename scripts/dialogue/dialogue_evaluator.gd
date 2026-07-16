@@ -61,20 +61,18 @@ static func available_topics(
 	return available
 
 
-## Applies a shown response's effects: learns every [[marked]] topic, adds
-## the journal entry, takes and gives items. Callers only pass responses
-## returned by pick_response, so the take can never fail.
-static func apply_effects(
-	response: DialogueResponse, journal: Journal, inventory: Inventory
-) -> EffectReport:
+## Applies a shown response's journal effects: learns every [[marked]]
+## topic and adds the journal entry. Item effects (take_items/give_items)
+## are deliberately NOT applied here — the caller routes them through
+## InventoryComponent so the player-side signals (item_added, item_removed,
+## encumbrance_changed) fire; a raw Inventory mutation would skip them.
+## Callers only pass responses returned by pick_response, whose implicit
+## take_items condition guarantees the exchange can never fail.
+static func apply_effects(response: DialogueResponse, journal: Journal) -> EffectReport:
 	var report := EffectReport.new()
 	for topic_id: StringName in DialogueMarkup.extract_topic_ids(response.text):
 		if journal.learn_topic(topic_id):
 			report.new_topics.append(topic_id)
 	if response.journal_entry != &"" and journal.add_entry(response.journal_entry):
 		report.journal_entry_added = response.journal_entry
-	for stack: ItemStack in response.take_items:
-		inventory.remove_item(stack.item, stack.count)
-	for stack: ItemStack in response.give_items:
-		inventory.add_item(stack.item, stack.count)
 	return report

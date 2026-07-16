@@ -1,8 +1,10 @@
 class_name Player
 extends CharacterBody3D
 ## First-person player controller: WASD to move, mouse to look, Space to
-## jump, E to interact, LMB to attack (while captured), Esc to release
-## the mouse (click to recapture).
+## jump, E to interact, LMB to attack (while captured), J to read the
+## journal, Esc to release the mouse (click to recapture).
+
+const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
 
 @export var speed := 6.0
 @export var jump_velocity := 4.8
@@ -11,6 +13,8 @@ extends CharacterBody3D
 ## The player's journal (spec 005) — injected identity like the sheet and
 ## inventory; a fresh one is built in _ready only when none was injected.
 var journal: Journal
+
+var _journal_panel: JournalPanel = null
 
 @onready var head: Node3D = $Head
 @onready var detector: InteractionDetector = $Head/Camera3D/InteractionDetector
@@ -38,6 +42,21 @@ func get_move_speed() -> float:
 	return speed * inventory_component.get_speed_multiplier()
 
 
+## Opens the journal reader (spec 005). Closing while open is the panel's
+## job — it pauses the tree, so this handler never fires while it is up.
+func open_journal() -> void:
+	if _journal_panel != null:
+		return
+	_journal_panel = JOURNAL_PANEL_SCENE.instantiate()
+	add_child(_journal_panel)
+	_journal_panel.closed.connect(_on_journal_panel_closed)
+	_journal_panel.open(journal)
+
+
+func _on_journal_panel_closed() -> void:
+	_journal_panel = null
+
+
 func _ready() -> void:
 	if journal == null:
 		journal = Journal.new()
@@ -57,6 +76,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		detector.try_interact()
 	elif event.is_action_pressed("attack") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		combat.try_attack()
+	elif event.is_action_pressed("journal"):
+		open_journal()
 	elif event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif (

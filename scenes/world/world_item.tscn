@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_item.gd" id="1_world_item"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="BoxMesh" id="mesh_item"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="BoxShape3D" id="shape_item"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="WorldItem" type="StaticBody3D"]
+script = ExtResource("1_world_item")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("mesh_item")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("shape_item")
+
+[node name="Interactable" type="Node3D" parent="."]
+script = ExtResource("2_interactable")
+display_name = "Item"
+verb = &"take"

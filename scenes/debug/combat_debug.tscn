@@ -1,0 +1,110 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://scripts/debug/combat_debug.gd" id="1_debug_root"]
+[ext_resource type="PackedScene" path="res://scenes/creatures/creature.tscn" id="2_creature"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_item.tscn" id="3_world_item"]
+[ext_resource type="Resource" path="res://data/creatures/marsh_rat.tres" id="4_marsh_rat"]
+[ext_resource type="Resource" path="res://data/creatures/bog_hound.tres" id="5_bog_hound"]
+[ext_resource type="Resource" path="res://data/creatures/barrow_thrall.tres" id="6_barrow_thrall"]
+[ext_resource type="Resource" path="res://data/items/healing_draught.tres" id="7_healing_draught"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.35, 0.55, 0.85, 1)
+sky_horizon_color = Color(0.65, 0.75, 0.85, 1)
+ground_bottom_color = Color(0.2, 0.25, 0.3, 1)
+ground_horizon_color = Color(0.65, 0.75, 0.85, 1)
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("sky")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="mat_ground"]
+albedo_color = Color(0.5, 0.47, 0.4, 1)
+
+[sub_resource type="BoxMesh" id="mesh_ground"]
+material = SubResource("mat_ground")
+size = Vector3(40, 1, 40)
+
+[sub_resource type="BoxShape3D" id="shape_ground"]
+size = Vector3(40, 1, 40)
+
+[sub_resource type="StandardMaterial3D" id="mat_wall"]
+albedo_color = Color(0.45, 0.4, 0.38, 1)
+
+[sub_resource type="BoxMesh" id="mesh_wall"]
+material = SubResource("mat_wall")
+size = Vector3(6, 3, 1)
+
+[sub_resource type="BoxShape3D" id="shape_wall"]
+size = Vector3(6, 3, 1)
+
+[node name="CombatDebug" type="Node3D"]
+script = ExtResource("1_debug_root")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, 0.383, -0.321, 0, 0.643, 0.766, 0.5, -0.663, 0.557, 0, 12, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("mesh_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("shape_ground")
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
+
+[node name="Wall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -11)
+
+[node name="Mesh" type="MeshInstance3D" parent="Wall"]
+mesh = SubResource("mesh_wall")
+
+[node name="Collision" type="CollisionShape3D" parent="Wall"]
+shape = SubResource("shape_wall")
+
+[node name="Creatures" type="Node3D" parent="."]
+
+[node name="MarshRat" parent="Creatures" instance=ExtResource("2_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+def = ExtResource("4_marsh_rat")
+
+[node name="BogHound" parent="Creatures" instance=ExtResource("2_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -8)
+def = ExtResource("5_bog_hound")
+
+[node name="BarrowThrall" parent="Creatures" instance=ExtResource("2_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+def = ExtResource("6_barrow_thrall")
+
+[node name="Pickups" type="Node3D" parent="."]
+
+[node name="DraughtA" parent="Pickups" instance=ExtResource("3_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 6)
+item = ExtResource("7_healing_draught")
+count = 2
+
+[node name="DraughtB" parent="Pickups" instance=ExtResource("3_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+item = ExtResource("7_healing_draught")
+count = 2
+
+[node name="DebugHud" type="CanvasLayer" parent="."]
+
+[node name="DebugLabel" type="Label" parent="DebugHud"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 460.0
+offset_bottom = 220.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6

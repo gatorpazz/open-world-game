@@ -65,4 +65,4 @@ Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same com
 
 ## Current focus
 
-Phase 1, spec 004: combat v1 (`docs/specs/004-combat.md`) — melee with physical hit detection, stamina, passive block, creatures + basic AI. Specs 001–003 are complete; combat consumes all three, so regressions there break here.
+Phase 1, spec 005: dialogue system (topic-based, data-driven) + journal — spec not yet written; writing it is the next task. Specs 001–004 are complete; 005 replaces the guts of spec 003's TalkStub without changing its wiring.

@@ -48,7 +48,7 @@ Spec queue (one spec = one reviewable unit of work):
 | 001 | Character stats system | ✅ complete |
 | 002 | Items & inventory (equipment slots, weight vs. carry capacity) | ✅ complete |
 | 003 | Interaction system (raycast interact: doors, containers, pickups, NPCs) | ✅ complete |
-| 004 | Combat v1 (melee, stamina costs, damage, basic enemy AI) | spec written — implementing next |
+| 004 | Combat v1 (melee, stamina costs, damage, basic enemy AI) | ✅ complete |
 | 005 | Dialogue system (topic-based, data-driven) + journal | queued |
 | 006 | Quest system (quest resources, stages, journal integration) | queued |
 | 007 | Save/load | queued |
@@ -108,4 +108,4 @@ The scope budget in §3 fully present · a new player can finish the main quest 
 
 ## 9. Current Status
 
-**As of July 16, 2026:** Phase 1 underway — specs 001 (character stats), 002 (items & inventory), and 003 (interaction system: pickups, containers, hinged/transition doors, NPC talk stub) are implemented with debug scenes and a passing test suite (121 tests / 14 scripts). A `Game` autoload now owns persistent identity and scene changes (added for spec 003's cross-scene door transitions). Spec 004 (combat v1) is written — physical hit resolution (no dice-roll to-hit), passive block, `CreatureDef` + 3 starter creatures, death = scene reload until 007. Next up: implement it. Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.
+**As of July 16, 2026:** Phase 1 underway — specs 001 (character stats), 002 (items & inventory), 003 (interaction system), and 004 (combat v1: physical hit resolution, stamina, passive block, `CreatureDef` + 3 starter creatures with idle/wander/chase/attack AI, container loot drops, death = scene reload until 007) are implemented with debug scenes and a passing test suite (178 tests / 19 scripts). Next up: write and implement spec 005 (topic-based dialogue + journal). Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.

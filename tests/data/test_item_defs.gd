@@ -97,6 +97,17 @@ func test_weapon_swing_time_and_reach_are_positive() -> void:
 		assert_gt(weapon.reach, 0.0, "%s reach is positive" % weapon.id)
 
 
+## Melee reach must not exceed interact range, or you could hit things
+## you cannot yet interact with (spec 004).
+func test_weapon_reach_within_interact_range() -> void:
+	var config := load("res://data/balance/balance_config.tres") as BalanceConfig
+	for item: ItemDef in _items:
+		var weapon := item as WeaponDef
+		if weapon == null:
+			continue
+		assert_lte(weapon.reach, config.interact_range, "%s reach <= interact_range" % weapon.id)
+
+
 func test_armor_slots_are_valid() -> void:
 	for item: ItemDef in _items:
 		var armor := item as ArmorDef

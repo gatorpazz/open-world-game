@@ -1,5 +1,6 @@
 extends GutTest
-## Validates data/balance/balance_config.tres (spec 003 adds interact_range).
+## Validates data/balance/balance_config.tres (spec 003 adds interact_range,
+## spec 004 adds the Combat and Creatures groups).
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 
@@ -27,3 +28,11 @@ func test_every_tunable_is_positive() -> void:
 
 func test_interact_range_present() -> void:
 	assert_gt(_config.interact_range, 0.0)
+
+
+func test_combat_constants_are_coherent() -> void:
+	assert_lt(_config.damage_skill_min, _config.damage_skill_max)
+	assert_lte(_config.block_chance_base, 1.0)
+	assert_lte(_config.exhausted_damage_multiplier, 1.0)
+	assert_lte(_config.block_damage_multiplier, 1.0)
+	assert_lte(_config.creature_idle_time_min, _config.creature_idle_time_max)

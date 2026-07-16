@@ -88,6 +88,15 @@ func test_armor_skill_ids_are_armor_skills_or_empty_for_jewelry() -> void:
 		)
 
 
+func test_weapon_swing_time_and_reach_are_positive() -> void:
+	for item: ItemDef in _items:
+		var weapon := item as WeaponDef
+		if weapon == null:
+			continue
+		assert_gt(weapon.swing_time, 0.0, "%s swing_time is positive" % weapon.id)
+		assert_gt(weapon.reach, 0.0, "%s reach is positive" % weapon.id)
+
+
 func test_armor_slots_are_valid() -> void:
 	for item: ItemDef in _items:
 		var armor := item as ArmorDef

@@ -12,3 +12,5 @@ base_value = 45
 damage = 6
 skill_id = &"ranged"
 two_handed = true
+swing_time = 1.0
+reach = 1.5

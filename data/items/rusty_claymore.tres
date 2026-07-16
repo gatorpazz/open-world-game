@@ -12,3 +12,5 @@ base_value = 40
 damage = 12
 skill_id = &"blades"
 two_handed = true
+swing_time = 1.2
+reach = 2.4

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmorDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/armor_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"plain_ring"
+display_name = "Plain Ring"
+description = "An unadorned band of silver."
+weight = 0.1
+base_value = 25
+slot = &"ring"
+armor_rating = 0

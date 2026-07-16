@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MiscDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/misc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"flawed_gem"
+display_name = "Flawed Gem"
+description = "A cloudy gemstone. A jeweler might still pay for it."
+weight = 0.1
+base_value = 40

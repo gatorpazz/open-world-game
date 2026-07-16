@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ConsumableDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/consumable_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"mana_draught"
+display_name = "Mana Draught"
+description = "A shimmering blue philtre that restores magical reserves."
+weight = 0.5
+base_value = 20
+stackable = true
+max_stack = 10
+mana_restore = 25.0

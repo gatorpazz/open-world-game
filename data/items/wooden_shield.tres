@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArmorDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/armor_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"wooden_shield"
+display_name = "Wooden Shield"
+description = "A round shield of banded oak."
+weight = 6.0
+base_value = 25
+slot = &"off_hand"
+armor_rating = 5
+skill_id = &"heavy_armor"

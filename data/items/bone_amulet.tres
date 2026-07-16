@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmorDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/armor_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"bone_amulet"
+display_name = "Bone Amulet"
+description = "A carved bone charm on a leather cord."
+weight = 0.3
+base_value = 15
+slot = &"amulet"
+armor_rating = 0

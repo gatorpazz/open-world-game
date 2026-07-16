@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArmorDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/armor_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"leather_cuirass"
+display_name = "Leather Cuirass"
+description = "Boiled leather chest armor, light and quiet."
+weight = 9.0
+base_value = 35
+slot = &"chest"
+armor_rating = 6
+skill_id = &"light_armor"

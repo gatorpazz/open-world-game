@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/weapon_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"hunting_bow"
+display_name = "Hunting Bow"
+description = "A simple wooden bow made for taking small game."
+weight = 5.0
+base_value = 45
+damage = 6
+skill_id = &"ranged"
+two_handed = true

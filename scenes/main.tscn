@@ -1,6 +1,4 @@
-[gd_scene load_steps=21 format=3]
-
-[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
+[gd_scene load_steps=20 format=3]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.35, 0.55, 0.85, 1)
@@ -195,5 +193,5 @@ material_override = SubResource("mat_teal")
 [node name="Collision" type="CollisionShape3D" parent="Boxes/TealBox"]
 shape = SubResource("shape_2m")
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)

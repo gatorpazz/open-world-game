@@ -27,6 +27,7 @@ The player *node* is instanced fresh in every scene; the player's *identity* is 
 
 - `character_sheet: CharacterSheet` and `inventory: Inventory` — created once, handed to the freshly instanced player's `StatsComponent` / `InventoryComponent` on every scene load.
 - `change_scene(scene_path: String, spawn_point: StringName)` — loads the scene, finds the `Marker3D` in group `spawn_points` whose name matches, instances the player there, injects the resources.
+- **Boot/F6 fallback (amendment):** scenes never embed a player. On startup, if the current scene has no player but has a spawn marker named `default`, `Game` instances the player there through the same injection path as a real transition. Convention: every playable scene has a `default` spawn marker; scenes without one (2D debug scenes, the test runner) leave `Game` inert.
 
 This means scene transitions are trivially safe (nothing to carry but two resource references), and save/load (007) becomes "serialize what Game holds." No other global state goes into `Game` without a spec saying so.
 

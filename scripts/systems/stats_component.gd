@@ -14,12 +14,15 @@ signal stamina_changed(current: float, max_value: float)
 const SKILLS_DIR := "res://data/skills"
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 
-@export var sheet: CharacterSheet
-## Major skills used when no sheet is assigned and a default one is built.
-## Character creation is a later spec; this is a placeholder loadout.
-@export var default_major_skills: Array[StringName] = [
+## Placeholder loadout until character creation (later spec). Shared with the
+## Game autoload, which builds the persistent sheet through the same path.
+const DEFAULT_MAJOR_SKILLS: Array[StringName] = [
 	&"blades", &"block", &"heavy_armor", &"evocation", &"sneak",
 ]
+
+@export var sheet: CharacterSheet
+## Major skills used when no sheet is assigned and a default one is built.
+@export var default_major_skills: Array[StringName] = DEFAULT_MAJOR_SKILLS.duplicate()
 
 var current_health: float
 var current_mana: float
@@ -28,7 +31,7 @@ var current_stamina: float
 
 func _ready() -> void:
 	if sheet == null:
-		sheet = _build_default_sheet()
+		sheet = build_default_sheet(default_major_skills)
 	current_health = sheet.get_max_health()
 	current_mana = sheet.get_max_mana()
 	current_stamina = sheet.get_max_stamina()
@@ -121,7 +124,9 @@ func _emit_derived_changes(old_maxes: Dictionary[StringName, float]) -> void:
 		stamina_changed.emit(current_stamina, max_stamina)
 
 
-func _build_default_sheet() -> CharacterSheet:
+## Builds a fresh sheet with every skill in data/skills/ and the given majors.
+## Static so the Game autoload can build the persistent sheet the same way.
+static func build_default_sheet(major_skills: Array[StringName]) -> CharacterSheet:
 	var balance := load(BALANCE_PATH) as BalanceConfig
 	var skill_ids: Array[StringName] = []
 	for file_name: String in ResourceLoader.list_directory(SKILLS_DIR):
@@ -130,5 +135,5 @@ func _build_default_sheet() -> CharacterSheet:
 		var skill := load(SKILLS_DIR.path_join(file_name)) as SkillDef
 		skill_ids.append(skill.id)
 	var new_sheet := CharacterSheet.new()
-	new_sheet.setup(skill_ids, default_major_skills, balance)
+	new_sheet.setup(skill_ids, major_skills, balance)
 	return new_sheet

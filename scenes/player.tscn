@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/interaction/interaction_detector.gd" id="2_detector"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud_prompt.tscn" id="3_prompt"]
+[ext_resource type="Script" path="res://scripts/systems/stats_component.gd" id="4_stats"]
+[ext_resource type="Script" path="res://scripts/systems/inventory_component.gd" id="5_inventory"]
 
 [sub_resource type="CapsuleShape3D" id="capsule"]
 radius = 0.35
@@ -22,6 +24,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="InteractionDetector" type="RayCast3D" parent="Head/Camera3D"]
 script = ExtResource("2_detector")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("4_stats")
+
+[node name="Inventory" type="Node" parent="." node_paths=PackedStringArray("stats")]
+script = ExtResource("5_inventory")
+stats = NodePath("../Stats")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

@@ -15,6 +15,13 @@ const SELF_DAMAGE := 30.0
 @onready var dump: RichTextLabel = $Layout/Dump
 
 
+## Route through the Game autoload's persistent identity (spec 003): parent
+## _enter_tree runs before child _ready, so the components skip their defaults.
+func _enter_tree() -> void:
+	($Stats as StatsComponent).sheet = Game.character_sheet
+	($Items as InventoryComponent).inventory = Game.inventory
+
+
 func _ready() -> void:
 	items.item_added.connect(_on_inventory_changed.unbind(2))
 	items.item_removed.connect(_on_inventory_changed.unbind(2))

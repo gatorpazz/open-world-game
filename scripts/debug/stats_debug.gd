@@ -11,6 +11,12 @@ const XP_PER_CLICK := 25
 @onready var sheet_dump: RichTextLabel = $Layout/SheetDump
 
 
+## Route through the Game autoload's persistent identity (spec 003): parent
+## _enter_tree runs before child _ready, so the component skips its default.
+func _enter_tree() -> void:
+	($Stats as StatsComponent).sheet = Game.character_sheet
+
+
 func _ready() -> void:
 	stats.skill_leveled.connect(_on_stats_changed.unbind(2))
 	stats.leveled_up.connect(_on_stats_changed.unbind(1))

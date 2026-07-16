@@ -10,6 +10,21 @@ extends CharacterBody3D
 @onready var head: Node3D = $Head
 @onready var detector: InteractionDetector = $Head/Camera3D/InteractionDetector
 @onready var hud_prompt: HudPrompt = $HUD/HudPrompt
+@onready var stats: StatsComponent = $Stats
+@onready var inventory_component: InventoryComponent = $Inventory
+
+
+## Called by Game after instantiate() and BEFORE add_child(): the child
+## components consume these in their _ready(), which only builds defaults
+## when the exported resource is null.
+func setup_identity(sheet: CharacterSheet, player_inventory: Inventory) -> void:
+	($Stats as StatsComponent).sheet = sheet
+	($Inventory as InventoryComponent).inventory = player_inventory
+
+
+## Flat speed scaled by encumbrance (the 001→002→003 hookup, criterion 7).
+func get_move_speed() -> float:
+	return speed * inventory_component.get_speed_multiplier()
 
 
 func _ready() -> void:
@@ -40,11 +55,12 @@ func _physics_process(delta: float) -> void:
 
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var move_speed := get_move_speed()
 	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-		velocity.z = move_toward(velocity.z, 0, speed)
+		velocity.x = move_toward(velocity.x, 0, move_speed)
+		velocity.z = move_toward(velocity.z, 0, move_speed)
 
 	move_and_slide()

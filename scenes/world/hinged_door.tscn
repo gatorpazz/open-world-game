@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/hinged_door.gd" id="1_door"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="mat_door"]
+albedo_color = Color(0.55, 0.4, 0.25, 1)
+
+[sub_resource type="BoxMesh" id="mesh_door"]
+material = SubResource("mat_door")
+size = Vector3(1, 2, 0.1)
+
+[sub_resource type="BoxShape3D" id="shape_door"]
+size = Vector3(1, 2, 0.1)
+
+[node name="HingedDoor" type="StaticBody3D"]
+script = ExtResource("1_door")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+mesh = SubResource("mesh_door")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+shape = SubResource("shape_door")
+
+[node name="Interactable" type="Node3D" parent="."]
+script = ExtResource("2_interactable")
+display_name = "Wooden Door"
+verb = &"use"

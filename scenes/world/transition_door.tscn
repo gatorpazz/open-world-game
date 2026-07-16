@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/transition_door.gd" id="1_door"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="mat_load_door"]
+albedo_color = Color(0.3, 0.25, 0.5, 1)
+
+[sub_resource type="BoxMesh" id="mesh_load_door"]
+material = SubResource("mat_load_door")
+size = Vector3(1.2, 2.2, 0.15)
+
+[sub_resource type="BoxShape3D" id="shape_load_door"]
+size = Vector3(1.2, 2.2, 0.15)
+
+[node name="TransitionDoor" type="StaticBody3D"]
+script = ExtResource("1_door")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("mesh_load_door")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("shape_load_door")
+
+[node name="Interactable" type="Node3D" parent="."]
+script = ExtResource("2_interactable")
+display_name = "Door"
+verb = &"use"

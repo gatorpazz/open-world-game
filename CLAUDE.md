@@ -65,4 +65,4 @@ Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same com
 
 ## Current focus
 
-Phase 1, spec 005: dialogue system (topic-based, data-driven) + journal — spec not yet written; writing it is the next task. Specs 001–004 are complete; 005 replaces the guts of spec 003's TalkStub without changing its wiring.
+Phase 1, spec 005: dialogue system (topic-based, data-driven) + journal — spec written (`docs/specs/005-dialogue-and-journal.md`); implementing it is the next task. Specs 001–004 are complete; 005 replaces the guts of spec 003's TalkStub without changing its wiring.

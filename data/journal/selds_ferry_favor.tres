@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"selds_ferry_favor"
+text = "I brought Seld the rat pelt he wanted for a boot patch. He paid me in a healing draught and says he owes me a crossing besides."

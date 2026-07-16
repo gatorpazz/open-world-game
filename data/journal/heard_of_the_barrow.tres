@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"heard_of_the_barrow"
+text = "I have heard talk of an old barrow out in the marsh. The villagers give it a wide berth, and nobody will say quite why."

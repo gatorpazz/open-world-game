@@ -1,0 +1,34 @@
+{
+  "enabledMcpjsonServers": ["godot"],
+  "permissions": {
+    "allow": [
+      "Bash(godot --headless -s addons/gut/gut_cmdln.gd *)",
+      "Bash(godot --headless --import *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | grep -qE '/(addons|\\.godot)/' && { echo 'Blocked: addons/ and .godot/ are third-party/generated — never hand-edit (CLAUDE.md)' >&2; exit 2; }; exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // .tool_response.filePath // empty'); case \"$f\" in *.gd) \"$HOME/.local/bin/gdformat\" \"$f\" >/dev/null 2>&1; out=$(\"$HOME/.local/bin/gdlint\" \"$f\" 2>&1) || { echo \"$out\" >&2; exit 2; };; esac; exit 0",
+            "statusMessage": "gdformat + gdlint"
+          }
+        ]
+      }
+    ]
+  }
+}

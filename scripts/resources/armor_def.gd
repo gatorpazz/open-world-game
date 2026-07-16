@@ -5,8 +5,14 @@ extends ItemDef
 ## Declared slots an armor piece may claim. &"ring" is a wildcard that
 ## resolves to ring_1 or ring_2 at equip time.
 const VALID_SLOTS: Array[StringName] = [
-	&"head", &"chest", &"legs", &"hands", &"feet",
-	&"off_hand", &"ring", &"amulet",
+	&"head",
+	&"chest",
+	&"legs",
+	&"hands",
+	&"feet",
+	&"off_hand",
+	&"ring",
+	&"amulet",
 ]
 
 @export var slot: StringName

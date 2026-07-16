@@ -30,7 +30,8 @@ func before_each() -> void:
 	_game.current_world = null
 	_game.player = null
 	_game.character_sheet = StatsComponent.build_default_sheet(
-			StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate())
+		StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate()
+	)
 	_game.inventory = Inventory.new()
 
 
@@ -72,8 +73,10 @@ func test_find_spawn_point_matches_name_and_group() -> void:
 	world.add_child(ungrouped)
 	assert_eq(GameScript.find_spawn_point(world, &"entrance"), marker)
 	assert_null(GameScript.find_spawn_point(world, &"missing"))
-	assert_null(GameScript.find_spawn_point(world, &"ungrouped"),
-			"a Marker3D outside the spawn_points group is not a spawn point")
+	assert_null(
+		GameScript.find_spawn_point(world, &"ungrouped"),
+		"a Marker3D outside the spawn_points group is not a spawn point"
+	)
 
 
 func test_spawn_player_places_at_marker_and_injects_identity() -> void:
@@ -81,10 +84,16 @@ func test_spawn_player_places_at_marker_and_injects_identity() -> void:
 	_sandbox.add_child(world)
 	var player: Player = _game.spawn_player(world, &"entrance")
 	assert_almost_eq(player.global_position, Vector3(3.0, 0.0, -2.0), Vector3.ONE * 0.001)
-	assert_same(player.stats.sheet, _game.character_sheet,
-			"spawned player shares the persistent CharacterSheet instance")
-	assert_same(player.inventory_component.inventory, _game.inventory,
-			"spawned player shares the persistent Inventory instance")
+	assert_same(
+		player.stats.sheet,
+		_game.character_sheet,
+		"spawned player shares the persistent CharacterSheet instance"
+	)
+	assert_same(
+		player.inventory_component.inventory,
+		_game.inventory,
+		"spawned player shares the persistent Inventory instance"
+	)
 
 
 func test_change_scene_swaps_managed_world_and_spawns_player() -> void:
@@ -107,8 +116,7 @@ func test_change_scene_leaves_unmanaged_world_alone() -> void:
 	_game.current_world = foreign
 	_game.change_scene(MAIN_SCENE, &"default")
 	await wait_process_frames(3)
-	assert_true(is_instance_valid(foreign),
-			"a world not parented to world_parent is never freed")
+	assert_true(is_instance_valid(foreign), "a world not parented to world_parent is never freed")
 	assert_eq(foreign.get_parent(), self)
 
 
@@ -118,7 +126,10 @@ func test_encumbered_player_moves_slower() -> void:
 	assert_almost_eq(player.get_move_speed(), player.speed, 0.001)
 	var config := load(BALANCE_PATH) as BalanceConfig
 	player.inventory_component.add_item(SACK_OF_ORE, 5)
-	assert_true(player.inventory_component.is_encumbered(),
-			"five sacks of ore exceed the default carry capacity")
-	assert_almost_eq(player.get_move_speed(),
-			player.speed * config.encumbered_speed_multiplier, 0.001)
+	assert_true(
+		player.inventory_component.is_encumbered(),
+		"five sacks of ore exceed the default carry capacity"
+	)
+	assert_almost_eq(
+		player.get_move_speed(), player.speed * config.encumbered_speed_multiplier, 0.001
+	)

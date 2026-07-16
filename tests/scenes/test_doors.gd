@@ -28,7 +28,8 @@ func before_each() -> void:
 	_game.current_world = null
 	_game.player = null
 	_game.character_sheet = StatsComponent.build_default_sheet(
-			StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate())
+		StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate()
+	)
 	_game.inventory = Inventory.new()
 
 
@@ -81,15 +82,13 @@ func test_transition_round_trip_lands_at_named_spawns() -> void:
 	var interior: Node = _game.current_world
 	assert_ne(interior, exterior, "load-door swaps the scene")
 	var spawn_in := GameScript.find_spawn_point(interior, &"from_exterior")
-	assert_almost_eq(_game.player.global_position, spawn_in.global_position,
-			Vector3.ONE * 0.01)
+	assert_almost_eq(_game.player.global_position, spawn_in.global_position, Vector3.ONE * 0.01)
 	_find_transition_door(interior).interactable.interact(_game.player)
 	await wait_process_frames(3)
 	var exterior_again: Node = _game.current_world
 	assert_ne(exterior_again, interior)
 	var spawn_back := GameScript.find_spawn_point(exterior_again, &"from_interior")
-	assert_almost_eq(_game.player.global_position, spawn_back.global_position,
-			Vector3.ONE * 0.01)
+	assert_almost_eq(_game.player.global_position, spawn_back.global_position, Vector3.ONE * 0.01)
 
 
 func test_identity_persists_across_transition() -> void:
@@ -106,8 +105,9 @@ func test_identity_persists_across_transition() -> void:
 	_find_transition_door(_game.current_world).interactable.interact(player_a)
 	await wait_process_frames(3)
 	var player_b: Player = _game.player
-	assert_ne(player_b.get_instance_id(), player_a_id,
-			"the player node is instanced fresh per scene")
+	assert_ne(
+		player_b.get_instance_id(), player_a_id, "the player node is instanced fresh per scene"
+	)
 	assert_same(player_b.stats.sheet, _game.character_sheet)
 	assert_same(player_b.inventory_component.inventory, _game.inventory)
 	assert_eq(player_b.stats.sheet.skills[&"blades"], blades_level)

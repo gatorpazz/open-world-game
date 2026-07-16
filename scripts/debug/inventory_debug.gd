@@ -53,8 +53,7 @@ func _build_buttons() -> void:
 			row.add_child(_make_button("Use", _on_use_pressed.bind(item)))
 		item_buttons.add_child(row)
 	for slot: StringName in Inventory.EQUIPMENT_SLOTS:
-		slot_buttons.add_child(_make_button(
-				"Unequip %s" % slot, _on_unequip_pressed.bind(slot)))
+		slot_buttons.add_child(_make_button("Unequip %s" % slot, _on_unequip_pressed.bind(slot)))
 	slot_buttons.add_child(_make_button("+%d gold" % GOLD_PER_CLICK, _on_add_gold_pressed))
 	slot_buttons.add_child(_make_button("Spend %d gold" % GOLD_PER_CLICK, _on_spend_gold_pressed))
 	slot_buttons.add_child(_make_button("Damage self %.0f" % SELF_DAMAGE, _on_damage_pressed))
@@ -108,17 +107,28 @@ func _refresh() -> void:
 	var lines: PackedStringArray = []
 	lines.append("[b]Gold[/b] %d" % inventory.gold)
 	var encumbered_tag := "   [b][color=red]ENCUMBERED[/color][/b]" if items.is_encumbered() else ""
-	lines.append("[b]Weight[/b] %5.1f / %5.1f%s   speed x%.2f" % [
-		inventory.get_total_weight(), stats.sheet.get_carry_capacity(),
-		encumbered_tag, items.get_speed_multiplier(),
-	])
+	(
+		lines
+		. append(
+			(
+				"[b]Weight[/b] %5.1f / %5.1f%s   speed x%.2f"
+				% [
+					inventory.get_total_weight(),
+					stats.sheet.get_carry_capacity(),
+					encumbered_tag,
+					items.get_speed_multiplier(),
+				]
+			)
+		)
+	)
 	lines.append("[b]Armor rating[/b] %d" % items.get_total_armor_rating())
 	lines.append("")
 	lines.append("[b]Pools[/b]")
 	lines.append("  health   %5.1f / %5.1f" % [stats.current_health, stats.sheet.get_max_health()])
 	lines.append("  mana     %5.1f / %5.1f" % [stats.current_mana, stats.sheet.get_max_mana()])
-	lines.append("  stamina  %5.1f / %5.1f" % [
-		stats.current_stamina, stats.sheet.get_max_stamina()])
+	lines.append(
+		"  stamina  %5.1f / %5.1f" % [stats.current_stamina, stats.sheet.get_max_stamina()]
+	)
 	lines.append("")
 	lines.append("[b]Equipment[/b]")
 	for slot: StringName in Inventory.EQUIPMENT_SLOTS:

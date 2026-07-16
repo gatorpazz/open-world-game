@@ -59,8 +59,7 @@ func test_target_changed_fires_exactly_on_change() -> void:
 	_detector.force_refresh()
 	_detector.force_refresh()
 	assert_signal_emit_count(_detector, "target_changed", 1)
-	assert_signal_emitted_with_parameters(_detector, "target_changed",
-			[Interactable.find_in(body)])
+	assert_signal_emitted_with_parameters(_detector, "target_changed", [Interactable.find_in(body)])
 	body.position = Vector3(0, 0, -100.0)
 	await _settle()
 	assert_signal_emit_count(_detector, "target_changed", 2)

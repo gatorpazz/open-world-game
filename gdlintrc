@@ -1,0 +1,3 @@
+# gdlint config (gdtoolkit). Defaults apply for anything not listed.
+# Raised so GUT test suites with many test_* functions don't trip the cap.
+max-public-methods: 40

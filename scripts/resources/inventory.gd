@@ -9,8 +9,16 @@ extends Resource
 ## declared-slot vocabulary; its &"ring" wildcard resolves to ring_1/ring_2
 ## at equip time.
 const EQUIPMENT_SLOTS: Array[StringName] = [
-	&"head", &"chest", &"legs", &"hands", &"feet",
-	&"main_hand", &"off_hand", &"ring_1", &"ring_2", &"amulet",
+	&"head",
+	&"chest",
+	&"legs",
+	&"hands",
+	&"feet",
+	&"main_hand",
+	&"off_hand",
+	&"ring_1",
+	&"ring_2",
+	&"amulet",
 ]
 
 @export var stacks: Array[ItemStack] = []

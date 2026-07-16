@@ -6,8 +6,13 @@ extends Resource
 ## wraps this in the scene tree and emits signals.
 
 const ATTRIBUTE_NAMES: Array[StringName] = [
-	&"strength", &"endurance", &"agility", &"speed",
-	&"intellect", &"willpower", &"presence",
+	&"strength",
+	&"endurance",
+	&"agility",
+	&"speed",
+	&"intellect",
+	&"willpower",
+	&"presence",
 ]
 const MAJOR_SKILL_COUNT := 5
 const ATTRIBUTE_MIN := 1
@@ -23,10 +28,10 @@ const ATTRIBUTE_MIN := 1
 @export var major_level_ups: int = 0
 
 
-func setup(skill_ids: Array[StringName], majors: Array[StringName],
-		balance: BalanceConfig) -> void:
-	assert(majors.size() == MAJOR_SKILL_COUNT,
-			"Exactly %d major skills required" % MAJOR_SKILL_COUNT)
+func setup(skill_ids: Array[StringName], majors: Array[StringName], balance: BalanceConfig) -> void:
+	assert(
+		majors.size() == MAJOR_SKILL_COUNT, "Exactly %d major skills required" % MAJOR_SKILL_COUNT
+	)
 	config = balance
 	level = 1
 	unspent_attribute_points = 0
@@ -91,6 +96,7 @@ func set_attribute(attribute: StringName, value: int) -> void:
 
 # --- Derived stats: always computed, never stored ---
 
+
 func get_max_health() -> float:
 	return config.health_base + attributes[&"endurance"] * config.health_per_endurance
 
@@ -101,8 +107,10 @@ func get_max_mana() -> float:
 
 func get_max_stamina() -> float:
 	var physical_total: int = (
-		attributes[&"strength"] + attributes[&"endurance"]
-		+ attributes[&"agility"] + attributes[&"speed"]
+		attributes[&"strength"]
+		+ attributes[&"endurance"]
+		+ attributes[&"agility"]
+		+ attributes[&"speed"]
 	)
 	return physical_total * config.stamina_factor
 

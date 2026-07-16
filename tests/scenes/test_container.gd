@@ -34,8 +34,7 @@ func test_take_moves_a_single_stack() -> void:
 	panel.take_selected()
 	assert_eq(_player.inventory_component.inventory.count_of(MANA_DRAUGHT), 3)
 	assert_eq(_container.inventory.count_of(MANA_DRAUGHT), 0)
-	assert_eq(_container.inventory.count_of(IRON_SWORD), 1,
-			"untaken stack stays in the container")
+	assert_eq(_container.inventory.count_of(IRON_SWORD), 1, "untaken stack stays in the container")
 	assert_eq(panel.item_list.item_count, 1, "list refreshes after a take")
 
 
@@ -57,8 +56,11 @@ func test_contents_persist_across_close_and_reopen() -> void:
 	await wait_process_frames(1)
 	var reopened := _open_panel()
 	assert_not_null(reopened, "container reopens after close")
-	assert_same(_container.inventory, inventory_before,
-			"container keeps the same Inventory instance while the scene is loaded")
+	assert_same(
+		_container.inventory,
+		inventory_before,
+		"container keeps the same Inventory instance while the scene is loaded"
+	)
 	assert_eq(reopened.item_list.item_count, 1)
 	assert_eq(_container.inventory.count_of(MANA_DRAUGHT), 3)
 
@@ -67,8 +69,15 @@ func test_double_interact_does_not_open_second_panel() -> void:
 	var panel := _open_panel()
 	_container.interactable.interact(_player)
 	assert_eq(_container._panel, panel, "interacting while open is a no-op")
-	assert_eq(_container.get_children().filter(
-			func(child: Node) -> bool: return child is ContainerPanel).size(), 1)
+	assert_eq(
+		(
+			_container
+			. get_children()
+			. filter(func(child: Node) -> bool: return child is ContainerPanel)
+			. size()
+		),
+		1
+	)
 
 
 func test_prompt_uses_container_display_name() -> void:

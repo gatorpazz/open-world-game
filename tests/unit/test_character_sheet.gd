@@ -6,12 +6,25 @@ extends GutTest
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 const SKILL_IDS: Array[StringName] = [
-	&"blades", &"ranged", &"block", &"heavy_armor",
-	&"evocation", &"mending", &"warding", &"alchemy",
-	&"sneak", &"security", &"light_armor", &"persuasion",
+	&"blades",
+	&"ranged",
+	&"block",
+	&"heavy_armor",
+	&"evocation",
+	&"mending",
+	&"warding",
+	&"alchemy",
+	&"sneak",
+	&"security",
+	&"light_armor",
+	&"persuasion",
 ]
 const MAJORS: Array[StringName] = [
-	&"blades", &"block", &"heavy_armor", &"evocation", &"sneak",
+	&"blades",
+	&"block",
+	&"heavy_armor",
+	&"evocation",
+	&"sneak",
 ]
 const MINOR := &"security"
 const MAJOR := &"blades"
@@ -31,6 +44,7 @@ func _level_once(sheet: CharacterSheet, skill_id: StringName) -> void:
 
 # --- Setup ---
 
+
 func test_setup_starting_values() -> void:
 	var sheet := _make_sheet()
 	for attribute: StringName in CharacterSheet.ATTRIBUTE_NAMES:
@@ -42,6 +56,7 @@ func test_setup_starting_values() -> void:
 
 
 # --- Criterion 1: skill xp, thresholds, multi-level, cap ---
+
 
 func test_xp_accrues_below_threshold() -> void:
 	var sheet := _make_sheet()
@@ -85,6 +100,7 @@ func test_zero_or_negative_xp_changes_nothing() -> void:
 
 # --- Criterion 2: major skills drive character level ---
 
+
 func test_ten_major_level_ups_trigger_one_character_level() -> void:
 	var sheet := _make_sheet()
 	for i: int in range(9):
@@ -112,6 +128,7 @@ func test_major_counter_carries_remainder() -> void:
 
 
 # --- Criterion 3: attribute points ---
+
 
 func _make_leveled_sheet() -> CharacterSheet:
 	var sheet := _make_sheet()
@@ -148,10 +165,11 @@ func test_spend_refused_when_attribute_capped() -> void:
 
 # --- Criterion 4: derived stats ---
 
+
 func test_derived_stats_at_starting_attributes() -> void:
 	var sheet := _make_sheet()
-	assert_almost_eq(sheet.get_max_health(), 65.0, 0.001)   # 20 + 30 * 1.5
-	assert_almost_eq(sheet.get_max_mana(), 45.0, 0.001)     # 30 * 1.5
+	assert_almost_eq(sheet.get_max_health(), 65.0, 0.001)  # 20 + 30 * 1.5
+	assert_almost_eq(sheet.get_max_mana(), 45.0, 0.001)  # 30 * 1.5
 	assert_almost_eq(sheet.get_max_stamina(), 60.0, 0.001)  # (30*4) * 0.5
 	assert_almost_eq(sheet.get_carry_capacity(), 120.0, 0.001)  # 30 * 4.0
 
@@ -161,13 +179,14 @@ func test_derived_stats_update_with_attributes() -> void:
 	sheet.set_attribute(&"endurance", 50)
 	sheet.set_attribute(&"intellect", 80)
 	sheet.set_attribute(&"strength", 10)
-	assert_almost_eq(sheet.get_max_health(), 95.0, 0.001)   # 20 + 50 * 1.5
-	assert_almost_eq(sheet.get_max_mana(), 120.0, 0.001)    # 80 * 1.5
+	assert_almost_eq(sheet.get_max_health(), 95.0, 0.001)  # 20 + 50 * 1.5
+	assert_almost_eq(sheet.get_max_mana(), 120.0, 0.001)  # 80 * 1.5
 	assert_almost_eq(sheet.get_max_stamina(), 60.0, 0.001)  # (10+50+30+30) * 0.5
 	assert_almost_eq(sheet.get_carry_capacity(), 40.0, 0.001)  # 10 * 4.0
 
 
 # --- Criterion 6: all constants come from the balance resource ---
+
 
 func test_behavior_follows_balance_config_values() -> void:
 	var altered: BalanceConfig = (load(BALANCE_PATH) as BalanceConfig).duplicate()

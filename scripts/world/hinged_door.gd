@@ -23,8 +23,12 @@ func toggle() -> void:
 	if _tween != null and _tween.is_valid():
 		_tween.kill()
 	_tween = create_tween()
-	_tween.tween_property(self, "rotation:y", target, swing_seconds) \
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	(
+		_tween
+		. tween_property(self, "rotation:y", target, swing_seconds)
+		. set_trans(Tween.TRANS_SINE)
+		. set_ease(Tween.EASE_OUT)
+	)
 
 
 func _on_interacted(_by: Node) -> void:

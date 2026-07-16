@@ -4,8 +4,13 @@ extends GutTest
 const SKILLS_DIR := "res://data/skills"
 const EXPECTED_SKILL_COUNT := 12
 const VALID_ATTRIBUTES: Array[StringName] = [
-	&"strength", &"endurance", &"agility", &"speed",
-	&"intellect", &"willpower", &"presence",
+	&"strength",
+	&"endurance",
+	&"agility",
+	&"speed",
+	&"intellect",
+	&"willpower",
+	&"presence",
 ]
 const VALID_ARCHETYPES: Array[StringName] = [&"combat", &"magic", &"stealth"]
 
@@ -43,8 +48,11 @@ func test_display_names_are_non_empty() -> void:
 
 func test_governing_attributes_are_valid() -> void:
 	for skill: SkillDef in _skills:
-		assert_has(VALID_ATTRIBUTES, skill.governing_attribute,
-				"%s governing attribute is valid" % skill.id)
+		assert_has(
+			VALID_ATTRIBUTES,
+			skill.governing_attribute,
+			"%s governing attribute is valid" % skill.id
+		)
 
 
 func test_archetypes_are_valid() -> void:

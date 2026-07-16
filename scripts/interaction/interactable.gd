@@ -11,8 +11,10 @@ signal interacted(by: Node)
 
 
 func _ready() -> void:
-	assert(not display_name.is_empty(),
-			"Interactable needs a non-empty display_name; owners with dynamic names set it in _enter_tree().")
+	assert(
+		not display_name.is_empty(),
+		"Interactable needs a non-empty display_name; owners with dynamic names set it in _enter_tree()."
+	)
 
 
 func interact(by: Node) -> void:

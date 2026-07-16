@@ -27,8 +27,9 @@ func test_pickup_adds_exact_item_and_count() -> void:
 	watch_signals(_player.inventory_component)
 	world_item.interactable.interact(_player)
 	assert_eq(_player.inventory_component.inventory.count_of(FLAWED_GEM), 3)
-	assert_signal_emitted_with_parameters(_player.inventory_component,
-			"item_added", [FLAWED_GEM, 3])
+	assert_signal_emitted_with_parameters(
+		_player.inventory_component, "item_added", [FLAWED_GEM, 3]
+	)
 
 
 func test_pickup_frees_the_node() -> void:
@@ -52,8 +53,7 @@ func test_ore_pickup_flips_encumbrance_and_slows_movement() -> void:
 
 func test_prompt_uses_item_display_name() -> void:
 	var world_item := _spawn_world_item(SACK_OF_ORE, 1)
-	assert_eq(world_item.interactable.get_prompt(),
-			"Take %s" % SACK_OF_ORE.display_name)
+	assert_eq(world_item.interactable.get_prompt(), "Take %s" % SACK_OF_ORE.display_name)
 
 
 func test_non_player_interaction_is_ignored() -> void:
@@ -62,5 +62,4 @@ func test_non_player_interaction_is_ignored() -> void:
 	autofree(stranger)
 	world_item.interactable.interact(stranger)
 	await wait_process_frames(1)
-	assert_true(is_instance_valid(world_item),
-			"only a Player can take a WorldItem")
+	assert_true(is_instance_valid(world_item), "only a Player can take a WorldItem")

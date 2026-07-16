@@ -23,7 +23,8 @@ var player: Player = null
 
 func _ready() -> void:
 	character_sheet = StatsComponent.build_default_sheet(
-			StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate())
+		StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate()
+	)
 	inventory = Inventory.new()
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()

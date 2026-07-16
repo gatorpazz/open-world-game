@@ -42,10 +42,10 @@ func test_equipment_changed_on_equip_and_unequip() -> void:
 	_component.add_item(IRON_SWORD)
 	assert_true(_component.equip(IRON_SWORD))
 	assert_signal_emitted_with_parameters(
-			_component, "equipment_changed", [&"main_hand", IRON_SWORD])
+		_component, "equipment_changed", [&"main_hand", IRON_SWORD]
+	)
 	assert_true(_component.unequip(&"main_hand"))
-	assert_signal_emitted_with_parameters(
-			_component, "equipment_changed", [&"main_hand", null])
+	assert_signal_emitted_with_parameters(_component, "equipment_changed", [&"main_hand", null])
 
 
 func test_two_handed_equip_emits_for_both_hand_slots() -> void:
@@ -54,15 +54,14 @@ func test_two_handed_equip_emits_for_both_hand_slots() -> void:
 	_component.equip(WOODEN_SHIELD)  # emission 0: off_hand = shield
 	_component.equip(RUSTY_CLAYMORE)
 	assert_signal_emitted_with_parameters(
-			_component, "equipment_changed", [&"main_hand", RUSTY_CLAYMORE], 1)
-	assert_signal_emitted_with_parameters(
-			_component, "equipment_changed", [&"off_hand", null], 2)
+		_component, "equipment_changed", [&"main_hand", RUSTY_CLAYMORE], 1
+	)
+	assert_signal_emitted_with_parameters(_component, "equipment_changed", [&"off_hand", null], 2)
 
 
 func test_encumbrance_signal_when_exceeding_capacity() -> void:
 	_component.add_item(SACK_OF_ORE, 5)  # 150 > 120
-	assert_signal_emitted_with_parameters(
-			_component, "encumbrance_changed", [150.0, 120.0, true])
+	assert_signal_emitted_with_parameters(_component, "encumbrance_changed", [150.0, 120.0, true])
 	assert_signal_emit_count(_component, "encumbrance_changed", 1)
 	assert_true(_component.is_encumbered())
 
@@ -70,8 +69,7 @@ func test_encumbrance_signal_when_exceeding_capacity() -> void:
 func test_encumbrance_signal_on_relief() -> void:
 	_component.add_item(SACK_OF_ORE, 5)
 	_component.remove_item(SACK_OF_ORE)
-	assert_signal_emitted_with_parameters(
-			_component, "encumbrance_changed", [120.0, 120.0, false])
+	assert_signal_emitted_with_parameters(_component, "encumbrance_changed", [120.0, 120.0, false])
 	assert_signal_emit_count(_component, "encumbrance_changed", 2)
 	assert_false(_component.is_encumbered())
 
@@ -85,8 +83,9 @@ func test_exactly_at_capacity_is_not_encumbered() -> void:
 func test_speed_multiplier_sourced_from_balance_config() -> void:
 	assert_almost_eq(_component.get_speed_multiplier(), 1.0, 0.001)
 	_component.add_item(SACK_OF_ORE, 5)
-	assert_almost_eq(_component.get_speed_multiplier(),
-			_stats.sheet.config.encumbered_speed_multiplier, 0.001)
+	assert_almost_eq(
+		_component.get_speed_multiplier(), _stats.sheet.config.encumbered_speed_multiplier, 0.001
+	)
 	# Prove the value tracks the config rather than a hardcoded constant.
 	_stats.sheet.config = _stats.sheet.config.duplicate()
 	_stats.sheet.config.encumbered_speed_multiplier = 0.5

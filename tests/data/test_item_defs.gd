@@ -67,8 +67,11 @@ func test_weapon_skill_ids_are_combat_skills() -> void:
 		var skill := load(SKILLS_DIR.path_join("%s.tres" % weapon.skill_id)) as SkillDef
 		assert_not_null(skill, "%s skill_id %s exists" % [weapon.id, weapon.skill_id])
 		if skill != null:
-			assert_eq(skill.archetype, &"combat",
-					"%s skill %s is a combat skill" % [weapon.id, weapon.skill_id])
+			assert_eq(
+				skill.archetype,
+				&"combat",
+				"%s skill %s is a combat skill" % [weapon.id, weapon.skill_id]
+			)
 
 
 func test_armor_skill_ids_are_armor_skills_or_empty_for_jewelry() -> void:
@@ -78,10 +81,11 @@ func test_armor_skill_ids_are_armor_skills_or_empty_for_jewelry() -> void:
 			continue
 		if armor.slot in JEWELRY_SLOTS and armor.skill_id == &"":
 			continue
-		assert_has(VALID_ARMOR_SKILLS, armor.skill_id,
-				"%s skill_id is an armor skill" % armor.id)
-		assert_not_null(load(SKILLS_DIR.path_join("%s.tres" % armor.skill_id)) as SkillDef,
-				"%s skill_id %s exists" % [armor.id, armor.skill_id])
+		assert_has(VALID_ARMOR_SKILLS, armor.skill_id, "%s skill_id is an armor skill" % armor.id)
+		assert_not_null(
+			load(SKILLS_DIR.path_join("%s.tres" % armor.skill_id)) as SkillDef,
+			"%s skill_id %s exists" % [armor.id, armor.skill_id]
+		)
 
 
 func test_armor_slots_are_valid() -> void:

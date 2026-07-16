@@ -23,4 +23,4 @@ func _ready() -> void:
 
 func _on_interacted(_by: Node) -> void:
 	talk_requested.emit(npc_name)
-	print("%s: \"Greetings, outlander.\"" % npc_name)
+	print('%s: "Greetings, outlander."' % npc_name)

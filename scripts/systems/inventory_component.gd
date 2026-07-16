@@ -109,7 +109,8 @@ func _refresh_encumbrance() -> void:
 		return
 	_was_encumbered = encumbered
 	encumbrance_changed.emit(
-			inventory.get_total_weight(), stats.sheet.get_carry_capacity(), encumbered)
+		inventory.get_total_weight(), stats.sheet.get_carry_capacity(), encumbered
+	)
 
 
 ## Emits equipment_changed for every slot that differs from the snapshot

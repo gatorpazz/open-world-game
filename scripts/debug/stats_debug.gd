@@ -58,10 +58,20 @@ func _on_stats_changed() -> void:
 func _refresh() -> void:
 	var sheet := stats.sheet
 	var lines: PackedStringArray = []
-	lines.append("[b]Level %d[/b]   major level-ups: %d/%d   unspent points: %d" % [
-		sheet.level, sheet.major_level_ups, sheet.config.level_up_threshold,
-		sheet.unspent_attribute_points,
-	])
+	(
+		lines
+		. append(
+			(
+				"[b]Level %d[/b]   major level-ups: %d/%d   unspent points: %d"
+				% [
+					sheet.level,
+					sheet.major_level_ups,
+					sheet.config.level_up_threshold,
+					sheet.unspent_attribute_points,
+				]
+			)
+		)
+	)
 	lines.append("")
 	lines.append("[b]Attributes[/b]")
 	for attribute: StringName in CharacterSheet.ATTRIBUTE_NAMES:
@@ -76,8 +86,19 @@ func _refresh() -> void:
 	lines.append("[b]Skills[/b]  (* = major)")
 	for skill_id: StringName in sheet.skills:
 		var marker := "*" if sheet.major_skills.has(skill_id) else " "
-		lines.append("%s %-12s %3d   xp %d/%d" % [
-			marker, skill_id, sheet.skills[skill_id],
-			sheet.skill_xp[skill_id], sheet.xp_required(skill_id),
-		])
+		(
+			lines
+			. append(
+				(
+					"%s %-12s %3d   xp %d/%d"
+					% [
+						marker,
+						skill_id,
+						sheet.skills[skill_id],
+						sheet.skill_xp[skill_id],
+						sheet.xp_required(skill_id),
+					]
+				)
+			)
+		)
 	sheet_dump.text = "\n".join(lines)

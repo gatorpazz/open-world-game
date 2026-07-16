@@ -21,6 +21,7 @@ func before_each() -> void:
 
 # --- Stacking (criterion 1) ---
 
+
 func test_fifteen_draughts_split_into_ten_plus_five() -> void:
 	_inventory.add_item(HEALING_DRAUGHT, 15)
 	assert_eq(_inventory.stacks.size(), 2)
@@ -46,9 +47,10 @@ func test_non_stackables_never_merge() -> void:
 
 # --- Weight ---
 
+
 func test_total_weight_sums_weight_times_count() -> void:
 	_inventory.add_item(HEALING_DRAUGHT, 4)  # 4 x 0.5
-	_inventory.add_item(IRON_SWORD)          # 8.0
+	_inventory.add_item(IRON_SWORD)  # 8.0
 	assert_almost_eq(_inventory.get_total_weight(), 10.0, 0.001)
 
 
@@ -59,6 +61,7 @@ func test_total_weight_includes_equipped_items() -> void:
 
 
 # --- Equip rules (criterion 3) ---
+
 
 func test_weapon_equips_to_main_hand_and_leaves_stacks() -> void:
 	_inventory.add_item(IRON_SWORD)
@@ -171,6 +174,7 @@ func test_get_equipped_weapon_null_when_unarmed() -> void:
 
 # --- Removal edges (criterion 5) ---
 
+
 func test_remove_more_than_present_fails_without_mutation() -> void:
 	_inventory.add_item(HEALING_DRAUGHT, 3)
 	assert_false(_inventory.remove_item(HEALING_DRAUGHT, 4))
@@ -208,6 +212,7 @@ func test_gold_never_goes_negative() -> void:
 
 
 # --- Serialization readiness (criterion 7) ---
+
 
 func test_duplicate_true_round_trips_stacks_gold_and_equipment() -> void:
 	_inventory.add_item(HEALING_DRAUGHT, 12)

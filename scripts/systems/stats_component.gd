@@ -17,7 +17,11 @@ const BALANCE_PATH := "res://data/balance/balance_config.tres"
 ## Placeholder loadout until character creation (later spec). Shared with the
 ## Game autoload, which builds the persistent sheet through the same path.
 const DEFAULT_MAJOR_SKILLS: Array[StringName] = [
-	&"blades", &"block", &"heavy_armor", &"evocation", &"sneak",
+	&"blades",
+	&"block",
+	&"heavy_armor",
+	&"evocation",
+	&"sneak",
 ]
 
 @export var sheet: CharacterSheet

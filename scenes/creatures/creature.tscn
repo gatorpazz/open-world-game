@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/creature.gd" id="1_creature"]
+[ext_resource type="Script" path="res://scripts/combat/hurt_box.gd" id="2_hurtbox"]
+
+[sub_resource type="CapsuleShape3D" id="capsule"]
+radius = 0.4
+height = 1.2
+
+[sub_resource type="CapsuleMesh" id="mesh"]
+radius = 0.4
+height = 1.2
+
+[node name="Creature" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_creature")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("capsule")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+mesh = SubResource("mesh")
+
+[node name="HurtBox" type="Area3D" parent="."]
+script = ExtResource("2_hurtbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("capsule")

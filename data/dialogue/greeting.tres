@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_hunald"]
+script = ExtResource("2")
+npc_id = &"hunald"
+text = "Another stranger tramping the marsh, and this one still has both boots. If you mean to stay in [[the_village]], keep clear of the [[bog_hounds]] after dark."
+
+[sub_resource type="Resource" id="resp_seld"]
+script = ExtResource("2")
+npc_id = &"seld"
+text = "Mind the boards, they're half rot. I've no time for chatter — [[the_village]] wants its freight moved and the [[bog_hounds]] have my nerves worn thin. Say — if you happen across a fresh rat pelt, I could use [[a_small_favor|a small favor]]."
+
+[sub_resource type="Resource" id="resp_fallback"]
+script = ExtResource("2")
+text = "Hm. You're new. Most who wander in from the marsh want salve for hound bites. If it's talk you're after, folk in [[the_village]] have plenty."
+
+[resource]
+script = ExtResource("1")
+id = &"greeting"
+display_name = "Greeting"
+responses = Array[ExtResource("2")]([SubResource("resp_hunald"), SubResource("resp_seld"), SubResource("resp_fallback")])

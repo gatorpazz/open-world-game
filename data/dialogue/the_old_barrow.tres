@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_heard"]
+script = ExtResource("2")
+requires_journal = Array[StringName]([&"heard_of_the_barrow"])
+text = "So you've been asking around. Old stones in the deep marsh, older than the village by far. Thralls walk there — dead men that don't know it. Take iron if you must go, and don't go at night."
+
+[sub_resource type="Resource" id="resp_fallback"]
+script = ExtResource("2")
+text = "A mound of old stones out in the deep marsh. Folk don't go there, and I'll not say more. Ask around if you must know."
+journal_entry = &"heard_of_the_barrow"
+
+[resource]
+script = ExtResource("1")
+id = &"the_old_barrow"
+display_name = "the old barrow"
+responses = Array[ExtResource("2")]([SubResource("resp_heard"), SubResource("resp_fallback")])

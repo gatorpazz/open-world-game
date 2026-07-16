@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="3"]
+[ext_resource type="Resource" path="res://data/items/rat_pelt.tres" id="4"]
+[ext_resource type="Resource" path="res://data/items/healing_draught.tres" id="5"]
+
+[sub_resource type="Resource" id="take_pelt"]
+script = ExtResource("3")
+item = ExtResource("4")
+count = 1
+
+[sub_resource type="Resource" id="give_draught"]
+script = ExtResource("3")
+item = ExtResource("5")
+count = 1
+
+[sub_resource type="Resource" id="resp_seld"]
+script = ExtResource("2")
+npc_id = &"seld"
+take_items = Array[ExtResource("3")]([SubResource("take_pelt")])
+text = "That pelt will patch my boots nicely. Here — a draught for your trouble, and I'll not forget the favor."
+journal_entry = &"selds_ferry_favor"
+give_items = Array[ExtResource("3")]([SubResource("give_draught")])
+
+[resource]
+script = ExtResource("1")
+id = &"a_small_favor"
+display_name = "a small favor"
+responses = Array[ExtResource("2")]([SubResource("resp_seld")])

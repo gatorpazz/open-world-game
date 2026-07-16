@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_fallback"]
+script = ExtResource("2")
+text = "Lean, mud-caked brutes with a grudge against anything on two legs. They've been ranging closer of late — travelers on the causeway have been set upon. Keep something sharp to hand."
+journal_entry = &"hounds_in_the_bog"
+
+[resource]
+script = ExtResource("1")
+id = &"bog_hounds"
+display_name = "bog hounds"
+responses = Array[ExtResource("2")]([SubResource("resp_fallback")])

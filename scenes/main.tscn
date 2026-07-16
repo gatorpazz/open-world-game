@@ -1,0 +1,199 @@
+[gd_scene load_steps=21 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.35, 0.55, 0.85, 1)
+sky_horizon_color = Color(0.65, 0.75, 0.85, 1)
+ground_bottom_color = Color(0.2, 0.25, 0.3, 1)
+ground_horizon_color = Color(0.65, 0.75, 0.85, 1)
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("sky")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="mat_ground"]
+albedo_color = Color(0.45, 0.52, 0.42, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_red"]
+albedo_color = Color(0.8, 0.25, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_blue"]
+albedo_color = Color(0.25, 0.4, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_green"]
+albedo_color = Color(0.3, 0.65, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_yellow"]
+albedo_color = Color(0.85, 0.75, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_orange"]
+albedo_color = Color(0.85, 0.5, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_teal"]
+albedo_color = Color(0.2, 0.65, 0.65, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_purple"]
+albedo_color = Color(0.55, 0.35, 0.75, 1)
+
+[sub_resource type="BoxMesh" id="mesh_ground"]
+material = SubResource("mat_ground")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="shape_ground"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxMesh" id="mesh_1m"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="shape_1m"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="BoxMesh" id="mesh_2m"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="shape_2m"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="mesh_4m"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="shape_4m"]
+size = Vector3(4, 4, 4)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, 0.383, -0.321, 0, 0.643, 0.766, 0.5, -0.663, 0.557, 0, 12, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("mesh_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("shape_ground")
+
+[node name="Boxes" type="Node3D" parent="."]
+
+[node name="RedBox" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/RedBox"]
+mesh = SubResource("mesh_2m")
+material_override = SubResource("mat_red")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/RedBox"]
+shape = SubResource("shape_2m")
+
+[node name="RedStep" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -4.5)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/RedStep"]
+mesh = SubResource("mesh_1m")
+material_override = SubResource("mat_red")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/RedStep"]
+shape = SubResource("shape_1m")
+
+[node name="BlueBox" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, -5)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/BlueBox"]
+mesh = SubResource("mesh_2m")
+material_override = SubResource("mat_blue")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/BlueBox"]
+shape = SubResource("shape_2m")
+
+[node name="BlueTop" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.5, -5)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/BlueTop"]
+mesh = SubResource("mesh_1m")
+material_override = SubResource("mat_blue")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/BlueTop"]
+shape = SubResource("shape_1m")
+
+[node name="GreenBox" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 8)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/GreenBox"]
+mesh = SubResource("mesh_2m")
+material_override = SubResource("mat_green")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/GreenBox"]
+shape = SubResource("shape_2m")
+
+[node name="GreenStep" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, 6.5)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/GreenStep"]
+mesh = SubResource("mesh_1m")
+material_override = SubResource("mat_green")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/GreenStep"]
+shape = SubResource("shape_1m")
+
+[node name="YellowLandmark" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2, 12)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/YellowLandmark"]
+mesh = SubResource("mesh_4m")
+material_override = SubResource("mat_yellow")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/YellowLandmark"]
+shape = SubResource("shape_4m")
+
+[node name="PurpleLandmark" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, -15)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/PurpleLandmark"]
+mesh = SubResource("mesh_4m")
+material_override = SubResource("mat_purple")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/PurpleLandmark"]
+shape = SubResource("shape_4m")
+
+[node name="OrangeBox" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 4)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/OrangeBox"]
+mesh = SubResource("mesh_2m")
+material_override = SubResource("mat_orange")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/OrangeBox"]
+shape = SubResource("shape_2m")
+
+[node name="OrangeStep" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, 2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/OrangeStep"]
+mesh = SubResource("mesh_1m")
+material_override = SubResource("mat_orange")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/OrangeStep"]
+shape = SubResource("shape_1m")
+
+[node name="TealBox" type="StaticBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -14)
+
+[node name="Mesh" type="MeshInstance3D" parent="Boxes/TealBox"]
+mesh = SubResource("mesh_2m")
+material_override = SubResource("mat_teal")
+
+[node name="Collision" type="CollisionShape3D" parent="Boxes/TealBox"]
+shape = SubResource("shape_2m")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)

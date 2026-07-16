@@ -1,0 +1,67 @@
+# CLAUDE.md — open-world-game
+
+Solo-developed open-world RPG inspired by Morrowind's *design* (original IP — no Bethesda names, lore, or assets, ever). Godot 4.x, GDScript. One human director + AI agents. Optimize for small, reviewable, tested changes.
+
+## Commands
+
+```bash
+# Run the game (adjust binary name/path to this machine)
+godot .
+
+# Run all tests (GUT addon)
+godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests -ginclude_subdirs -gexit
+
+# Reimport assets after adding files outside the editor
+godot --headless --import
+```
+
+## The Golden Rule: content is data, code is systems
+
+- All game content — items, skills, NPCs, spells, quests, dialogue, loot tables, balance numbers — lives in custom `Resource` files (`.tres`) under `data/`. Scripts define *behavior*, never *content*.
+- No hardcoded game values in scripts. Tunable numbers belong in `data/balance/balance_config.tres`.
+- Every new content type gets: a `class_name` Resource definition in `scripts/resources/`, a folder under `data/`, and a validation test in `tests/data/` that loads every file of that type and checks it (unique ids, required fields, valid references).
+
+## Code conventions
+
+- GDScript with **static typing everywhere**: typed vars, typed function signatures, typed arrays (`Array[SkillDef]`). `-> void` on functions that return nothing.
+- `class_name` on every reusable script. PascalCase for classes/nodes, snake_case for files, folders, functions, and variables. `StringName` for ids.
+- Signals up, calls down: children never reach up the tree; they emit signals. Parents call down.
+- Autoloads are a last resort. Ask before adding one.
+- Prefer composition (small component nodes) over inheritance.
+- Pure logic lives in Resources/RefCounted classes so it is testable without a scene tree; Nodes are thin wrappers that own state and emit signals.
+
+## Folder layout
+
+```
+scenes/        # .tscn files (scenes/debug/ for test scenes)
+scripts/       # systems and components (scripts/resources/ for Resource defs)
+data/          # .tres content files (skills/, items/, balance/, ...)
+assets/        # models, textures, audio (assets/LICENSES.md is mandatory)
+tests/         # GUT tests (tests/data/ for content validators)
+docs/specs/    # numbered feature specs — implement these as written
+addons/        # third-party only; never hand-edit
+```
+
+## Testing
+
+- Every system gets GUT tests written alongside it, not after. Test pure logic directly; use the debug scenes for manual verification.
+- All tests must pass before a commit. Run the test command above and show the output.
+
+## Git
+
+- Small, focused commits. Message format: `area: what changed` (e.g., `stats: add skill xp progression`).
+- Never commit `.godot/`. Never force-push.
+
+## Asset licensing
+
+Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same commit: filename, source URL, license, author. No exceptions — this file is what lets us ship commercially.
+
+## Agent guardrails
+
+- Don't install addons, delete files, or refactor code unrelated to the task without asking first.
+- If a spec in `docs/specs/` conflicts with something in the code, flag it instead of silently choosing.
+- When a task is ambiguous, ask one clarifying question rather than guessing at game design decisions — design authority stays with the human.
+
+## Current focus
+
+Phase 1, spec 001: character stats system (`docs/specs/001-character-stats.md`). The character sheet is the spine of the game — build it clean.

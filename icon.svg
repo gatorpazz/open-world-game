@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="16" fill="#4a7ab5"/>
+  <!-- isometric box -->
+  <polygon points="64,28 100,46 64,64 28,46" fill="#e8d9a0"/>
+  <polygon points="28,46 64,64 64,104 28,86" fill="#b0925a"/>
+  <polygon points="100,46 64,64 64,104 100,86" fill="#8c703f"/>
+</svg>

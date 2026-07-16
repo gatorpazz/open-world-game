@@ -102,9 +102,10 @@ func test_journal_gated_response_variant_on_second_ask() -> void:
 
 
 func test_item_exchange_goes_through_the_component_and_its_signals() -> void:
-	# Seld's a_small_favor: hidden without a pelt, then takes it, gives a
-	# draught, and writes the journal. Routed through InventoryComponent so
-	# item_added / item_removed fire (the ContainerPanel precedent).
+	# Seld's a_small_favor: listed once learned, nudges without a pelt, and
+	# with one takes it, gives a draught, and writes the journal. Routed
+	# through InventoryComponent so item_added / item_removed fire (the
+	# ContainerPanel precedent).
 	var seld: Npc = NPC_SCENE.instantiate()
 	seld.def = SELD
 	add_child_autofree(seld)
@@ -115,10 +116,17 @@ func test_item_exchange_goes_through_the_component_and_its_signals() -> void:
 		for index: int in list.item_count:
 			names.append(list.get_item_text(index))
 		return names
-	assert_false(
+	assert_true(
 		listed.call(panel.topic_list).has("a small favor"),
-		"the favor is hidden until the player holds a rat pelt"
+		"the favor is listed once learned, even without a pelt"
 	)
+	panel.show_topic(&"a_small_favor")
+	assert_string_contains(
+		panel.transcript.get_parsed_text(),
+		"Got that pelt for me yet?",
+		"without a pelt the nudge response answers"
+	)
+	assert_false(_player.journal.has_entry(&"selds_ferry_favor"), "no exchange without a pelt")
 	_player.inventory_component.add_item(RAT_PELT, 1)
 	watch_signals(_player.inventory_component)
 	panel.show_topic(&"a_small_favor")
@@ -132,6 +140,17 @@ func test_item_exchange_goes_through_the_component_and_its_signals() -> void:
 	assert_eq(_player.inventory_component.inventory.count_of(HEALING_DRAUGHT), 1)
 	assert_true(_player.journal.has_entry(&"selds_ferry_favor"))
 	panel.close()
+
+
+func test_unanswerable_keyword_click_says_so() -> void:
+	# Hunald cannot answer seld-only a_small_favor: clicking its keyword
+	# appends a notice instead of a silent no-op.
+	_player.journal.learn_topic(&"a_small_favor")
+	var panel := _open_panel()
+	panel._on_keyword_clicked("a_small_favor")
+	assert_string_contains(
+		panel.transcript.get_parsed_text(), "Hunald has nothing to say about that."
+	)
 
 
 func test_dialogue_pauses_and_close_restores() -> void:

@@ -16,6 +16,8 @@ extends Node3D
 ## - The purple load-door round-trips to the interior and back; the label's
 ##   topics and entries survive the transition.
 
+const RAT_PELT := preload("res://data/items/rat_pelt.tres")
+
 var _player: Player
 
 @onready var debug_label: Label = $DebugHud/DebugLabel
@@ -40,6 +42,7 @@ func _process(_delta: float) -> void:
 					% [journal.known_topics.size(), _join(journal.known_topics)]
 				),
 				"journal entries (%d): %s" % [journal.entries.size(), _join(journal.entries)],
+				"rat pelts held: %d" % _player.inventory_component.inventory.count_of(RAT_PELT),
 			]
 		)
 	)

@@ -52,7 +52,7 @@ Conditions AND together; a response with every condition empty is an uncondition
 
 ### Keyword unlocking — the architectural decision
 
-**Inline markup IS the unlock mechanism.** Syntax: `[[topic_id]]` renders the topic's `display_name`; `[[topic_id|shown text]]` renders custom text (grammar/case). When a response is **displayed**, every marked topic in its text is learned — no click required. Clicking a highlighted keyword is *navigation*: if the current NPC has a response for that topic, the panel jumps to it.
+**Inline markup IS the unlock mechanism.** Syntax: `[[topic_id]]` renders the topic's `display_name`; `[[topic_id|shown text]]` renders custom text (grammar/case). When a response is **displayed**, every marked topic in its text is learned — no click required. Clicking a highlighted keyword is *navigation*: if the current NPC has a response for that topic, the panel jumps to it. *(Amendment, playtest: if the NPC has no response, the panel appends a dim "(X has nothing to say about that.)" notice — a highlighted keyword that silently no-ops reads as broken.)*
 
 Rejected alternatives: auto-scanning response text for topic display names (Morrowind-authentic but magic — invisible to validators, breaks on substrings, localization-hostile) and a bare `unlocks_topics` array (validatable but invisible to the player — keywords you can't see defeat the discovery loop). Markup is simultaneously the visual highlight, the unlock, and a validator target: **every `[[id]]` in every response must resolve to an existing topic file or the data suite fails** — exactly the malformed-content rejection Phase 3 needs.
 
@@ -127,7 +127,7 @@ New input action `journal`, default **J** (free key), added in project settings 
 | `the_village` | shared topic: hunald-specific response + fallback for everyone else; unlocks `[[the_old_barrow]]` |
 | `bog_hounds` | adds journal entry `hounds_in_the_bog` |
 | `the_old_barrow` | first response gated on `requires_journal = [heard_of_the_barrow]` (the richer answer); unconditional fallback second (vague answer, adds `heard_of_the_barrow`) — proves first-match-wins and journal gating across two conversations |
-| `a_small_favor` | seld-only; `take_items` rat_pelt ×1, `give_items` healing_draught ×1, adds `selds_ferry_favor` — proves the implicit take-condition (hidden until you hold a pelt; both items exist in `data/items/`) |
+| `a_small_favor` | seld-only; `take_items` rat_pelt ×1, `give_items` healing_draught ×1, adds `selds_ferry_favor` — proves the implicit take-condition. *(Amendment, playtest: a second seld-only "come back with a pelt" nudge response follows the exchange, so the topic stays listed and answerable once learned — first-match-wins picks the exchange whenever a pelt is held. A learned topic that vanishes from the list read as a bug.)* |
 
 Names are placeholders pending the lore bible; renames are cheap `.tres` edits.
 

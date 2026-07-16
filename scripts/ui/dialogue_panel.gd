@@ -62,6 +62,9 @@ func show_topic(topic_id: StringName) -> void:
 	var inventory := _inventory_component.inventory
 	var response := DialogueEvaluator.pick_response(topics[topic_id], _npc.id, _journal, inventory)
 	if response == null:
+		# A known keyword this NPC can't answer: say so instead of a silent
+		# no-op — a highlighted keyword that does nothing reads as broken.
+		_append_notice("%s has nothing to say about that." % _npc.display_name)
 		return
 	transcript.append_text(DialogueMarkup.to_bbcode(response.text, _display_names) + "\n\n")
 	var report := DialogueEvaluator.apply_effects(response, _journal)

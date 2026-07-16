@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CreatureDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/creature_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="2"]
+[ext_resource type="Resource" path="res://data/items/hound_fang.tres" id="3"]
+
+[sub_resource type="Resource" id="loot_1"]
+script = ExtResource("2")
+item = ExtResource("3")
+count = 2
+
+[resource]
+script = ExtResource("1")
+id = &"bog_hound"
+display_name = "Bog Hound"
+description = "A lean, mud-caked pack hunter with a grudge against travelers."
+max_health = 30.0
+damage = 6
+armor = 0
+attack_reach = 1.5
+attack_cooldown = 1.5
+move_speed = 5.5
+detect_radius = 12.0
+leash_radius = 20.0
+loot = Array[ExtResource("2")]([SubResource("loot_1")])

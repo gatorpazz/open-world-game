@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CreatureDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/creature_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="2"]
+[ext_resource type="Resource" path="res://data/items/rat_pelt.tres" id="3"]
+
+[sub_resource type="Resource" id="loot_1"]
+script = ExtResource("2")
+item = ExtResource("3")
+count = 1
+
+[resource]
+script = ExtResource("1")
+id = &"marsh_rat"
+display_name = "Marsh Rat"
+description = "An overgrown wetland rodent, bold enough to bite first."
+max_health = 12.0
+damage = 3
+armor = 0
+attack_reach = 1.2
+attack_cooldown = 1.2
+move_speed = 4.5
+detect_radius = 8.0
+leash_radius = 14.0
+loot = Array[ExtResource("2")]([SubResource("loot_1")])

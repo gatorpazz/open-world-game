@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BalanceConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/balance_config.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+skill_xp_base = 15
+skill_xp_per_level = 3
+skill_start_minor = 5
+skill_start_major = 25
+skill_max = 100
+level_up_threshold = 10
+attribute_points_per_level = 3
+attribute_start = 30
+attribute_max = 100
+health_base = 20.0
+health_per_endurance = 1.5
+mana_per_intellect = 1.5
+stamina_factor = 0.5
+carry_per_strength = 4.0

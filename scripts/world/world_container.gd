@@ -10,11 +10,17 @@ extends StaticBody3D
 
 const PANEL_SCENE := preload("res://scenes/ui/container_panel.tscn")
 
+@export var display_name := "Container"
 @export var inventory: Inventory
 
 @onready var interactable: Interactable = $Interactable
 
 var _panel: ContainerPanel = null
+
+
+## Before the child Interactable's _ready assert: prompt name per instance.
+func _enter_tree() -> void:
+	($Interactable as Interactable).display_name = display_name
 
 
 func _ready() -> void:

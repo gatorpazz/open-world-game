@@ -15,6 +15,7 @@ func before_each() -> void:
 	_player = PLAYER_SCENE.instantiate()
 	add_child_autofree(_player)
 	_container = CONTAINER_SCENE.instantiate()
+	_container.display_name = "Worn Chest"
 	var stocked := Inventory.new()
 	stocked.add_item(IRON_SWORD, 1)
 	stocked.add_item(MANA_DRAUGHT, 3)
@@ -68,6 +69,10 @@ func test_double_interact_does_not_open_second_panel() -> void:
 	assert_eq(_container._panel, panel, "interacting while open is a no-op")
 	assert_eq(_container.get_children().filter(
 			func(child: Node) -> bool: return child is ContainerPanel).size(), 1)
+
+
+func test_prompt_uses_container_display_name() -> void:
+	assert_eq(_container.interactable.get_prompt(), "Open Worn Chest")
 
 
 func test_take_with_no_selection_is_noop() -> void:

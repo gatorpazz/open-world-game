@@ -8,6 +8,10 @@ extends CharacterBody3D
 @export var jump_velocity := 4.8
 @export var mouse_sensitivity := 0.002
 
+## The player's journal (spec 005) — injected identity like the sheet and
+## inventory; a fresh one is built in _ready only when none was injected.
+var journal: Journal
+
 @onready var head: Node3D = $Head
 @onready var detector: InteractionDetector = $Head/Camera3D/InteractionDetector
 @onready var hud_prompt: HudPrompt = $HUD/HudPrompt
@@ -21,9 +25,12 @@ extends CharacterBody3D
 ## Called by Game after instantiate() and BEFORE add_child(): the child
 ## components consume these in their _ready(), which only builds defaults
 ## when the exported resource is null.
-func setup_identity(sheet: CharacterSheet, player_inventory: Inventory) -> void:
+func setup_identity(
+	sheet: CharacterSheet, player_inventory: Inventory, player_journal: Journal
+) -> void:
 	($Stats as StatsComponent).sheet = sheet
 	($Inventory as InventoryComponent).inventory = player_inventory
+	journal = player_journal
 
 
 ## Flat speed scaled by encumbrance (the 001→002→003 hookup, criterion 7).
@@ -32,6 +39,8 @@ func get_move_speed() -> float:
 
 
 func _ready() -> void:
+	if journal == null:
+		journal = Journal.new()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	detector.target_changed.connect(hud_prompt.set_target)
 	hud_bars.bind(stats)

@@ -12,6 +12,7 @@ var _game: Node
 var _sandbox: Node3D
 var _saved_sheet: CharacterSheet
 var _saved_inventory: Inventory
+var _saved_journal: Journal
 var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
@@ -21,6 +22,7 @@ func before_each() -> void:
 	_game = get_node("/root/Game")
 	_saved_sheet = _game.character_sheet
 	_saved_inventory = _game.inventory
+	_saved_journal = _game.journal
 	_saved_world_parent = _game.world_parent
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
@@ -33,11 +35,13 @@ func before_each() -> void:
 		StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate()
 	)
 	_game.inventory = Inventory.new()
+	_game.journal = Journal.new()
 
 
 func after_each() -> void:
 	_game.character_sheet = _saved_sheet
 	_game.inventory = _saved_inventory
+	_game.journal = _saved_journal
 	_game.world_parent = _saved_world_parent
 	_game.current_world = _saved_current_world
 	_game.player = _saved_player
@@ -57,6 +61,7 @@ func test_autoload_registered_with_identity() -> void:
 	assert_not_null(_game, "Game autoload should exist at /root/Game")
 	assert_not_null(_game.character_sheet)
 	assert_not_null(_game.inventory)
+	assert_not_null(_game.journal)
 
 
 func test_find_spawn_point_matches_name_and_group() -> void:
@@ -94,6 +99,26 @@ func test_spawn_player_places_at_marker_and_injects_identity() -> void:
 		_game.inventory,
 		"spawned player shares the persistent Inventory instance"
 	)
+	assert_same(
+		player.journal, _game.journal, "spawned player shares the persistent Journal instance"
+	)
+
+
+func test_journal_persists_across_scene_change() -> void:
+	# Spec 005 criterion 9, mirroring 003 criterion 5 for the Journal.
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.player.journal.learn_topic(&"the_village")
+	_game.player.journal.add_entry(&"heard_of_the_barrow")
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	assert_same(
+		_game.player.journal,
+		_game.journal,
+		"the player's Journal after a transition is the same resource instance"
+	)
+	assert_true(_game.player.journal.knows_topic(&"the_village"))
+	assert_true(_game.player.journal.has_entry(&"heard_of_the_barrow"))
 
 
 func test_change_scene_swaps_managed_world_and_spawns_player() -> void:

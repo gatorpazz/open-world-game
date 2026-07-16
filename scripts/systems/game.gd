@@ -1,9 +1,10 @@
 extends Node
 ## Autoload "Game" — the only sanctioned global (spec 003). Owns the player's
-## persistent identity (CharacterSheet + Inventory) and performs spawn-point
-## scene changes; the player NODE is instanced fresh per scene and the identity
-## resources are injected into it. Save/load (spec 007) serializes what this
-## node holds. No other global state goes here without a spec saying so.
+## persistent identity (CharacterSheet + Inventory, plus the Journal per
+## spec 005) and performs spawn-point scene changes; the player NODE is
+## instanced fresh per scene and the identity resources are injected into it.
+## Save/load (spec 007) serializes what this node holds. No other global
+## state goes here without a spec saying so.
 ##
 ## Deliberately no class_name: it would collide with the autoload name.
 ## Tests preload this script by path instead.
@@ -13,6 +14,7 @@ const SPAWN_GROUP := &"spawn_points"
 
 var character_sheet: CharacterSheet
 var inventory: Inventory
+var journal: Journal
 
 ## Parent of world scenes. Tests point this at a sandbox node; scene swaps
 ## only ever free worlds parented here, so Game can never free the test runner.
@@ -26,6 +28,7 @@ func _ready() -> void:
 		StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate()
 	)
 	inventory = Inventory.new()
+	journal = Journal.new()
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
 
@@ -51,7 +54,7 @@ func reload_current_scene() -> void:
 ## building defaults in _ready.
 func spawn_player(world: Node, spawn_point: StringName) -> Player:
 	var new_player: Player = PLAYER_SCENE.instantiate()
-	new_player.setup_identity(character_sheet, inventory)
+	new_player.setup_identity(character_sheet, inventory, journal)
 	world.add_child(new_player)
 	var marker := find_spawn_point(world, spawn_point)
 	if marker != null:

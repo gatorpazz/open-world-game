@@ -103,6 +103,14 @@ func get_total_armor_rating() -> int:
 	return inventory.get_total_armor_rating()
 
 
+func get_equipped_shield() -> ArmorDef:
+	return inventory.get_equipped_shield()
+
+
+func get_equipped_armor_skill_ids() -> Array[StringName]:
+	return inventory.get_equipped_armor_skill_ids()
+
+
 func _refresh_encumbrance() -> void:
 	var encumbered := is_encumbered()
 	if encumbered == _was_encumbered:

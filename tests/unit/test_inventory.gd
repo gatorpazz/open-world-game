@@ -247,3 +247,43 @@ func test_duplicate_is_independent_of_the_original() -> void:
 	assert_eq(copy.count_of(copy.stacks[0].item), 5)
 	assert_eq(copy.gold, 100)
 	assert_eq(copy.equipment.size(), 1)
+
+
+# --- Combat equipment helpers (spec 004 amendment) ---
+
+
+func test_equipped_shield_is_null_when_off_hand_empty() -> void:
+	assert_null(_inventory.get_equipped_shield())
+
+
+func test_equipped_shield_returns_off_hand_armor() -> void:
+	_inventory.add_item(WOODEN_SHIELD)
+	_inventory.equip(WOODEN_SHIELD)
+	assert_eq(_inventory.get_equipped_shield(), WOODEN_SHIELD)
+
+
+func test_armor_skill_ids_empty_with_nothing_equipped() -> void:
+	assert_eq(_inventory.get_equipped_armor_skill_ids(), [] as Array[StringName])
+
+
+func test_armor_skill_ids_collects_distinct_skills() -> void:
+	_inventory.add_item(LEATHER_CUIRASS)
+	_inventory.add_item(IRON_HELM)
+	_inventory.add_item(WOODEN_SHIELD)  # heavy_armor, same as helm
+	_inventory.equip(LEATHER_CUIRASS)
+	_inventory.equip(IRON_HELM)
+	_inventory.equip(WOODEN_SHIELD)
+	var ids := _inventory.get_equipped_armor_skill_ids()
+	assert_eq(ids.size(), 2)
+	assert_has(ids, &"light_armor")
+	assert_has(ids, &"heavy_armor")
+
+
+func test_armor_skill_ids_excludes_jewelry_and_weapons() -> void:
+	_inventory.add_item(PLAIN_RING)
+	_inventory.add_item(BONE_AMULET)
+	_inventory.add_item(IRON_SWORD)
+	_inventory.equip(PLAIN_RING)
+	_inventory.equip(BONE_AMULET)
+	_inventory.equip(IRON_SWORD)
+	assert_eq(_inventory.get_equipped_armor_skill_ids(), [] as Array[StringName])

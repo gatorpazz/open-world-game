@@ -123,6 +123,26 @@ func get_equipped_weapon() -> WeaponDef:
 	return equipment.get(&"main_hand") as WeaponDef
 
 
+## The shield in off_hand, or null. Only shields occupy off_hand (spec 002
+## slot rules), so any ArmorDef there is a shield (spec 004 amendment).
+func get_equipped_shield() -> ArmorDef:
+	return equipment.get(&"off_hand") as ArmorDef
+
+
+## Distinct non-empty skill_ids across equipped armor; jewelry's empty
+## skill_id drops out. Combat grants armor xp to each on a hit taken
+## (spec 004 amendment).
+func get_equipped_armor_skill_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for slot: StringName in equipment:
+		var armor := equipment[slot] as ArmorDef
+		if armor == null or armor.skill_id == &"":
+			continue
+		if not ids.has(armor.skill_id):
+			ids.append(armor.skill_id)
+	return ids
+
+
 ## Sums armor_rating over equipped ArmorDefs only.
 func get_total_armor_rating() -> int:
 	var total := 0
@@ -188,18 +208,24 @@ func _resolve_slot(item: ItemDef, requested: StringName) -> StringName:
 	if armor == null:
 		return &""  # consumables and misc never equip
 	if armor.slot == &"ring":
-		if requested == &"ring_1" or requested == &"ring_2":
-			return requested
-		if requested != &"":
-			return &""
-		if not equipment.has(&"ring_1"):
-			return &"ring_1"
-		if not equipment.has(&"ring_2"):
-			return &"ring_2"
-		return &"ring_1"  # both full: swap ring_1
+		return _resolve_ring_slot(requested)
 	if requested == &"" or requested == armor.slot:
 		return armor.slot
 	return &""
+
+
+## Resolves the &"ring" wildcard: honor an explicit ring slot, otherwise
+## first empty one, swapping ring_1 when both are full.
+func _resolve_ring_slot(requested: StringName) -> StringName:
+	if requested == &"ring_1" or requested == &"ring_2":
+		return requested
+	if requested != &"":
+		return &""
+	if not equipment.has(&"ring_1"):
+		return &"ring_1"
+	if not equipment.has(&"ring_2"):
+		return &"ring_2"
+	return &"ring_1"  # both full: swap ring_1
 
 
 func _holds_two_handed_weapon() -> bool:

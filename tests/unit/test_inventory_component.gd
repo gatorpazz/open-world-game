@@ -128,3 +128,10 @@ func test_gold_signal_and_overspend_refusal() -> void:
 	assert_signal_emit_count(_component, "gold_changed", 1)
 	assert_true(_component.spend_gold(40))
 	assert_signal_emitted_with_parameters(_component, "gold_changed", [60])
+
+
+func test_combat_helper_passthroughs() -> void:
+	_component.add_item(WOODEN_SHIELD)
+	_component.equip(WOODEN_SHIELD)
+	assert_eq(_component.get_equipped_shield(), WOODEN_SHIELD)
+	assert_eq(_component.get_equipped_armor_skill_ids(), [&"heavy_armor"] as Array[StringName])

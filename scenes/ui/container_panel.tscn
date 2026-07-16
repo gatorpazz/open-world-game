@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/container_panel.gd" id="1_panel"]
+
+[node name="ContainerPanel" type="CanvasLayer"]
+script = ExtResource("1_panel")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0, 0, 0, 0.45)
+
+[node name="Panel" type="PanelContainer" parent="Dim"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -210.0
+offset_right = 220.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layout" type="VBoxContainer" parent="Dim/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Dim/Panel/Layout"]
+layout_mode = 2
+text = "Container"
+horizontal_alignment = 1
+
+[node name="Items" type="ItemList" parent="Dim/Panel/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Dim/Panel/Layout"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="Take" type="Button" parent="Dim/Panel/Layout/Buttons"]
+layout_mode = 2
+text = "Take"
+
+[node name="TakeAll" type="Button" parent="Dim/Panel/Layout/Buttons"]
+layout_mode = 2
+text = "Take All"
+
+[node name="Close" type="Button" parent="Dim/Panel/Layout/Buttons"]
+layout_mode = 2
+text = "Close"

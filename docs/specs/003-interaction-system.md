@@ -36,7 +36,7 @@ This means scene transitions are trivially safe (nothing to carry but two resour
 | object | behavior |
 |---|---|
 | `WorldItem` (`scenes/world/world_item.tscn`) | exported `item: ItemDef`, `count: int`; verb "take"; on interact: add to player inventory, `queue_free()`. Placeholder mesh; per-item meshes later. |
-| `Container` (`scenes/world/container.tscn`) | owns its own `Inventory` resource (002 reuse), contents authored in-editor; verb "open"; opens `container_panel.tscn`: item list, Take, Take All, Close. Take-only in v1. Contents persist while the scene is loaded. |
+| `WorldContainer` (`scenes/world/world_container.tscn`) | owns its own `Inventory` resource (002 reuse), contents authored in-editor; verb "open"; opens `container_panel.tscn`: item list, Take, Take All, Close. Take-only in v1. Contents persist while the scene is loaded. *(Amendment: named `WorldContainer`, not `Container` — Godot reserves `Container` for its built-in GUI class.)* |
 | `HingedDoor` | verb "use"; toggles open/closed (simple rotation tween); blocks/unblocks nav later. |
 | `TransitionDoor` | exported `target_scene: String`, `spawn_point: StringName`; verb "use"; calls `Game.change_scene(...)`. This is the Morrowind load-door: interiors are separate scenes. |
 | `TalkStub` | verb "talk"; emits `talk_requested(npc_name)` and shows a placeholder line. Spec 005 replaces the guts, not the wiring. |
@@ -48,7 +48,7 @@ This means scene transitions are trivially safe (nothing to carry but two resour
 | `scripts/interaction/interactable.gd` | the component |
 | `scripts/interaction/interaction_detector.gd` | camera raycast, `current_target`, `target_changed(target_or_null)`, `try_interact()` |
 | `scripts/systems/game.gd` (autoload `Game`) | persistent identity + scene changes, as above |
-| `scripts/world/world_item.gd`, `container.gd`, `hinged_door.gd`, `transition_door.gd`, `talk_stub.gd` | concrete objects |
+| `scripts/world/world_item.gd`, `world_container.gd`, `hinged_door.gd`, `transition_door.gd`, `talk_stub.gd` | concrete objects |
 | `scenes/ui/hud_prompt.tscn`, `scenes/ui/container_panel.tscn` | minimal UI |
 | `scenes/debug/interaction_debug.tscn` (+ `interaction_debug_interior.tscn`) | a room with several pickups (include `sack_of_ore` to prove encumbrance), a stocked container, a hinged door, a transition-door pair into a second scene and back, a TalkStub NPC |
 

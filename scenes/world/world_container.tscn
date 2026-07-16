@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_container.gd" id="1_container"]
+[ext_resource type="Script" path="res://scripts/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="BoxMesh" id="mesh_container"]
+size = Vector3(1, 0.7, 0.6)
+
+[sub_resource type="BoxShape3D" id="shape_container"]
+size = Vector3(1, 0.7, 0.6)
+
+[node name="WorldContainer" type="StaticBody3D"]
+script = ExtResource("1_container")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+mesh = SubResource("mesh_container")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+shape = SubResource("shape_container")
+
+[node name="Interactable" type="Node3D" parent="."]
+script = ExtResource("2_interactable")
+display_name = "Container"
+verb = &"open"

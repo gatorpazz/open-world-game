@@ -25,6 +25,7 @@ godot --headless --import
 
 - GDScript with **static typing everywhere**: typed vars, typed function signatures, typed arrays (`Array[SkillDef]`). `-> void` on functions that return nothing.
 - `class_name` on every reusable script. PascalCase for classes/nodes, snake_case for files, folders, functions, and variables. `StringName` for ids.
+- Godot reserves many generic nouns as built-in classes; check for collisions before declaring `class_name`, and prefer domain-prefixed names (`World*`, `Game*`) for generic English words.
 - Signals up, calls down: children never reach up the tree; they emit signals. Parents call down.
 - Autoloads are a last resort. Ask before adding one.
 - Prefer composition (small component nodes) over inheritance.

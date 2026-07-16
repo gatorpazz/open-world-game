@@ -24,3 +24,6 @@ extends Resource
 @export var mana_per_intellect: float = 1.5
 @export var stamina_factor: float = 0.5
 @export var carry_per_strength: float = 4.0
+
+@export_group("Movement")
+@export var encumbered_speed_multiplier: float = 0.25

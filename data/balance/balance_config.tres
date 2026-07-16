@@ -18,3 +18,4 @@ health_per_endurance = 1.5
 mana_per_intellect = 1.5
 stamina_factor = 0.5
 carry_per_strength = 4.0
+encumbered_speed_multiplier = 0.25

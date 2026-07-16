@@ -75,3 +75,37 @@ func test_set_attribute_to_same_value_emits_nothing() -> void:
 	_component.set_attribute(&"strength", 30)
 	assert_signal_not_emitted(_component, "attribute_changed")
 	assert_signal_not_emitted(_component, "stamina_changed")
+
+
+func test_apply_health_delta_heals_and_clamps_at_max() -> void:
+	_component.set_current_health(10.0)
+	_component.apply_health_delta(100.0)
+	assert_almost_eq(_component.current_health, 65.0, 0.001)
+	assert_signal_emitted_with_parameters(_component, "health_changed", [65.0, 65.0])
+
+
+func test_apply_health_delta_damages_and_clamps_at_zero() -> void:
+	_component.apply_health_delta(-30.0)
+	assert_almost_eq(_component.current_health, 35.0, 0.001)
+	_component.apply_health_delta(-9999.0)
+	assert_almost_eq(_component.current_health, 0.0, 0.001)
+	assert_signal_emitted_with_parameters(_component, "health_changed", [0.0, 65.0])
+
+
+func test_apply_delta_of_zero_emits_nothing() -> void:
+	_component.apply_health_delta(0.0)
+	_component.apply_mana_delta(0.0)
+	_component.apply_stamina_delta(0.0)
+	assert_signal_not_emitted(_component, "health_changed")
+	assert_signal_not_emitted(_component, "mana_changed")
+	assert_signal_not_emitted(_component, "stamina_changed")
+
+
+func test_apply_mana_and_stamina_deltas() -> void:
+	_component.apply_mana_delta(-20.0)
+	assert_almost_eq(_component.current_mana, 25.0, 0.001)
+	assert_signal_emitted_with_parameters(_component, "mana_changed", [25.0, 45.0])
+	_component.apply_stamina_delta(-15.0)
+	_component.apply_stamina_delta(10.0)
+	assert_almost_eq(_component.current_stamina, 55.0, 0.001)
+	assert_signal_emitted_with_parameters(_component, "stamina_changed", [55.0, 60.0])

@@ -76,6 +76,26 @@ func set_current_stamina(value: float) -> void:
 	stamina_changed.emit(current_stamina, sheet.get_max_stamina())
 
 
+## Adjusts current health by amount (heal +, damage -), clamped to [0, max].
+## A zero delta is a no-op and emits nothing.
+func apply_health_delta(amount: float) -> void:
+	if is_zero_approx(amount):
+		return
+	set_current_health(current_health + amount)
+
+
+func apply_mana_delta(amount: float) -> void:
+	if is_zero_approx(amount):
+		return
+	set_current_mana(current_mana + amount)
+
+
+func apply_stamina_delta(amount: float) -> void:
+	if is_zero_approx(amount):
+		return
+	set_current_stamina(current_stamina + amount)
+
+
 func _snapshot_maxes() -> Dictionary[StringName, float]:
 	return {
 		&"health": sheet.get_max_health(),

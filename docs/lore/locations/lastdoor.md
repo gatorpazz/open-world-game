@@ -70,6 +70,9 @@ Awning hooks worn bright on every lintel.
 
 ## Open questions
 
-- Warden authority: crown office or parish order? (Factions pass;
-  overlaps the Highroof's same question.)
-- What does a salvage license actually promise — and to whom?
+- ~~Warden authority~~ — ruled (factions pass): neither — the
+  [[wardens]] answer to doctrine itself, a self-governing
+  precedent-order.
+- What does a salvage license actually promise — and to whom? (The
+  [[licensed_crews]] and [[wardens]] entries now frame it; the economy
+  pass prices it.)

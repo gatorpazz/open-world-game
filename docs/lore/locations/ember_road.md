@@ -61,4 +61,6 @@ poor walk this road unshod on purpose.
 
 ## Open questions
 
-- Which parish holds the stall-patronage, and what does it buy with it?
+- Stall-patronage is chapter-granted (factions pass, [[vent_parishes]]);
+  *which* chapter holds this road's grants, and what it buys with them,
+  stays open for quest use.

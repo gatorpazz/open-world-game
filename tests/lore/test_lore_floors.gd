@@ -104,6 +104,14 @@ func test_m2_cultures_floors() -> void:
 	assert_gt(complete, 1, "at least 2 cultures with naming/speech/material sections")
 
 
+func test_m2_factions_floors() -> void:
+	var factions := 0
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.type == &"faction" and entry.status != &"deprecated":
+			factions += 1
+	assert_gt(factions, 2, "at least 3 faction entries — the future guilds")
+
+
 func test_m1_active_region_exists_and_is_reachable() -> void:
 	var regions := 0
 	var reachable := _vault.reachable_from(&"bible")

@@ -67,5 +67,8 @@ mark nobody will explain to the stranger it refers to.
 ## Open questions
 
 - Everything about the how and why is reserved (spoiler: high). The
-  island-side question the passes must answer instead: who moves
-  first on the stranger, and with what offer? (Factions pass.)
+  island-side question is now answered in the faction entries — the
+  [[wardens]] want a retest, the [[reciters]] a reading, the
+  [[licensed_crews]] a partner, [[the_crown]] a filing, the
+  [[vent_parishes]] watch, the [[chitin_wrights]] abstain. *Sequencing*
+  the courtship is spec 006/010's work.

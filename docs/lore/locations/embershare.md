@@ -71,5 +71,6 @@ with the years of their casting: none from the years of the Coming.
 - The high tier's emptying is now dated — [[cold_tier_hush]],
   the_roofed_years — but its cause, sweeper, and the parish's silence
   stay reserved as a quest-sized secret.
-- Are vent-parishes one order or many? (Factions pass; bible says the
-  pantheon's orders are aspected.)
+- ~~One order or many~~ — ruled (factions pass): one umbrella, the
+  [[vent_parishes]], with a chapter per vent; the pantheon's aspected
+  orders beneath it are the magic pass's ground.

@@ -66,6 +66,7 @@ use on trivial things.
 
 ## Open questions
 
-- Which telling of the why is true — fear of tyrants or fear of the
-  work? (Both recited; the director may rule or keep the dispute.)
+- ~~Which telling is true~~ — ruled (factions pass): neither and both;
+  the dispute itself is canon, recited on both sides, and the compact
+  stays silent. See [[the_crown]].
 - What does the struck clause say? (Reserve until a quest needs it.)

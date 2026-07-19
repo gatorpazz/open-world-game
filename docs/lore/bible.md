@@ -95,8 +95,10 @@ orders are tied to aspects of magic; the reciters' office descends from
 the Daylight priesthood, serving the grief-rite as penance
 ([[the_still_year]]); parishes tend the lava vents; guilds run the
 roofed roads, the salvage trade, and the fisheries; a deliberately weak
-crown arbitrates ([[crown_compact]]). Factions and the wildlife of the
-dark are drafted in their M2 passes.
+crown arbitrates ([[crown_compact]]). The powers (factions pass): the
+three joinable guilds — [[wardens]], [[reciters]], [[licensed_crews]] —
+and the supporting powers [[vent_parishes]], [[chitin_wrights]], and
+[[the_crown]]. The wildlife of the dark is drafted in its M2 pass.
 
 ## Content grammar
 

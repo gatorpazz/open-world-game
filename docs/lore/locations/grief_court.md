@@ -67,8 +67,10 @@ the wall, decades ago, never righted, never explained.
 
 ## Open questions
 
-- Who authorizes removals, and who checks the authorizer? (Factions
-  pass.)
+- The rite's keepers are now the [[reciters]] (factions pass) — and
+  removal law is theirs, which sharpens the scandal: who inside the
+  order authorized it, and under what reading, stays reserved as the
+  quest spine.
 - The rite's origin — first *recitation* answered by
   [[first_kept_names]] (reading the wall aloud so the names would not
   go silent); first formal court and first titled reciter remain open

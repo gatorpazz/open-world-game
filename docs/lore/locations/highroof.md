@@ -76,4 +76,6 @@ crown's tower, that is not wrapped and never rings.
   incumbents, and the true why remain the factions pass's work.
 - How many wards, and which do specs 006/010 actually build? (Slice
   scoping, spec 010.)
-- What do the roof-wardens answer to — crown, parish, or guild?
+- ~~Warden allegiance~~ — ruled (factions pass): the [[wardens]] are a
+  self-governing precedent-order answering to doctrine itself; the
+  compact recognized them and nothing commands them.

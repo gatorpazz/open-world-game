@@ -75,4 +75,4 @@ Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same com
 
 ## Current focus
 
-Phase 1, spec 011: lore bible & worldbuilding system — spec written (jumps the queue ahead of 006 so quest/slice content draws on canon). Next: implement M0 (vault, parser, validators, skills), then the M1 foundation director session (blank-slate world invention). Spec 006 (quests) follows, written from canon packets. Specs 001–005 are complete.
+Phase 1, spec 011: lore bible & worldbuilding system — M0 (vault, parser, validators, skills) is implemented. Next: the M1 foundation director session (blank-slate world invention — run `/worldbuilding-pass foundation`), then the six M2 regional-skeleton passes. Spec 006 (quests) follows, written from canon packets. Specs 001–005 are complete.

@@ -40,6 +40,8 @@ data/          # .tres content files (skills/, items/, balance/, ...)
 assets/        # models, textures, audio (assets/LICENSES.md is mandatory)
 tests/         # GUT tests (tests/data/ for content validators)
 docs/specs/    # numbered feature specs — implement these as written
+docs/lore/     # canon lore vault — validated markdown entries (spec 011)
+docs/research/ # commissioned research docs; not shipped
 addons/        # third-party only; never hand-edit
 ```
 
@@ -57,6 +59,14 @@ addons/        # third-party only; never hand-edit
 
 Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same commit: filename, source URL, license, author. No exceptions — this file is what lets us ship commercially.
 
+## Lore & canon
+
+- World canon lives in `docs/lore/` (spec 011): one markdown entry per fact-bearing thing, strict frontmatter, `[[id]]` wikilinks, validated by `tests/lore/` in the normal test run.
+- Statuses: draft → reviewed → canon (→ deprecated). **Only the director ratifies `status: canon`** — agents never promote.
+- No silent invention: a fact the vault doesn't hold becomes a stub entry or an Open questions line, never improvised prose.
+- Run the `canon-packet` skill before writing any player-facing text (dialogue, journal, quests) and write only from cited facts.
+- Factions in `docs/lore/factions/` are prose canon only; faction game-data types stay fenced to a Phase 2 spec.
+
 ## Agent guardrails
 
 - Don't install addons, delete files, or refactor code unrelated to the task without asking first.
@@ -65,4 +75,4 @@ Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same com
 
 ## Current focus
 
-Phase 1, spec 006: quest system (quest resources, stages, journal integration) — spec not yet written; writing it is the next task. Specs 001–005 are complete; 006 builds quest stages on 005's journal (entries are `JournalEntryDef` ids).
+Phase 1, spec 011: lore bible & worldbuilding system — spec written (jumps the queue ahead of 006 so quest/slice content draws on canon). Next: implement M0 (vault, parser, validators, skills), then the M1 foundation director session (blank-slate world invention). Spec 006 (quests) follows, written from canon packets. Specs 001–005 are complete.

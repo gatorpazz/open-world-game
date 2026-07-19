@@ -28,6 +28,9 @@ A solo-developed, AI-assisted open-world RPG in the spirit of Morrowind's design
 | 2026-07 | **Journal = one resource (entries + known topics) on `Game`**, injected at spawn like sheet/inventory — the second sanctioned `Game` field (spec 005) | Cross-scene dialogue/journal state needs one owner; 007 still just "serializes what Game holds" |
 | 2026-07 | **NPCs are dialogue anchors** — `NPCDef` is id + name + flavor only; no faction, stats, or schedules without a new spec (spec 005) | Mirror of the creatures ruling; keeps NPC content cheap and the 001 spine uncontested |
 | 2026-07 | **Dialogue and journal pause the game**; container looting stays real-time (spec 005) | Text-rich dialogue is a pillar — reading under attack is hostile; looting stays tense |
+| 2026-07 | **Lore canon is markdown-in-git** — `docs/lore/` vault: strict YAML-subset frontmatter, `[[id]]` wikilinks reusing the 005 markup, filename stem = id, GUT-validated; YAML addons and external canon stores (MCP knowledge graphs, wiki apps) rejected (spec 011) | Canon must live where diffs, review, and validators reach it; agents author with native file tools |
+| 2026-07 | **Graduated lore validation; reachability replaces count pins** — drafts parse-and-link only, reviewed/canon require the full spine; every non-deprecated entry must be reachable from `bible.md`; no EXPECTED_COUNT for the vault (spec 011) | Strictness where it protects canon, none where it taxes bulk drafting; orphan lore fails the suite like unreachable topics |
+| 2026-07 | **The faction fence extends to lore** — `docs/lore/factions/` entries describe factions as prose canon; no faction game-data type until the Phase 2 spec (spec 011) | The bible needs factions for hooks and cultures now; game systems don't — the 005 NPC ruling stays uncontested |
 
 *(Append new rows as decisions land. A decision isn't made until it's in this table.)*
 
@@ -59,6 +62,7 @@ Spec queue (one spec = one reviewable unit of work):
 | 008 | Magic v1 (evocation / mending / warding) | queued |
 | 009 | Character creation flow (attributes, 5 major skills) | queued |
 | 010 | Slice content: first village, ~10 NPCs, 30–60 min questline | queued |
+| 011 | Lore bible & worldbuilding system (canon vault + validators + skills; foundation & regional-skeleton passes) | spec written — **next up**, jumps the queue so 006/010 draw on canon |
 
 ### Phase 2 — Systems Depth (target: 3–4 months)
 Factions with ranks, reputation, and advancement requirements · crime & bounty · barter economy with regional prices · NPC daily schedules · alchemy · enchanting-analog · fast-travel network (transport hubs, not map-anywhere) · persuasion mechanics · creature variety pass.
@@ -82,7 +86,7 @@ Steam page live early in Phase 3 for wishlists ($100 fee) · demo in a Steam Nex
 | asset type | pipeline | quality gate |
 |---|---|---|
 | Code | Claude Code per spec, small commits | GUT tests + human review of every commit |
-| Quests/dialogue/lore | LLM generates against schemas, guided by `docs/lore-bible.md` + style guide | Schema validators + human edits every line |
+| Quests/dialogue/lore | LLM generates against schemas, guided by the `docs/lore/` canon vault (spec 011: canon-packet retrieval + `bible.md` content grammar) | Schema validators (data + lore suites) + human edits every line |
 | 3D props/kits | CC0 libraries (Kenney, Quaternius, PolyHaven) + text-to-3D (Meshy/Tripo) for gaps; Blender cleanup | Art bible; tri-count and texture-size budgets |
 | Characters | Base-mesh tool + Mixamo/Cascadeur animation | Shared rig; silhouette check |
 | Textures/2D | Local Stable Diffusion; fixed palette and resolution | Art bible |
@@ -112,4 +116,4 @@ The scope budget in §3 fully present · a new player can finish the main quest 
 
 ## 9. Current Status
 
-**As of July 16, 2026:** Phase 1 underway — specs 001 (character stats), 002 (items & inventory), 003 (interaction system), 004 (combat v1), and 005 (topic-based dialogue with keyword unlocking + journal: NPCDef/DialogueTopicDef/JournalEntryDef content types, validated `[[keyword]]` markup, Journal on `Game`, dialogue + journal panels, TalkStub superseded by the def-driven `Npc`) are implemented with debug scenes and a passing test suite (240 tests / 27 scripts); 005 is playtested with a first polish pass (learned topics stay answerable, unanswerable keyword clicks say so). Next up: write spec 006 (quest system: quest resources, stages, journal integration). Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.
+**As of July 19, 2026:** Phase 1 underway — specs 001 (character stats), 002 (items & inventory), 003 (interaction system), 004 (combat v1), and 005 (topic-based dialogue with keyword unlocking + journal) are implemented with debug scenes and a passing test suite (240 tests / 27 scripts); 005 is playtested with a first polish pass. **Spec 011 (lore bible & worldbuilding system) is written and jumps the queue ahead of 006** so quest and slice content draw on real canon: a validated markdown canon vault at `docs/lore/`, lore skills (`new-lore-entry`, `canon-packet`, `lore-audit`, `worldbuilding-pass`) + a canon-keeper reviewer, and the blank-slate foundation + regional-skeleton passes run as director sessions. Next: implement 011 M0 (parser, vault, validators, skills), then the M1 foundation session. Spec 006 (quests) follows, written from canon packets. Repo local at `~/personal_projects/open-world-game`; GitHub remote pending — link to this Claude project when live.

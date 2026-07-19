@@ -61,5 +61,7 @@ generosity as insurance. Wind-worn rope where the roof meets the gap.
 
 ## Open questions
 
-- Did the Scar open naturally under the road — or was the road the
-  point? (Timeline pass decides; keep both readings alive until then.)
+- ~~Natural or aimed~~ — ruled (timeline pass): officially natural per
+  [[scar_night]]'s inquiry; the truth is reserved with the deep's
+  secrets. The road was not officially the point, and unofficially the
+  question is not asked.

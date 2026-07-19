@@ -72,7 +72,9 @@ took the time.
 
 ## Open questions
 
-- What opened the Scar, and in whose era? (Timeline pass; the Last
-  Road's entry keeps both natural and unnatural readings alive.)
+- ~~What opened the Scar~~ — ruled (timeline pass): the official record
+  is *natural, by common assent* ([[scar_night]], the_roofed_years);
+  what actually opened the ground is reserved, spoiler: high, pointing
+  down.
 - The older masonry: who built below before the Coming? (Ties to the
   locked Deep Roads region; spoiler: high beyond this observable.)

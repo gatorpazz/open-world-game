@@ -77,6 +77,18 @@ func test_m2_geography_floors() -> void:
 	assert_gt(counts["danger_zone"], 1, "at least 2 danger zones")
 
 
+func test_m2_timeline_floors() -> void:
+	var events := 0
+	var eras: Dictionary[String, bool] = {}
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.type != &"timeline_event" or entry.status == &"deprecated":
+			continue
+		events += 1
+		eras[entry.frontmatter.get_scalar("era")] = true
+	assert_gt(events, 11, "at least 12 timeline events")
+	assert_gt(eras.size(), 1, "events span at least 2 eras")
+
+
 func test_m1_active_region_exists_and_is_reachable() -> void:
 	var regions := 0
 	var reachable := _vault.reachable_from(&"bible")

@@ -56,11 +56,22 @@ is one continuous temple.
 
 ## Historical spine
 
-One fact is fixed: generations ago the hives came, and the island went
-under roof — the Coming (name provisional). Nothing else about the past is
-canon yet. The M2 timeline pass fixes the eras (this section is
-`VALID_ERAS`' source of truth) and hangs 12–20 events on them, each with
-present-day consequences.
+Three eras (the source of truth for `VALID_ERAS`), grief-shaped: the world
+lost, the world wounded, the world enduring. Clerks date in Roll-years
+since the Coming's first winter (format: "Roll 214" — the current year
+number is deliberately unfixed); folk date by generations and events
+("two lives after the Still Year," "the year the beast came ashore"). The deep masonry below [[the_scar]] belongs to no era — it is
+older than the spine and stays undated on purpose.
+
+- **the_daylight** — the surface world, half-remembered:
+  [[terrace_centuries]] · [[first_bells]] · [[the_still_year]].
+- **the_coming** — the catastrophe generation: [[the_coming]] ·
+  [[the_going_under]] · [[first_kept_names]] ·
+  [[sealing_of_the_reaches]] · [[warden_doctrine]].
+- **the_roofed_years** — consolidation to now: [[crown_compact]] ·
+  [[scar_night]] · [[shell_year]] · [[the_beaching]] ·
+  [[cold_tier_hush]] · [[the_untaken_arrival]] — history's last line is
+  the player.
 
 ## Regional map index
 
@@ -160,8 +171,12 @@ consequences (flag for a future spec), levitation as a gated ability
 - The ants' logic: how much is ever revealed, and where does the reveal
   live? (All of it `spoiler: high`.)
 - Lava's status: infrastructure, divinity, or both? (Magic pass.)
-- The weak central figure: office, name, and why it stays weak. (Factions
-  pass.)
+- The crown: founding shape fixed by [[crown_compact]] (arbiter, small by
+  design); its name, incumbents, and which telling of the why is true
+  stay with the factions pass.
+- The sea was once crossable (Daylight sea-trade brought the bell-bronze,
+  [[first_bells]]); its closing is an unwritten event. When, and is it
+  the Coming's sea-half?
 - The player's arrival: how does anyone survive the leviathan sea, and
   what does the answer imply? (Before spec 010 writes the opening.)
 - High-sky season: real cycle or folk belief? (Geography/timeline passes.)

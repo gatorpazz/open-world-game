@@ -65,6 +65,8 @@ it.
 
 ## Open questions
 
-- Where did enough felled scouts for a bridge come from? (Timeline
-  pass: implies a battle, a bargain, or a harvest nobody discusses.)
+- Where the scouts came from is now dated — [[shell_year]],
+  the_roofed_years — and still not answered: battle, bargain, or
+  harvest stays reserved (spoiler: high), and the wrights' oath is
+  *the shell is not asked*.
 - Why does the chitin never wear? (Spoiler: high candidate.)

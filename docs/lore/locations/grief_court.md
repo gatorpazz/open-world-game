@@ -69,8 +69,10 @@ the wall, decades ago, never righted, never explained.
 
 - Who authorizes removals, and who checks the authorizer? (Factions
   pass.)
-- The rite's origin — first grief-court, first reciter? (Timeline pass;
-  candidate for the Coming's immediate aftermath.)
-- The nine-day circuit and the nine-day beaching at [[leviathan_ribs]]:
-  coincidence, shared liturgical number, or connection? (Director
-  ruling; two derived nines collided and the collision is on record.)
+- The rite's origin — first *recitation* answered by
+  [[first_kept_names]] (reading the wall aloud so the names would not
+  go silent); first formal court and first titled reciter remain open
+  (factions/cultures passes).
+- ~~The two nines~~ — ruled (timeline pass): nine is liturgical. The
+  circuit took its length from [[the_beaching]]'s nine days; nines
+  propagate through mourning-rite island-wide.

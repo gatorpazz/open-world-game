@@ -27,9 +27,9 @@ const VALID_SURFACES: Array[String] = [
 ]
 const VALID_KINDS: Array[String] = ["settlement", "landmark", "dungeon", "route", "danger_zone"]
 
-## Amended by the M2 timeline pass when bible.md's Historical spine fixes
-## the eras (spec 011) — empty means "no timeline entries may exist yet".
-const VALID_ERAS: Array[String] = []
+## Fixed by the M2 timeline pass from bible.md's Historical spine (spec
+## 011): grief-shaped — the world lost, wounded, enduring.
+const VALID_ERAS: Array[String] = ["the_daylight", "the_coming", "the_roofed_years"]
 
 const GAME_ID_FOLDERS: Dictionary[String, String] = {
 	"npc": "npcs",

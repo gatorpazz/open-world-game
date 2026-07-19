@@ -68,7 +68,8 @@ with the years of their casting: none from the years of the Coming.
 
 ## Open questions
 
-- Why is the high tier abandoned and who keeps it swept? (Assign in
-  timeline or factions pass; candidate for a quiet local tragedy.)
+- The high tier's emptying is now dated — [[cold_tier_hush]],
+  the_roofed_years — but its cause, sweeper, and the parish's silence
+  stay reserved as a quest-sized secret.
 - Are vent-parishes one order or many? (Factions pass; bible says the
   pantheon's orders are aspected.)

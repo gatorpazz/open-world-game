@@ -6,3 +6,6 @@
 
 # Machine-local Claude Code permissions
 .claude/settings.local.json
+
+# Obsidian workspace state (optional human viewer for docs/lore/)
+.obsidian/

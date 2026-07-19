@@ -61,6 +61,8 @@ dies — someone always does, no one is assigned to.
 
 ## Open questions
 
-- Did the priests of the Daylight read the stillness? (Their order's
-  fate is cultures/factions material; their silence, if it was one,
-  is spoiler: high.)
+- ~~The order's fate~~ — ruled (cultures pass): the Daylight priesthood
+  survived as the reciters, taking the grief-rite as penance; the High
+  Register is their inheritance. Whether they read the stillness and
+  said nothing remains spoiler: high — the island's holiest office
+  carries its oldest open wound.

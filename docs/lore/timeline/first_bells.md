@@ -64,8 +64,9 @@ the bronze's family album.
 
 ## Open questions
 
-- Do any tellings preserve what the first bells were named for?
-  (Cultures pass; candidates for the unreadable columns' content.)
+- The first bells' names are High Register (cultures pass) — the
+  reciters can pronounce them; what they *mean* is reserved with the
+  rest of the old tongue's vocabulary.
 - The bronze came by sea-trade — so the sea was once crossable and an
   outside world existed to trade with. When did the sea close, and is
   its closing the Coming's sea-half? (An unwritten fifteenth event;

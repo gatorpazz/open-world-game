@@ -24,10 +24,11 @@ question *what does the sea flee* permanently under the port's floor.
 
 In the grandparents' generation, a leviathan drove itself against the
 cliff at [[tidegate]]'s cave mouth and died over nine days. The
-tellings agree it did not fight the shore; they fight over everything
-else — whether the port fed it, sang to it, or hid; whether it sang
-back. On the ninth day it was still, and the port lived for a
-generation on what it left. The reciters of that time took the nine:
+tellings agree it did not fight the shore, and that the port sang to
+it — the root of all sea-singing since — though minority families
+still tell it as feeding, or as hiding; every telling fights over
+whether it sang back. On the ninth day it was still, and the port
+lived for a generation on what it left. The reciters of that time took the nine:
 the [[grief_court]]'s circuit has run nine days since, and nine has
 been the mourning-number of the whole island — nine soft peals, nine
 stones, ninth-day rites — in honor of the largest thing that ever
@@ -68,7 +69,8 @@ carved with a tenderness the later trade lost.
 
 ## Open questions
 
-- Fed, sung to, or hidden from — and did it sing back? (Cultures pass
-  owns Tidegate's character; the director may rule or keep the
-  dispute.)
+- ~~Fed, sung to, or hidden from~~ — ruled (cultures pass): **they
+  sang** — the nine days are the root of [[lastlight]] sea-singing;
+  fed and hid persist as minority family tellings. *Whether it sang
+  back* stays the open wound, and no ruling touches it.
 - What was it fleeing? (Spoiler: high, with the truce-lines.)

@@ -90,6 +90,8 @@ inside.
   terms and the deeper truth stays spoiler: high.)
 - Is prophecy material wanted anywhere? (Not banned in the foundation
   session — permitted, not required.)
-- Provisional names pending the cultures pass: all of them — the
-  Undervault, Vaultfolk, the Coming, and every geography name in the
-  Relationships list above.
+- ~~Provisional names~~ — ruled (cultures pass): the translation
+  convention makes the existing compounds real [[underfirst]] folk
+  coinage, and "Vaultfolk" is confirmed as the collective word. Only
+  *personal* placeholder names in game data (the 005 NPCs) still await
+  re-coining under the new traditions at the M3 retrofit.

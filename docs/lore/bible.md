@@ -86,12 +86,17 @@ older than the spine and stays undated on purpose.
 
 ## Peoples & powers
 
-The people call themselves Vaultfolk (working demonym, cultures pass may
-rename). The pantheon is real and its orders are tied to aspects of magic;
-parishes tend the lava vents; guilds run the roofed roads, the salvage
-trade, and the fisheries; a deliberately weak central figure sits at the
-citadel-mountain. Cultures, factions, and the wildlife of the dark are
-drafted in their M2 passes — this section grows links as they land.
+Vaultfolk is the collective word for all islanders (confirmed, cultures
+pass); beneath it run two descents cut by the Coming itself: the
+[[underfirst]], first under the roof, people of the count and the
+hearth-name; and the [[lastlight]], who held the surface longest,
+people of the word-hoard and the song. The pantheon is real and its
+orders are tied to aspects of magic; the reciters' office descends from
+the Daylight priesthood, serving the grief-rite as penance
+([[the_still_year]]); parishes tend the lava vents; guilds run the
+roofed roads, the salvage trade, and the fisheries; a deliberately weak
+crown arbitrates ([[crown_compact]]). Factions and the wildlife of the
+dark are drafted in their M2 passes.
 
 ## Content grammar
 
@@ -99,10 +104,16 @@ drafted in their M2 passes — this section grows links as they land.
   unhurried. People under-name the danger: the hives are "the Above," the
   Taken are "kept," the surface is "the open." Saying the plain words
   reads as transgressive or intimate.
-- **Naming meta-rules:** all proper nouns are provisional until the
-  cultures pass writes phoneme and place-name rules; prefer descriptive,
-  translatable names (the Undervault, the Coming) that a future language
-  can re-coin. No real-language copies; no apostrophe gibberish.
+- **Naming rules (the translation convention, ruled in the cultures
+  pass):** folk speech renders in transparent English — [[underfirst]]
+  names say what a thing *is* (closed compounds: Highroof, Embershare;
+  roll-names + hearth-names), [[lastlight]] names say what it *was like
+  in the light* (open bright syllables; the daylight word-hoard) — and
+  **only the High Register is untranslated**: the old formal tongue of
+  the unreadable columns, the named bells, seal-texts, and the
+  reciters' rite forms. Its vocabulary is reserved; its flavor is
+  formulaic pairs, never explained in dialogue. No real-language
+  copies; no apostrophe gibberish.
 - **Material logic:** if an object, garment, or building can't say *rope,
   stone, fungus, chitin, or lava-glass*, it must justify itself.
 - **Forbidden tropes:** the Core promise bans, applied at review; hooks
@@ -180,6 +191,7 @@ consequences (flag for a future spec), levitation as a gated ability
 - The player's arrival: how does anyone survive the leviathan sea, and
   what does the answer imply? (Before spec 010 writes the opening.)
 - High-sky season: real cycle or folk belief? (Geography/timeline passes.)
-- Institution words — "parish," "liturgy," "processional," "the crown,"
-  "warden" — are English register placeholders; the cultures pass decides
-  the in-world terms before they fossilize.
+- ~~Institution words~~ — ruled (cultures pass): the translation
+  convention keeps folk and civic words transparent (parish, warden,
+  crown, reciter stand as translations); only the High Register is
+  untranslated. The placeholders are now canon vocabulary.

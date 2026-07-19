@@ -89,6 +89,21 @@ func test_m2_timeline_floors() -> void:
 	assert_gt(eras.size(), 1, "events span at least 2 eras")
 
 
+func test_m2_cultures_floors() -> void:
+	var complete := 0
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.type != &"culture" or entry.status == &"deprecated":
+			continue
+		var sections: Array = entry.sections.keys()
+		if (
+			sections.has("Naming conventions")
+			and sections.has("Speech & register")
+			and sections.has("Material culture")
+		):
+			complete += 1
+	assert_gt(complete, 1, "at least 2 cultures with naming/speech/material sections")
+
+
 func test_m1_active_region_exists_and_is_reachable() -> void:
 	var regions := 0
 	var reachable := _vault.reachable_from(&"bible")

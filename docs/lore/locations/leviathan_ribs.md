@@ -24,11 +24,13 @@ sea's counterweight to the sky's hives.
 The beast came ashore in living memory's grandparents' time: drove
 itself against the cliff at [[tidegate]]'s cave mouth and died over
 nine days, during which the port fed it, sang to it, or hid from it,
-depending on whose grandmother tells it. Its ribs were left where they
-settled and the port grew through them — crane-mounts bolted to bone,
-lamp-hooks in the vertebrae, the tally-carvings of every season since.
-Fishers touch the third rib going out and the first coming home. What
-it fled is not discussed with strangers.
+depending on whose grandmother tells it. The port sang to it for the nine
+days — the fed and hid tellings survive in minority families — and its
+ribs were left where they settled as the port grew through them:
+crane-mounts bolted to bone, lamp-hooks in the vertebrae, the
+tally-carvings of every season since. Fishers touch the third rib
+going out and the first coming home. What it fled is not discussed
+with strangers.
 
 ## Visible traits
 
@@ -73,5 +75,7 @@ low-tide mark, facing out to sea.
 - What was it fleeing, and is that thing the reason for the
   truce-lines? (Spoiler: high; the sea's logic gets the same dignity
   as the sky's.)
-- Was the nine-days feeding mercy, worship, or bargain? (Cultures
-  pass; the answer defines Tidegate's character.)
+- ~~The nine days' practice~~ — ruled (cultures pass): the port
+  **sang** ([[the_beaching]], [[lastlight]]); feeding and hiding
+  survive as minority tellings. Whether the beast sang back is
+  reserved — the tellings' one loud detail stays disputed on purpose.

@@ -59,6 +59,24 @@ func test_m1_aesthetic_brief_floors() -> void:
 	assert_true(brief.contains("MDA"), "the MDA lens note lives in the Aesthetic brief")
 
 
+func test_m2_geography_floors() -> void:
+	var counts: Dictionary[String, int] = {
+		"settlement": 0, "landmark": 0, "dungeon": 0, "route": 0, "danger_zone": 0
+	}
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.type != &"location" or entry.status == &"deprecated":
+			continue
+		if entry.frontmatter.get_scalar("region") != "undervault":
+			continue
+		var kind := entry.frontmatter.get_scalar("kind")
+		if counts.has(kind):
+			counts[kind] += 1
+	assert_gt(counts["settlement"], 2, "at least 3 settlements in the active region")
+	assert_gt(counts["landmark"] + counts["dungeon"], 7, "at least 8 landmarks + dungeons")
+	assert_gt(counts["route"], 1, "at least 2 routes")
+	assert_gt(counts["danger_zone"], 1, "at least 2 danger zones")
+
+
 func test_m1_active_region_exists_and_is_reachable() -> void:
 	var regions := 0
 	var reachable := _vault.reachable_from(&"bible")

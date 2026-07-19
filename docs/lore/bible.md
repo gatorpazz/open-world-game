@@ -46,7 +46,9 @@ is one continuous temple.
   pantheon; levitation exists and is the most precious and contested art
   (shape fixed in the M2 magic pass, feeding spec 008).
 - **Technology:** rope, stone, fungus-craft, chitin-wrighting, lava-glass;
-  heat and light are utilities with owners.
+  heat and light are governed utilities — deeded in the Highroof, held as
+  parish commons in Embershare; the rivalry between the two regimes is
+  deliberate and unresolved.
 - **Death, travel, communication:** the honored dead go down into stone —
   only the Taken go up. Travel is roofed galleries, covered under-roads,
   and priced open sprints; no open water, no unshafted flight. News moves
@@ -163,6 +165,6 @@ consequences (flag for a future spec), levitation as a gated ability
 - The player's arrival: how does anyone survive the leviathan sea, and
   what does the answer imply? (Before spec 010 writes the opening.)
 - High-sky season: real cycle or folk belief? (Geography/timeline passes.)
-- Institution words — "parish," "liturgy," "processional" — are English
-  register placeholders; the cultures pass decides the in-world terms
-  before they fossilize.
+- Institution words — "parish," "liturgy," "processional," "the crown,"
+  "warden" — are English register placeholders; the cultures pass decides
+  the in-world terms before they fossilize.

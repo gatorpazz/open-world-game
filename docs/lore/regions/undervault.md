@@ -15,9 +15,10 @@ surface:
 The active region and the whole playable world of the vertical slice: a
 single island, crossable on foot in fifteen to twenty minutes of roofed
 galleries and nervous open sprints. The story starts here because the
-player does the one thing Vaultfolk believe impossible — arrives. An
-outsider washed in from a leviathan sea nobody survives is a walking
-question, and the parishes and guilds all want the answer on their side.
+player does the one thing Vaultfolk believe impossible — arrives. The
+player was found lying in [[bait_square|Lastdoor's bait square]], exposed
+under open sky and inexplicably untaken: a walking violation of
+[[the_taking]], and every parish and guild wants the answer on its side.
 
 ## Canon summary
 
@@ -49,10 +50,17 @@ than the Coming.
 
 ## Relationships
 
-Ruled loosely by a weak central figure at the citadel (shape decided in
+Ruled loosely by a weak central figure at [[highroof]] (shape decided in
 the factions pass). Parishes tend the lava vents; guilds run the roofed
 roads and salvage trade (cultures and factions passes). Everything under
 [[the_taking]].
+
+Contains — settlements: [[highroof]] · [[tidegate]] · [[embershare]] ·
+[[lastdoor]]. Roads: [[tide_road]] · [[ember_road]] · [[last_road]].
+Danger: [[the_scar]] · [[open_fields]]. Landmarks and depths:
+[[chitin_bridge]] · [[grief_court]] · [[sealed_reaches]] ·
+[[undersun_galleries]] · [[drowned_stair]] · [[first_roof]] ·
+[[bellworks]] · [[bait_square]] · [[leviathan_ribs]].
 
 ## Quest hooks
 
@@ -73,12 +81,15 @@ inside.
 
 ## Open questions
 
-- How did the player survive the sea? (Arrival is the inciting mystery —
-  decide what it implies before spec 010 writes the opening.)
-- The citadel's name, the gate-towns' count and names — geography pass.
-- Do leviathans honor truce-lines that make fishing possible? (Geography/
-  economy passes; implied by fishery imagery.)
+- The arrival mystery is now double: how did the player cross the
+  leviathan sea AND walk the open fields to a bait square, unseen and
+  untaken? (Decide what the answer implies before spec 010 writes the
+  opening; all of it spoiler: high.)
+- The truce-lines at [[tidegate]]: who set them, what keeps them, what
+  breaks them? (Their existence is settled; the economy pass fixes the
+  terms and the deeper truth stays spoiler: high.)
 - Is prophecy material wanted anywhere? (Not banned in the foundation
   session — permitted, not required.)
-- Provisional names pending the cultures pass: the Undervault, Vaultfolk,
-  the Coming.
+- Provisional names pending the cultures pass: all of them — the
+  Undervault, Vaultfolk, the Coming, and every geography name in the
+  Relationships list above.

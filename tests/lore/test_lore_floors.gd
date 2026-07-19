@@ -112,6 +112,16 @@ func test_m2_factions_floors() -> void:
 	assert_gt(factions, 2, "at least 3 faction entries — the future guilds")
 
 
+func test_m2_magic_floors() -> void:
+	var magic_rules := 0
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.type != &"world_rule" or entry.status == &"deprecated":
+			continue
+		if entry.frontmatter.get_list("tags").has("magic"):
+			magic_rules += 1
+	assert_gt(magic_rules, 0, "at least 1 rules entry tagged magic — spec 008's design input")
+
+
 func test_m1_active_region_exists_and_is_reachable() -> void:
 	var regions := 0
 	var reachable := _vault.reachable_from(&"bible")

@@ -65,5 +65,8 @@ Rope-stage hooks worn bright beside blind, abandoned shaft-mouths.
 
 ## Open questions
 
-- Lava's status — infrastructure, divinity, or both — lands here
-  hardest. (Magic pass; bible carries the question.)
+- ~~Lava's status~~ — ruled (magic pass): both, and disputed — the
+  parishes hold the veins are the Flame's living attention, deed-law
+  holds them property, and neither has ever won ([[the_workings]]).
+  The Galleries stay the dispute's sharpest ground: every mirror deed
+  is quietly blasphemous to somebody.

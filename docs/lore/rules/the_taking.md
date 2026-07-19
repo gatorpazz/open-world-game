@@ -39,8 +39,8 @@ of courtyard left open to the sky, offered like an accusation.
 
 Traversal: roofed routes are safe and slow; open ground is fast and
 sky-priced. Economy: roof-tax, salvage runs to the abandoned surface,
-chitin trade. Magic: levitation is real and gated (M2 magic pass). Law:
-the roof-law is liturgical — enforced by rite and warden alike.
+chitin trade. Magic: levitation is real and gated ([[the_workings]]).
+Law: the roof-law is liturgical — enforced by rite and warden alike.
 
 ## Relationships
 
@@ -64,4 +64,4 @@ to a cliff face, ending at nothing.
 - What exactly marks you — being seen, time exposed, light, sound? (The rule needs teeth the player can learn.)
 - Does night, storm, or season change the risk? ("High-sky season" is implied — define it in the geography/timeline passes.)
 - Why does the sky *take* instead of kill? The ban says the logic exists; how much is ever revealed, and where does the reveal live (spoiler: high)?
-- How is levitation's theft from the hives true — literal capture, ritual imitation, or a claim taught as truth? (Magic pass. The theft itself is ratified foundation canon; only its mechanism is open. Theft-vs-birthright as a recurring *theme* was not chosen — the fact stays, the sermon doesn't.)
+- ~~How is levitation's theft from the hives true~~ — ruled (magic pass): ritual imitation — the first levitators learned the lift by watching Takings, a theft the hives could not prevent, and the art imitates the rising of the Taken ([[the_workings]]). The Shell Year's reserve stays untouched. (Theft-vs-birthright as a recurring *theme* remains unchosen — the fact stays, the sermon doesn't.)

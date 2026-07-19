@@ -72,7 +72,8 @@ own trade.
 
 - The truce-lines: who set them, what keeps them, what breaks them?
   (Economy pass for terms; the deeper truth is spoiler: high material.)
-- Where exactly does sky-law end over water? (Magic/economy passes; the
+- Where exactly does sky-law end over water? (Undecided through the
+  magic pass; the economy pass prices what crews do about it. The
   wardens and net-bosses argue it weekly — see Systems impact.)
 - What was the leviathan fleeing? (Never answered casually; ban — no
   mindless swarm — applies to the sea as much as the sky.)

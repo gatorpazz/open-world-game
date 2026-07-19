@@ -22,9 +22,9 @@ hospitality is the island's warmest surveillance.
 The Vent-Parishes are one institution with a chapter at every tended
 vent, [[embershare]]'s great chapter first among them. They apportion
 heat as commons, bless the ovens, keep the [[bellworks]]' founding
-rights, and hold that every flame is attention — whose attention, and
-what the aspected orders of the pantheon make of it, is the magic
-pass's ground, and parish speech stays carefully vague there. Their
+rights, and hold that every flame is attention — the Flame's, the
+aspected orders teach ([[the_workings]]), though parish speech stays
+carefully vague at table all the same. Their
 public creed is hospitality: *no cold table under our roof.* Their
 private truth is the [[cold_tier_hush]] — the emptied tier is a parish
 matter, the sweeping is parish-funded through no ledger line, and
@@ -74,8 +74,10 @@ body, and it circulates.
 
 ## Open questions
 
-- The pantheon's aspected orders under the umbrella: named and shaped
-  by the magic pass, not before.
+- ~~The pantheon's aspected orders under the umbrella~~ — ruled (magic
+  pass): three — the flame-tenders, the stone-tenders, and the
+  tide-tenders, plain-named in folk speech, true names High Register
+  and rite-only ([[the_workings]]).
 - Who inside the chapter keeps the Cold-Tier silence, and is it
   protection, penance, or quarantine? (Reserved as the quest-sized
   secret it was ruled to be.)

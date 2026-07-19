@@ -43,8 +43,9 @@ is one continuous temple.
   under-sun (infrastructure and mystery both; divinity status open).
 - **The law:** [[the_taking]] — the rule of record for the roofed world.
 - **Magic:** real, aspected, and administered by religious orders of the
-  pantheon; levitation exists and is the most precious and contested art
-  (shape fixed in the M2 magic pass, feeding spec 008).
+  pantheon — the rule of record is [[the_workings]] (M2 magic pass,
+  feeds spec 008); levitation exists and is the most precious and
+  contested art, stolen by watching and tri-key licensed.
 - **Technology:** rope, stone, fungus-craft, chitin-wrighting, lava-glass;
   heat and light are governed utilities — deeded in the Highroof, held as
   parish commons in Embershare; the rivalry between the two regimes is
@@ -183,7 +184,10 @@ consequences (flag for a future spec), levitation as a gated ability
   required. Does any thread want it?
 - The ants' logic: how much is ever revealed, and where does the reveal
   live? (All of it `spoiler: high`.)
-- Lava's status: infrastructure, divinity, or both? (Magic pass.)
+- ~~Lava's status~~ — ruled (magic pass): both, and disputed — the
+  parishes hold the veins are the Flame's living attention, deed-law
+  holds them property, and the island keeps both readings on purpose
+  ([[the_workings]]).
 - The crown: founding shape fixed by [[crown_compact]] (arbiter, small by
   design); its name, incumbents, and which telling of the why is true
   stay with the factions pass.

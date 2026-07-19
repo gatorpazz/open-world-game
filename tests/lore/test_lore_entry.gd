@@ -65,6 +65,16 @@ func test_fenced_heading_does_not_split_sections() -> void:
 	assert_true(entry.sections["Speech & register"].contains("After."))
 
 
+func test_empty_heading_is_content_not_a_section_break() -> void:
+	var entry := _entry("## Function\ntext before\n## \ntext after")
+	assert_true(entry.ok, "parses: %s" % entry.error)
+	assert_eq(entry.sections.keys(), ["Function"], "no empty-string section key")
+	assert_true(
+		entry.sections["Function"].contains("text after"),
+		"lines after a malformed heading stay in the current section"
+	)
+
+
 func test_links_plain_pipe_dedup_in_first_appearance_order() -> void:
 	var entry := _entry(
 		(

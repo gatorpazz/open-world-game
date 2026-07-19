@@ -113,7 +113,9 @@ func test_rejects_empty_and_unterminated_values() -> void:
 	_assert_rejects(_src(["title:  "]), 2, "empty scalar value")
 	_assert_rejects(_src(['title: ""']), 2, "empty quoted scalar")
 	_assert_rejects(_src(['title: "unterminated']), 2, "unterminated quote")
+	_assert_rejects(_src(["tags:", '  - "unterminated']), 3, "unterminated quoted list item")
 	_assert_rejects(_src(["tags:", "  - "]), 3, "empty list item")
+	_assert_rejects(_src(["tags:", '  - ""']), 3, "empty quoted list item")
 
 
 func test_rejects_bad_keys() -> void:
@@ -126,6 +128,26 @@ func test_rejects_bad_keys() -> void:
 func test_rejects_orphan_list_items() -> void:
 	_assert_rejects(_src(["  - orphan"]), 2, "item with no opener")
 	_assert_rejects(_src(["tags:", "  - a", "title: x", "  - b"]), 5, "item after scalar reset")
+
+
+func test_quoted_values_bypass_structural_rejections() -> void:
+	var fm := (
+		LoreFrontmatter
+		. parse(
+			_src(
+				[
+					'pitch: "[a, b] as a literal"',
+					'note: "| pipe start"',
+					"tags:",
+					'  - "{braced item}"',
+				]
+			)
+		)
+	)
+	assert_true(fm.ok, "quoting is the escape hatch: %s" % fm.error)
+	assert_eq(fm.get_scalar("pitch"), "[a, b] as a literal")
+	assert_eq(fm.get_scalar("note"), "| pipe start")
+	assert_eq(fm.get_list("tags"), PackedStringArray(["{braced item}"]))
 
 
 func test_rejects_lines_matching_neither_form() -> void:

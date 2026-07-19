@@ -9,7 +9,9 @@ extends RefCounted
 ## rather than copied so the two regexes cannot drift.
 ## Pure RefCounted — fixture-testable via from_string, no scene tree.
 
-static var _inline_code_regex := RegEx.create_from_string("`[^`\\n]*`")
+const INLINE_CODE_PATTERN := "`[^`\\n]*`"
+
+static var _inline_code_regex := RegEx.create_from_string(INLINE_CODE_PATTERN)
 
 var ok := false
 var error := ""
@@ -54,17 +56,22 @@ static func load_file(file_path: String) -> LoreEntry:
 
 ## Splits the body on `## ` headings (outside code fences). Text before the
 ## first heading lands in `preamble`; section text is edge-trimmed; keys keep
-## first-appearance order (Dictionary preserves insertion order).
+## first-appearance order (Dictionary preserves insertion order). A malformed
+## empty heading (`## ` with no title) is treated as content, and duplicate
+## headings merge into the first occurrence — both deliberate: this model
+## feeds validators, so mis-routing must be impossible, and the canon suite
+## checks presence and order, not multiplicity.
 func _split_sections() -> void:
 	var current := ""
 	var in_fence := false
 	var chunks: Dictionary[String, PackedStringArray] = {}
 	var preamble_lines := PackedStringArray()
 	for line: String in frontmatter.body.split("\n"):
+		var heading := line.substr(3).strip_edges() if line.begins_with("## ") else ""
 		if line.strip_edges().begins_with("```"):
 			in_fence = not in_fence
-		elif not in_fence and line.begins_with("## "):
-			current = line.substr(3).strip_edges()
+		elif not in_fence and not heading.is_empty():
+			current = heading
 			if not chunks.has(current):
 				chunks[current] = PackedStringArray()
 			continue

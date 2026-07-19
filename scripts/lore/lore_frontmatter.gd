@@ -7,6 +7,7 @@ extends RefCounted
 ## with a line number. Double-quoting a value exempts its content from the
 ## structural rejections (the escape hatch for literals). The parser knows
 ## grammar only — the canon suite in tests/lore/ owns the schema.
+## Files are LF-only: a CRLF file fails at line 1 by design.
 ## Static and pure — no scene-tree dependencies.
 
 const KEY_PATTERN := "^[a-z_][a-z0-9_]*$"
@@ -48,7 +49,11 @@ static func parse(source: String) -> LoreFrontmatter:
 		if line.begins_with("  - "):
 			if open_list.is_empty():
 				return _fail(result, line_number, "list item without an open list")
-			var item := _unquote(line.substr(4).strip_edges())
+			var item := line.substr(4).strip_edges()
+			if item.begins_with('"'):
+				if item.length() < 2 or not item.ends_with('"'):
+					return _fail(result, line_number, "unterminated quote")
+				item = item.substr(1, item.length() - 2)
 			if item.is_empty():
 				return _fail(result, line_number, "empty list item")
 			result.lists[open_list].append(item)
@@ -116,9 +121,3 @@ static func _fail(result: LoreFrontmatter, line_number: int, message: String) ->
 	result.error = "line %d: %s" % [line_number, message]
 	result.error_line = line_number
 	return result
-
-
-static func _unquote(item: String) -> String:
-	if item.length() >= 2 and item.begins_with('"') and item.ends_with('"'):
-		return item.substr(1, item.length() - 2)
-	return item

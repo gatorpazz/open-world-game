@@ -28,6 +28,7 @@ give_items = Array[ExtResource("3")]([SubResource("give_draught")])
 script = ExtResource("2")
 npc_id = &"suddel"
 text = "Got that pelt for me yet? The vault rats wear them, if you take my meaning. Come back when you have one."
+journal_entry = &"suddel_wants_a_pelt"
 
 [resource]
 script = ExtResource("1")

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="QuestDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/quest_stage.gd" id="2"]
+
+[sub_resource type="Resource" id="stage_offer"]
+script = ExtResource("2")
+journal_entry = &"suddel_wants_a_pelt"
+
+[sub_resource type="Resource" id="stage_done"]
+script = ExtResource("2")
+journal_entry = &"suddels_stores_favor"
+outcome = &"complete"
+
+[resource]
+script = ExtResource("1")
+id = &"a_small_favor"
+display_name = "A Small Favor"
+lore_sources = Array[StringName]([&"suddel"])
+stages = Array[ExtResource("2")]([SubResource("stage_offer"), SubResource("stage_done")])

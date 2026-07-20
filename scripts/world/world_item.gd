@@ -29,6 +29,6 @@ func _on_interacted(by: Node) -> void:
 	if player == null:
 		return
 	player.inventory_component.add_item(item, count)
-	if journal_entry != &"":
-		player.journal.add_entry(journal_entry)
+	if journal_entry != &"" and player.journal.add_entry(journal_entry):
+		player.show_notice(HudNotice.JOURNAL_UPDATED)
 	queue_free()

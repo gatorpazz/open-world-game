@@ -61,12 +61,14 @@ func test_pickup_adds_journal_entry_once() -> void:
 	world_item.journal_entry = &"found_the_gem"
 	world_item.interactable.interact(_player)
 	assert_true(_player.journal.has_entry(&"found_the_gem"), "document pickup writes the journal")
+	assert_eq(_player.hud_notice.get_child_count(), 1, "the pickup's journal write notices")
 
 
 func test_pickup_without_journal_entry_leaves_journal_untouched() -> void:
 	var world_item := _spawn_world_item(FLAWED_GEM, 1)
 	world_item.interactable.interact(_player)
 	assert_eq(_player.journal.entries.size(), 0, 'default &"" adds nothing')
+	assert_eq(_player.hud_notice.get_child_count(), 0, "and notices nothing")
 
 
 func test_non_player_interaction_is_ignored() -> void:

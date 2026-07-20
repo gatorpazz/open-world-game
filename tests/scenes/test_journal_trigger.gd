@@ -1,6 +1,6 @@
 extends GutTest
-## JournalTrigger gating and idempotence (spec 006, acceptance criterion 4,
-## minus notices — those land with HudNotice).
+## JournalTrigger gating, idempotence, and notices (spec 006, acceptance
+## criterion 4).
 
 const TRIGGER_SCENE := preload("res://scenes/world/journal_trigger.tscn")
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
@@ -44,6 +44,14 @@ func test_blocked_by_journal_disarms_the_trigger() -> void:
 	_player.journal.add_entry(&"too_late")
 	trigger.try_trigger(_player)
 	assert_false(_player.journal.has_entry(&"arrived"), "a held blocker disarms the trigger")
+
+
+func test_new_entry_notices_and_repeat_stays_silent() -> void:
+	var trigger := _spawn_trigger(&"arrived")
+	trigger.try_trigger(_player)
+	assert_eq(_player.hud_notice.get_child_count(), 1, "a new entry shows one notice")
+	trigger.try_trigger(_player)
+	assert_eq(_player.hud_notice.get_child_count(), 1, "the no-op re-entry stays silent")
 
 
 func test_non_player_bodies_are_ignored() -> void:

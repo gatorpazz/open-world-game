@@ -26,7 +26,8 @@ func try_trigger(body: Node3D) -> void:
 		return
 	if not _conditions_pass(player.journal):
 		return
-	player.journal.add_entry(journal_entry)
+	if player.journal.add_entry(journal_entry):
+		player.show_notice(HudNotice.JOURNAL_UPDATED)
 
 
 func _conditions_pass(journal: Journal) -> bool:

@@ -20,6 +20,7 @@ var _journal_panel: JournalPanel = null
 @onready var detector: InteractionDetector = $Head/Camera3D/InteractionDetector
 @onready var hud_prompt: HudPrompt = $HUD/HudPrompt
 @onready var hud_bars: HudBars = $HUD/HudBars
+@onready var hud_notice: HudNotice = $HUD/HudNotice
 @onready var death_overlay: DeathOverlay = $HUD/DeathOverlay
 @onready var stats: StatsComponent = $Stats
 @onready var inventory_component: InventoryComponent = $Inventory
@@ -55,6 +56,12 @@ func open_journal() -> void:
 
 func _on_journal_panel_closed() -> void:
 	_journal_panel = null
+
+
+## Queues a brief fading HUD line (spec 006) — for journal writes outside
+## dialogue; the dialogue panel keeps its own inline transcript notices.
+func show_notice(text: String) -> void:
+	hud_notice.show_notice(text)
 
 
 func _ready() -> void:

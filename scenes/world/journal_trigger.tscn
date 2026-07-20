@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/journal_trigger.gd" id="1_journal_trigger"]
+
+[sub_resource type="BoxShape3D" id="shape_trigger"]
+size = Vector3(2, 2, 2)
+
+[node name="JournalTrigger" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_journal_trigger")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("shape_trigger")

@@ -35,7 +35,7 @@ This means scene transitions are trivially safe (nothing to carry but two resour
 
 | object | behavior |
 |---|---|
-| `WorldItem` (`scenes/world/world_item.tscn`) | exported `item: ItemDef`, `count: int`; verb "take"; on interact: add to player inventory, `queue_free()`. Placeholder mesh; per-item meshes later. |
+| `WorldItem` (`scenes/world/world_item.tscn`) | exported `item: ItemDef`, `count: int`; verb "take"; on interact: add to player inventory, `queue_free()`. Placeholder mesh; per-item meshes later. *(Amendment, spec 006: plus exported `journal_entry: StringName` — pickup adds the entry to the player's journal; the document-acquisition quest trigger.)* |
 | `WorldContainer` (`scenes/world/world_container.tscn`) | owns its own `Inventory` resource (002 reuse), contents authored in-editor; verb "open"; opens `container_panel.tscn`: item list, Take, Take All, Close. Take-only in v1. Contents persist while the scene is loaded. *(Amendment: named `WorldContainer`, not `Container` — Godot reserves `Container` for its built-in GUI class.)* |
 | `HingedDoor` | verb "use"; toggles open/closed (simple rotation tween); blocks/unblocks nav later. |
 | `TransitionDoor` | exported `target_scene: String`, `spawn_point: StringName`; verb "use"; calls `Game.change_scene(...)`. This is the Morrowind load-door: interiors are separate scenes. |

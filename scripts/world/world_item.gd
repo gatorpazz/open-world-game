@@ -5,6 +5,9 @@ extends StaticBody3D
 
 @export var item: ItemDef
 @export var count: int = 1
+## Optional quest hook (spec 006): journal entry added on pickup — the
+## "concrete item or document" trigger. Empty = no journal effect.
+@export var journal_entry: StringName = &""
 
 @onready var interactable: Interactable = $Interactable
 
@@ -26,4 +29,6 @@ func _on_interacted(by: Node) -> void:
 	if player == null:
 		return
 	player.inventory_component.add_item(item, count)
+	if journal_entry != &"":
+		player.journal.add_entry(journal_entry)
 	queue_free()

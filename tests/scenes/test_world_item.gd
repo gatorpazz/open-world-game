@@ -56,6 +56,19 @@ func test_prompt_uses_item_display_name() -> void:
 	assert_eq(world_item.interactable.get_prompt(), "Take %s" % SACK_OF_ORE.display_name)
 
 
+func test_pickup_adds_journal_entry_once() -> void:
+	var world_item := _spawn_world_item(FLAWED_GEM, 1)
+	world_item.journal_entry = &"found_the_gem"
+	world_item.interactable.interact(_player)
+	assert_true(_player.journal.has_entry(&"found_the_gem"), "document pickup writes the journal")
+
+
+func test_pickup_without_journal_entry_leaves_journal_untouched() -> void:
+	var world_item := _spawn_world_item(FLAWED_GEM, 1)
+	world_item.interactable.interact(_player)
+	assert_eq(_player.journal.entries.size(), 0, 'default &"" adds nothing')
+
+
 func test_non_player_interaction_is_ignored() -> void:
 	var world_item := _spawn_world_item(FLAWED_GEM, 1)
 	var stranger := Node.new()

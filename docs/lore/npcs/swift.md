@@ -60,6 +60,9 @@ grounds toward [[the_scar]]'s quieter mouths and tells no one which.
 - The warden post doubled its standing order and will not say why it
   suddenly needs so many cages. Swift cannot fill it alone and does
   not trust help he didn't choose.
+- The silence and the doubled order landed the same week — each side
+  knows half of something, and whoever carries word between them
+  breaches one trust or the other (quests pass).
 - Someone has been following him toward his grounds. He wants them led
   wrong — convincingly, kindly, and without a fight.
 

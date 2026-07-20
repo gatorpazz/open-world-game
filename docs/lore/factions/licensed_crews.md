@@ -66,7 +66,15 @@ on runs, and the Quiet Lines want them off the books entirely.
 - The stranded crew: alive under cover one roof short of home (see
   [[open_fields]]) — the rescue is a budget problem, a courage
   problem, and a politics problem in that order, and the player's
-  presence changes the arithmetic.
+  presence changes the arithmetic. (One event, two guild doors — the
+  wardens hold the budget side; quests pass.)
+- The quiet row, from the crews' side: the wash took a find nobody had
+  offered it ([[the_shares]]) — tracing the parish key is a favor the
+  Lines cannot ask for out loud.
+- The bridge count: the manifest and the toll-book disagree by three
+  carts a week and the discrepancy starts at the bridge — the crews
+  pay the fourth taking loudest, and a documented count is a crown
+  hearing waiting to be forced ([[chitin_bridge]]).
 
 ## Environmental storytelling
 

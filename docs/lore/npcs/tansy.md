@@ -59,7 +59,9 @@ hers, and neither says the other's is the copy.
 
 - A crew brought her a sealed daylight jar. The seal-text is High
   Register, she will not sell what she cannot name, and the people
-  offering to read it all want something.
+  offering to read it all want something — the Column-Readers hold
+  the only sanctioned reading right, which is exactly what makes
+  their offer suspect ([[reciters]]).
 - Someone buys out one simple, every market-day, at asking price,
   without haggling. To a Lastlight stall-keeper this is not custom —
   it is a message she cannot read yet.

@@ -5,7 +5,7 @@ status: reviewed
 region: undervault
 kind: landmark
 pitch: "The island's great open courtyard — thousands of kept names offered to the sky like an accusation."
-spoiler: none
+spoiler: low
 surface:
   - environment
   - dialogue
@@ -54,10 +54,19 @@ rite's keepers are the [[reciters]].
 
 - A tablet was removed in the night — no declaration filed, mortar
   still damp, and the reciters skipped the name without breaking
-  stride.
+  stride. (The chain's spine, spec 006: what the wall does next —
+  restored with nine stones, or a blank kept gap — is the outcome
+  made visible.)
 - A family wants a name *added* for someone lost in the [[open_fields]]
-  — lost, not Taken — and the keepers' refusal is tearing the ward.
-- A reciter has begun reading one extra name that appears on no tablet.
+  — lost, not Taken — and the keepers' refusal is tearing the ward;
+  Lastdoor's crew shrine already borrows tablets, and a reciter
+  standing at that shrine would be a first.
+- A reciter has begun reading one extra name that appears on no tablet
+  — the Walker [[ollun]], and the name is the removed one (ruled,
+  quests pass).
+- The filled stops: a staff appeared on the court's hooks overnight,
+  finger-stops waxed in censure — and no reciter is missing from the
+  circuit.
 
 ## Environmental storytelling
 
@@ -67,10 +76,10 @@ the wall, decades ago, never righted, never explained.
 
 ## Open questions
 
-- The rite's keepers are now the [[reciters]] (factions pass) — and
-  removal law is theirs, which sharpens the scandal: who inside the
-  order authorized it, and under what reading, stays reserved as the
-  quest spine.
+- ~~Who inside the order authorized the removal, and under what
+  reading~~ — ruled (quests pass): an absolution debt — see
+  [[reciters]] for the ruling; the cast stays with the chain (spec
+  006 content). Removal law remains the keepers' own scandal.
 - The rite's origin — first *recitation* answered by
   [[first_kept_names]] (reading the wall aloud so the names would not
   go silent); first formal court and first titled reciter remain open

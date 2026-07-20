@@ -53,12 +53,21 @@ on. Under [[the_taking]] absolutely.
 ## Quest hooks
 
 - A crew's exposure budget ran out one roof short of home; they are
-  alive, under cover, and the rescue question is now a town argument.
+  alive, under cover, and the rescue question is now a town argument —
+  a budget problem to the wardens, a shares problem to the crews, and
+  the untaken stranger changes both arithmetics (one event, two guild
+  doors; quests pass).
 - A granary's seal is intact but its seed is gone — removed carefully,
   recently, from the inside.
 - A courtyard farmstead's grief-tablets are still mounted — and one
   family in Lastdoor pays quietly to keep anyone from salvaging that
   particular house.
+- The roof that shouldn't be: the crews' cache rumor is true, and the
+  cache's cover is older than the crews — someone built roof out here
+  *after* the Coming ([[licensed_crews]]).
+- The grave bell: a crew claims an unrecast Daylight bell still hangs
+  in a field tower ([[first_bells]]) — the richest bronze claim alive,
+  a grave to the reciters, and never once rung.
 
 ## Environmental storytelling
 

@@ -95,6 +95,10 @@ glass; the bead is [[the_workings]]' glass wearing its other hat.
 - The quarantine row emptied on a night the parish key provably never
   left its cabinet — either there is a second key, or the wash has
   learned to run itself.
+- The wash took what wasn't offered: a crew's find vanished from
+  assessment before they had even decided to hide it — the first crew
+  in memory with standing to complain about the black market's
+  service.
 
 ## Environmental storytelling
 

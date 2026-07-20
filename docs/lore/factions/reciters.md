@@ -27,7 +27,7 @@ since [[the_still_year]] ([[first_kept_names]] is their founding
 text), and their public creed is the vow itself: *kept, not dead.*
 Their private truth is layered: the inner circle keeps the unresolved
 question of whether their forebears read the stillness and said
-nothing — and someone among them authorized the fresh-mortar tablet
+nothing — and someone among them carried out the fresh-mortar tablet
 removal at the [[grief_court]] that the order's own law says cannot
 happen. And at the order's radical edge a young heresy grows from the
 vow itself: the Homebringers, who read *kept, not dead* as a debt
@@ -57,19 +57,35 @@ with the [[wardens]] over declarations; courteous rivalry with the
 Lastlight singers ([[lastlight]]) whose funerals they do not walk. The
 [[the_untaken_arrival]] is their theological event: the sky *declined*
 — hope to the Walkers, heresy to the Carvers, omen to the
-Column-Readers, who want the player read aloud in the court.
+Column-Readers, who want the player read aloud in the court. The
+petition is [[kellom]]'s; the circuit's youngest complication is the
+Walker [[ollun]].
 
 ## Quest hooks
 
 - The removed tablet: the mortar was fresh, the reciters skipped the
   name without breaking stride, and the order's own law has no
   procedure for what one of them plainly did.
-- The extra name: a Walker has begun reciting a name on no tablet —
-  discipline says stop them; the Column-Readers say *write it down
-  first.*
+- The extra name: the Walker [[ollun]] has begun reciting a name on no
+  tablet — discipline says stop them; the Column-Readers say *write it
+  down first.*
 - The reading: stand in the court at circuit's end and be read in the
   High Register — the player as text, and the order split on what it
-  says.
+  says. [[kellom]] filed the petition; joining rides on it (spec 006's
+  recruitment beat — novice standing, no roll-name).
+- The summons: the order's first move against a Homebringer cell — a
+  novice is handed the discipline summons, and exile from the roof is
+  whispered as the ceiling penalty by the very order that keeps
+  everyone under one. (Its use stays unruled; the whisper is the
+  seed.)
+- The ninth telling: the collector paying Tidegate grandmothers for
+  verbatim ninth-day tellings is a Column-Reader — the order archiving
+  the rival liturgy it will not walk — and someone is editing the
+  tellings before they arrive ([[leviathan_ribs]]).
+- The funeral line: a salvager died beyond the covers, the crew wants
+  the funeral sung outside, and the dead's Underfirst spouse asks a
+  gate-post reciter to stand witness at the roof's edge — the order
+  does not walk Lastlight funerals, and everyone knows it.
 
 ## Environmental storytelling
 
@@ -80,8 +96,14 @@ years around it, in every hand, in every century.
 
 ## Open questions
 
-- Who authorized the removal, and under what reading of tablet law?
-  (Quest spine material; reserved to the order's inner circle.)
+- ~~Who authorized the removal, and under what reading of tablet
+  law?~~ — ruled (quests pass): an absolution debt. A death in the
+  fields hidden as a Taking was confessed under the seal; the keeper
+  who heard it could neither speak it nor let the circuit recite a
+  lie, and removed the tablet — law against law. Which keeper, and
+  the crew that hid the death, stay cast with the chain (spec 006
+  content). The extra name [[ollun]] recites is the removed name
+  (ruled: braided).
 - Whether the forebears read the stillness: spoiler high, with
   [[the_still_year]] — the order's founding wound stays open.
 - Do the Column-Readers actually read the oldest columns, or only
@@ -89,4 +111,6 @@ years around it, in every hand, in every century.
   vocabulary.)
 - The Homebringers: how many, how organized, and how far will the
   order let the heresy grow before it acts? (Quest spine material,
-  spec 006; the name is drafted coinage — director veto welcome.)
+  spec 006 — the summons seed is the first move; ~~the name is
+  drafted coinage — director veto welcome~~ — ruled (quests pass):
+  the coinage stands.)

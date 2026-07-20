@@ -57,11 +57,20 @@ origin the timeline pass anchors its first era on. The grief rite of
 
 - A scholar has found a name in the columns that also stands on a
   current tablet in the [[grief_court]] — same name, same hand.
+  Sanctioned access runs through the Column-Readers, so helping the
+  scholar means learning whether they can actually read what they
+  keep.
 - The yearly rope across the lower gallery was found cut from the far
-  side, and the custom has no procedure for that.
+  side, and the custom has no procedure for that. (The circuit closes
+  here — the removed-tablet chain's trail runs to this rope, spec
+  006.)
 - A pilgrim family's tallow lamp reveals fresh soot above the oldest
   strata — someone has been reading the columns by night, high on the
   wall where the unreadable ones are.
+- The refused threshold: a family's telling claims their forebear was
+  turned away at the refuge wall, and the threshold tallies, read
+  closely, might prove it — they want it read aloud in the court, and
+  the order does not.
 
 ## Environmental storytelling
 

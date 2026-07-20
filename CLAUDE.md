@@ -75,4 +75,4 @@ Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same com
 
 ## Current focus
 
-Phase 1, spec 011: lore bible & worldbuilding system — M0 (vault, parser, validators, skills) is implemented. Next: the M1 foundation director session (blank-slate world invention — run `/worldbuilding-pass foundation`), then the six M2 regional-skeleton passes. Spec 006 (quests) follows, written from canon packets. Specs 001–005 are complete.
+Phase 1, spec 006: the quest system, written from canon packets — run `canon-packet` before any quest text, and the `quests` worldbuilding pass (12 seeds per joinable guild: [[wardens]], [[reciters]], [[licensed_crews]]) lands hooks in entries during 006, not before. Spec 011 is complete: the lore bible is live (54 entries, 19 canon; M3 bridge floor green — every narrative `data/` stem canon-claimed). Specs 001–005 are complete.

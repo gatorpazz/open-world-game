@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1")
 id = &"hounds_near_the_covers"
+lore_sources = Array[StringName]([&"scar_hound", &"wardens"])
 text = "The scar-hounds have been ranging closer to the covers of late. Travelers on the last road have been set upon, and the wardens' patrols are stretched thin."

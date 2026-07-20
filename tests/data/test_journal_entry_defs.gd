@@ -35,3 +35,10 @@ func test_ids_are_unique_and_match_filenames() -> void:
 func test_texts_are_non_empty() -> void:
 	for def: JournalEntryDef in _defs:
 		assert_ne(def.text, "", "%s has text" % def.id)
+
+
+func test_lore_sources_present() -> void:
+	for def: JournalEntryDef in _defs:
+		assert_gt(def.lore_sources.size(), 0, "%s cites at least one lore source" % def.id)
+		for source: StringName in def.lore_sources:
+			assert_ne(source, &"", "%s has no empty lore_sources id" % def.id)

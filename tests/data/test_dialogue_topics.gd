@@ -53,6 +53,15 @@ func test_every_topic_has_at_least_one_response() -> void:
 		assert_gt(topic.responses.size(), 0, "%s has responses" % topic.id)
 
 
+func test_lore_sources_present_except_greeting() -> void:
+	for topic: DialogueTopicDef in _topics:
+		if topic.id == DialogueTopicDef.GREETING_ID:
+			continue
+		assert_gt(topic.lore_sources.size(), 0, "%s cites at least one lore source" % topic.id)
+		for source: StringName in topic.lore_sources:
+			assert_ne(source, &"", "%s has no empty lore_sources id" % topic.id)
+
+
 func test_responses_are_well_formed() -> void:
 	for topic: DialogueTopicDef in _topics:
 		for response: DialogueResponse in topic.responses:

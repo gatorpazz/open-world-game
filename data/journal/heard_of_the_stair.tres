@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1")
 id = &"heard_of_the_stair"
+lore_sources = Array[StringName]([&"drowned_stair"])
 text = "I have heard talk of old stairs at the bottom of the Scar, going down to a gate nobody opens. The town gives the lower flights a wide berth, and nobody will say quite why."

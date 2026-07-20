@@ -40,4 +40,5 @@ journal_entry = &"suddel_wants_a_pelt"
 script = ExtResource("1")
 id = &"a_small_favor"
 display_name = "a small favor"
+lore_sources = Array[StringName]([&"suddel"])
 responses = Array[ExtResource("2")]([SubResource("resp_suddel"), SubResource("resp_suddel_done"), SubResource("resp_suddel_no_pelt")])

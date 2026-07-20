@@ -17,4 +17,5 @@ journal_entry = &"heard_of_the_stair"
 script = ExtResource("1")
 id = &"drowned_stair"
 display_name = "the drowned stair"
+lore_sources = Array[StringName]([&"drowned_stair"])
 responses = Array[ExtResource("2")]([SubResource("resp_heard"), SubResource("resp_fallback")])

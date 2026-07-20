@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1")
 id = &"suddel_wants_a_pelt"
+lore_sources = Array[StringName]([&"suddel"])
 text = "Suddel, the quartermaster at Lastdoor's warehouse row, wants a vault-rat pelt for his bounty book. He pays from crew stores — a draught for a pelt, the line entered in my presence."

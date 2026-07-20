@@ -12,4 +12,5 @@ journal_entry = &"hounds_near_the_covers"
 script = ExtResource("1")
 id = &"scar_hounds"
 display_name = "scar-hounds"
+lore_sources = Array[StringName]([&"scar_hound"])
 responses = Array[ExtResource("2")]([SubResource("resp_fallback")])

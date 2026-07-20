@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1")
 id = &"suddels_stores_favor"
+lore_sources = Array[StringName]([&"suddel"])
 text = "I brought Suddel the rat pelt for his bounty book. He paid me a healing draught from crew stores, entered the line in my presence, and says the book remembers a favor besides."

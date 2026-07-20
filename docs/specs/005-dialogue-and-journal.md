@@ -32,6 +32,7 @@ Deliberately minimal — no faction, no disposition, no stats. Creatures got the
 |---|---|---|
 | `id` | StringName | unique, == filename stem; the id used by `[[markup]]` |
 | `display_name` | String | topic-list label AND default rendered keyword text |
+| `lore_sources` | Array[StringName] | *(Amendment, spec 006:)* lore entry ids the topic's text derives from — ≥1 required (`greeting` exempt), vault-validated |
 | `responses` | Array[DialogueResponse] | ordered; **first match wins** |
 
 **`DialogueResponse`** (`scripts/resources/dialogue_response.gd`) — a sub-resource inside the topic `.tres`, no data folder of its own, exactly like `CreatureDef.loot`'s ItemStacks. *Decision: sub-resources, not separate files* — a topic is one reviewable file, the LLM pipeline generates one topic per file against one schema, responses have no independent identity, and the validator walks the nested array the same way `test_creature_defs.gd` walks loot. Fields are flat — no nested condition trees — so validators and generators stay simple:
@@ -49,7 +50,7 @@ Deliberately minimal — no faction, no disposition, no stats. Creatures got the
 
 Conditions AND together; a response with every condition empty is an unconditional fallback. Authoring convention: specific responses first, fallback last — enforced by the validator (no response may follow a fully-unconditional one; unreachable content fails the suite).
 
-**`JournalEntryDef`** (`scripts/resources/journal_entry_def.gd`, `data/journal/`): `id: StringName`, `text: String` (multiline). *Decision: entries are defs with ids, not free text in the effect.* Content-as-data; 006 will gate quest stages on entry ids and `requires_journal` already needs ids to point at; free text in effects would be unreferenceable and duplicated. No date field — order is runtime state (see *Journal* below).
+**`JournalEntryDef`** (`scripts/resources/journal_entry_def.gd`, `data/journal/`): `id: StringName`, `text: String` (multiline). *(Amendment, spec 006: plus `lore_sources: Array[StringName]` — ≥1 cited lore entry id, vault-validated.)* *Decision: entries are defs with ids, not free text in the effect.* Content-as-data; 006 will gate quest stages on entry ids and `requires_journal` already needs ids to point at; free text in effects would be unreferenceable and duplicated. No date field — order is runtime state (see *Journal* below).
 
 ### Keyword unlocking — the architectural decision
 

@@ -16,4 +16,5 @@ text = "A working town. We keep the awnings hung and the tallies chalked, and we
 script = ExtResource("1")
 id = &"lastdoor"
 display_name = "Lastdoor"
+lore_sources = Array[StringName]([&"lastdoor", &"last_road", &"drowned_stair"])
 responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_fallback")])

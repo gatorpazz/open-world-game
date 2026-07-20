@@ -10,4 +10,8 @@ const GREETING_ID := &"greeting"
 
 @export var id: StringName
 @export var display_name: String
+## Lore entry ids this topic's text derives from (spec 006) — durable
+## canon-packet citations; ≥1 required (greeting exempt), validated
+## against the vault by the lore suite.
+@export var lore_sources: Array[StringName] = []
 @export var responses: Array[DialogueResponse] = []

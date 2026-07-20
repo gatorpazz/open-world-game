@@ -66,6 +66,8 @@ func test_responses_are_well_formed() -> void:
 				_assert_resolves(required, DIR, "DialogueTopicDef", String(topic.id))
 			for entry: StringName in response.requires_journal:
 				_assert_resolves(entry, JOURNAL_DIR, "JournalEntryDef", String(topic.id))
+			for entry: StringName in response.blocked_by_journal:
+				_assert_resolves(entry, JOURNAL_DIR, "JournalEntryDef", String(topic.id))
 			if response.journal_entry != &"":
 				_assert_resolves(
 					response.journal_entry, JOURNAL_DIR, "JournalEntryDef", String(topic.id)
@@ -106,8 +108,9 @@ func test_no_response_follows_an_unconditional_one() -> void:
 
 
 func test_greeting_covers_every_npc_from_a_fresh_state() -> void:
-	# A fresh state (empty journal, empty inventory) passes only responses
-	# with all-empty gating conditions, so existence here is exactly
+	# A fresh state (empty journal, empty inventory) passes responses whose
+	# positive gates are all empty (blocked_by_journal passes vacuously —
+	# nothing is held from fresh), so existence here is exactly
 	# "pick_response is non-null for every NPC on first meeting".
 	var greeting: DialogueTopicDef = load(DIR.path_join("greeting.tres")) as DialogueTopicDef
 	assert_not_null(greeting, "the reserved greeting topic exists")

@@ -7,10 +7,13 @@ extends Resource
 ## response is only offered while the player holds the items, so effects
 ## can never fail once a response is shown.
 
-## Conditions. Empty npc_id means any NPC.
+## Conditions. Empty npc_id means any NPC. blocked_by_journal is the
+## negative gate (spec 006): the response matches only while the journal
+## holds NONE of the listed entries — cross-NPC branch exclusion.
 @export var npc_id: StringName = &""
 @export var requires_topics: Array[StringName] = []
 @export var requires_journal: Array[StringName] = []
+@export var blocked_by_journal: Array[StringName] = []
 @export var take_items: Array[ItemStack] = []
 
 ## Effects. [[topic_id]] markup in text unlocks topics when displayed.
@@ -26,5 +29,6 @@ func is_unconditional() -> bool:
 		npc_id == &""
 		and requires_topics.is_empty()
 		and requires_journal.is_empty()
+		and blocked_by_journal.is_empty()
 		and take_items.is_empty()
 	)

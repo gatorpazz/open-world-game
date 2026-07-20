@@ -27,6 +27,9 @@ static func matches(
 	for entry_id: StringName in response.requires_journal:
 		if not journal.has_entry(entry_id):
 			return false
+	for entry_id: StringName in response.blocked_by_journal:
+		if journal.has_entry(entry_id):
+			return false
 	for stack: ItemStack in response.take_items:
 		if inventory.count_of(stack.item) + inventory.count_equipped(stack.item) < stack.count:
 			return false

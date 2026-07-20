@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=9 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
@@ -24,6 +24,12 @@ text = "One pelt, posted bounty, entered. Here — a draught from stores for you
 journal_entry = &"suddels_stores_favor"
 give_items = Array[ExtResource("3")]([SubResource("give_draught")])
 
+[sub_resource type="Resource" id="resp_suddel_done"]
+script = ExtResource("2")
+npc_id = &"suddel"
+requires_journal = Array[StringName]([&"suddels_stores_favor"])
+text = "The book holds your line, and the book doesn't forget. Bring more pelts if the rats oblige — posted bounty, same as ever."
+
 [sub_resource type="Resource" id="resp_suddel_no_pelt"]
 script = ExtResource("2")
 npc_id = &"suddel"
@@ -34,4 +40,4 @@ journal_entry = &"suddel_wants_a_pelt"
 script = ExtResource("1")
 id = &"a_small_favor"
 display_name = "a small favor"
-responses = Array[ExtResource("2")]([SubResource("resp_suddel"), SubResource("resp_suddel_no_pelt")])
+responses = Array[ExtResource("2")]([SubResource("resp_suddel"), SubResource("resp_suddel_done"), SubResource("resp_suddel_no_pelt")])

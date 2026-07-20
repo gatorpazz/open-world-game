@@ -110,6 +110,36 @@ func test_first_match_wins_on_order() -> void:
 	assert_same(_pick(topic, &"swift"), first)
 
 
+# --- blocked_by_journal (spec 006, criterion 3) ---
+
+
+func test_blocked_by_journal_hides_response_once_entry_held() -> void:
+	var response := _response("Before the deed only.")
+	response.blocked_by_journal = [&"deed_done"] as Array[StringName]
+	var topic := _topic(&"offer", [response])
+	assert_same(_pick(topic, &"swift"), response, "matches while the blocker is unheld")
+	_journal.add_entry(&"deed_done")
+	assert_null(_pick(topic, &"swift"), "a held blocker hides the response")
+
+
+func test_blocked_only_response_is_not_unconditional() -> void:
+	var response := _response("x")
+	response.blocked_by_journal = [&"deed_done"] as Array[StringName]
+	assert_false(
+		response.is_unconditional(),
+		"a blocked response is conditional — the unreachable-response validator depends on it"
+	)
+
+
+func test_cross_npc_branch_exclusion() -> void:
+	var offer_b := _response("Side with us instead.", &"npc_b")
+	offer_b.blocked_by_journal = [&"branch_a_taken"] as Array[StringName]
+	var topic := _topic(&"the_choice", [offer_b])
+	assert_same(_pick(topic, &"npc_b"), offer_b, "branch B offered before A is taken")
+	_journal.add_entry(&"branch_a_taken")
+	assert_null(_pick(topic, &"npc_b"), "taking branch A at another NPC retires B's offer")
+
+
 # --- available_topics (criterion 4) ---
 
 

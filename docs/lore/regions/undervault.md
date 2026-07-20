@@ -1,7 +1,7 @@
 ---
 title: The Undervault
 type: region
-status: draft
+status: canon
 region: world
 pitch: "A roofed island that hides its whole civilization from a sky that harvests."
 spoiler: none
@@ -28,7 +28,8 @@ building, shuttered and buttressed, with no open windows above the third
 reach. Around it, gate-towns and vent-warrens cling to covered routes.
 Above, the sky belongs to the hives that enforce [[the_taking]]; around,
 the sea belongs to leviathans; below, lava veins are the under-sun that
-lights and warms the caverns. Nobody leaves. Nothing arrives.
+lights and warms the caverns. Nobody leaves; nothing arrives — the
+player is the first exception anyone can prove.
 
 ## Visible traits
 
@@ -50,10 +51,10 @@ than the Coming.
 
 ## Relationships
 
-Ruled loosely by a weak central figure at [[highroof]] (shape decided in
-the factions pass). Parishes tend the lava vents; guilds run the roofed
-roads and salvage trade (cultures and factions passes). Everything under
-[[the_taking]].
+Ruled loosely by the weak crown at [[highroof]] ([[the_crown]], shaped
+by [[crown_compact]]). Parishes tend the lava vents
+([[vent_parishes]]); guilds run the roofed roads and salvage trade
+([[licensed_crews]]). Everything under [[the_taking]].
 
 Contains — settlements: [[highroof]] · [[tidegate]] · [[embershare]] ·
 [[lastdoor]]. Roads: [[tide_road]] · [[ember_road]] · [[last_road]].
@@ -64,13 +65,13 @@ Danger: [[the_scar]] · [[open_fields]]. Landmarks and depths:
 
 ## Quest hooks
 
-- A gate-town on the verge of refusing the citadel's roof-tax — the first
-  test of whose word holds where the roof ends.
+- [[tidegate]] on the verge of refusing the citadel's roof-tax — the
+  first test of whose word holds where the roof ends.
 - A salvage contract for something absurdly mundane — grain-seed from a
   surface granary — priced like treasure, because it is.
 - A kept-name tablet found *on the surface*, face-up, where no tablet
-  should be — and the name on it is still recited nightly in a gate-town
-  grief-court.
+  should be — and the name on it still stands in a gate-town
+  grief-court's circuit.
 
 ## Environmental storytelling
 

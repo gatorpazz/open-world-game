@@ -1,7 +1,7 @@
 ---
 title: The Lastlight
 type: culture
-status: draft
+status: canon
 region: undervault
 pitch: "They held the surface longest and paid for every hour — the people of the word-hoard, the sky-scarf, and the song."
 spoiler: none

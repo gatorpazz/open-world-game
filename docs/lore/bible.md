@@ -1,8 +1,12 @@
 ---
 title: World Bible
 type: hub
-status: draft
+status: canon
 region: world
+pitch: "The hub of the canon vault — the world promise, its rules, and the reachability root."
+spoiler: none
+surface:
+  - none
 ---
 
 The hub of the lore vault (spec 011) and the reachability root: every live
@@ -14,9 +18,10 @@ derived details remain draft until ratified.
 ## Core promise
 
 **The fantasy:** you are the outsider a hidden world learns to trust —
-washed ashore into the roofed island of [[undervault]], climbing its
-parishes and guilds until the factions ask you the only question that
-matters: does the island keep hiding from the sky, or fight for it?
+found impossibly untaken in a bait square of the roofed island of
+[[undervault]], climbing its parishes and guilds until the factions ask
+you the only question that matters: does the island keep hiding from
+the sky, or fight for it?
 
 **The twist that is law:** [[the_taking]] — stand under open sky and the
 hives will come for you; levitation is the predator's own art, stolen.
@@ -40,16 +45,19 @@ is one continuous temple.
 
 - **Cosmology:** the sky is not heaven — it is held territory. Warmth and
   light rise from below, from the lava veins that serve as the caverns'
-  under-sun (infrastructure and mystery both; divinity status open).
+  under-sun (infrastructure and mystery both; divinity disputed by
+  design — [[the_workings]]).
 - **The law:** [[the_taking]] — the rule of record for the roofed world.
 - **Magic:** real, aspected, and administered by religious orders of the
   pantheon — the rule of record is [[the_workings]] (M2 magic pass,
   feeds spec 008); levitation exists and is the most precious and
   contested art, stolen by watching and tri-key licensed.
 - **Technology:** rope, stone, fungus-craft, chitin-wrighting, lava-glass;
-  heat and light are governed utilities — deeded in the Highroof, held as
-  parish commons in Embershare; the rivalry between the two regimes is
-  deliberate and unresolved.
+  timber and paper are closed stocks — pre-Coming beams, surface
+  salvage, and rag-fungus pulp, with true daylight paper an archival
+  treasure; heat and light are governed utilities — deeded in the
+  Highroof, held as parish commons in Embershare; the rivalry between
+  the two regimes is deliberate and unresolved.
 - **Economy:** [[the_shares]] — bead-glass cash under three credit
   layers; heat-capped growth; toll, tithe, and the sea's share; the
   warden-declared seal of high-sky season.
@@ -103,7 +111,10 @@ roofed roads, the salvage trade, and the fisheries; a deliberately weak
 crown arbitrates ([[crown_compact]]). The powers (factions pass): the
 three joinable guilds — [[wardens]], [[reciters]], [[licensed_crews]] —
 and the supporting powers [[vent_parishes]], [[chitin_wrights]], and
-[[the_crown]]. The wildlife of the dark is drafted in its M2 pass.
+[[the_crown]]. The fight-for-the-sky pole of the Core promise lives at
+the reciters' radical edge: the Homebringers, the heresy that reads
+*kept, not dead* as a debt — open the sky, bring the Taken home. The
+wildlife of the dark: [[hush_moths]], [[scar_hound]], [[vault_rat]].
 
 ## Content grammar
 

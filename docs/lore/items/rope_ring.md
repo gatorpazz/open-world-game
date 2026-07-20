@@ -1,7 +1,7 @@
 ---
 title: Rope-Ring
 type: item
-status: draft
+status: canon
 region: undervault
 pitch: "A finger-ring worked from retired rope — Lastlight craft that says crew, kin, and firsts without a word."
 spoiler: none

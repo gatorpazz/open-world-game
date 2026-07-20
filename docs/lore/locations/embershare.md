@@ -1,7 +1,7 @@
 ---
 title: Embershare
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: settlement
 pitch: "The vent-warren where heat is a commons, bread is a liturgy, and every bell on the island is born."
@@ -48,8 +48,9 @@ everyone knows and no one says aloud.
 ## Relationships
 
 Feeds and arms [[highroof]] via the [[ember_road]]. Home of the
-[[bellworks]]. Its vent-parish and smith-guild take shape in the
-factions pass.
+[[bellworks]]. Its vent-parish is the great chapter of the
+[[vent_parishes]]; the smiths carry guild-shaped weight with no
+charter of their own yet.
 
 ## Quest hooks
 

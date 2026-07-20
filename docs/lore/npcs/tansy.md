@@ -1,7 +1,7 @@
 ---
 title: Tansy
 type: npc
-status: draft
+status: canon
 region: undervault
 culture: lastlight
 pitch: "Lastdoor's simples-seller — terrace fungus and salvaged rarities, named for a healing plant of the lost surface."

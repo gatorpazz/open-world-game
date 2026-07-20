@@ -1,7 +1,7 @@
 ---
 title: The Sealing of the Reaches
 type: timeline_event
-status: draft
+status: reviewed
 region: undervault
 era: the_coming
 order: 40

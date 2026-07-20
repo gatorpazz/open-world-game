@@ -1,7 +1,7 @@
 ---
 title: The Sealed Reaches
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: dungeon
 pitch: "The Highroof's mortared crown — wards shut from the inside, and a throne that pays for reports of sounds."
@@ -47,7 +47,7 @@ audits it).
 
 The crown of [[highroof]], above the [[undersun_galleries]]' reach,
 neighbor to nothing — the sealed wards touch open sky on every outer
-face. What sealed them ties to the Coming (timeline pass).
+face. What sealed them: [[sealing_of_the_reaches]].
 
 ## Quest hooks
 
@@ -69,5 +69,7 @@ watched a mason work.
 
 - What is the Reaches' truth — refuge, tomb, cage, or bargain? (All of
   it spoiler: high; the observable stays exactly as written.)
-- When exactly were they sealed, and under whose crown? (Timeline
-  pass.)
+- ~~When exactly were they sealed, and under whose crown~~ — answered
+  ([[sealing_of_the_reaches]]): in the Coming's years, before any
+  crown existed to answer for it; the record's brevity is its own
+  monument.

@@ -1,7 +1,7 @@
 ---
 title: The Undersun Galleries
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: landmark
 pitch: "The light-well system that gives the Highroof its bronze noon — light as property, mirrors as inheritance."

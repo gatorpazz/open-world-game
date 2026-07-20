@@ -153,6 +153,23 @@ func test_m3_schema_stress_two_per_typed_folder() -> void:
 		assert_gt(counts.get(type, 0), 1, "at least 2 non-deprecated %s entries (M3)" % type)
 
 
+func test_m3_first_canon_batch_floor() -> void:
+	var bible := _vault.entries.get(&"bible") as LoreEntry
+	assert_not_null(bible, "bible.md loads")
+	if bible != null:
+		assert_eq(bible.status, &"canon", "the bible is ratified canon")
+	var canon_by_type: Dictionary[StringName, int] = {}
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.status != &"canon":
+			continue
+		if entry.type == &"region" and entry.frontmatter.get_list("tags").has("locked"):
+			continue
+		canon_by_type[entry.type] = canon_by_type.get(entry.type, 0) + 1
+	assert_gt(canon_by_type.get(&"region", 0), 0, "the active region is canon")
+	for type: StringName in [&"culture", &"faction", &"location"]:
+		assert_gt(canon_by_type.get(type, 0), 0, "at least 1 canon %s (M3)" % type)
+
+
 func test_m1_active_region_exists_and_is_reachable() -> void:
 	var regions := 0
 	var reachable := _vault.reachable_from(&"bible")

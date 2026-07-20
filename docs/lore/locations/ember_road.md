@@ -1,7 +1,7 @@
 ---
 title: The Ember Road
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: route
 pitch: "The warm road — the island's busiest artery, where bread, glass, and gossip move at the speed of the bell."
@@ -52,6 +52,9 @@ informal parliament.
   the ousted family wants to know whose name is on the patronage line.
 - Someone is posting notices in a cipher; the wardens tear them down,
   and by next bell they are back.
+- One span near the midpoint goes cold every ninth day — the parish
+  calls it maintenance, and the vent-channel map shows no channel
+  under that span at all.
 
 ## Environmental storytelling
 

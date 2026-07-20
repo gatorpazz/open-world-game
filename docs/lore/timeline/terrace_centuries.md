@@ -1,7 +1,7 @@
 ---
 title: The Terrace Centuries
 type: timeline_event
-status: draft
+status: reviewed
 region: undervault
 era: the_daylight
 order: 10

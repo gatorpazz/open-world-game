@@ -1,7 +1,7 @@
 ---
 title: The Tide Road
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: route
 pitch: "The dripping causeway between the Highroof and the sea — fish-carts, toll-lights, and the smell of the water you never see."
@@ -50,6 +50,9 @@ often than its toll-books admit.
   end of the road.
 - A lamp-porter has stopped refilling one specific niche, and travelers
   who rest in its dark are losing things.
+- The toll-book shows the same crate weighed twice at the same
+  toll-light, lighter the second time — and between the weighings it
+  never left the road.
 
 ## Environmental storytelling
 
@@ -59,4 +62,5 @@ around a repaired collapse nobody remembers happening.
 
 ## Open questions
 
-- Who holds the road's law between bells? (Factions pass.)
+- Who holds the road's law between bells? (Open — the factions pass
+  left it unclaimed; quest-level.)

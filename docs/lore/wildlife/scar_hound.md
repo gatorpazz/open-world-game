@@ -1,7 +1,7 @@
 ---
 title: Scar-Hounds
 type: wildlife
-status: draft
+status: canon
 region: undervault
 pitch: "Pack predators denning in the Scar's galleries — when the galleries go hungry, the covers hear them first."
 spoiler: none

@@ -1,7 +1,7 @@
 ---
 title: Swift
 type: npc
-status: draft
+status: canon
 region: undervault
 culture: lastlight
 pitch: "Lastdoor's moth-catcher — named for a vanished bird that hunted on the wing, and guarded about where he hangs his cages."

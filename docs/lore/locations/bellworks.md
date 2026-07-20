@@ -1,7 +1,7 @@
 ---
 title: The Bellworks
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: landmark
 pitch: "Half foundry, half temple at Embershare's vent — where every bell on the island is born, and one recent bell rings wrong."
@@ -42,9 +42,10 @@ lava-glass wall.
 ## Systems impact
 
 Bell-code is the island's nervous system; the Bellworks holds its
-integrity. The Rolls double as a census of public works (timeline
-pass will mine them). Founding rights are parish-held; guild founders
-dispute the margins (factions pass).
+integrity. The Rolls double as a census of public works (the Bell
+Rolls date the eras' public record). Founding rights are parish-held
+([[vent_parishes]]); the founders dispute the margins with no charter
+of their own.
 
 ## Relationships
 

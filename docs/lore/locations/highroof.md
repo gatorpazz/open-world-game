@@ -1,7 +1,7 @@
 ---
 title: The Highroof
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: settlement
 pitch: "The citadel-mountain city — a peak that is a building, and the roof every other roof shelters under."
@@ -50,8 +50,8 @@ Rents rise with distance from the light-wells.
 
 Contains [[grief_court]], [[sealed_reaches]], [[undersun_galleries]],
 and [[first_roof]] beneath. Fed by [[embershare]]'s terraces and
-[[tidegate]]'s catch. The crown's shape and the guilds' seats are the
-factions pass's work.
+[[tidegate]]'s catch. The crown is [[the_crown]]; the guild seats
+belong to the [[wardens]], [[reciters]], and [[licensed_crews]].
 
 ## Quest hooks
 
@@ -72,8 +72,9 @@ crown's tower, that is not wrapped and never rings.
 
 ## Open questions
 
-- The crown: founding shape fixed by [[crown_compact]]; name,
-  incumbents, and the true why remain the factions pass's work.
+- The crown: founding shape fixed by [[crown_compact]]; the true why
+  is ruled recited-both-ways ([[the_crown]]); names and incumbents
+  land with spec 006/010.
 - How many wards, and which do specs 006/010 actually build? (Slice
   scoping, spec 010.)
 - ~~Warden allegiance~~ — ruled (factions pass): the [[wardens]] are a

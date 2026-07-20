@@ -1,7 +1,7 @@
 ---
 title: The Crown
 type: faction
-status: draft
+status: reviewed
 region: undervault
 pitch: "The office everyone wants kept weak — an arbiter, a roll of assents, a purse for sounds, and now a stranger to file."
 spoiler: low

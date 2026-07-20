@@ -1,7 +1,7 @@
 ---
 title: The First Kept Names
 type: timeline_event
-status: draft
+status: reviewed
 region: undervault
 era: the_coming
 order: 30
@@ -64,6 +64,6 @@ blank final width of wall, left unfilled, waiting.
 
 ## Open questions
 
-- Who scratched the vow? (The tellings' second-oldest fight; cultures
-  pass decides which orders claim the hand.)
+- Who scratched the vow? (The tellings' second-oldest fight — open;
+  the cultures pass left it undecided, and the tellings still fight.)
 - What do the unreadable columns say? (Reserved; see [[first_roof]].)

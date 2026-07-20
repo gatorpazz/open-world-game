@@ -1,7 +1,7 @@
 ---
 title: The Drowned Stair
 type: location
-status: draft
+status: canon
 region: undervault
 kind: dungeon
 pitch: "The switchback descent at the Scar's floor, ending at a gate to the Deep Roads — sealed from the other side."
@@ -48,8 +48,8 @@ wardens cannot price — which is why cachers love it.
 ## Relationships
 
 The floor of [[the_scar]]; kin to the canyon's exposed masonry; the
-threshold of the locked Deep Roads region. What built the stair
-predates the Coming (timeline pass).
+threshold of the locked [[deep_roads]]. What built the stair predates
+the Coming and belongs to no era — reserved with the region below.
 
 ## Quest hooks
 

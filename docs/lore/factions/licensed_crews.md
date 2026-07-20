@@ -1,7 +1,7 @@
 ---
 title: The Licensed Crews
 type: faction
-status: draft
+status: canon
 region: undervault
 pitch: "The people who bring the Daylight back down, jar by jar — and don't report everything they find."
 spoiler: low

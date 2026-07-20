@@ -1,7 +1,7 @@
 ---
 title: The Leviathan Ribs
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: landmark
 pitch: "The skeleton arching Tidegate's cave mouth — gate, shrine, and scaffold from a beast that chose the shore over the sea."
@@ -23,10 +23,9 @@ sea's counterweight to the sky's hives.
 
 The beast came ashore in living memory's grandparents' time: drove
 itself against the cliff at [[tidegate]]'s cave mouth and died over
-nine days, during which the port fed it, sang to it, or hid from it,
-depending on whose grandmother tells it. The port sang to it for the nine
-days — the fed and hid tellings survive in minority families — and its
-ribs were left where they settled as the port grew through them:
+nine days, and the port sang to it for all nine — the fed and hid
+tellings survive in minority families — and its ribs were left where
+they settled as the port grew through them:
 crane-mounts bolted to bone, lamp-hooks in the vertebrae, the
 tally-carvings of every season since. Fishers touch the third rib
 going out and the first coming home. What it fled is not discussed

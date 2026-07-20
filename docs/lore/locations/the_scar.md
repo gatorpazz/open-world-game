@@ -1,7 +1,7 @@
 ---
 title: The Scar
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: danger_zone
 pitch: "The collapse-canyon no roof can span — the island's open wound, and the only road for those who cannot pay the bridge."
@@ -50,8 +50,8 @@ The galleries are the island's black market ([[the_shares]]).
 
 Severs the [[last_road]]; crossed by the [[chitin_bridge]]; holds the
 [[drowned_stair]]. Denning ground of the [[scar_hound]] packs. The
-exposed older masonry predates the Coming — timeline pass owns what
-it was.
+exposed older masonry predates the Coming and belongs to no era —
+reserved with the [[deep_roads]].
 
 ## Quest hooks
 

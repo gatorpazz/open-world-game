@@ -1,7 +1,7 @@
 ---
 title: The Underfirst
 type: culture
-status: draft
+status: canon
 region: undervault
 pitch: "First under the roof and proud of it — the people of the count, the seal, and the hearth-name."
 spoiler: none

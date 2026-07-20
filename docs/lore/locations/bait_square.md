@@ -1,7 +1,7 @@
 ---
 title: The Bait Square of Lastdoor
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: landmark
 pitch: "The scorched plaza where wardens measure the sky's attention — and where the island's one impossible arrival lay untaken."
@@ -71,4 +71,8 @@ player lay — added after, by hands, in reverence or in quarantine.
 
 - What did the tallies record during the arrival window? (Spoiler:
   high; the wardens themselves dispute the readings.)
-- Warden doctrine's author and age? (Timeline/factions passes.)
+- ~~Warden doctrine's author and age~~ — dated ([[warden_doctrine]],
+  the Coming's era); the first warden's name stays unfixed.
+- The tethered lures: what is tethered, and what does doctrine feed
+  the sky to test it? (Reserved-adjacent; spoiler: high with the
+  marking mechanism.)

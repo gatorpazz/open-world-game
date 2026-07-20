@@ -1,7 +1,7 @@
 ---
 title: The Wardens
 type: faction
-status: draft
+status: canon
 region: undervault
 pitch: "The order that answers to no one but the tables — and the tables just met the one case they cannot price."
 spoiler: low

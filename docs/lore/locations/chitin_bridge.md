@@ -1,7 +1,7 @@
 ---
 title: The Chitin Bridge
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: landmark
 pitch: "The one span over the Scar — built from the enemy's own bones, and the most political object on the island."

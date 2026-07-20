@@ -1,7 +1,7 @@
 ---
 title: Vault Rats
 type: wildlife
-status: draft
+status: canon
 region: undervault
 pitch: "The roofed world's universal vermin — fungus-fed, everywhere, and worth a bounty at the quartermaster's counter."
 spoiler: none

@@ -1,7 +1,7 @@
 ---
 title: Lastdoor
 type: location
-status: draft
+status: canon
 region: undervault
 kind: settlement
 pitch: "The salvage town at the final gate before the open — where the roof ends and the price of everything is the sky."
@@ -49,8 +49,8 @@ Lastdoor's goods pay two tolls — a standing grievance.
 ## Relationships
 
 Gateway to the [[open_fields]]; keeper of the [[bait_square]]. Linked to
-[[highroof]] by the severed [[last_road]]. Salvage crews and wardens
-organize in the factions pass. First faces of the gate trade:
+[[highroof]] by the severed [[last_road]]. Salvage crews and wardens:
+[[licensed_crews]] and [[wardens]]. First faces of the gate trade:
 [[suddel]] at the warehouse-row counter, [[swift]] at the warden
 post's cage-hooks, [[tansy]] in the market row.
 

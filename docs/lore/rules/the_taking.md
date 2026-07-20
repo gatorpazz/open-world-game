@@ -1,7 +1,7 @@
 ---
 title: The Taking
 type: world_rule
-status: draft
+status: canon
 region: world
 pitch: "Stand under open sky and the hives will come for you — the law that roofed the world."
 spoiler: none
@@ -22,7 +22,7 @@ on it.
 ## Canon summary
 
 Generations ago the hives came, and the open sky stopped belonging to
-people. To stand unroofed in daylight is to be marked, and the marked are
+people. To stand under open sky is to be marked, and the marked are
 Taken — carried up alive to the floating hives. The island survived by
 going under: under stone, under roof, under law. The Taken are not mourned
 as dead; their names are kept and recited, because no one has ever proven

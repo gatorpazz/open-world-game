@@ -1,7 +1,7 @@
 ---
 title: Tidegate
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: settlement
 pitch: "The sea-cave port that fishes a sea nobody sails, through the ribs of a leviathan that beached itself fleeing something."
@@ -49,8 +49,9 @@ wardens argue jurisdiction with net-bosses weekly.
 ## Relationships
 
 Feeds [[highroof]] by the [[tide_road]]. The [[leviathan_ribs]] are its
-gate, shrine, and scaffold at once. Net-bosses and salters organize into
-a guild (factions pass).
+gate, shrine, and scaffold at once. Net-bosses and salters organize
+crew-fashion; a chartered port guild remains unformed (see Open
+questions).
 
 ## Quest hooks
 
@@ -76,8 +77,11 @@ own trade.
   fishery's dread crime, worse than crossing ([[the_shares]]). Who set
   the lines, what keeps them, and what breaks them stay reserved
   (spoiler: high).
-- Where exactly does sky-law end over water? (Undecided — and unbilled
-  while the dispute stands ([[the_shares]]). The wardens and
-  net-bosses argue it weekly — see Systems impact.)
+- Where exactly does sky-law end over water? (Open — the wardens and
+  net-bosses argue it weekly, and no ruling has been sought; see
+  Systems impact.)
 - What was the leviathan fleeing? (Never answered casually; ban — no
   mindless swarm — applies to the sea as much as the sky.)
+- The port's net-bosses and salters carry guild-shaped weight with no
+  charter — does a fourth guild ever form here, or does the port stay
+  crew-law? (A factions-pass gap, held open; director/Phase 2.)

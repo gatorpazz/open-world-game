@@ -1,7 +1,7 @@
 ---
 title: The Going-Under
 type: timeline_event
-status: draft
+status: reviewed
 region: undervault
 era: the_coming
 order: 20
@@ -41,7 +41,7 @@ a survival rite then.
 The legal fiction that all Vaultfolk share one roof descends from the
 refuge season — it is why the crown can arbitrate at all, and why
 exiling someone "from the roof" is the heaviest sentence the island
-has (factions pass owns its use).
+has (its use is quest-level; spec 006).
 
 ## Relationships
 
@@ -64,4 +64,5 @@ hold up. Tallow soot in strata, thickest at the bottom.
 ## Open questions
 
 - Who kept order in the refuge season — and is any current office
-  their heir? (Factions pass; candidate root for wardens or reciters.)
+  their heir? (Open — the factions pass left no ruling; candidate
+  root for the [[wardens]] or [[reciters]]; director.)

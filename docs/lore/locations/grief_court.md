@@ -1,7 +1,7 @@
 ---
 title: The Grief-Court of the Highroof
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: landmark
 pitch: "The island's great open courtyard — thousands of kept names offered to the sky like an accusation."
@@ -48,7 +48,7 @@ death — the rarest and heaviest legal act on the island.
 Within [[highroof]]; sister courts in every settlement; the crew
 shrine at [[lastdoor]] borrows its forms for the lost-not-Taken; the
 nine-day circuit closes at the [[first_roof]]'s name-columns. The
-rite's keepers take shape in the factions pass.
+rite's keepers are the [[reciters]].
 
 ## Quest hooks
 
@@ -74,7 +74,7 @@ the wall, decades ago, never righted, never explained.
 - The rite's origin — first *recitation* answered by
   [[first_kept_names]] (reading the wall aloud so the names would not
   go silent); first formal court and first titled reciter remain open
-  (factions/cultures passes).
+  (quest and dialogue material, spec 006/010).
 - ~~The two nines~~ — ruled (timeline pass): nine is liturgical. The
   circuit took its length from [[the_beaching]]'s nine days; nines
   propagate through mourning-rite island-wide.

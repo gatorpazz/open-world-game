@@ -1,7 +1,7 @@
 ---
 title: The Last Road
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: route
 pitch: "The severed road — it set out for Lastdoor and met the Scar, and everything since has crossed on someone's terms."
@@ -16,7 +16,7 @@ surface:
 The covered spoke between [[highroof]] and [[lastdoor]] — severed
 mid-length by [[the_scar]] and stitched back together by the
 [[chitin_bridge]]. The road that makes the island's politics physical:
-every salvaged jar pays the bridge before it pays the crown.
+every salvaged jar pays twice between the fields and a Highroof shelf.
 
 ## Canon summary
 
@@ -52,6 +52,9 @@ Runs [[highroof]] ↔ [[lastdoor]], broken at [[the_scar]], crossing at
   by three carts a week, every week, in the same direction.
 - A road-marker near the break has been re-carved to count a distance
   that no longer exists — freshly.
+- The wind through the deck seams died for three nights running — the
+  Scar stopped breathing — and the gallery folk moved their squats up
+  two levels without telling anyone why.
 
 ## Environmental storytelling
 

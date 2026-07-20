@@ -1,7 +1,7 @@
 ---
 title: The First Roof
 type: location
-status: draft
+status: reviewed
 region: undervault
 kind: dungeon
 pitch: "The refuge cavern of the Coming, fossilized under the city it became — where the first names were kept before keeping had rules."
@@ -72,7 +72,8 @@ of [[the_scar]] would recognize.
 
 ## Open questions
 
-- What do the unreadable columns say, and who can read them? (Timeline
-  and cultures passes; candidate spoiler: high.)
+- What do the unreadable columns say, and who can read them? (The
+  Column-Readers claim the right — [[reciters]]; reserved, spoiler:
+  high.)
 - Why is there recent dust in sealed air? (Reserve; the observable
   stays as written.)

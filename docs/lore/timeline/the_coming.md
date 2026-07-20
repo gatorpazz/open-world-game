@@ -1,7 +1,7 @@
 ---
 title: The Coming
 type: timeline_event
-status: draft
+status: reviewed
 region: undervault
 era: the_coming
 order: 10

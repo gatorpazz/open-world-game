@@ -1,7 +1,7 @@
 ---
 title: Scrimshaw Token
 type: item
-status: draft
+status: canon
 region: undervault
 pitch: "A carved fragment of the beached leviathan — Tidegate's signature luxury, the island's most-smuggled good, and a grief-gift with weight."
 spoiler: none

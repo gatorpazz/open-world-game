@@ -1,7 +1,7 @@
 ---
 title: The Shares
 type: world_rule
-status: draft
+status: canon
 region: world
 pitch: "Everything under the roof is a share of something held, or a toll on passage — the island's economic law."
 spoiler: none
@@ -118,9 +118,9 @@ a cook ever touches it.
   ([[chitin_bridge]]).
 - Has the sea's share ever gone unpaid by a whole season — and what
   happened? (Reserved with the truce's deeper truth; spoiler: high.)
-- Where sky-law ends over water stays open and unbilled while the
-  dispute stands ([[tidegate]], [[the_workings]]); whether a crown
-  hearing ever prices the cave-mouth is quest-level.
+- Where sky-law ends over water stays open ([[tidegate]],
+  [[the_workings]]); whether anyone can bill the cave-mouth is part of
+  the argument, and no ruling has been sought.
 - Numeric rates, prices, and wages live in balance data, never in lore
   prose — the boundary line for spec work.
 - Which chapter holds the [[ember_road]]'s stall grants stays open for
@@ -128,3 +128,7 @@ a cook ever touches it.
 - The [[underfirst]] counting-string and the cash-string share a wrist
   and a material — one string, two strings, or is that the island's
   oldest joke about faith and arithmetic? (Cultures detail; unfixed.)
+- What exactly seals in high-sky season — sky-gates only, or the roads
+  too? The sealed-weeks emptiness ([[scar_hound]]) assumes the roads
+  thin; rule the mechanics before spec work prices the season.
+  (Director.)

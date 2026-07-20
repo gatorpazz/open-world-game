@@ -1,7 +1,7 @@
 ---
 title: The Reciters
 type: faction
-status: draft
+status: canon
 region: undervault
 pitch: "The island's holiest office and its oldest guilt — the penance order that keeps every name, and one question, alive."
 spoiler: low
@@ -29,7 +29,10 @@ Their private truth is layered: the inner circle keeps the unresolved
 question of whether their forebears read the stillness and said
 nothing — and someone among them authorized the fresh-mortar tablet
 removal at the [[grief_court]] that the order's own law says cannot
-happen.
+happen. And at the order's radical edge a young heresy grows from the
+vow itself: the Homebringers, who read *kept, not dead* as a debt
+unpaid — the sky must be opened and the Taken brought home, and
+grief, in their mouths, is a war the island has not started yet.
 
 ## Visible traits
 
@@ -84,3 +87,6 @@ years around it, in every hand, in every century.
 - Do the Column-Readers actually read the oldest columns, or only
   claim the right to try? (Reserved with the High Register's
   vocabulary.)
+- The Homebringers: how many, how organized, and how far will the
+  order let the heresy grow before it acts? (Quest spine material,
+  spec 006; the name is drafted coinage — director veto welcome.)

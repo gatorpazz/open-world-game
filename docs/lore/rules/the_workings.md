@@ -1,7 +1,7 @@
 ---
 title: The Workings
 type: world_rule
-status: draft
+status: canon
 region: world
 pitch: "To work magic is to draw regard — and regard is the one thing the roofed world cannot afford to gather."
 spoiler: none
@@ -32,7 +32,7 @@ vent-parish umbrella — the Flame, the Stone, and the Tide, plain-named
 in folk speech, their true names High Register and rite-only. The
 worker's price is notice: a working makes the worker remarkable, spent
 in the same currency the open sky prices, and to work too much is to
-be marked under any roof. Levitation stands apart — no aspect, no
+remain remarkable under any roof. Levitation stands apart — no aspect, no
 god's art: stolen by watching the Takings themselves, an imitation of
 the lift, and licensed by no single power. Whether the lava veins are
 the Flame's living attention or deeded property is the island's
@@ -44,7 +44,7 @@ ever won.
 Blessing-marks and hearth-charms wherever the roof holds — an oven
 blessed, a bell quieted, a doorway hushed: the art at hearth level,
 free and unlicensed. Lamps lidded and hooded, light pointing down or
-in; nothing on the island is built to be seen. Moth-cages hung at
+in; nothing on the island is built to be seen from above or afar. Moth-cages hung at
 warden posts and shaft-mouths ([[hush_moths]]). And in the licensed
 shafts of [[highroof]], the rising itself: arms loose, head back, feet
 together — the posture of the Taken, practiced as a rite and watched
@@ -129,10 +129,14 @@ the same motion as the morning lamp-lighting.
   what does that tone gather? (Reserved; spoiler: high.)
 - Did the sky ever have a god and a true name? The orders are silent,
   and the silence is old. (Reserved; spoiler: high adjacency.)
-- Where sky-law ends over water stays open at [[tidegate]] —
-  undecided, and unbilled while the dispute stands ([[the_shares]]).
+- Where sky-law ends over water stays open at [[tidegate]] — the
+  wardens and net-bosses argue it weekly, and no ruling has been
+  sought.
 - Spec 008 scoping: which arts reach the player as learnable skills in
   the slice, what the overcast state is mechanically, and how the
   shaft-rite plays. (Spec 008, with the director.)
 - The Daylight priesthood served gods — these three? A fourth? (Timeline
   adjacency; reserved with the High Register's vocabulary.)
+- The bead is worked, blessed glass, and worked glass holds regard
+  ([[the_shares]]) — is a rich wrist a small gathering, and does
+  wealth carry sky-risk? (Feature-shaped hole; director + spec 008.)

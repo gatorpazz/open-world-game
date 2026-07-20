@@ -1,7 +1,7 @@
 ---
 title: Suddel
 type: npc
-status: draft
+status: canon
 region: undervault
 culture: underfirst
 pitch: "Lastdoor's crew quartermaster — the Underfirst hand keeping a Lastlight crew's licensed book, careful about what he never sees."
@@ -65,15 +65,13 @@ every manifest at the gate ([[vent_parishes]]).
 ## Environmental storytelling
 
 The bounty shelf of pelts tagged and tallied in thirds. Contract
-papers folded in thirds and sealed in the counter's niche. A bead
-turned on his wrist-string for every crew member out beyond the gate
-tonight — the hearth custom, carried to work.
+papers folded in thirds and sealed in the counter's niche. On the
+shutter edge, the out-crew chalked in his careful hand, crew-style,
+each name rubbed out as it comes back through the gate — an Underfirst
+string at his wrist and Lastlight chalk under his thumb.
 
 ## Open questions
 
 - The crew's name, boss, and standing (quest casting; spec 006/010).
 - His hearth-name, and who on the island has been offered it.
   (Intimacy canon; director taste.)
-- His counter-bead custom inverts the hearth form — counting the
-  exposed rather than the sheltered ([[underfirst]] doorway custom).
-  Confirm the custom bends this way before promotion. (Director.)

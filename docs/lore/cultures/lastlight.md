@@ -36,8 +36,9 @@ singing, and it needed no penance.
 Weathered wraps in fungal brights — daylight-color worn as defiance.
 The sky-scarf at every neck: a broad cloth that can be pulled
 overhead in one motion, a portable roof and the culture's signature
-gesture. Rope-work rings, scrimshaw tokens, crew-marks chalked on
-sleeves. Louder in a market, quieter at an ebb-tide funeral.
+gesture. Rope-work rings ([[rope_ring]]), scrimshaw tokens
+([[scrimshaw_token]]), crew-marks chalked on sleeves. Louder in a
+market, quieter at an ebb-tide funeral.
 
 ## Systems impact
 

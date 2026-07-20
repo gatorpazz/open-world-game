@@ -49,8 +49,9 @@ The galleries are the island's black market ([[the_shares]]).
 ## Relationships
 
 Severs the [[last_road]]; crossed by the [[chitin_bridge]]; holds the
-[[drowned_stair]]. The exposed older masonry predates the Coming —
-timeline pass owns what it was.
+[[drowned_stair]]. Denning ground of the [[scar_hound]] packs. The
+exposed older masonry predates the Coming — timeline pass owns what
+it was.
 
 ## Quest hooks
 

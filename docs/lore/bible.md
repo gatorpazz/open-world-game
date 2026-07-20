@@ -82,8 +82,9 @@ older than the spine and stays undated on purpose.
 - **Active:** [[undervault]] — the roofed island, the whole playable world
   of the vertical slice.
 - **Locked (future regions, entries to come with their passes):** the
-  Hives above; the Deep Roads below; the leviathan sea around. Vertical
-  regions — the island stacks rather than sprawls.
+  Hives above; the Deep Roads below ([[deep_roads]], stub); the
+  leviathan sea around. Vertical regions — the island stacks rather
+  than sprawls.
 - **Travel methods:** roofed arteries and under-roads (safe, slow, tolled)
   · open-ground crossings (fast, sky-priced) · shaft-levitation inside
   enclosed verticals · no open water, no open flight.

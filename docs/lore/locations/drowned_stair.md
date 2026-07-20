@@ -33,7 +33,10 @@ squats the lower ones.
 Stair treads cut for a confident stride, worn by none. Waterline
 stains marking centuries of rise and fall. The gate: seamless fit,
 no handle on this side, a sill swept clean by water — or by something.
-Vein-light through the flood like a second, drowned sky.
+Vein-light through the flood like a second, drowned sky. And in the
+flooded lower flights, glimpsed and never chased: the stair-drowned —
+person-shaped, wading, the unstated reason nobody squats below the
+waterline marks.
 
 ## Systems impact
 
@@ -68,3 +71,7 @@ old masonry's own numbering. The swept sill.
   up or down? (Deep Roads region material; spoiler: high.)
 - Does anything answer the bell-code knock? (Reserve the answer; the
   hook's job is the question.)
+- The stair-drowned: whose dead, why wading, and what they are to the
+  gate — all reserved with the stair's deeper truth (spoiler: high).
+  The observable stays exactly as written; the honored dead go down
+  into stone, and these did not.

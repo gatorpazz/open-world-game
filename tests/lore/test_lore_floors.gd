@@ -132,6 +132,27 @@ func test_m2_economy_floors() -> void:
 	assert_gt(economy_rules, 0, "at least 1 rules entry tagged economy")
 
 
+func test_m3_schema_stress_two_per_typed_folder() -> void:
+	var counts: Dictionary[StringName, int] = {}
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.status == &"deprecated" or entry.type == &"hub":
+			continue
+		counts[entry.type] = counts.get(entry.type, 0) + 1
+	var all_types: Array[StringName] = [
+		&"world_rule",
+		&"timeline_event",
+		&"region",
+		&"location",
+		&"culture",
+		&"faction",
+		&"npc",
+		&"wildlife",
+		&"item",
+	]
+	for type: StringName in all_types:
+		assert_gt(counts.get(type, 0), 1, "at least 2 non-deprecated %s entries (M3)" % type)
+
+
 func test_m1_active_region_exists_and_is_reachable() -> void:
 	var regions := 0
 	var reachable := _vault.reachable_from(&"bible")

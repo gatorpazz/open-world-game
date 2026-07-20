@@ -21,7 +21,8 @@ showing its edge — and where breaking it is a profession.
 ## Canon summary
 
 Lastdoor grew around the Last Gate, the final roofed door before the
-abandoned surface terraces. Its economy is the open: salvage crews run
+abandoned surface terraces; the town and its covered edges together
+are the gate-country in folk speech. Its economy is the open: salvage crews run
 grain-seed, tools, and glass out of the old world's granaries and
 workshops, priced by the exposure it costs to fetch them. The wardens
 keep their largest post here, run the bait squares, and log the sky's
@@ -49,7 +50,9 @@ Lastdoor's goods pay two tolls — a standing grievance.
 
 Gateway to the [[open_fields]]; keeper of the [[bait_square]]. Linked to
 [[highroof]] by the severed [[last_road]]. Salvage crews and wardens
-organize in the factions pass.
+organize in the factions pass. First faces of the gate trade:
+[[suddel]] at the warehouse-row counter, [[swift]] at the warden
+post's cage-hooks, [[tansy]] in the market row.
 
 ## Quest hooks
 

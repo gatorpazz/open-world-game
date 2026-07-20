@@ -43,8 +43,8 @@ truce-line lanes and the cold bright water.
 
 The ribs are Tidegate's fixed infrastructure — cranes, gantries,
 lamp-mounts; replacing them is unthinkable in both senses. Scrimshaw
-from loose fragments is the port's signature luxury and its most
-smuggled good ([[tide_road]]). The nine-days story is the port's civic
+from loose fragments ([[scrimshaw_token]]) is the port's signature
+luxury and its most smuggled good ([[tide_road]]). The nine-days story is the port's civic
 identity and its argument with itself.
 
 ## Relationships

@@ -41,8 +41,9 @@ matters closed without explanation.
 
 A standing exception inside parish law: a tier held empty against all
 housing pressure, in the settlement least able to afford it. Whoever
-funds the sweeping funds it invisibly — a thread the economy pass and
-faction quests can pull.
+funds the sweeping funds it invisibly — a thread the economy pass left
+deliberately unpulled ([[the_shares]] notes the adjacency and reserves
+it); faction quests can pull it.
 
 ## Relationships
 

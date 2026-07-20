@@ -85,9 +85,9 @@ inside.
   leviathan sea AND walk the open fields to a bait square, unseen and
   untaken? (Decide what the answer implies before spec 010 writes the
   opening; all of it spoiler: high.)
-- The truce-lines at [[tidegate]]: who set them, what keeps them, what
-  breaks them? (Their existence is settled; the economy pass fixes the
-  terms and the deeper truth stays spoiler: high.)
+- ~~The truce-lines' terms~~ — ruled (economy pass): the sea's share,
+  tipped back at the line ([[the_shares]]). Who set the lines, what
+  keeps them, and what breaks them stay reserved (spoiler: high).
 - Is prophecy material wanted anywhere? (Not banned in the foundation
   session — permitted, not required.)
 - ~~Provisional names~~ — ruled (cultures pass): the translation

@@ -41,7 +41,7 @@ grieve less if it fails*.
 ## Systems impact
 
 Salvage licensing, open-crossing tolls, and the crews' whole
-profession run on doctrine numbers (economy pass prices them). The
+profession run on doctrine numbers ([[the_shares]] prices them). The
 doctrine's authority is precedent, not office — which is why its
 current anomaly ([[the_untaken_arrival]]) is a crisis of faith and
 not just of data.

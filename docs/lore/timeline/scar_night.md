@@ -42,7 +42,7 @@ that ends conversations.
 
 Roof-law gained its floor clause after the Scar-Night: settlements
 sound their under-stone on a calendar, and the sounding-fees are a
-minor parish income (economy pass). The verdict is precedent for how
+minor parish income. The verdict is precedent for how
 the island files what it cannot explain.
 
 ## Relationships

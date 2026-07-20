@@ -40,7 +40,7 @@ is still out there.
 ## Systems impact
 
 All surface salvage enters the island here and is tolled here — the
-crown's single most reliable revenue (economy pass). Crews are licensed
+crown's single most reliable revenue ([[the_shares]]). Crews are licensed
 by exposure record; the wardens' tallies are law. The [[last_road]] to
 the Highroof crosses the [[the_scar|Scar]] at the [[chitin_bridge]], so
 Lastdoor's goods pay two tolls — a standing grievance.
@@ -74,5 +74,5 @@ Awning hooks worn bright on every lintel.
   [[wardens]] answer to doctrine itself, a self-governing
   precedent-order.
 - What does a salvage license actually promise — and to whom? (The
-  [[licensed_crews]] and [[wardens]] entries now frame it; the economy
-  pass prices it.)
+  [[licensed_crews]] and [[wardens]] entries now frame it;
+  [[the_shares]] prices the trade it licenses.)

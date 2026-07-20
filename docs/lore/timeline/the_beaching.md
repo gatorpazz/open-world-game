@@ -46,8 +46,8 @@ with the same courtesy as the Shell Year's.
 
 The recitation calendar's length — and so civic time itself — derives
 from this event. Tidegate's infrastructure is its skeleton. The
-scrimshaw trade and its smuggling shadow (economy pass) date from the
-generation it fed.
+scrimshaw trade and its smuggling shadow ([[the_shares]]) date from
+the generation it fed.
 
 ## Relationships
 

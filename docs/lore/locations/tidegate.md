@@ -70,10 +70,14 @@ own trade.
 
 ## Open questions
 
-- The truce-lines: who set them, what keeps them, what breaks them?
-  (Economy pass for terms; the deeper truth is spoiler: high material.)
-- Where exactly does sky-law end over water? (Undecided through the
-  magic pass; the economy pass prices what crews do about it. The
-  wardens and net-bosses argue it weekly — see Systems impact.)
+- ~~The truce-lines' terms~~ — ruled (economy pass): the sea's share —
+  a fixed share of every haul tipped back at the line, unwitnessed by
+  custom, reckoned and vowed at the drowned shrine; skimping it is the
+  fishery's dread crime, worse than crossing ([[the_shares]]). Who set
+  the lines, what keeps them, and what breaks them stay reserved
+  (spoiler: high).
+- Where exactly does sky-law end over water? (Undecided — and unbilled
+  while the dispute stands ([[the_shares]]). The wardens and
+  net-bosses argue it weekly — see Systems impact.)
 - What was the leviathan fleeing? (Never answered casually; ban — no
   mindless swarm — applies to the sea as much as the sky.)

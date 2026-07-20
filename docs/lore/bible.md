@@ -50,6 +50,9 @@ is one continuous temple.
   heat and light are governed utilities — deeded in the Highroof, held as
   parish commons in Embershare; the rivalry between the two regimes is
   deliberate and unresolved.
+- **Economy:** [[the_shares]] — bead-glass cash under three credit
+  layers; heat-capped growth; toll, tithe, and the sea's share; the
+  warden-declared seal of high-sky season.
 - **Death, travel, communication:** the honored dead go down into stone —
   only the Taken go up. Travel is roofed galleries, covered under-roads,
   and priced open sprints; no open water, no unshafted flight. News moves
@@ -196,7 +199,9 @@ consequences (flag for a future spec), levitation as a gated ability
   the Coming's sea-half?
 - The player's arrival: how does anyone survive the leviathan sea, and
   what does the answer imply? (Before spec 010 writes the opening.)
-- High-sky season: real cycle or folk belief? (Geography/timeline passes.)
+- ~~High-sky season~~ — ruled (economy pass): real and roughly annual,
+  weeks long, gates sealed — and its edges are doctrine: the wardens
+  declare the opening and the closing ([[the_shares]]).
 - ~~Institution words~~ — ruled (cultures pass): the translation
   convention keeps folk and civic words transparent (parish, warden,
   crown, reciter stand as translations); only the High Register is

@@ -37,8 +37,9 @@ translucence like slow blood.
 
 ## Systems impact
 
-Toll on every crossing (economy pass sets rates); closure reroutes all
-traffic down through the Scar's galleries. The keepers' allegiance —
+Toll on every crossing — the fourth taking, whose answer no crown has
+ever collected ([[the_shares]]); closure reroutes all traffic down
+through the Scar's galleries. The keepers' allegiance —
 crown, parish, or guild — is the factions pass's single most loaded
 question.
 

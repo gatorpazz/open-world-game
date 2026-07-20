@@ -74,4 +74,6 @@ felt-soft thunder. A shelf-gap in the Rolls, dusted around, not in.
 - What does the wrong bell's tone *do*? If a voice is a worked thing
   ([[the_workings]]), what does that tone gather? (Reserved; spoiler:
   high.)
-- Are the Rolls parish property or public record? (Factions/economy.)
+- ~~Are the Rolls parish property or public record~~ — ruled (economy
+  pass): public record, parish-kept — anyone may read, only the parish
+  writes ([[the_shares]]).

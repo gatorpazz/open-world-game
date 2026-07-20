@@ -37,8 +37,8 @@ from the Scar through the seams.
 ## Systems impact
 
 All Lastdoor salvage and all warden logistics move here and pay the
-bridge toll — a double taxation Lastdoor resents loudly (economy
-pass). When the bridge closes, the only alternative is down through the
+bridge toll — a double taxation Lastdoor resents loudly
+([[the_shares]]). When the bridge closes, the only alternative is down through the
 Scar's galleries: slower, roofless in stretches, and lawless.
 
 ## Relationships

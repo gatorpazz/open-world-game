@@ -79,5 +79,8 @@ Cover-maps' chalk conventions taught to children as a game.
 
 - What is on the unlisted inventory? (Reserved; candidates adjacent
   to the fields' spoiler-high watchers and the sea's closing.)
-- The Quiet Lines' reach: how deep into the Scar galleries, and who
-  launders their finds? (Economy pass; quest-level.)
+- The Quiet Lines: ~~who launders their finds~~ — ruled (economy
+  pass): the wash is a parish key through the quarantine row — goods
+  vanish from assessment overnight and re-enter blessed
+  ([[the_shares]]). Who holds the key, and the Lines' full reach into
+  the Scar galleries, stay quest-level.

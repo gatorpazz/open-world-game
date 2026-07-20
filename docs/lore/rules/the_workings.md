@@ -129,8 +129,8 @@ the same motion as the morning lamp-lighting.
   what does that tone gather? (Reserved; spoiler: high.)
 - Did the sky ever have a god and a true name? The orders are silent,
   and the silence is old. (Reserved; spoiler: high adjacency.)
-- Where sky-law ends over water stays open at [[tidegate]] — undecided
-  by this pass; the economy pass prices what crews do about it.
+- Where sky-law ends over water stays open at [[tidegate]] —
+  undecided, and unbilled while the dispute stands ([[the_shares]]).
 - Spec 008 scoping: which arts reach the player as learnable skills in
   the slice, what the overcast state is mechanically, and how the
   shaft-rite plays. (Spec 008, with the director.)

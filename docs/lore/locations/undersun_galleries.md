@@ -38,7 +38,7 @@ seen dimly through thick lava-glass.
 ## Systems impact
 
 Light-rights are deeded, inherited, contested, and rented — a legal
-architecture the economy pass builds on. A re-angled mirror is theft; a
+architecture [[the_shares]] builds on. A re-angled mirror is theft; a
 broken lens is a ward emergency. The Galleries' lower service doors are
 the closest sanctioned point to the island's deep (and to the locked
 Deep Roads' domain).

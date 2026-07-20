@@ -38,7 +38,7 @@ ceremony.
 
 The island's food security travels here; a blockage at any point is
 felt in Highroof bread queues within a day. Stall licenses are parish
-patronage (factions/economy passes). News moves this road faster than
+patronage ([[the_shares]]). News moves this road faster than
 bell-code — a fact the crown's clerks resent.
 
 ## Relationships

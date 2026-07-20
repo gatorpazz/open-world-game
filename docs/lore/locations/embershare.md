@@ -40,7 +40,8 @@ above: swept clean, doors ajar, warm air rising past it untouched.
 Staple food and all worked lava-glass originate here; the [[ember_road]]
 to the Highroof is the island's busiest artery. Embershare's commons and the Highroof's deeded light
 ([[undersun_galleries]]) are rival legal theories — the island has
-never chosen between them, which keeps its lawyers fed (economy pass).
+never chosen between them, which keeps its lawyers fed
+([[the_shares]]).
 If the vent guttered, the Undervault would starve in a season — a fact
 everyone knows and no one says aloud.
 

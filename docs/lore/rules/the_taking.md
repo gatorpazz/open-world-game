@@ -62,6 +62,6 @@ to a cliff face, ending at nothing.
 ## Open questions
 
 - What exactly marks you — being seen, time exposed, light, sound? (The rule needs teeth the player can learn.)
-- Does night, storm, or season change the risk? ("High-sky season" is implied — define it in the geography/timeline passes.)
+- Does night, storm, or season change the risk? (High-sky season is now fixed as real, roughly annual, and warden-declared at its edges ([[the_shares]]); whether night or storm change the *marking* stays with the reserved mechanism.)
 - Why does the sky *take* instead of kill? The ban says the logic exists; how much is ever revealed, and where does the reveal live (spoiler: high)?
 - ~~How is levitation's theft from the hives true~~ — ruled (magic pass): ritual imitation — the first levitators learned the lift by watching Takings, a theft the hives could not prevent, and the art imitates the rising of the Taken ([[the_workings]]). The Shell Year's reserve stays untouched. (Theft-vs-birthright as a recurring *theme* remains unchosen — the fact stays, the sermon doesn't.)

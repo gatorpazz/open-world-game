@@ -36,7 +36,7 @@ fifty spans farther than the speakers think.
 
 The catch moves on it twice daily; miss the bell-window and the fish
 sour and the prices climb. Its porters' guild holds the lamp-toll
-(economy pass). The dampness makes it the cheapest road to travel and
+— a toll in kind ([[the_shares]]). The dampness makes it the cheapest road to travel and
 the most expensive to maintain.
 
 ## Relationships

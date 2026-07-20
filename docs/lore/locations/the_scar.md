@@ -44,7 +44,7 @@ Crossing options price each other: the [[chitin_bridge]] (tolled, fast,
 lawful) against the Scar descent (free, slow, roofless in stretches,
 and subject to whoever holds the galleries this season). Exposure rules
 apply on the floor — sky-priced travel inside the island's own body.
-The galleries are the island's black market (economy pass).
+The galleries are the island's black market ([[the_shares]]).
 
 ## Relationships
 

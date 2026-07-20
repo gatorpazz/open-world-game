@@ -2,15 +2,15 @@ extends Node3D
 ## Debug scene for spec 005. Run with F6; Game spawns the player at "default".
 ##
 ## Manual checklist:
-## - Hunald and Seld greet with their own lines; Maera uses the fallback.
-## - Keywords render highlighted; reading the greeting puts "the village"
-##   and "bog hounds" straight into the topic list.
-## - "the village" mentions the old barrow — the topic appears mid-talk.
-## - Ask "the old barrow" twice: vague answer + journal entry first, the
-##   richer requires_journal answer on the second ask.
-## - Seld's "a small favor" stays hidden until the rat pelt on the floor is
-##   picked up; the exchange takes the pelt, gives a healing draught, and
-##   writes the journal (watch the label).
+## - Swift and Suddel greet with their own lines; Tansy uses the fallback.
+## - Keywords render highlighted; reading the greeting puts "Lastdoor"
+##   and "scar-hounds" straight into the topic list.
+## - "Lastdoor" mentions the drowned stair — the topic appears mid-talk.
+## - Ask "the drowned stair" twice: vague answer + journal entry first,
+##   the richer requires_journal answer on the second ask.
+## - Suddel's "a small favor" stays hidden until the rat pelt on the floor
+##   is picked up; the exchange takes the pelt, gives a healing draught,
+##   and writes the journal (watch the label).
 ## - J opens the journal, paused, entries in order; J or Close closes it.
 ## - Dialogue and journal pause the game while open.
 ## - The purple load-door round-trips to the interior and back; the label's

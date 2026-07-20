@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = &"rat_pelt"
 display_name = "Rat Pelt"
-description = "A patchy marsh-rat hide. A tanner might take it off your hands."
+description = "A patchy vault-rat hide. The quartermasters post a bounty."
 weight = 0.5
 base_value = 2
 stackable = true

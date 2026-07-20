@@ -15,9 +15,9 @@ item = ExtResource("4")
 
 [resource]
 script = ExtResource("1")
-id = &"barrow_thrall"
-display_name = "Barrow Thrall"
-description = "A dried husk of a warrior, still standing watch over a plundered tomb."
+id = &"stair_drowned"
+display_name = "Stair-Drowned"
+description = "A person-shaped wader of the Drowned Stair's flooded flights — glimpsed, never chased, and never below the waterline by choice of everyone else."
 max_health = 55.0
 damage = 10
 armor = 5

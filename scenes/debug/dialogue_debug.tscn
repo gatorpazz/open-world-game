@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/debug/dialogue_debug.gd" id="1_debug_root"]
 [ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="2_npc"]
-[ext_resource type="Resource" path="res://data/npcs/hunald.tres" id="3_hunald"]
-[ext_resource type="Resource" path="res://data/npcs/seld.tres" id="4_seld"]
-[ext_resource type="Resource" path="res://data/npcs/maera.tres" id="5_maera"]
+[ext_resource type="Resource" path="res://data/npcs/swift.tres" id="3_swift"]
+[ext_resource type="Resource" path="res://data/npcs/suddel.tres" id="4_suddel"]
+[ext_resource type="Resource" path="res://data/npcs/tansy.tres" id="5_tansy"]
 [ext_resource type="PackedScene" path="res://scenes/world/world_item.tscn" id="6_world_item"]
 [ext_resource type="Resource" path="res://data/items/rat_pelt.tres" id="7_rat_pelt"]
 [ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="8_transition_door"]
@@ -41,17 +41,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 8)
 [node name="from_interior" type="Marker3D" parent="." groups=["spawn_points"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -4)
 
-[node name="Hunald" parent="." instance=ExtResource("2_npc")]
+[node name="Swift" parent="." instance=ExtResource("2_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
-def = ExtResource("3_hunald")
+def = ExtResource("3_swift")
 
-[node name="Seld" parent="." instance=ExtResource("2_npc")]
+[node name="Suddel" parent="." instance=ExtResource("2_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
-def = ExtResource("4_seld")
+def = ExtResource("4_suddel")
 
-[node name="Maera" parent="." instance=ExtResource("2_npc")]
+[node name="Tansy" parent="." instance=ExtResource("2_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
-def = ExtResource("5_maera")
+def = ExtResource("5_tansy")
 
 [node name="RatPelt" parent="." instance=ExtResource("6_world_item")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)

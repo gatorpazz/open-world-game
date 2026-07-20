@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1")
-id = &"plain_ring"
-display_name = "Plain Ring"
-description = "An unadorned band of silver."
+id = &"rope_ring"
+display_name = "Rope-Ring"
+description = "A finger-ring braided from retired rope, oil-dark and wear-polished. Given for firsts; read before papers."
 weight = 0.1
 base_value = 25
 slot = &"ring"

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_heard"]
+script = ExtResource("2")
+requires_journal = Array[StringName]([&"heard_of_the_stair"])
+text = "So you've been asking around. Old stairs at the Scar's floor, older than any roof on this island, going down to a gate no one opens. The stair-drowned walk the flooded flights — dead that went in the water, not the stone. Cache high if you must go down, and never past the waterline."
+
+[sub_resource type="Resource" id="resp_fallback"]
+script = ExtResource("2")
+text = "Old stairs under the Scar, down where the water sits. Folk don't go below the waterline, and I'll not say more. Ask the crews if you must know."
+journal_entry = &"heard_of_the_stair"
+
+[resource]
+script = ExtResource("1")
+id = &"drowned_stair"
+display_name = "the drowned stair"
+responses = Array[ExtResource("2")]([SubResource("resp_heard"), SubResource("resp_fallback")])

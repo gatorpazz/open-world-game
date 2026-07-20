@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"swift"
+display_name = "Swift"
+description = "A weathered moth-catcher who works the covered edges of the gate-country and sells his cages to the warden post. Where he hangs them is nobody's business."

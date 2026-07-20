@@ -9,6 +9,8 @@ spoiler: none
 surface:
   - dialogue
   - environment
+game_ids:
+  - topic:lastdoor
 ---
 
 ## Function

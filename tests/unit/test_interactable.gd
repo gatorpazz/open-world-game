@@ -26,9 +26,9 @@ func test_prompt_formats_verb_and_display_name() -> void:
 
 
 func test_prompt_uses_talk_verb() -> void:
-	var interactable := _make_interactable("Hunald", &"talk")
+	var interactable := _make_interactable("Swift", &"talk")
 	autofree(interactable)
-	assert_eq(interactable.get_prompt(), "Talk Hunald")
+	assert_eq(interactable.get_prompt(), "Talk Swift")
 
 
 func test_find_in_returns_child_interactable() -> void:

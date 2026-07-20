@@ -8,6 +8,8 @@ spoiler: none
 surface:
   - environment
   - dialogue
+game_ids:
+  - item:scrimshaw_token
 ---
 
 ## Function

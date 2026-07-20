@@ -22,8 +22,8 @@ func test_journal_action_is_mapped() -> void:
 
 
 func test_open_shows_entries_in_chronological_order_with_resolved_text() -> void:
-	_player.journal.add_entry(&"heard_of_the_barrow")
-	_player.journal.add_entry(&"hounds_in_the_bog")
+	_player.journal.add_entry(&"heard_of_the_stair")
+	_player.journal.add_entry(&"hounds_near_the_covers")
 	_player.open_journal()
 	var panel := _player._journal_panel
 	assert_not_null(panel)
@@ -31,11 +31,11 @@ func test_open_shows_entries_in_chronological_order_with_resolved_text() -> void
 	var text := panel.entries_label.get_parsed_text()
 	assert_string_contains(text, "Entry 1")
 	assert_string_contains(text, "Entry 2")
-	var barrow_at := text.find("an old barrow out in the marsh")
-	var hounds_at := text.find("ranging closer to the village")
-	assert_gt(barrow_at, -1, "first entry's def text is rendered")
+	var stair_at := text.find("old stairs at the bottom of the Scar")
+	var hounds_at := text.find("ranging closer to the covers")
+	assert_gt(stair_at, -1, "first entry's def text is rendered")
 	assert_gt(hounds_at, -1, "second entry's def text is rendered")
-	assert_lt(barrow_at, hounds_at, "entries render in chronological order")
+	assert_lt(stair_at, hounds_at, "entries render in chronological order")
 
 
 func test_empty_journal_shows_placeholder() -> void:

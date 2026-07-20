@@ -93,6 +93,6 @@ inside.
   session — permitted, not required.)
 - ~~Provisional names~~ — ruled (cultures pass): the translation
   convention makes the existing compounds real [[underfirst]] folk
-  coinage, and "Vaultfolk" is confirmed as the collective word. Only
-  *personal* placeholder names in game data (the 005 NPCs) still await
-  re-coining under the new traditions at the M3 retrofit.
+  coinage, and "Vaultfolk" is confirmed as the collective word. The
+  M3 retrofit re-coined the last placeholders: the 005 NPCs are now
+  [[suddel]], [[swift]], and [[tansy]].

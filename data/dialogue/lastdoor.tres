@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_swift"]
+script = ExtResource("2")
+npc_id = &"swift"
+text = "Salvage town. Last roof before the open, and the gate never quite shuts — shut means someone's still out there. Bigger trade once, before the road broke at the Scar and every jar started paying twice. The careful go around by [[drowned_stair|the drowned stair]]; the sensible don't."
+
+[sub_resource type="Resource" id="resp_fallback"]
+script = ExtResource("2")
+text = "A working town. We keep the awnings hung and the tallies chalked, and we mind our own. Crews could tell you about [[drowned_stair|the drowned stair]] down in the Scar, though they'd rather not."
+
+[resource]
+script = ExtResource("1")
+id = &"lastdoor"
+display_name = "Lastdoor"
+responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_fallback")])

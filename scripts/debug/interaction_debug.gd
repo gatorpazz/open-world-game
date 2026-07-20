@@ -10,4 +10,4 @@ extends Node3D
 ## - Wooden Door swings open and closed on use.
 ## - The purple load-door round-trips to the interior and back, landing at the
 ##   named spawn points; loot and skill xp survive the trip.
-## - Hunald: "Talk Hunald" prompt, placeholder line in the output log.
+## - Swift: "Talk Swift" prompt, placeholder line in the output log.

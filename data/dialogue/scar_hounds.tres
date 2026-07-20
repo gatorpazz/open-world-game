@@ -5,11 +5,11 @@
 
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")
-text = "Lean, mud-caked brutes with a grudge against anything on two legs. They've been ranging closer of late — travelers on the causeway have been set upon. Keep something sharp to hand."
-journal_entry = &"hounds_in_the_bog"
+text = "Lean, oil-dark, and quiet until they're not. They den in the Scar's galleries and range the covers when the galleries run hungry — travelers on the last road have been set upon. If you hear drip-echo answer itself, get to a lamp."
+journal_entry = &"hounds_near_the_covers"
 
 [resource]
 script = ExtResource("1")
-id = &"bog_hounds"
-display_name = "bog hounds"
+id = &"scar_hounds"
+display_name = "scar-hounds"
 responses = Array[ExtResource("2")]([SubResource("resp_fallback")])

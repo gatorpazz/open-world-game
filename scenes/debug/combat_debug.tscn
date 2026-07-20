@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scripts/debug/combat_debug.gd" id="1_debug_root"]
 [ext_resource type="PackedScene" path="res://scenes/creatures/creature.tscn" id="2_creature"]
 [ext_resource type="PackedScene" path="res://scenes/world/world_item.tscn" id="3_world_item"]
-[ext_resource type="Resource" path="res://data/creatures/marsh_rat.tres" id="4_marsh_rat"]
-[ext_resource type="Resource" path="res://data/creatures/bog_hound.tres" id="5_bog_hound"]
-[ext_resource type="Resource" path="res://data/creatures/barrow_thrall.tres" id="6_barrow_thrall"]
+[ext_resource type="Resource" path="res://data/creatures/vault_rat.tres" id="4_vault_rat"]
+[ext_resource type="Resource" path="res://data/creatures/scar_hound.tres" id="5_scar_hound"]
+[ext_resource type="Resource" path="res://data/creatures/stair_drowned.tres" id="6_stair_drowned"]
 [ext_resource type="Resource" path="res://data/items/healing_draught.tres" id="7_healing_draught"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
@@ -75,17 +75,17 @@ shape = SubResource("shape_wall")
 
 [node name="Creatures" type="Node3D" parent="."]
 
-[node name="MarshRat" parent="Creatures" instance=ExtResource("2_creature")]
+[node name="VaultRat" parent="Creatures" instance=ExtResource("2_creature")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
-def = ExtResource("4_marsh_rat")
+def = ExtResource("4_vault_rat")
 
-[node name="BogHound" parent="Creatures" instance=ExtResource("2_creature")]
+[node name="ScarHound" parent="Creatures" instance=ExtResource("2_creature")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -8)
-def = ExtResource("5_bog_hound")
+def = ExtResource("5_scar_hound")
 
-[node name="BarrowThrall" parent="Creatures" instance=ExtResource("2_creature")]
+[node name="StairDrowned" parent="Creatures" instance=ExtResource("2_creature")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
-def = ExtResource("6_barrow_thrall")
+def = ExtResource("6_stair_drowned")
 
 [node name="Pickups" type="Node3D" parent="."]
 

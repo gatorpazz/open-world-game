@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = &"hound_fang"
 display_name = "Hound Fang"
-description = "A curved fang from a bog hound. Alchemists prize the marrow."
+description = "A curved fang from a scar-hound. Proof-of-kill to the wardens, a charm to everyone else."
 weight = 0.3
 base_value = 6
 stackable = true

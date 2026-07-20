@@ -9,6 +9,8 @@ spoiler: none
 surface:
   - dialogue
   - rumor
+game_ids:
+  - npc:swift
 ---
 
 ## Function

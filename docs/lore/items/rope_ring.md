@@ -8,6 +8,8 @@ spoiler: none
 surface:
   - environment
   - dialogue
+game_ids:
+  - item:rope_ring
 ---
 
 ## Function

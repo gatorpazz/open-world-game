@@ -7,19 +7,19 @@ const NO_NAMES: Dictionary[StringName, String] = {}
 
 
 func test_extracts_plain_markup() -> void:
-	var ids := DialogueMarkup.extract_topic_ids("Ask about [[the_village]] sometime.")
-	assert_eq(ids, [&"the_village"] as Array[StringName])
+	var ids := DialogueMarkup.extract_topic_ids("Ask about [[lastdoor]] sometime.")
+	assert_eq(ids, [&"lastdoor"] as Array[StringName])
 
 
 func test_extracts_labeled_markup() -> void:
-	var ids := DialogueMarkup.extract_topic_ids("The [[bog_hounds|hounds]] howl at night.")
-	assert_eq(ids, [&"bog_hounds"] as Array[StringName])
+	var ids := DialogueMarkup.extract_topic_ids("The [[scar_hounds|hounds]] howl at night.")
+	assert_eq(ids, [&"scar_hounds"] as Array[StringName])
 
 
 func test_extracts_multiple_in_order_deduplicated() -> void:
-	var text := "[[the_village]] and [[bog_hounds]] and [[the_village]] again."
+	var text := "[[lastdoor]] and [[scar_hounds]] and [[lastdoor]] again."
 	var ids := DialogueMarkup.extract_topic_ids(text)
-	assert_eq(ids, [&"the_village", &"bog_hounds"] as Array[StringName])
+	assert_eq(ids, [&"lastdoor", &"scar_hounds"] as Array[StringName])
 
 
 func test_ignores_non_markup_brackets() -> void:
@@ -32,21 +32,21 @@ func test_ignores_non_markup_brackets() -> void:
 
 
 func test_renders_display_name_for_plain_markup() -> void:
-	var names: Dictionary[StringName, String] = {&"the_village": "The Village"}
-	var bbcode := DialogueMarkup.to_bbcode("Ask about [[the_village]].", names)
+	var names: Dictionary[StringName, String] = {&"lastdoor": "Lastdoor"}
+	var bbcode := DialogueMarkup.to_bbcode("Ask about [[lastdoor]].", names)
 	var expected := (
-		"Ask about [url=the_village][color=%s]The Village[/color][/url]."
+		"Ask about [url=lastdoor][color=%s]Lastdoor[/color][/url]."
 		% (DialogueMarkup.KEYWORD_COLOR)
 	)
 	assert_eq(bbcode, expected)
 
 
 func test_renders_custom_label_over_display_name() -> void:
-	var names: Dictionary[StringName, String] = {&"bog_hounds": "Bog Hounds"}
-	var bbcode := DialogueMarkup.to_bbcode("Those [[bog_hounds|hounds]] again.", names)
-	assert_string_contains(bbcode, "[url=bog_hounds]")
+	var names: Dictionary[StringName, String] = {&"scar_hounds": "Scar-Hounds"}
+	var bbcode := DialogueMarkup.to_bbcode("Those [[scar_hounds|hounds]] again.", names)
+	assert_string_contains(bbcode, "[url=scar_hounds]")
 	assert_string_contains(bbcode, "]hounds[/color]")
-	assert_false(bbcode.contains("Bog Hounds"))
+	assert_false(bbcode.contains("Scar-Hounds"))
 
 
 func test_falls_back_to_raw_id_when_display_name_unknown() -> void:

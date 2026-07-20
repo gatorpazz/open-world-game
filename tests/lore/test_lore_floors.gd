@@ -5,6 +5,15 @@ extends GutTest
 
 const VAULT_ROOT := "res://docs/lore"
 
+## The narrative data folders floored by the M3 bridge (spec 011 criterion
+## 12). data/items/ is audited by lore-audit, never floored.
+const BRIDGED_DATA: Dictionary[String, String] = {
+	"npc": "res://data/npcs",
+	"topic": "res://data/dialogue",
+	"journal": "res://data/journal",
+	"creature": "res://data/creatures",
+}
+
 const HUB_SECTIONS: Array[String] = [
 	"Core promise",
 	"Rules of the world",
@@ -168,6 +177,28 @@ func test_m3_first_canon_batch_floor() -> void:
 	assert_gt(canon_by_type.get(&"region", 0), 0, "the active region is canon")
 	for type: StringName in [&"culture", &"faction", &"location"]:
 		assert_gt(canon_by_type.get(type, 0), 0, "at least 1 canon %s (M3)" % type)
+
+
+func test_m3_every_narrative_stem_claimed_exactly_once() -> void:
+	var claims: Dictionary[String, int] = {}
+	for entry: LoreEntry in _vault.entries.values():
+		if entry.status == &"deprecated":
+			continue
+		for item: String in entry.frontmatter.get_list("game_ids"):
+			claims[item] = claims.get(item, 0) + 1
+	for kind: String in BRIDGED_DATA:
+		for file_name: String in DirAccess.get_files_at(BRIDGED_DATA[kind]):
+			if not file_name.ends_with(".tres"):
+				continue
+			var stem := file_name.get_basename()
+			if kind == "topic" and StringName(stem) == DialogueTopicDef.GREETING_ID:
+				continue  # reserved system topic — spec 011 M3 amendment
+			var claim := "%s:%s" % [kind, stem]
+			assert_eq(
+				claims.get(claim, 0),
+				1,
+				"%s claimed by exactly one entry's game_ids (M3 bridge)" % claim
+			)
 
 
 func test_m1_active_region_exists_and_is_reachable() -> void:

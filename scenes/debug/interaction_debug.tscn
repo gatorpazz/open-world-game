@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/world/world_container.tscn" id="4_world_container"]
 [ext_resource type="PackedScene" path="res://scenes/world/hinged_door.tscn" id="5_hinged_door"]
 [ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="6_npc"]
-[ext_resource type="Resource" path="res://data/npcs/hunald.tres" id="6_hunald"]
+[ext_resource type="Resource" path="res://data/npcs/swift.tres" id="6_swift"]
 [ext_resource type="Script" path="res://scripts/resources/inventory.gd" id="7_inventory"]
 [ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="8_item_stack"]
 [ext_resource type="Resource" path="res://data/items/flawed_gem.tres" id="9_flawed_gem"]
@@ -14,7 +14,7 @@
 [ext_resource type="Resource" path="res://data/items/sack_of_ore.tres" id="11_sack_of_ore"]
 [ext_resource type="Resource" path="res://data/items/iron_sword.tres" id="12_iron_sword"]
 [ext_resource type="Resource" path="res://data/items/mana_draught.tres" id="13_mana_draught"]
-[ext_resource type="Resource" path="res://data/items/bone_amulet.tres" id="14_bone_amulet"]
+[ext_resource type="Resource" path="res://data/items/scrimshaw_token.tres" id="14_scrimshaw_token"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.35, 0.55, 0.85, 1)
@@ -52,7 +52,7 @@ count = 3
 
 [sub_resource type="Resource" id="stack_amulet"]
 script = ExtResource("8_item_stack")
-item = ExtResource("14_bone_amulet")
+item = ExtResource("14_scrimshaw_token")
 count = 1
 
 [sub_resource type="Resource" id="chest_inventory"]
@@ -114,9 +114,9 @@ inventory = SubResource("chest_inventory")
 [node name="WoodenDoor" parent="." instance=ExtResource("5_hinged_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
 
-[node name="Hunald" parent="." instance=ExtResource("6_npc")]
+[node name="Swift" parent="." instance=ExtResource("6_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2)
-def = ExtResource("6_hunald")
+def = ExtResource("6_swift")
 
 [node name="DoorToInterior" parent="." instance=ExtResource("2_transition_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)

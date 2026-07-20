@@ -9,6 +9,10 @@ spoiler: low
 surface:
   - rumor
   - environment
+game_ids:
+  - topic:drowned_stair
+  - journal:heard_of_the_stair
+  - creature:stair_drowned
 ---
 
 ## Function

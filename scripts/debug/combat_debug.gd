@@ -4,10 +4,10 @@ extends Node3D
 ## Manual checklist:
 ## - LMB swings: stamina drops per swing and regenerates; spamming faster than
 ##   swing_time is ignored; swinging with the bow equipped does nothing.
-## - Marsh Rat dies in ~3 sword hits and leaves "Marsh Rat Remains" (pelt).
-## - Bog Hound chases on sight; retreat past its leash and it trots home.
-## - The wall: the thrall behind it doesn't aggro, and swings into it whiff.
-## - Barrow Thrall hits hard through armor — let it kill you to see the death
+## - Vault Rat dies in ~3 sword hits and leaves "Vault Rat Remains" (pelt).
+## - Scar-Hound chases on sight; retreat past its leash and it trots home.
+## - The wall: the stair-drowned behind it does not aggro; swings into it whiff.
+## - The Stair-Drowned hits hard through armor — let it kill you to see the death
 ##   overlay; Reload restarts the arena with xp and loot intact.
 ## - Watch the label: skill xp ticks on weapon hits, blocks, and armored hits.
 

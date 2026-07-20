@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"suddels_stores_favor"
+text = "I brought Suddel the rat pelt for his bounty book. He paid me a healing draught from crew stores, entered the line in my presence, and says the book remembers a favor besides."

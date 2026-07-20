@@ -9,6 +9,10 @@ spoiler: none
 surface:
   - dialogue
   - journal
+game_ids:
+  - npc:suddel
+  - topic:a_small_favor
+  - journal:suddels_stores_favor
 ---
 
 ## Function

@@ -10,9 +10,9 @@ item = ExtResource("3")
 
 [resource]
 script = ExtResource("1")
-id = &"marsh_rat"
-display_name = "Marsh Rat"
-description = "An overgrown wetland rodent, bold enough to bite first."
+id = &"vault_rat"
+display_name = "Vault Rat"
+description = "A grey-brown, velvet-dusted rodent of the roofed dark, bold enough to bite first and expensive enough to gnaw rope."
 max_health = 12.0
 damage = 3
 attack_reach = 1.2

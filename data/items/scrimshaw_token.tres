@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1")
-id = &"bone_amulet"
-display_name = "Bone Amulet"
-description = "A carved bone charm on a leather cord."
+id = &"scrimshaw_token"
+display_name = "Scrimshaw Token"
+description = "A carved fragment of rib, grey-gold with lamp-oil patina — luck to a crew, grief to a family, beads to anyone."
 weight = 0.3
 base_value = 15
 slot = &"amulet"

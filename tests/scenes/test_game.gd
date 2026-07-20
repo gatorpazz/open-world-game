@@ -108,8 +108,8 @@ func test_journal_persists_across_scene_change() -> void:
 	# Spec 005 criterion 9, mirroring 003 criterion 5 for the Journal.
 	_game.change_scene(MAIN_SCENE, &"default")
 	await wait_process_frames(3)
-	_game.player.journal.learn_topic(&"the_village")
-	_game.player.journal.add_entry(&"heard_of_the_barrow")
+	_game.player.journal.learn_topic(&"lastdoor")
+	_game.player.journal.add_entry(&"heard_of_the_stair")
 	_game.change_scene(MAIN_SCENE, &"default")
 	await wait_process_frames(3)
 	assert_same(
@@ -117,8 +117,8 @@ func test_journal_persists_across_scene_change() -> void:
 		_game.journal,
 		"the player's Journal after a transition is the same resource instance"
 	)
-	assert_true(_game.player.journal.knows_topic(&"the_village"))
-	assert_true(_game.player.journal.has_entry(&"heard_of_the_barrow"))
+	assert_true(_game.player.journal.knows_topic(&"lastdoor"))
+	assert_true(_game.player.journal.has_entry(&"heard_of_the_stair"))
 
 
 func test_change_scene_swaps_managed_world_and_spawns_player() -> void:

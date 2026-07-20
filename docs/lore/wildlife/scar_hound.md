@@ -9,6 +9,10 @@ surface:
   - environment
   - rumor
   - dialogue
+game_ids:
+  - creature:scar_hound
+  - topic:scar_hounds
+  - journal:hounds_near_the_covers
 ---
 
 ## Function

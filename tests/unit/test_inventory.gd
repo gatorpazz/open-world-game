@@ -7,8 +7,8 @@ const RUSTY_CLAYMORE := preload("res://data/items/rusty_claymore.tres")
 const LEATHER_CUIRASS := preload("res://data/items/leather_cuirass.tres")
 const IRON_HELM := preload("res://data/items/iron_helm.tres")
 const WOODEN_SHIELD := preload("res://data/items/wooden_shield.tres")
-const PLAIN_RING := preload("res://data/items/plain_ring.tres")
-const BONE_AMULET := preload("res://data/items/bone_amulet.tres")
+const ROPE_RING := preload("res://data/items/rope_ring.tres")
+const SCRIMSHAW_TOKEN := preload("res://data/items/scrimshaw_token.tres")
 const HEALING_DRAUGHT := preload("res://data/items/healing_draught.tres")
 const FLAWED_GEM := preload("res://data/items/flawed_gem.tres")
 
@@ -114,23 +114,23 @@ func test_shield_refused_while_two_handed_weapon_held() -> void:
 
 
 func test_second_ring_fills_ring_2_and_third_swaps_ring_1() -> void:
-	_inventory.add_item(PLAIN_RING, 3)
-	assert_true(_inventory.equip(PLAIN_RING))
-	assert_eq(_inventory.get_equipped(&"ring_1"), PLAIN_RING)
-	assert_true(_inventory.equip(PLAIN_RING))
-	assert_eq(_inventory.get_equipped(&"ring_2"), PLAIN_RING)
-	assert_eq(_inventory.count_of(PLAIN_RING), 1)
+	_inventory.add_item(ROPE_RING, 3)
+	assert_true(_inventory.equip(ROPE_RING))
+	assert_eq(_inventory.get_equipped(&"ring_1"), ROPE_RING)
+	assert_true(_inventory.equip(ROPE_RING))
+	assert_eq(_inventory.get_equipped(&"ring_2"), ROPE_RING)
+	assert_eq(_inventory.count_of(ROPE_RING), 1)
 	# Both full: third equip swaps ring_1, count stays consistent.
-	assert_true(_inventory.equip(PLAIN_RING))
-	assert_eq(_inventory.count_equipped(PLAIN_RING), 2)
-	assert_eq(_inventory.count_of(PLAIN_RING), 1)
+	assert_true(_inventory.equip(ROPE_RING))
+	assert_eq(_inventory.count_equipped(ROPE_RING), 2)
+	assert_eq(_inventory.count_of(ROPE_RING), 1)
 
 
 func test_explicit_ring_slot_request_is_honored() -> void:
-	_inventory.add_item(PLAIN_RING)
-	assert_true(_inventory.equip(PLAIN_RING, &"ring_2"))
+	_inventory.add_item(ROPE_RING)
+	assert_true(_inventory.equip(ROPE_RING, &"ring_2"))
 	assert_null(_inventory.get_equipped(&"ring_1"))
-	assert_eq(_inventory.get_equipped(&"ring_2"), PLAIN_RING)
+	assert_eq(_inventory.get_equipped(&"ring_2"), ROPE_RING)
 
 
 func test_equipping_into_occupied_slot_returns_old_item() -> void:
@@ -146,11 +146,11 @@ func test_total_armor_rating_sums_equipped_pieces_only() -> void:
 	_inventory.add_item(LEATHER_CUIRASS)
 	_inventory.add_item(IRON_HELM)
 	_inventory.add_item(WOODEN_SHIELD)
-	_inventory.add_item(BONE_AMULET)
+	_inventory.add_item(SCRIMSHAW_TOKEN)
 	_inventory.equip(LEATHER_CUIRASS)
 	_inventory.equip(IRON_HELM)
 	_inventory.equip(WOODEN_SHIELD)
-	_inventory.equip(BONE_AMULET)
+	_inventory.equip(SCRIMSHAW_TOKEN)
 	assert_eq(_inventory.get_total_armor_rating(), 15)
 	_inventory.unequip(&"off_hand")
 	assert_eq(_inventory.get_total_armor_rating(), 10, "loose shield does not count")
@@ -219,10 +219,10 @@ func test_duplicate_true_round_trips_stacks_gold_and_equipment() -> void:
 	_inventory.add_item(IRON_SWORD)
 	_inventory.add_gold(250)
 	_inventory.add_item(RUSTY_CLAYMORE)
-	_inventory.add_item(PLAIN_RING, 2)
+	_inventory.add_item(ROPE_RING, 2)
 	_inventory.equip(RUSTY_CLAYMORE)
-	_inventory.equip(PLAIN_RING)
-	_inventory.equip(PLAIN_RING)
+	_inventory.equip(ROPE_RING)
+	_inventory.equip(ROPE_RING)
 	var copy := _inventory.duplicate(true) as Inventory
 	assert_eq(copy.gold, 250)
 	assert_eq(copy.stacks.size(), _inventory.stacks.size())
@@ -280,10 +280,10 @@ func test_armor_skill_ids_collects_distinct_skills() -> void:
 
 
 func test_armor_skill_ids_excludes_jewelry_and_weapons() -> void:
-	_inventory.add_item(PLAIN_RING)
-	_inventory.add_item(BONE_AMULET)
+	_inventory.add_item(ROPE_RING)
+	_inventory.add_item(SCRIMSHAW_TOKEN)
 	_inventory.add_item(IRON_SWORD)
-	_inventory.equip(PLAIN_RING)
-	_inventory.equip(BONE_AMULET)
+	_inventory.equip(ROPE_RING)
+	_inventory.equip(SCRIMSHAW_TOKEN)
 	_inventory.equip(IRON_SWORD)
 	assert_eq(_inventory.get_equipped_armor_skill_ids(), [] as Array[StringName])

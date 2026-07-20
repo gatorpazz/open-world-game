@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"suddel"
+display_name = "Suddel"
+description = "Quartermaster to a licensed salvage crew, keeping the counter inside the Last Gate — pelts bought at posted bounty, stores sold at posted prices, everything entered."

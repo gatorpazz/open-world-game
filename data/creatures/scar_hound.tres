@@ -11,9 +11,9 @@ count = 2
 
 [resource]
 script = ExtResource("1")
-id = &"bog_hound"
-display_name = "Bog Hound"
-description = "A lean, mud-caked pack hunter with a grudge against travelers."
+id = &"scar_hound"
+display_name = "Scar-Hound"
+description = "A lean, oil-dark pack hunter out of the Scar's galleries, quiet-footed and lamp-shy — until the galleries run hungry."
 max_health = 30.0
 damage = 6
 move_speed = 5.5

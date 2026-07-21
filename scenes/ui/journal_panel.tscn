@@ -38,6 +38,18 @@ layout_mode = 2
 text = "Journal"
 horizontal_alignment = 1
 
+[node name="Views" type="HBoxContainer" parent="Dim/Panel/Layout"]
+layout_mode = 2
+alignment = 1
+
+[node name="Chronicle" type="Button" parent="Dim/Panel/Layout/Views"]
+layout_mode = 2
+text = "Chronicle"
+
+[node name="Quests" type="Button" parent="Dim/Panel/Layout/Views"]
+layout_mode = 2
+text = "Quests"
+
 [node name="Entries" type="RichTextLabel" parent="Dim/Panel/Layout"]
 layout_mode = 2
 size_flags_vertical = 3

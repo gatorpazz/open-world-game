@@ -1,9 +1,9 @@
 class_name Player
 extends CharacterBody3D
 ## First-person player controller: WASD to move, mouse to look, Space to
-## jump, E to interact, LMB to attack (while captured), J to read the
-## journal, F5/F9 to quicksave/quickload, Esc to release the mouse
-## (click to recapture).
+## jump, E to interact, LMB to attack and RMB to cast (while captured),
+## R to cycle spells, J to read the journal, F5/F9 to quicksave/quickload,
+## Esc to release the mouse (click to recapture).
 
 const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
 
@@ -26,6 +26,7 @@ var _journal_panel: JournalPanel = null
 @onready var stats: StatsComponent = $Stats
 @onready var inventory_component: InventoryComponent = $Inventory
 @onready var combat: PlayerCombat = $Combat
+@onready var casting: PlayerCasting = $Casting
 
 
 ## Called by Game after instantiate() and BEFORE add_child(): the child
@@ -59,6 +60,14 @@ func _on_journal_panel_closed() -> void:
 	_journal_panel = null
 
 
+func _on_cast_failed() -> void:
+	show_notice(HudNotice.CAST_FAILED)
+
+
+func _on_spell_learned(spell: SpellDef) -> void:
+	show_notice(HudNotice.WORKING_LEARNED % spell.display_name)
+
+
 ## Queues a brief fading HUD line (spec 006) — for journal writes outside
 ## dialogue; the dialogue panel keeps its own inline transcript notices.
 func show_notice(text: String) -> void:
@@ -72,6 +81,8 @@ func _ready() -> void:
 	detector.target_changed.connect(hud_prompt.set_target)
 	hud_bars.bind(stats)
 	combat.died.connect(death_overlay.open)
+	casting.cast_failed.connect(_on_cast_failed)
+	casting.spell_learned.connect(_on_spell_learned)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -84,6 +95,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		detector.try_interact()
 	elif event.is_action_pressed("attack") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		combat.try_attack()
+	elif event.is_action_pressed("cast") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		casting.try_cast()
+	elif event.is_action_pressed("cycle_spell"):
+		casting.cycle()
 	elif event.is_action_pressed("journal"):
 		open_journal()
 	elif event.is_action_pressed("quicksave"):

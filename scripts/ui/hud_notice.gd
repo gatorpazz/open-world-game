@@ -8,6 +8,10 @@ extends VBoxContainer
 const JOURNAL_UPDATED := "Your journal has been updated."
 const GAME_SAVED := "Game saved."
 const NO_SAVE_TO_LOAD := "No save to load."
+## Spec 008 casting notices; terminology from the canon packet (a working
+## draws — the pool noun stays deliberately unnamed in-world).
+const CAST_FAILED := "Nothing left to draw."
+const WORKING_LEARNED := "New working: %s"
 
 ## Timing is UI styling, not balance (spec 006's empty-BalanceConfig ruling).
 @export var display_seconds := 3.0

@@ -1,5 +1,6 @@
 extends GutTest
-## Unit tests for CombatMath (spec 004, acceptance criteria 1-2).
+## Unit tests for CombatMath (spec 004, acceptance criteria 1-2; spec 008,
+## criterion 1).
 ## Default balance values assumed by the math below: damage skill mult
 ## 0.5..1.5, strength mult 0.5 + 0.01/point, stamina cost 5 + 0.5/weight,
 ## exhausted and block multipliers 0.5, armor scale 50, block chance
@@ -85,6 +86,39 @@ func test_armor_curve_endpoints() -> void:
 
 func test_armor_never_reduces_below_zero() -> void:
 	assert_gt(CombatMath.armor_mitigation(10.0, 100000, _cfg), 0.0)
+
+
+# --- spell_power ---
+
+
+func test_spell_power_matches_lerp_at_skill_points() -> void:
+	# Magnitude 10: skill 0 -> 5.0, 25 -> 7.5, 50 -> 10.0, 100 -> 15.0.
+	assert_almost_eq(CombatMath.spell_power(10.0, 0, _cfg), 5.0, 0.001)
+	assert_almost_eq(CombatMath.spell_power(10.0, 25, _cfg), 7.5, 0.001)
+	assert_almost_eq(CombatMath.spell_power(10.0, 50, _cfg), 10.0, 0.001)
+	assert_almost_eq(CombatMath.spell_power(10.0, 100, _cfg), 15.0, 0.001)
+
+
+func test_spell_power_starting_character_with_minor_bolt() -> void:
+	# Evocation 25 (major start): 8 * 0.75 = 6.0.
+	assert_almost_eq(CombatMath.spell_power(8.0, 25, _cfg), 6.0, 0.001)
+
+
+func test_spell_power_constants_come_from_config_not_code() -> void:
+	var tweaked := _cfg.duplicate() as BalanceConfig
+	tweaked.magic_skill_min = 2.0
+	tweaked.magic_skill_max = 2.0
+	assert_almost_eq(CombatMath.spell_power(8.0, 25, tweaked), 16.0, 0.001)
+
+
+# --- ward_absorb ---
+
+
+func test_ward_absorb_returns_min_of_damage_and_ward() -> void:
+	assert_almost_eq(CombatMath.ward_absorb(4.0, 10.0), 4.0, 0.001)
+	assert_almost_eq(CombatMath.ward_absorb(10.0, 4.0), 4.0, 0.001)
+	assert_almost_eq(CombatMath.ward_absorb(10.0, 0.0), 0.0, 0.001)
+	assert_almost_eq(CombatMath.ward_absorb(0.0, 10.0), 0.0, 0.001)
 
 
 # --- resolve_defense ---

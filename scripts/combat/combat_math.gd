@@ -38,6 +38,20 @@ static func armor_mitigation(damage: float, armor_rating: int, cfg: BalanceConfi
 	return damage * (1.0 - armor_rating / (armor_rating + cfg.armor_mitigation_scale))
 
 
+## Scaled power of a working (spec 008): damage, heal, or ward absorb.
+## The melee lerp shape with no attribute term — intellect already sizes
+## the mana pool.
+static func spell_power(magnitude: float, skill: int, cfg: BalanceConfig) -> float:
+	return magnitude * lerpf(cfg.magic_skill_min, cfg.magic_skill_max, skill / 100.0)
+
+
+## Amount a ward pool soaks from an incoming hit (spec 008): min of the
+## two. Applied after resolve_defense, before health — the caller drains
+## the pool and passes the remainder on.
+static func ward_absorb(damage: float, ward: float) -> float:
+	return minf(damage, ward)
+
+
 ## Resolves an incoming hit for a defender: passive block first (only with a
 ## shield equipped), then armor. The block roll is injected so tests are
 ## deterministic — gameplay callers pass randf().

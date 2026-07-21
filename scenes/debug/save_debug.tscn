@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/debug/save_debug.gd" id="1_debug_root"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_item.tscn" id="2_world_item"]
+[ext_resource type="Resource" path="res://data/items/healing_draught.tres" id="3_draught"]
+[ext_resource type="PackedScene" path="res://scenes/creatures/creature.tscn" id="4_creature"]
+[ext_resource type="Resource" path="res://data/creatures/vault_rat.tres" id="5_vault_rat"]
+[ext_resource type="PackedScene" path="res://scenes/world/journal_trigger.tscn" id="6_trigger"]
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="7_door"]
+
+[sub_resource type="StandardMaterial3D" id="mat_floor"]
+albedo_color = Color(0.3, 0.36, 0.34, 1)
+
+[sub_resource type="BoxMesh" id="mesh_floor"]
+material = SubResource("mat_floor")
+size = Vector3(30, 1, 30)
+
+[sub_resource type="BoxShape3D" id="shape_floor"]
+size = Vector3(30, 1, 30)
+
+[node name="SaveDebug" type="Node3D"]
+script = ExtResource("1_debug_root")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("mesh_floor")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("shape_floor")
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 10)
+
+[node name="from_interior" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.1, 4)
+
+[node name="HealingDraught" parent="." instance=ExtResource("2_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+item = ExtResource("3_draught")
+
+[node name="VaultRat" parent="." instance=ExtResource("4_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6)
+def = ExtResource("5_vault_rat")
+
+[node name="LandmarkTrigger" parent="." instance=ExtResource("6_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
+journal_entry = &"heard_of_the_stair"
+
+[node name="DoorToInterior" parent="." instance=ExtResource("7_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 6)
+target_scene = "res://scenes/debug/save_debug_interior.tscn"
+spawn_point = &"from_exterior"
+
+[node name="DebugHud" type="CanvasLayer" parent="."]
+
+[node name="DebugLabel" type="Label" parent="DebugHud"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 760.0
+offset_bottom = 140.0
+theme_override_colors/font_color = Color(1, 1, 0.6, 1)

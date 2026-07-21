@@ -13,6 +13,7 @@ surface:
 game_ids:
   - journal:the_name_restored
   - journal:the_gap_kept
+  - quest:the_skipped_name
 ---
 
 ## Function

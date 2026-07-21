@@ -14,6 +14,7 @@ game_ids:
   - topic:a_small_favor
   - journal:suddel_wants_a_pelt
   - journal:suddels_stores_favor
+  - quest:a_small_favor
 ---
 
 ## Function

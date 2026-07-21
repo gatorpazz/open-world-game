@@ -3,7 +3,8 @@ extends GutTest
 ## Phase 3 bulk pipeline runs against. Loads docs/lore fresh and validates
 ## every grammar-passing entry against the schema: ids and folders, known
 ## keys, enum fields, the graduated per-status matrix, link integrity, the
-## deprecation rules, reachability from bible.md, and the game_ids bridge.
+## deprecation rules, reachability from bible.md, the game_ids bridge, and
+## its reverse — the lore_sources citation bridge (spec 006).
 
 const VAULT_ROOT := "res://docs/lore"
 const HUB_ID := &"bible"
@@ -37,7 +38,17 @@ const GAME_ID_FOLDERS: Dictionary[String, String] = {
 	"journal": "journal",
 	"item": "items",
 	"creature": "creatures",
+	"quest": "quests",
 }
+
+## The reverse of the game_ids bridge (spec 006): data folders whose files
+## carry lore_sources citations, each resolving to a live vault entry — a
+## changed entry greps to its exact rewrite set.
+const CITED_DATA: Array[String] = [
+	"res://data/quests",
+	"res://data/dialogue",
+	"res://data/journal",
+]
 
 const SPINE_SECTIONS: Array[String] = [
 	"Function",
@@ -284,6 +295,34 @@ func test_game_ids_bridge_resolves() -> void:
 			)
 	if checked == 0:
 		pass_test("no game_ids in the vault yet — the bridge arrives with M3 (spec 011)")
+
+
+func test_lore_sources_resolve_to_live_entries() -> void:
+	var checked := 0
+	for dir: String in CITED_DATA:
+		for file_name: String in DirAccess.get_files_at(dir):
+			if not file_name.ends_with(".tres"):
+				continue
+			var resource: Resource = load(dir.path_join(file_name))
+			assert_not_null(resource, "%s loads" % file_name)
+			if resource == null:
+				continue
+			var sources: Array[StringName] = resource.get("lore_sources")
+			for source: StringName in sources:
+				checked += 1
+				assert_true(
+					_vault.entries.has(source),
+					"%s: lore_sources '%s' resolves to a vault entry" % [file_name, source]
+				)
+				if not _vault.entries.has(source):
+					continue
+				var entry: LoreEntry = _vault.entries[source]
+				assert_ne(
+					entry.status,
+					&"deprecated",
+					"%s: lore_sources '%s' cites a live entry" % [file_name, source]
+				)
+	assert_gt(checked, 0, "the citation bridge covers shipped content (spec 006)")
 
 
 func test_quarantine_is_honored() -> void:

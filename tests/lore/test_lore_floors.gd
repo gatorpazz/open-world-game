@@ -12,6 +12,7 @@ const BRIDGED_DATA: Dictionary[String, String] = {
 	"topic": "res://data/dialogue",
 	"journal": "res://data/journal",
 	"creature": "res://data/creatures",
+	"quest": "res://data/quests",
 }
 
 const HUB_SECTIONS: Array[String] = [

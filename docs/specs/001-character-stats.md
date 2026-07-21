@@ -13,7 +13,7 @@
 
 ### Attributes (7)
 
-`strength, endurance, agility, speed, intellect, willpower, presence` — integers, range 1–100, default starting value 30 (40 in one attribute of the player's choice at character creation; creation flow itself is a later spec, so for now the debug scene just sets values).
+`strength, endurance, agility, speed, intellect, willpower, presence` — integers, range 1–100, default starting value 30 (40 in one attribute of the player's choice at character creation; creation flow itself is a later spec, so for now the debug scene just sets values). *(Amended, 009: the creation flow now exists — title screen + creation form; the favored value lives in `BalanceConfig.attribute_favored_start`. The debug scene remains the value-poking tool.)*
 
 ### Skills (12)
 

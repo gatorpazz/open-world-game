@@ -128,16 +128,43 @@ func _emit_derived_changes(old_maxes: Dictionary[StringName, float]) -> void:
 		stamina_changed.emit(current_stamina, max_stamina)
 
 
-## Builds a fresh sheet with every skill in data/skills/ and the given majors.
-## Static so the Game autoload can build the persistent sheet the same way.
-static func build_default_sheet(major_skills: Array[StringName]) -> CharacterSheet:
-	var balance := load(BALANCE_PATH) as BalanceConfig
-	var skill_ids: Array[StringName] = []
+## Every SkillDef in data/skills/, in directory order — the full roster
+## for sheet building and the creation form's picker (spec 009).
+static func list_skill_defs() -> Array[SkillDef]:
+	var defs: Array[SkillDef] = []
 	for file_name: String in ResourceLoader.list_directory(SKILLS_DIR):
 		if not file_name.ends_with(".tres"):
 			continue
 		var skill := load(SKILLS_DIR.path_join(file_name)) as SkillDef
-		skill_ids.append(skill.id)
+		if skill != null:
+			defs.append(skill)
+	return defs
+
+
+## Builds a fresh sheet with every skill in data/skills/ and the given majors.
+## Static so the Game autoload can build the persistent sheet the same way.
+static func build_default_sheet(major_skills: Array[StringName]) -> CharacterSheet:
+	var balance := load(BALANCE_PATH) as BalanceConfig
 	var new_sheet := CharacterSheet.new()
-	new_sheet.setup(skill_ids, major_skills, balance)
+	new_sheet.setup(_all_skill_ids(), major_skills, balance)
 	return new_sheet
+
+
+## Builds the sheet character creation confirmed (spec 009): the chosen
+## majors plus one favored attribute at attribute_favored_start.
+static func build_creation_sheet(
+	major_skills: Array[StringName], favored: StringName
+) -> CharacterSheet:
+	assert(CharacterSheet.ATTRIBUTE_NAMES.has(favored), "favored must be a real attribute")
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var new_sheet := CharacterSheet.new()
+	new_sheet.setup(_all_skill_ids(), major_skills, balance)
+	new_sheet.set_attribute(favored, balance.attribute_favored_start)
+	return new_sheet
+
+
+static func _all_skill_ids() -> Array[StringName]:
+	var skill_ids: Array[StringName] = []
+	for skill: SkillDef in list_skill_defs():
+		skill_ids.append(skill.id)
+	return skill_ids

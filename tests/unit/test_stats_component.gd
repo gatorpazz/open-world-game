@@ -1,10 +1,18 @@
 extends GutTest
-## Tests for StatsComponent signals and current-pool clamping (spec 001).
-## Uses the real balance config: attribute start 30 -> max health 65,
-## max mana 45, max stamina 60.
+## Tests for StatsComponent signals and current-pool clamping (spec 001)
+## plus the static sheet builders (spec 009, criterion 2). Uses the real
+## balance config: attribute start 30 -> max health 65, max mana 45,
+## max stamina 60; favored start 40.
 
 const MAJOR := &"blades"
 const MINOR := &"security"
+const CREATION_MAJORS: Array[StringName] = [
+	&"ranged",
+	&"alchemy",
+	&"security",
+	&"persuasion",
+	&"light_armor",
+]
 
 var _component: StatsComponent
 
@@ -109,3 +117,45 @@ func test_apply_mana_and_stamina_deltas() -> void:
 	_component.apply_stamina_delta(10.0)
 	assert_almost_eq(_component.current_stamina, 55.0, 0.001)
 	assert_signal_emitted_with_parameters(_component, "stamina_changed", [55.0, 60.0])
+
+
+# --- Static sheet builders (spec 009, criterion 2) ---
+
+
+func test_list_skill_defs_returns_all_twelve_deterministically() -> void:
+	var defs := StatsComponent.list_skill_defs()
+	assert_eq(defs.size(), 12)
+	var again := StatsComponent.list_skill_defs()
+	for i: int in defs.size():
+		assert_eq(defs[i].id, again[i].id, "ordering is stable")
+
+
+func test_build_creation_sheet_sets_favored_majors_and_minors() -> void:
+	var cfg := load("res://data/balance/balance_config.tres") as BalanceConfig
+	var sheet := StatsComponent.build_creation_sheet(CREATION_MAJORS, &"endurance")
+	assert_eq(sheet.attributes[&"endurance"], cfg.attribute_favored_start)
+	for attribute: StringName in CharacterSheet.ATTRIBUTE_NAMES:
+		if attribute != &"endurance":
+			assert_eq(sheet.attributes[attribute], cfg.attribute_start)
+	assert_eq(sheet.skills.size(), 12)
+	for skill_id: StringName in sheet.skills:
+		var expected := (
+			cfg.skill_start_major if CREATION_MAJORS.has(skill_id) else cfg.skill_start_minor
+		)
+		assert_eq(sheet.skills[skill_id], expected, "start level for %s" % skill_id)
+
+
+func test_build_creation_sheet_derived_stats_reflect_the_favor() -> void:
+	var cfg := load("res://data/balance/balance_config.tres") as BalanceConfig
+	var sheet := StatsComponent.build_creation_sheet(CREATION_MAJORS, &"endurance")
+	var expected := cfg.health_base + cfg.attribute_favored_start * cfg.health_per_endurance
+	assert_almost_eq(sheet.get_max_health(), expected, 0.001)
+	assert_almost_eq(sheet.get_max_mana(), cfg.attribute_start * cfg.mana_per_intellect, 0.001)
+
+
+func test_build_default_sheet_unchanged_by_the_009_factor() -> void:
+	var sheet := StatsComponent.build_default_sheet(StatsComponent.DEFAULT_MAJOR_SKILLS)
+	assert_eq(sheet.skills.size(), 12)
+	assert_eq(sheet.attributes[&"endurance"], 30)
+	assert_eq(sheet.skills[&"blades"], 25)
+	assert_eq(sheet.skills[&"security"], 5)

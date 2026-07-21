@@ -78,6 +78,8 @@ string at his wrist and Lastlight chalk under his thumb.
 
 ## Open questions
 
-- The crew's name, boss, and standing (quest casting; spec 006/010).
+- ~~The crew's boss~~ — ruled (spec 010, roster session): [[wester]]
+  bosses the crew whose licensed book Suddel keeps. The crew's *name*
+  and standing stay open (dialogue pass).
 - His hearth-name, and who on the island has been offered it.
   (Intimacy canon; director taste.)

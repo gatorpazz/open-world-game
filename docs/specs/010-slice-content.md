@@ -77,7 +77,7 @@ All new entries via `new-lore-entry` (draft, inbound link from `lastdoor.md`, su
 
 | validator | now | slice target |
 |---|---|---|
-| `test_npc_defs` | 5 | 10 |
+| `test_npc_defs` | 5 | 11 *(amended in the roster session: two town faces, not one — Wren + Munnok)* |
 | `test_dialogue_topics` | 9 | ~20 (greeting covers all 10 NPCs; every non-greeting topic keyword-reachable) |
 | `test_journal_entry_defs` | 10 | ~20 |
 | `test_quest_defs` | 2 | 4 (`for_the_tallies` + `the_roofed_cache`, ruled) |
@@ -112,7 +112,7 @@ Canon-packet before every line of player-facing text. The dialogue pass runs per
 Phased; every commit suite-green; canon-keeper on lore diffs, golden-rule/conventions on data/scripts:
 
 **Phase 0** — this spec + the all-three-joinable Decision Log row + faction Systems-impact notes + CLAUDE.md focus.
-**Phase 1 (director checkpoints)** — warden-chain rulings session (stage ids/branches, captaincy lever, courtship sequencing, crews beat shape, shrine-vs-exterior) → roster session (5 new NPC entries draft → reviewed; kellom/ollun ratification). No Phase-2 `.tres` before both land.
+**Phase 1 (director checkpoints)** — warden-chain rulings session (stage ids/branches, captaincy lever, courtship sequencing, crews beat shape, shrine-vs-exterior) → roster session *(ran 2026-07-21; amended: 6 new entries — two town faces)*: new NPC entries land as draft, promoted to reviewed after the dialogue pass; kellom/ollun ratified to reviewed. No Phase-2 `.tres` before both land.
 **Phase 2 (dialogue pass, one canon-packet session per cluster)** — warden chain + post voices → crews recruitment + crew boss → town faces + greeting coverage + keyword weave (→ route/stair rumors if ruled).
 **Phase 3 (scenes)** — lastdoor + interiors + re-homed 006 nodes + scene lint → bait square → scar route + drowned stair + creatures → environmental-storytelling session beats.
 **Phase 4** — `MAIN_SCENE_PATH` retarget + criterion-7 test.

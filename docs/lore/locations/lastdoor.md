@@ -54,7 +54,10 @@ Gateway to the [[open_fields]]; keeper of the [[bait_square]]. Linked to
 [[highroof]] by the severed [[last_road]]. Salvage crews and wardens:
 [[licensed_crews]] and [[wardens]]. First faces of the gate trade:
 [[suddel]] at the warehouse-row counter, [[swift]] at the warden
-post's cage-hooks, [[tansy]] in the market row.
+post's cage-hooks, [[tansy]] in the market row. The slice roster
+(spec 010 roster session, ruled): [[torrum]] captains the warden post with [[bryony]] at
+the cages; [[wester]] bosses Suddel's crew; [[dossun]] keeps the gate
+shrine; [[wren]] and [[munnok]] trade the legend across the cut.
 
 ## Quest hooks
 

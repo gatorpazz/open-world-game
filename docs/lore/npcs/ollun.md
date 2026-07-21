@@ -1,7 +1,7 @@
 ---
 title: Ollun
 type: npc
-status: draft
+status: reviewed
 region: undervault
 culture: underfirst
 pitch: "The young Walker who recites one name no tablet holds — the vow enforcing itself through a voice too disciplined to weep."

@@ -132,9 +132,13 @@ the same motion as the morning lamp-lighting.
 - Where sky-law ends over water stays open at [[tidegate]] — the
   wardens and net-bosses argue it weekly, and no ruling has been
   sought.
-- Spec 008 scoping: which arts reach the player as learnable skills in
-  the slice, what the overcast state is mechanically, and how the
-  shaft-rite plays. (Spec 008, with the director.)
+- ~~Which arts reach the player as learnable skills~~ — ruled (spec
+  008, director): three schools, each under one aspect's order —
+  evocation under the Flame, warding under the Stone, mending under
+  the Tide — and the licensing tiers are the progression gate
+  (hearth-charm free, chartered craft and ordained aspect-work at the
+  skill thresholds spec 008 fixes). What the overcast state is mechanically and
+  how the shaft-rite plays stay open. (Director + later spec.)
 - The Daylight priesthood served gods — these three? A fourth? (Timeline
   adjacency; reserved with the High Register's vocabulary.)
 - The bead is worked, blessed glass, and worked glass holds regard

@@ -1,6 +1,7 @@
 extends GutTest
 ## Validates data/balance/balance_config.tres (spec 003 adds interact_range,
-## spec 004 adds the Combat and Creatures groups, spec 008 adds Magic).
+## spec 004 adds the Combat and Creatures groups, spec 008 adds Magic,
+## spec 009 adds attribute_favored_start).
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 
@@ -37,3 +38,5 @@ func test_combat_constants_are_coherent() -> void:
 	assert_lte(_config.block_damage_multiplier, 1.0)
 	assert_lte(_config.creature_idle_time_min, _config.creature_idle_time_max)
 	assert_lt(_config.magic_skill_min, _config.magic_skill_max)
+	assert_lt(_config.attribute_start, _config.attribute_favored_start)
+	assert_lte(_config.attribute_favored_start, _config.attribute_max)

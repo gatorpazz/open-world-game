@@ -16,6 +16,8 @@ extends Resource
 
 @export_group("Attributes")
 @export var attribute_start: int = 30
+## Starting value of the one attribute favored at character creation (009).
+@export var attribute_favored_start: int = 40
 @export var attribute_max: int = 100
 
 @export_group("Derived Stats")

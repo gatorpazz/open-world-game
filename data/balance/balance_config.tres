@@ -12,6 +12,7 @@ skill_max = 100
 level_up_threshold = 10
 attribute_points_per_level = 3
 attribute_start = 30
+attribute_favored_start = 40
 attribute_max = 100
 health_base = 20.0
 health_per_endurance = 1.5

@@ -88,6 +88,12 @@ func test_sixth_major_is_refused_and_unchecked_buttons_disable() -> void:
 			assert_false(button.disabled, "under five, everything re-enables")
 
 
+func test_set_favored_refuses_unknown_attributes() -> void:
+	_pick_five()
+	_form.set_favored(&"charisma")
+	assert_false(_form.can_confirm(), "an unknown favored attribute never validates")
+
+
 func test_set_favored_replaces_previous_pick() -> void:
 	_pick_five()
 	_form.set_favored(&"strength")

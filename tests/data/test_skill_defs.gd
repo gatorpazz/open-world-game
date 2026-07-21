@@ -12,7 +12,6 @@ const VALID_ATTRIBUTES: Array[StringName] = [
 	&"willpower",
 	&"presence",
 ]
-const VALID_ARCHETYPES: Array[StringName] = [&"combat", &"magic", &"stealth"]
 
 var _skills: Array[SkillDef] = []
 
@@ -57,4 +56,4 @@ func test_governing_attributes_are_valid() -> void:
 
 func test_archetypes_are_valid() -> void:
 	for skill: SkillDef in _skills:
-		assert_has(VALID_ARCHETYPES, skill.archetype, "%s archetype is valid" % skill.id)
+		assert_has(SkillDef.ARCHETYPES, skill.archetype, "%s archetype is valid" % skill.id)

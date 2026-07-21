@@ -136,8 +136,10 @@ static func list_skill_defs() -> Array[SkillDef]:
 		if not file_name.ends_with(".tres"):
 			continue
 		var skill := load(SKILLS_DIR.path_join(file_name)) as SkillDef
-		if skill != null:
-			defs.append(skill)
+		if skill == null:
+			push_warning("list_skill_defs: %s is not a SkillDef" % file_name)
+			continue
+		defs.append(skill)
 	return defs
 
 

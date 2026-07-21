@@ -9,9 +9,6 @@ extends Control
 signal confirmed(sheet: CharacterSheet)
 signal cancelled
 
-## Archetype column order for the majors picker (the 001 table's split).
-const ARCHETYPES: Array[StringName] = [&"combat", &"magic", &"stealth"]
-
 var _config: BalanceConfig
 var _selected_majors: Array[StringName] = []
 var _favored: StringName = &""
@@ -52,8 +49,11 @@ func toggle_major(skill_id: StringName) -> bool:
 	return true
 
 
-## Sets (replaces) the favored attribute.
+## Sets (replaces) the favored attribute; an unknown attribute is refused.
 func set_favored(attribute: StringName) -> void:
+	if not CharacterSheet.ATTRIBUTE_NAMES.has(attribute):
+		push_warning("set_favored: unknown attribute '%s'" % attribute)
+		return
 	_favored = attribute
 	_refresh()
 
@@ -84,13 +84,13 @@ func preview_sheet() -> CharacterSheet:
 	for attribute: StringName in CharacterSheet.ATTRIBUTE_NAMES:
 		sheet.attributes[attribute] = _config.attribute_start
 	if _favored != &"":
-		sheet.attributes[_favored] = _config.attribute_favored_start
+		sheet.set_attribute(_favored, _config.attribute_favored_start)
 	return sheet
 
 
 func _build_skill_columns() -> void:
 	var defs := StatsComponent.list_skill_defs()
-	for archetype: StringName in ARCHETYPES:
+	for archetype: StringName in SkillDef.ARCHETYPES:
 		var column := VBoxContainer.new()
 		var header := Label.new()
 		header.text = String(archetype).capitalize()

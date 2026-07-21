@@ -56,6 +56,14 @@ extends Resource
 @export var xp_per_block: int = 5
 @export var xp_per_armor_hit: int = 2
 
+@export_group("Magic")
+## Magic-skill power multiplier endpoints at skill 0 and 100.
+@export var magic_skill_min: float = 0.5
+@export var magic_skill_max: float = 1.5
+@export var mana_regen_per_second: float = 1.0
+@export var spell_sweep_radius: float = 0.3
+@export var xp_per_cast: int = 5
+
 @export_group("Creatures")
 @export var creature_wander_speed_multiplier: float = 0.4
 @export var creature_wander_radius: float = 5.0

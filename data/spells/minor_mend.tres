@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/spell_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"minor_mend"
+display_name = "Tidemend"
+description = "A hearth-charm of the Tide: its regard drawn through the body, turning small hurts back."
+skill_id = &"mending"
+min_skill = 0
+mana_cost = 10.0
+magnitude = 10.0
+duration = 0.0
+cast_range = 0.0
+cast_time = 1.0

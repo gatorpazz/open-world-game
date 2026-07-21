@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/spell_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"lesser_ward"
+display_name = "Stoneroof"
+description = "A hearth-charm of the Stone: a little roof of its regard, held over the skin until it is spent."
+skill_id = &"warding"
+min_skill = 0
+mana_cost = 12.0
+magnitude = 20.0
+duration = 20.0
+cast_range = 0.0
+cast_time = 1.0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/spell_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"greater_bolt"
+display_name = "Flamelash"
+description = "Ordained aspect-work of the flame-tenders: the Flame's full attention, turned on a target."
+skill_id = &"evocation"
+min_skill = 50
+mana_cost = 22.0
+magnitude = 20.0
+duration = 0.0
+cast_range = 15.0
+cast_time = 1.0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/spell_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"greater_ward"
+display_name = "Greatroof"
+description = "Chartered stone-work: a standing roof of regard that outlasts what strikes it."
+skill_id = &"warding"
+min_skill = 25
+mana_cost = 25.0
+magnitude = 45.0
+duration = 30.0
+cast_range = 0.0
+cast_time = 1.2

@@ -2,10 +2,11 @@ class_name Player
 extends CharacterBody3D
 ## First-person player controller: WASD to move, mouse to look, Space to
 ## jump, E to interact, LMB to attack and RMB to cast (while captured),
-## R to cycle spells, J to read the journal, F5/F9 to quicksave/quickload,
-## Esc to release the mouse (click to recapture).
+## R to cycle spells, I for the inventory, J to read the journal, F5/F9 to
+## quicksave/quickload, Esc to release the mouse (click to recapture).
 
 const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
+const INVENTORY_PANEL_SCENE := preload("res://scenes/ui/inventory_panel.tscn")
 
 @export var speed := 6.0
 @export var jump_velocity := 4.8
@@ -16,6 +17,7 @@ const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
 var journal: Journal
 
 var _journal_panel: JournalPanel = null
+var _inventory_panel: InventoryPanel = null
 
 @onready var head: Node3D = $Head
 @onready var detector: InteractionDetector = $Head/Camera3D/InteractionDetector
@@ -59,6 +61,21 @@ func open_journal() -> void:
 
 func _on_journal_panel_closed() -> void:
 	_journal_panel = null
+
+
+## Opens the inventory panel (spec 012) — the journal-panel pattern: it
+## pauses the tree, so this handler never fires while it is up.
+func open_inventory() -> void:
+	if _inventory_panel != null:
+		return
+	_inventory_panel = INVENTORY_PANEL_SCENE.instantiate()
+	add_child(_inventory_panel)
+	_inventory_panel.closed.connect(_on_inventory_panel_closed)
+	_inventory_panel.open(inventory_component, stats)
+
+
+func _on_inventory_panel_closed() -> void:
+	_inventory_panel = null
 
 
 func _on_cast_failed() -> void:
@@ -106,6 +123,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		casting.cycle()
 	elif event.is_action_pressed("journal"):
 		open_journal()
+	elif event.is_action_pressed("inventory"):
+		open_inventory()
 	elif event.is_action_pressed("quicksave"):
 		# Calls down into the sanctioned autoload's own mutation API (the
 		# TransitionDoor/DeathOverlay precedent); Game stays UI-free, so

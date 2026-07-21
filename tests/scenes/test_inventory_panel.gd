@@ -167,3 +167,20 @@ func test_open_pauses_and_inventory_action_closes() -> void:
 	_panel._unhandled_input(press)
 	assert_signal_emit_count(_panel, "closed", 1)
 	assert_false(get_tree().paused, "closed unpaused")
+
+
+# --- Player wiring (criterion 8) ---
+
+
+func test_inventory_action_exists_and_player_opens_one_panel() -> void:
+	_panel.close()
+	assert_true(InputMap.has_action(&"inventory"))
+	var player: Player = preload("res://scenes/player.tscn").instantiate()
+	add_child_autofree(player)
+	player.open_inventory()
+	assert_not_null(player._inventory_panel)
+	var first: InventoryPanel = player._inventory_panel
+	player.open_inventory()
+	assert_same(player._inventory_panel, first, "a second call adds nothing")
+	first.close()
+	assert_null(player._inventory_panel, "closed clears the player's reference")

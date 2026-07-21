@@ -76,6 +76,14 @@ func try_attack() -> void:
 	stats.gain_skill_xp(weapon.skill_id, config.xp_per_weapon_hit)
 
 
+func get_ward() -> float:
+	return _ward_pool
+
+
+func get_ward_seconds() -> float:
+	return _ward_seconds
+
+
 ## Raises a ward (spec 008): a temporary pool soaking incoming damage
 ## after block and armor, before health. Recasting replaces the pool and
 ## the timer outright — no stacking.

@@ -3,9 +3,11 @@ extends VBoxContainer
 ## Fading notice queue on the player HUD (spec 006): brief lines for
 ## journal writes outside dialogue ("Your journal has been updated.").
 ## The dialogue panel keeps its inline transcript notices — nothing
-## double-notices. 007 reuses this for "Game saved."
+## double-notices. Spec 007 reuses it for the quicksave notices.
 
 const JOURNAL_UPDATED := "Your journal has been updated."
+const GAME_SAVED := "Game saved."
+const NO_SAVE_TO_LOAD := "No save to load."
 
 ## Timing is UI styling, not balance (spec 006's empty-BalanceConfig ruling).
 @export var display_seconds := 3.0

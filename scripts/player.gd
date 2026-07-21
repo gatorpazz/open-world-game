@@ -2,7 +2,8 @@ class_name Player
 extends CharacterBody3D
 ## First-person player controller: WASD to move, mouse to look, Space to
 ## jump, E to interact, LMB to attack (while captured), J to read the
-## journal, Esc to release the mouse (click to recapture).
+## journal, F5/F9 to quicksave/quickload, Esc to release the mouse
+## (click to recapture).
 
 const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
 
@@ -85,6 +86,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		combat.try_attack()
 	elif event.is_action_pressed("journal"):
 		open_journal()
+	elif event.is_action_pressed("quicksave"):
+		# Calls down into the sanctioned autoload's own mutation API (the
+		# TransitionDoor/DeathOverlay precedent); Game stays UI-free, so
+		# the notice is ours.
+		if Game.save_game():
+			show_notice(HudNotice.GAME_SAVED)
+	elif event.is_action_pressed("quickload"):
+		if not Game.load_game():
+			show_notice(HudNotice.NO_SAVE_TO_LOAD)
 	elif event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif (

@@ -73,6 +73,21 @@ func test_save_game_guard_refuses_without_world_or_player() -> void:
 	assert_false(_game.has_save(), "the guard writes no file")
 
 
+func test_quicksave_action_saves_and_notices() -> void:
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.player._unhandled_input(_action(&"quicksave"))
+	assert_true(_game.has_save(), "F5 writes the save file")
+	assert_eq(_game.player.hud_notice.get_child_count(), 1, "one 'Game saved.' notice queued")
+
+
+func test_quickload_action_without_save_notices_failure() -> void:
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.player._unhandled_input(_action(&"quickload"))
+	assert_eq(_game.player.hud_notice.get_child_count(), 1, "one 'No save to load.' notice queued")
+
+
 # --- Criterion 8: load restores the world ---
 
 
@@ -148,6 +163,13 @@ func test_future_version_save_refused() -> void:
 func test_load_game_without_file_returns_false() -> void:
 	assert_false(_game.has_save())
 	assert_false(_game.load_game())
+
+
+func _action(action_name: StringName) -> InputEventAction:
+	var event := InputEventAction.new()
+	event.action = action_name
+	event.pressed = true
+	return event
 
 
 func _remove_scratch_file() -> void:

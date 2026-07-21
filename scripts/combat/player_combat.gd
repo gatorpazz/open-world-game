@@ -7,9 +7,6 @@ extends Node
 signal died
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
-## The melee sweep hits world geometry (layer 1) and hurtboxes (layer 4):
-## walls block swings; creature bodies (layer 3) are invisible to it.
-const SWEEP_MASK := 0b1001
 
 @export var stats: StatsComponent
 @export var inventory_component: InventoryComponent
@@ -27,7 +24,7 @@ func _ready() -> void:
 	if config == null:
 		config = load(BALANCE_PATH) as BalanceConfig
 	sweep.enabled = false  # queried once per swing, not every frame
-	sweep.collision_mask = SWEEP_MASK
+	sweep.collision_mask = SweepQuery.SWEEP_MASK
 	sweep.collide_with_areas = true  # hurtboxes are areas
 	(sweep.shape as SphereShape3D).radius = config.melee_sweep_radius
 	sweep.add_exception(hurt_box)
@@ -53,7 +50,7 @@ func try_attack() -> void:
 	var cost := CombatMath.stamina_cost(weapon.weight, config)
 	var exhausted := stats.current_stamina < cost
 	stats.apply_stamina_delta(-cost)
-	var target := _nearest_sweep_hurt_box(weapon.reach)
+	var target := SweepQuery.nearest_hurt_box(sweep, weapon.reach)
 	if target == null:
 		return  # whiffed: nothing in reach, or something solid was nearer
 	var raw := CombatMath.attack_damage(
@@ -65,22 +62,6 @@ func try_attack() -> void:
 	)
 	target.take_hit(raw, owner as Node3D)
 	stats.gain_skill_xp(weapon.skill_id, config.xp_per_weapon_hit)
-
-
-## Sweeps a sphere camera-forward and returns the hit HurtBox, or null on
-## a whiff. Nearest contact wins, so exactly one target per swing and a
-## wall in front of a target eats the hit.
-func _nearest_sweep_hurt_box(reach: float) -> HurtBox:
-	sweep.target_position = Vector3(0, 0, -reach)
-	sweep.force_shapecast_update()
-	var nearest: Object = null
-	var nearest_distance := INF
-	for i: int in sweep.get_collision_count():
-		var distance := sweep.global_position.distance_to(sweep.get_collision_point(i))
-		if distance < nearest_distance:
-			nearest_distance = distance
-			nearest = sweep.get_collider(i)
-	return nearest as HurtBox
 
 
 ## Defense pipeline for anything that hits the player: passive block

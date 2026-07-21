@@ -45,7 +45,9 @@ Licenses, budgets, gate law, and the [[bait_square]]'s instrument
 authority. When wardens close a gate, it is closed; when their tables
 and a crew's ledger disagree, the island's courts take the tables. The
 report-purse of [[highroof]] galls them — a second, sealed doctrine
-implies theirs is not the whole arithmetic.
+implies theirs is not the whole arithmetic. Joinable (spec 010, ruled):
+membership in one guild bars none of the others — every guild wants
+first claim on the untaken outsider, none has veto.
 
 ## Relationships
 

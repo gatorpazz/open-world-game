@@ -44,7 +44,9 @@ The salvage economy is theirs end to end: licensing, pricing (by
 exposure spent), warehouse law, and the crew-shares system that half
 the island's contracts imitate. Their standing grievances — the
 [[chitin_bridge]]'s double toll and the wardens' budget ceilings —
-are the island's most reliable tavern politics.
+are the island's most reliable tavern politics. Joinable (spec 010,
+ruled): membership in one guild bars none of the others — every guild
+wants first claim on the untaken outsider, none has veto.
 
 ## Relationships
 

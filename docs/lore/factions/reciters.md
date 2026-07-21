@@ -51,7 +51,9 @@ Tablet law: additions, recitations, and the island's rarest act, the
 declaration of death. The recitation calendar structures civic time;
 the Column-Readers hold the only sanctioned access to the
 [[first_roof]]'s oldest text. Absolution — hearing a thing said and
-sealing it unsaid — is their quiet second currency.
+sealing it unsaid — is their quiet second currency. Joinable (spec
+010, ruled): membership in one guild bars none of the others — every
+guild wants first claim on the untaken outsider, none has veto.
 
 ## Relationships
 

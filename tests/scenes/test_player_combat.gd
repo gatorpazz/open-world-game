@@ -1,7 +1,8 @@
 extends GutTest
 ## Player melee: stamina/cooldown, sweep hit detection, defense pipeline,
-## and skill xp (spec 004, acceptance criteria 3-5). Default sheet: majors
-## include blades and block (25); attributes 30; light_armor is minor (5).
+## and skill xp (spec 004, acceptance criteria 3-5), plus the ward pool
+## and mana regen (spec 008, criteria 6-7). Default sheet: majors include
+## blades and block (25); attributes 30; light_armor is minor (5).
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
@@ -234,3 +235,63 @@ func test_died_emitted_when_health_reaches_zero() -> void:
 	_player.combat.hurt_box.take_hit(10000.0, _root)
 	assert_eq(_player.stats.current_health, 0.0)
 	assert_signal_emitted(_combat, "died")
+
+
+# --- Mana regen & ward pool (spec 008, criteria 6-7) ---
+
+
+func test_mana_regenerates_at_configured_rate_up_to_max() -> void:
+	_player.stats.set_current_mana(0.0)
+	_combat._physics_process(1.0)
+	assert_almost_eq(_player.stats.current_mana, _cfg.mana_regen_per_second, 0.001)
+	_combat._physics_process(100000.0)
+	assert_almost_eq(_player.stats.current_mana, _player.stats.sheet.get_max_mana(), 0.001)
+
+
+func test_ward_soaks_damage_before_health_and_signals_the_drain() -> void:
+	watch_signals(_combat)
+	var max_health := _player.stats.sheet.get_max_health()
+	_combat.apply_ward(20.0, 30.0)
+	assert_signal_emitted_with_parameters(_combat, "ward_changed", [20.0, 20.0], 0)
+	_combat.hurt_box.take_hit(6.0, _root)  # unarmored: full 6 reaches the ward
+	assert_almost_eq(_player.stats.current_health, max_health, 0.001)
+	assert_signal_emitted_with_parameters(_combat, "ward_changed", [14.0, 20.0], 1)
+
+
+func test_ward_remainder_hits_health_and_empty_pool_stops_soaking() -> void:
+	var max_health := _player.stats.sheet.get_max_health()
+	_combat.apply_ward(4.0, 30.0)
+	_combat.hurt_box.take_hit(10.0, _root)
+	assert_almost_eq(_player.stats.current_health, max_health - 6.0, 0.001)
+	_combat.hurt_box.take_hit(10.0, _root)
+	assert_almost_eq(_player.stats.current_health, max_health - 16.0, 0.001)
+
+
+func test_ward_soaks_after_block_and_armor_with_block_xp_intact() -> void:
+	_equip(WOODEN_SHIELD)
+	_combat.block_roll_source = func() -> float: return 0.0
+	_combat.apply_ward(100.0, 30.0)
+	var max_health := _player.stats.sheet.get_max_health()
+	_combat.hurt_box.take_hit(10.0, _root)
+	assert_almost_eq(_player.stats.current_health, max_health, 0.001)
+	assert_eq(_player.stats.sheet.skill_xp[&"block"], _cfg.xp_per_block)
+
+
+func test_ward_expires_after_duration() -> void:
+	watch_signals(_combat)
+	_combat.apply_ward(20.0, 5.0)
+	_combat._physics_process(5.01)
+	assert_signal_emitted_with_parameters(_combat, "ward_changed", [0.0, 0.0], 1)
+	var max_health := _player.stats.sheet.get_max_health()
+	_combat.hurt_box.take_hit(6.0, _root)
+	assert_almost_eq(_player.stats.current_health, max_health - 6.0, 0.001)
+
+
+func test_recast_replaces_ward_pool_and_timer() -> void:
+	_combat.apply_ward(20.0, 5.0)
+	_combat.hurt_box.take_hit(6.0, _root)  # drains to 14
+	_combat.apply_ward(11.0, 30.0)
+	_combat._physics_process(6.0)  # the replaced timer would have expired
+	var max_health := _player.stats.sheet.get_max_health()
+	_combat.hurt_box.take_hit(10.0, _root)
+	assert_almost_eq(_player.stats.current_health, max_health, 0.001)

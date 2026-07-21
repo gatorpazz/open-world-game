@@ -70,7 +70,7 @@ No BalanceConfig additions — the panel introduces no tunables.
 
 ## How to implement
 
-One commit each, full suite green before each: spec doc + `world_container.gd` comment amendment + master-plan queue row → InventoryPanel scene/script + scene tests (standalone — fixtures build an InventoryComponent + StatsComponent directly, no player) → `inventory` action + player wiring + wiring test → docs housekeeping (row → complete, Current Status "Next:" → 010, CLAUDE.md Current focus).
+One commit each, full suite green before each: spec doc + `world_container.gd` comment amendment + master-plan queue row → InventoryPanel scene/script + the `inventory` input action + scene tests *(amended: the action lands with the panel, not the player wiring — the panel's own `_unhandled_input` references it, and an unregistered action errors on every input event)* → player wiring + wiring test → docs housekeeping (row → complete, Current Status "Next:" → 010, CLAUDE.md Current focus).
 
 **No debug scene** — `inventory_debug.tscn` already exercises every component path; the panel is reachable in any world scene with I.
 

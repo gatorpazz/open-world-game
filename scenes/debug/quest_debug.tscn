@@ -1,0 +1,171 @@
+[gd_scene load_steps=25 format=3]
+
+[ext_resource type="Script" path="res://scripts/debug/quest_debug.gd" id="1_debug_root"]
+[ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="2_npc"]
+[ext_resource type="Resource" path="res://data/npcs/suddel.tres" id="3_suddel"]
+[ext_resource type="Resource" path="res://data/npcs/kellom.tres" id="4_kellom"]
+[ext_resource type="Resource" path="res://data/npcs/ollun.tres" id="5_ollun"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_item.tscn" id="6_world_item"]
+[ext_resource type="Resource" path="res://data/items/rat_pelt.tres" id="7_rat_pelt"]
+[ext_resource type="Resource" path="res://data/items/reciters_staff.tres" id="8_staff"]
+[ext_resource type="PackedScene" path="res://scenes/world/journal_trigger.tscn" id="9_trigger"]
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="10_door"]
+[ext_resource type="Script" path="res://scripts/world/journal_gate.gd" id="11_gate"]
+
+[sub_resource type="StandardMaterial3D" id="mat_floor"]
+albedo_color = Color(0.32, 0.34, 0.4, 1)
+
+[sub_resource type="BoxMesh" id="mesh_floor"]
+material = SubResource("mat_floor")
+size = Vector3(30, 1, 30)
+
+[sub_resource type="BoxShape3D" id="shape_floor"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="StandardMaterial3D" id="mat_pillar"]
+albedo_color = Color(0.55, 0.5, 0.42, 1)
+
+[sub_resource type="BoxMesh" id="mesh_pillar"]
+material = SubResource("mat_pillar")
+size = Vector3(1, 4, 1)
+
+[sub_resource type="BoxShape3D" id="shape_pillar"]
+size = Vector3(1, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_stones"]
+albedo_color = Color(0.92, 0.9, 0.85, 1)
+
+[sub_resource type="BoxMesh" id="mesh_stones"]
+material = SubResource("mat_stones")
+size = Vector3(1.5, 0.5, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="mat_gap"]
+albedo_color = Color(0.12, 0.12, 0.14, 1)
+
+[sub_resource type="BoxMesh" id="mesh_gap"]
+material = SubResource("mat_gap")
+size = Vector3(1.5, 2, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="mat_rubble"]
+albedo_color = Color(0.45, 0.42, 0.4, 1)
+
+[sub_resource type="BoxMesh" id="mesh_rubble"]
+material = SubResource("mat_rubble")
+size = Vector3(2, 1, 2)
+
+[sub_resource type="BoxShape3D" id="shape_prop"]
+size = Vector3(2, 2, 2)
+
+[node name="QuestDebug" type="Node3D"]
+script = ExtResource("1_debug_root")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("mesh_floor")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("shape_floor")
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 10)
+
+[node name="from_interior" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.1, 4)
+
+[node name="Suddel" parent="." instance=ExtResource("2_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -2)
+def = ExtResource("3_suddel")
+
+[node name="Kellom" parent="." instance=ExtResource("2_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+def = ExtResource("4_kellom")
+
+[node name="Ollun" parent="." instance=ExtResource("2_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -2)
+def = ExtResource("5_ollun")
+
+[node name="RatPelt" parent="." instance=ExtResource("6_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 4)
+item = ExtResource("7_rat_pelt")
+
+[node name="MockColumns" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 2, -10)
+
+[node name="Mesh" type="MeshInstance3D" parent="MockColumns"]
+mesh = SubResource("mesh_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="MockColumns"]
+shape = SubResource("shape_pillar")
+
+[node name="ColumnsTrigger" parent="." instance=ExtResource("9_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -8)
+journal_entry = &"the_cut_rope"
+requires_journal = Array[StringName]([&"the_walkers_name"])
+
+[node name="RopeGate" type="Node3D" parent="."]
+script = ExtResource("11_gate")
+requires_journal = Array[StringName]([&"the_cut_rope"])
+
+[node name="Staff" parent="RopeGate" instance=ExtResource("6_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -10)
+item = ExtResource("8_staff")
+journal_entry = &"the_waxed_staff"
+
+[node name="RestoredGate" type="Node3D" parent="."]
+script = ExtResource("11_gate")
+requires_journal = Array[StringName]([&"the_name_restored"])
+
+[node name="NineStones" type="StaticBody3D" parent="RestoredGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.25, -10)
+
+[node name="Mesh" type="MeshInstance3D" parent="RestoredGate/NineStones"]
+mesh = SubResource("mesh_stones")
+
+[node name="Collision" type="CollisionShape3D" parent="RestoredGate/NineStones"]
+shape = SubResource("shape_prop")
+
+[node name="GapGate" type="Node3D" parent="."]
+script = ExtResource("11_gate")
+requires_journal = Array[StringName]([&"the_gap_kept"])
+
+[node name="BlankCourse" type="StaticBody3D" parent="GapGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1, -10)
+
+[node name="Mesh" type="MeshInstance3D" parent="GapGate/BlankCourse"]
+mesh = SubResource("mesh_gap")
+
+[node name="Collision" type="CollisionShape3D" parent="GapGate/BlankCourse"]
+shape = SubResource("shape_prop")
+
+[node name="RubbleGate" type="Node3D" parent="."]
+script = ExtResource("11_gate")
+blocked_by_journal = Array[StringName]([&"joined_the_reciters"])
+
+[node name="Rubble" type="StaticBody3D" parent="RubbleGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.5, 3)
+
+[node name="Mesh" type="MeshInstance3D" parent="RubbleGate/Rubble"]
+mesh = SubResource("mesh_rubble")
+
+[node name="Collision" type="CollisionShape3D" parent="RubbleGate/Rubble"]
+shape = SubResource("shape_prop")
+
+[node name="DoorToInterior" parent="." instance=ExtResource("10_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 6)
+target_scene = "res://scenes/debug/quest_debug_interior.tscn"
+spawn_point = &"from_exterior"
+
+[node name="DebugHud" type="CanvasLayer" parent="."]
+
+[node name="DebugLabel" type="Label" parent="DebugHud"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 760.0
+offset_bottom = 140.0
+theme_override_colors/font_color = Color(1, 1, 0.6, 1)

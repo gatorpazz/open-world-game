@@ -12,6 +12,7 @@ extends Node
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const SPAWN_GROUP := &"spawn_points"
 const DEFAULT_SAVE_PATH := "user://save.json"
+const MAIN_SCENE_PATH := "res://scenes/main.tscn"
 
 var character_sheet: CharacterSheet
 var inventory: Inventory
@@ -53,6 +54,17 @@ func reload_current_scene() -> void:
 		push_warning("reload_current_scene: no reloadable current world")
 		return
 	change_scene(current_world.scene_file_path, &"default")
+
+
+## New-game commit point (spec 009): adopts the sheet character creation
+## built, resets the rest of the identity wholesale — a new game is a whole
+## new identity — and enters the starting world. The default sheet built in
+## _ready remains the F6 debug fallback.
+func start_new_game(sheet: CharacterSheet) -> void:
+	character_sheet = sheet
+	inventory = Inventory.new()
+	journal = Journal.new()
+	change_scene(MAIN_SCENE_PATH, &"default")
 
 
 func has_save() -> bool:

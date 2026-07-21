@@ -145,6 +145,24 @@ func test_change_scene_leaves_unmanaged_world_alone() -> void:
 	assert_eq(foreign.get_parent(), self)
 
 
+func test_start_new_game_adopts_sheet_and_resets_identity() -> void:
+	# Spec 009, criterion 7.
+	var majors: Array[StringName] = [&"blades", &"block", &"evocation", &"mending", &"sneak"]
+	var created := StatsComponent.build_creation_sheet(majors, &"intellect")
+	var old_inventory: Inventory = _game.inventory
+	var old_journal: Journal = _game.journal
+	_game.start_new_game(created)
+	await wait_process_frames(3)
+	assert_same(_game.character_sheet, created, "the created sheet is adopted wholesale")
+	assert_same(_game.player.stats.sheet, created, "the spawned player carries it")
+	assert_ne(_game.inventory, old_inventory, "inventory resets to a fresh instance")
+	assert_ne(_game.journal, old_journal, "journal resets to a fresh instance")
+	assert_eq(_game.current_world.get_parent(), _sandbox, "entered the managed starting world")
+	assert_almost_eq(
+		_game.player.stats.current_mana, created.get_max_mana(), 0.001, "pools start full"
+	)
+
+
 func test_encumbered_player_moves_slower() -> void:
 	var player: Player = PLAYER_SCENE.instantiate()
 	add_child_autofree(player)

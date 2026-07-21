@@ -3,7 +3,7 @@ extends GutTest
 ## criterion 10).
 
 const DIR := "res://data/npcs"
-const EXPECTED_COUNT := 5
+const EXPECTED_COUNT := 7
 
 var _defs: Array[NPCDef] = []
 

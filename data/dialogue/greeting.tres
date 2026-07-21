@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
@@ -23,6 +23,29 @@ script = ExtResource("2")
 npc_id = &"ollun"
 text = "You've stood in the court, then. Everyone counts the tablets; nobody counts the voices. Count both and you come up one apart. The others walk faster past [[the_extra_name|the extra name]]. I don't."
 
+[sub_resource type="Resource" id="resp_torrum_joined"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"joined_the_wardens"])
+text = "Warden. The watches are posted and Bryony has your name — walk counted, and mind [[for_the_tallies|the tallies]]."
+
+[sub_resource type="Resource" id="resp_torrum_stood"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"stood_for_the_tallies"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "You stood. The post noticed — the post is built of noticing. [[take_the_cord|Take the cord]], if you'll wear it."
+
+[sub_resource type="Resource" id="resp_torrum"]
+script = ExtResource("2")
+npc_id = &"torrum"
+text = "Captain Torrum. You're the stranger who cost my square its arithmetic — good, saves introductions. We should talk about [[for_the_tallies|the tallies]]."
+
+[sub_resource type="Resource" id="resp_bryony"]
+script = ExtResource("2")
+npc_id = &"bryony"
+text = "Mind the wing-dust — it carries. You're the one the square couldn't read? Then you and my [[the_moth_cages|moths]] have something in common: everyone wants to know what you'd say."
+
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")
 text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this roof will let you sit cold. If it's talk you want, [[lastdoor]] has plenty."
@@ -31,4 +54,4 @@ text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this r
 script = ExtResource("1")
 id = &"greeting"
 display_name = "Greeting"
-responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_fallback")])
+responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum"), SubResource("resp_bryony"), SubResource("resp_fallback")])

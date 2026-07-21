@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"woke_in_the_bait_square"
+lore_sources = Array[StringName]([&"the_untaken_arrival", &"bait_square"])
+text = "I woke in the center of a scorched square outside a gate-town's walls, under open sky, with wardens watching from a chitin blind. They say no living thing has lain exposed that long and stayed untaken. They logged what they could. Nobody will tell me what the tallies read."

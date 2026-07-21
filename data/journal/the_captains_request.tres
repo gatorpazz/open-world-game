@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_captains_request"
+lore_sources = Array[StringName]([&"torrum", &"the_untaken_arrival", &"wardens"])
+text = "Torrum, the Gate-captain at Lastdoor's warden post, wants me back in the bait square — under witness, timed, entered. His square prices every crossing out of the gate, and it cannot price me. The town calls it science, trial, or bait, depending on who is talking."

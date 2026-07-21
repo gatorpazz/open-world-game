@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_bryony_stood"]
+script = ExtResource("2")
+npc_id = &"bryony"
+requires_journal = Array[StringName]([&"the_moth_test"])
+text = "You stood, the cage read, I entered it. No — I won't show you the slate. Not to keep it from you; to keep it honest. A reading you have seen changes the next one."
+
+[sub_resource type="Resource" id="resp_bryony_invite"]
+script = ExtResource("2")
+npc_id = &"bryony"
+text = "The moths follow what is spent — that is all a cage is. What my cages made of you that day is entered, sealed, and argued over by readers above my cord; you will not hear it from me. Stand near the cage now — that is honest work, and I will thank you for it. Stand in the square — just know the square was built to ask the sky questions. You would be the question. Ask me for [[the_wardens_side|the post's honest want]] and I will give it to you straight."
+
+[resource]
+script = ExtResource("1")
+id = &"the_moth_cages"
+display_name = "the moth cages"
+lore_sources = Array[StringName]([&"bryony", &"hush_moths", &"wardens"])
+responses = Array[ExtResource("2")]([SubResource("resp_bryony_stood"), SubResource("resp_bryony_invite")])

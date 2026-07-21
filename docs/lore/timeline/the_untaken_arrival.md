@@ -11,6 +11,9 @@ surface:
   - dialogue
   - rumor
   - journal
+game_ids:
+  - journal:woke_in_the_bait_square
+  - journal:the_town_takes_sides
 ---
 
 ## Function

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"joined_the_wardens"
+lore_sources = Array[StringName]([&"torrum", &"wardens"])
+text = "Torrum offered me the cord, and I took it. I stand with the wardens of Lastdoor now — gate watches, the tables, service counted. The square read me or it did not; either way, the post would rather count me among its own."

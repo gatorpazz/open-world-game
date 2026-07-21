@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"heard_the_retest_side"
+lore_sources = Array[StringName]([&"bryony", &"wardens"])
+text = "Bryony, the warden at the moth cages, gave me the post's honest half: the square is instruments, the window's readings are sealed and disputed above her cord, and a bait square is built to ask the sky questions. If I stand again, I am the question."

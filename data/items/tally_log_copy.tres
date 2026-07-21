@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MiscDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/misc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"tally_log_copy"
+display_name = "Arrival Tally-Log (Fair Copy)"
+description = "The tally-log for the arrival window, in two fair copies under one warden's initials. What each version reads, the post files without deciding."
+weight = 0.1
+base_value = 0
+stackable = false
+max_stack = 1

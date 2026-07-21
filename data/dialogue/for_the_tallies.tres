@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_torrum_joined"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"joined_the_wardens"])
+text = "You wear the cord, so hear it as a warden hears it: the square stands, the tables hold, and Lastdoor counts you. Report to Bryony for the watches — the cages teach faster than I do."
+
+[sub_resource type="Resource" id="resp_torrum_stood"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"stood_for_the_tallies"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "You stood. Entered, witnessed, timed — the number is the tables' business now. Yours is a different question: [[take_the_cord|take the cord]], if you'll have it. The post takes walkers who stand."
+
+[sub_resource type="Resource" id="resp_torrum_makegood"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"refused_the_square", &"the_moth_test"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "You refused the square and stood for the cage anyway. That counts — everything counts; that is the whole of me. The offer is warm again: [[take_the_cord|the cord]], or the square itself, whichever you will stand."
+
+[sub_resource type="Resource" id="resp_torrum_refused"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"refused_the_square"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "The offer cools; the gate does not close. If it ever wants warming, start small — [[the_moth_cages|Bryony's cage]] counts too. The tables hold refusals the same as crossings."
+
+[sub_resource type="Resource" id="resp_torrum_reminder"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"the_captains_request"])
+blocked_by_journal = Array[StringName]([&"stood_for_the_tallies", &"refused_the_square"])
+text = "The square waits — under witness, timed, entered, whenever you say the word at the blind. Read [[the_two_tally_logs|the arrival log]] first if you doubt my asking, or stand for [[the_moth_cages|the cage]] to learn the shape of it. Or tell me [[refuse_the_square|no]], and we will enter that too."
+
+[sub_resource type="Resource" id="resp_torrum_ask"]
+script = ExtResource("2")
+npc_id = &"torrum"
+blocked_by_journal = Array[StringName]([&"the_captains_request"])
+text = "You cost my post two bells a day. Every crossing out of that gate wants a number; the square makes the numbers; the square cannot read you. So the tables will not close, and crews stand idle arguing doctrine at my gate. Stand in the square again — under witness, timed, entered. Not for me. For every walker who needs a number before the open. The post keeps [[the_two_tally_logs|the arrival log]]; read it if you doubt me. [[the_moth_cages|Bryony's cages]] are the small test. Or [[refuse_the_square|refuse]], and we will enter that too."
+journal_entry = &"the_captains_request"
+
+[resource]
+script = ExtResource("1")
+id = &"for_the_tallies"
+display_name = "for the tallies"
+lore_sources = Array[StringName]([&"torrum", &"wardens", &"the_untaken_arrival"])
+responses = Array[ExtResource("2")]([SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum_makegood"), SubResource("resp_torrum_refused"), SubResource("resp_torrum_reminder"), SubResource("resp_torrum_ask")])

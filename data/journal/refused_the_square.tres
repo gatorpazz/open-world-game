@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"refused_the_square"
+lore_sources = Array[StringName]([&"torrum", &"wardens"])
+text = "I refused the captain's request. Torrum took it without heat — the offer cools, he said, but the gate does not close. The town will make of my refusal what it makes of everything."

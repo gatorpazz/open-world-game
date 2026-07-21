@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_torrum_read"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"the_two_tally_logs"])
+text = "So you have read both. Two copies, one warden's initials, one window. I file both, because filing one would be deciding, and deciding is not reading. When the square can read you, the log closes itself."
+
+[sub_resource type="Resource" id="resp_torrum_pointer"]
+script = ExtResource("2")
+npc_id = &"torrum"
+text = "The arrival log is in the post — on the shelf, and you are welcome past the seal. Read it before you judge my asking. Two versions, one set of initials. That is not carelessness; that is what an honest post does with a reading it cannot hold."
+
+[resource]
+script = ExtResource("1")
+id = &"the_two_tally_logs"
+display_name = "the two tally-logs"
+lore_sources = Array[StringName]([&"bait_square", &"torrum"])
+responses = Array[ExtResource("2")]([SubResource("resp_torrum_read"), SubResource("resp_torrum_pointer")])

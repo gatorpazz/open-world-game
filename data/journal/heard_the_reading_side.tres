@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"heard_the_reading_side"
+lore_sources = Array[StringName]([&"dossun", &"reciters"])
+text = "Dossun, the reciter at the gate shrine, offered the order's answer: stand at circuit's end and be read in the High Register — not because they know what I am, but because the roll is how the island keeps what it cannot explain."

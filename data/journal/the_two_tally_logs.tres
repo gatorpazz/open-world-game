@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_two_tally_logs"
+lore_sources = Array[StringName]([&"bait_square", &"torrum"])
+text = "I found the tally-log for my arrival window in the warden post. It exists in two versions, initialed by the same warden. Both cannot be true, and the post files both."

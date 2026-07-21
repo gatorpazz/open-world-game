@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_moth_test"
+lore_sources = Array[StringName]([&"bryony", &"wardens"])
+text = "I stood near Bryony's moth cage, for the tallies. Honest work, she called it. Whatever the cage read, she entered it without a word and thanked me — and did not show me the slate."

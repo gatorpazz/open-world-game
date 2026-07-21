@@ -9,6 +9,19 @@ spoiler: low
 surface:
   - dialogue
   - quest
+game_ids:
+  - npc:torrum
+  - quest:for_the_tallies
+  - topic:for_the_tallies
+  - topic:refuse_the_square
+  - topic:take_the_cord
+  - topic:the_two_tally_logs
+  - journal:the_captains_request
+  - journal:stood_for_the_tallies
+  - journal:joined_the_wardens
+  - journal:refused_the_square
+  - journal:the_two_tally_logs
+  - item:tally_log_copy
 ---
 
 ## Function

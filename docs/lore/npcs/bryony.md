@@ -9,6 +9,12 @@ spoiler: low
 surface:
   - dialogue
   - quest
+game_ids:
+  - npc:bryony
+  - topic:the_moth_cages
+  - topic:the_wardens_side
+  - journal:the_moth_test
+  - journal:heard_the_retest_side
 ---
 
 ## Function

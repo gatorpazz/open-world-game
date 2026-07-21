@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"stood_for_the_tallies"
+lore_sources = Array[StringName]([&"bait_square", &"the_untaken_arrival"])
+text = "I stood in the bait square again, under witness, timed and entered. The scorch rings, the blind, the instruments — and me at the center, the question the square was built to ask. The tallies have their number now, whatever it is."

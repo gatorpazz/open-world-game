@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"heard_the_partner_side"
+lore_sources = Array[StringName]([&"wester", &"licensed_crews"])
+text = "Wester, boss of the crew whose book Suddel keeps, made the crews' offer plain arithmetic: an untaken partner rewrites every exposure line in the book. The sky prices everyone but me — and Wester would like to renegotiate."

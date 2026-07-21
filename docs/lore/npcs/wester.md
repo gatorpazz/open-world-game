@@ -9,6 +9,8 @@ spoiler: low
 surface:
   - dialogue
   - quest
+game_ids:
+  - journal:heard_the_partner_side
 ---
 
 ## Function

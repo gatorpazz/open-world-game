@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_bryony_final"]
+script = ExtResource("2")
+npc_id = &"bryony"
+requires_journal = Array[StringName]([&"heard_the_reading_side", &"heard_the_partner_side"])
+blocked_by_journal = Array[StringName]([&"the_town_takes_sides"])
+text = "Then you have heard all three of us now. The order wants you read, the crews want you priced, and we want you measured. The sides do not sum, walker. They never did — that is what makes them sides."
+journal_entry = &"the_town_takes_sides"
+
+[sub_resource type="Resource" id="resp_bryony_side"]
+script = ExtResource("2")
+npc_id = &"bryony"
+text = "The post's want is simple, and we argue it loudly: measure you. Doctrine covers everything; you are the case it does not; a table with one uncovered case is a roof with one hole. The captain calls it work. The Doctrinists call it rite. I call the instruments honest and the square hungry — hold both."
+journal_entry = &"heard_the_retest_side"
+
+[resource]
+script = ExtResource("1")
+id = &"the_wardens_side"
+display_name = "the wardens' side"
+lore_sources = Array[StringName]([&"bryony", &"wardens", &"the_untaken_arrival"])
+responses = Array[ExtResource("2")]([SubResource("resp_bryony_final"), SubResource("resp_bryony_side")])

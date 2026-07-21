@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="QuestDef" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/quest_stage.gd" id="2"]
+
+[sub_resource type="Resource" id="stage_woke"]
+script = ExtResource("2")
+journal_entry = &"woke_in_the_bait_square"
+
+[sub_resource type="Resource" id="stage_request"]
+script = ExtResource("2")
+journal_entry = &"the_captains_request"
+
+[sub_resource type="Resource" id="stage_sides"]
+script = ExtResource("2")
+journal_entry = &"the_town_takes_sides"
+
+[sub_resource type="Resource" id="stage_logs"]
+script = ExtResource("2")
+journal_entry = &"the_two_tally_logs"
+
+[sub_resource type="Resource" id="stage_moth"]
+script = ExtResource("2")
+journal_entry = &"the_moth_test"
+
+[sub_resource type="Resource" id="stage_stood"]
+script = ExtResource("2")
+journal_entry = &"stood_for_the_tallies"
+
+[sub_resource type="Resource" id="stage_joined"]
+script = ExtResource("2")
+journal_entry = &"joined_the_wardens"
+outcome = &"complete"
+
+[sub_resource type="Resource" id="stage_refused"]
+script = ExtResource("2")
+journal_entry = &"refused_the_square"
+outcome = &"complete"
+
+[resource]
+script = ExtResource("1")
+id = &"for_the_tallies"
+display_name = "For the Tallies"
+lore_sources = Array[StringName]([&"wardens", &"the_untaken_arrival", &"bait_square", &"torrum", &"bryony"])
+stages = Array[ExtResource("2")]([SubResource("stage_woke"), SubResource("stage_request"), SubResource("stage_sides"), SubResource("stage_logs"), SubResource("stage_moth"), SubResource("stage_stood"), SubResource("stage_joined"), SubResource("stage_refused")])

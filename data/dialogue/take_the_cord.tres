@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_torrum_worn"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"joined_the_wardens"])
+text = "Wear it plain. Knots come with service, beads with witness — the cord remembers so you don't have to."
+
+[sub_resource type="Resource" id="resp_torrum_join_stood"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"stood_for_the_tallies"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "Then it is entered: you serve, by standing. The post takes you — gate watches to start, the tables when you can read them, and the square's counsel when it matters. Counted and kept, warden."
+journal_entry = &"joined_the_wardens"
+
+[sub_resource type="Resource" id="resp_torrum_join_makegood"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"refused_the_square", &"the_moth_test"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "You came back to it the small way — cage first. Good. That is how doctrine walks. Entered: you serve. The square will keep."
+journal_entry = &"joined_the_wardens"
+
+[sub_resource type="Resource" id="resp_torrum_not_yet"]
+script = ExtResource("2")
+npc_id = &"torrum"
+text = "The cord is earned standing — in the square, or start small at the cage. The post takes walkers who stand, not walkers who ask."
+
+[resource]
+script = ExtResource("1")
+id = &"take_the_cord"
+display_name = "take the cord"
+lore_sources = Array[StringName]([&"torrum", &"wardens"])
+responses = Array[ExtResource("2")]([SubResource("resp_torrum_worn"), SubResource("resp_torrum_join_stood"), SubResource("resp_torrum_join_makegood"), SubResource("resp_torrum_not_yet")])

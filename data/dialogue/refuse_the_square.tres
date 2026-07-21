@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_torrum_already"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"refused_the_square"])
+text = "Entered already. The gate stays open, walker — it always does. Closed means someone is still out there."
+
+[sub_resource type="Resource" id="resp_torrum_stood_first"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"stood_for_the_tallies"])
+text = "You already stood. Refusing now would confuse the tables, and me. Let the number rest where you left it."
+
+[sub_resource type="Resource" id="resp_torrum_refuse"]
+script = ExtResource("2")
+npc_id = &"torrum"
+text = "Then it is entered: the stranger declines. No heat in it — the tables hold refusals too. The offer cools; the gate does not close. If you ever change your mind, start small. Bryony's cage counts."
+journal_entry = &"refused_the_square"
+
+[resource]
+script = ExtResource("1")
+id = &"refuse_the_square"
+display_name = "refuse the square"
+lore_sources = Array[StringName]([&"torrum", &"the_untaken_arrival"])
+responses = Array[ExtResource("2")]([SubResource("resp_torrum_already"), SubResource("resp_torrum_stood_first"), SubResource("resp_torrum_refuse")])

@@ -2,7 +2,8 @@ class_name WorldContainer
 extends StaticBody3D
 ## A lootable container. Owns its own Inventory resource (002 reuse),
 ## authored in-editor with resource_local_to_scene so instances don't share
-## stacks. Take-only in v1; depositing comes with the real inventory UI.
+## stacks. Take-only in v1; the inventory panel (012) shipped without
+## depositing — that waits for Phase 2 barter.
 ## NOTE: gold in containers is out of scope until barter (Phase 2).
 ##
 ## Named WorldContainer, not Container: Godot reserves Container for its
@@ -13,9 +14,9 @@ const PANEL_SCENE := preload("res://scenes/ui/container_panel.tscn")
 @export var display_name := "Container"
 @export var inventory: Inventory
 
-@onready var interactable: Interactable = $Interactable
-
 var _panel: ContainerPanel = null
+
+@onready var interactable: Interactable = $Interactable
 
 
 ## Before the child Interactable's _ready assert: prompt name per instance.

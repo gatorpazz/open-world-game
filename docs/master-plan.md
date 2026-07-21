@@ -72,6 +72,7 @@ Spec queue (one spec = one reviewable unit of work):
 | 009 | Character creation flow (attributes, 5 major skills) | ✅ complete |
 | 010 | Slice content: first village, ~10 NPCs, 30–60 min questline | queued |
 | 011 | Lore bible & worldbuilding system (canon vault + validators + skills; foundation & regional-skeleton passes) | ✅ complete (jumped the queue so 006/010 draw on canon) |
+| 012 | Inventory panel UI (view / use / equip; mini-spec prerequisite for 010) | queued |
 
 ### Phase 2 — Systems Depth (target: 3–4 months)
 Factions with ranks, reputation, and advancement requirements · crime & bounty · barter economy with regional prices · NPC daily schedules · alchemy · enchanting-analog · fast-travel network (transport hubs, not map-anywhere) · persuasion mechanics · creature variety pass.

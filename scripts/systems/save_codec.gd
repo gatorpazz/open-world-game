@@ -19,6 +19,131 @@ const _SHEET_KEYS: Array[String] = [
 	"unspent_attribute_points",
 	"major_level_ups",
 ]
+const _ROOT_KEYS: Array[String] = [
+	"save_version",
+	"scene_path",
+	"player",
+	"sheet",
+	"inventory",
+	"journal",
+]
+const _PLAYER_KEYS: Array[String] = [
+	"transform",
+	"head_pitch",
+	"current_health",
+	"current_mana",
+	"current_stamina",
+]
+const _TRANSFORM_FLOATS := 12
+
+
+## Everything one save holds, in both directions: built by Game at save
+## time, returned whole by decode_save — or not at all (null), never half.
+class SaveState:
+	var scene_path: String
+	var player_transform: Transform3D
+	var head_pitch: float
+	var current_health: float
+	var current_mana: float
+	var current_stamina: float
+	var sheet: CharacterSheet
+	var inventory: Inventory
+	var journal: Journal
+
+
+static func encode_save(state: SaveState) -> Dictionary:
+	return {
+		"save_version": SAVE_VERSION,
+		"scene_path": state.scene_path,
+		"player":
+		{
+			"transform": transform_to_array(state.player_transform),
+			"head_pitch": state.head_pitch,
+			"current_health": state.current_health,
+			"current_mana": state.current_mana,
+			"current_stamina": state.current_stamina,
+		},
+		"sheet": sheet_to_dict(state.sheet),
+		"inventory": inventory_to_dict(state.inventory),
+		"journal": journal_to_dict(state.journal),
+	}
+
+
+## Validates and rebuilds a full SaveState, or returns null — atomic by
+## design, so a caller never applies half a save. The save_version equality
+## check is the future migration hook; the scene_path allow-list is the
+## security boundary (a tampered save must never load outside res://).
+static func decode_save(
+	data: Dictionary, balance: BalanceConfig, items: Dictionary[StringName, ItemDef]
+) -> SaveState:
+	if not data.has_all(_ROOT_KEYS):
+		push_warning("decode_save: missing sections")
+		return null
+	if not (data["save_version"] is float or data["save_version"] is int):
+		push_warning("decode_save: malformed save_version")
+		return null
+	if int(data["save_version"]) != SAVE_VERSION:
+		push_warning("decode_save: unsupported save_version %d" % int(data["save_version"]))
+		return null
+	if not data["scene_path"] is String:
+		push_warning("decode_save: malformed scene_path")
+		return null
+	var scene_path := data["scene_path"] as String
+	if not scene_path.begins_with("res://") or not ResourceLoader.exists(scene_path):
+		push_warning("decode_save: scene_path '%s' refused" % scene_path)
+		return null
+	if not _is_player_dict(data["player"]):
+		push_warning("decode_save: malformed player section")
+		return null
+	var sections_are_dicts := (
+		data["sheet"] is Dictionary
+		and data["inventory"] is Dictionary
+		and data["journal"] is Dictionary
+	)
+	if not sections_are_dicts:
+		push_warning("decode_save: malformed identity sections")
+		return null
+	var sheet := sheet_from_dict(data["sheet"] as Dictionary, balance)
+	var inventory := inventory_from_dict(data["inventory"] as Dictionary, items)
+	var journal := journal_from_dict(data["journal"] as Dictionary)
+	if sheet == null or inventory == null or journal == null:
+		return null
+	var player := data["player"] as Dictionary
+	var state := SaveState.new()
+	state.scene_path = scene_path
+	state.player_transform = transform_from_array(player["transform"] as Array)
+	state.head_pitch = float(player["head_pitch"])
+	state.current_health = float(player["current_health"])
+	state.current_mana = float(player["current_mana"])
+	state.current_stamina = float(player["current_stamina"])
+	state.sheet = sheet
+	state.inventory = inventory
+	state.journal = journal
+	return state
+
+
+## Flattens a Transform3D to 12 floats: basis x/y/z axes, then origin.
+static func transform_to_array(transform: Transform3D) -> Array:
+	var values: Array[float] = []
+	for axis: Vector3 in [
+		transform.basis.x, transform.basis.y, transform.basis.z, transform.origin
+	]:
+		values.append(axis.x)
+		values.append(axis.y)
+		values.append(axis.z)
+	return values
+
+
+## Rebuilds a Transform3D from 12 floats; the basis is orthonormalized to
+## kill JSON double -> 32-bit float drift. Callers validate the array shape.
+static func transform_from_array(values: Array) -> Transform3D:
+	var basis := Basis(
+		Vector3(values[0], values[1], values[2]),
+		Vector3(values[3], values[4], values[5]),
+		Vector3(values[6], values[7], values[8])
+	)
+	var origin := Vector3(values[9], values[10], values[11])
+	return Transform3D(basis.orthonormalized(), origin)
 
 
 static func sheet_to_dict(sheet: CharacterSheet) -> Dictionary:
@@ -194,6 +319,29 @@ static func _is_string_array(value: Variant) -> bool:
 		return false
 	for entry: Variant in value as Array:
 		if not entry is String:
+			return false
+	return true
+
+
+static func _is_player_dict(value: Variant) -> bool:
+	if not value is Dictionary:
+		return false
+	var player := value as Dictionary
+	if not player.has_all(_PLAYER_KEYS):
+		return false
+	if not _is_number_array(player["transform"], _TRANSFORM_FLOATS):
+		return false
+	for key: String in ["head_pitch", "current_health", "current_mana", "current_stamina"]:
+		if not (player[key] is float or player[key] is int):
+			return false
+	return true
+
+
+static func _is_number_array(value: Variant, expected_size: int) -> bool:
+	if not value is Array or (value as Array).size() != expected_size:
+		return false
+	for entry: Variant in value as Array:
+		if not (entry is float or entry is int):
 			return false
 	return true
 

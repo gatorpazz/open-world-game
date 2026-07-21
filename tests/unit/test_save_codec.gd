@@ -161,7 +161,99 @@ func test_journal_from_dict_refuses_malformed_shapes() -> void:
 	)
 
 
+# --- Criterion 4: full payload — transform, pitch, pools ---
+
+
+func test_full_payload_round_trips_transform_and_pools() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var state := _make_state(balance, items)
+
+	var decoded := SaveCodec.decode_save(
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items
+	)
+
+	assert_not_null(decoded)
+	assert_eq(decoded.scene_path, state.scene_path)
+	assert_true(
+		decoded.player_transform.is_equal_approx(state.player_transform),
+		"transform survives within epsilon"
+	)
+	assert_almost_eq(decoded.head_pitch, state.head_pitch, 0.00001)
+	assert_almost_eq(decoded.current_health, 42.5, 0.00001)
+	assert_almost_eq(decoded.current_mana, 10.25, 0.00001)
+	assert_almost_eq(decoded.current_stamina, 55.0, 0.00001)
+	assert_eq(decoded.journal.entries, state.journal.entries)
+
+
+func test_decoded_basis_is_orthonormal() -> void:
+	var skewed: Array[float] = [1.02, 0.01, 0.0, -0.01, 0.99, 0.0, 0.0, 0.0, 1.01, 3.0, 0.5, -2.0]
+	var transform := SaveCodec.transform_from_array(skewed)
+	assert_almost_eq(transform.basis.x.length(), 1.0, 0.00001, "axes renormalized")
+	assert_almost_eq(transform.basis.x.dot(transform.basis.y), 0.0, 0.00001, "axes orthogonal")
+	assert_eq(transform.origin, Vector3(3.0, 0.5, -2.0), "origin untouched")
+
+
+# --- Criteria 5 (unit half) and 10: atomic refusal + security ---
+
+
+func test_decode_save_refuses_bad_payloads() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var good := SaveCodec.encode_save(_make_state(balance, items))
+
+	assert_null(SaveCodec.decode_save({}, balance, items), "missing sections")
+
+	var wrong_version := _json_round_trip(good)
+	wrong_version["save_version"] = SaveCodec.SAVE_VERSION + 1
+	assert_null(SaveCodec.decode_save(wrong_version, balance, items), "future version refused")
+
+	var bad_sheet := _json_round_trip(good)
+	bad_sheet["sheet"] = {"level": 3}
+	assert_null(
+		SaveCodec.decode_save(bad_sheet, balance, items), "one bad section fails the whole decode"
+	)
+
+	var bad_transform := _json_round_trip(good)
+	(bad_transform["player"] as Dictionary)["transform"] = [1.0, 2.0]
+	assert_null(SaveCodec.decode_save(bad_transform, balance, items), "short transform refused")
+
+
+func test_scene_path_outside_res_is_refused() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+
+	var evil := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	evil["scene_path"] = "user://evil.tscn"
+	assert_null(SaveCodec.decode_save(evil, balance, items), "user:// scene refused")
+
+	var missing := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	missing["scene_path"] = "res://scenes/does_not_exist.tscn"
+	assert_null(SaveCodec.decode_save(missing, balance, items), "nonexistent scene refused")
+
+
 # --- Helpers ---
+
+
+func _make_state(
+	balance: BalanceConfig, items: Dictionary[StringName, ItemDef]
+) -> SaveCodec.SaveState:
+	var state := SaveCodec.SaveState.new()
+	state.scene_path = "res://scenes/main.tscn"
+	state.player_transform = Transform3D(Basis(Vector3.UP, 1.3), Vector3(3.0, 0.5, -2.0))
+	state.head_pitch = -0.31
+	state.current_health = 42.5
+	state.current_mana = 10.25
+	state.current_stamina = 55.0
+	state.sheet = _make_sheet(balance)
+	var inventory := Inventory.new()
+	inventory.gold = 7
+	inventory.stacks = [_stack(items[&"potion"], 2)]
+	state.inventory = inventory
+	var journal := Journal.new()
+	journal.entries = [&"arrival"]
+	state.journal = journal
+	return state
 
 
 func _json_round_trip(data: Dictionary) -> Dictionary:

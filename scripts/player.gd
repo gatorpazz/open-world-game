@@ -22,6 +22,7 @@ var _journal_panel: JournalPanel = null
 @onready var hud_prompt: HudPrompt = $HUD/HudPrompt
 @onready var hud_bars: HudBars = $HUD/HudBars
 @onready var hud_notice: HudNotice = $HUD/HudNotice
+@onready var hud_spell: HudSpell = $HUD/HudSpell
 @onready var death_overlay: DeathOverlay = $HUD/DeathOverlay
 @onready var stats: StatsComponent = $Stats
 @onready var inventory_component: InventoryComponent = $Inventory
@@ -80,9 +81,13 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	detector.target_changed.connect(hud_prompt.set_target)
 	hud_bars.bind(stats)
+	hud_bars.bind_ward(combat)
 	combat.died.connect(death_overlay.open)
 	casting.cast_failed.connect(_on_cast_failed)
 	casting.spell_learned.connect(_on_spell_learned)
+	casting.selected_spell_changed.connect(hud_spell.set_spell)
+	# Casting readied before us, so pull the selection it already made.
+	hud_spell.set_spell(casting.get_selected())
 
 
 func _unhandled_input(event: InputEvent) -> void:

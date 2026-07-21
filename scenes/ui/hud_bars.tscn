@@ -35,3 +35,28 @@ offset_right = 216.0
 offset_bottom = -12.0
 grow_vertical = 0
 show_percentage = false
+
+[node name="Mana" type="ProgressBar" parent="."]
+modulate = Color(0.35, 0.55, 0.95, 1)
+layout_mode = 1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -80.0
+offset_right = 216.0
+offset_bottom = -60.0
+grow_vertical = 0
+show_percentage = false
+
+[node name="Ward" type="ProgressBar" parent="."]
+modulate = Color(0.75, 0.72, 0.6, 1)
+visible = false
+layout_mode = 1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -92.0
+offset_right = 216.0
+offset_bottom = -84.0
+grow_vertical = 0
+show_percentage = false

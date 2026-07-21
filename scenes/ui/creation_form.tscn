@@ -1,0 +1,95 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/creation_form.gd" id="1_form"]
+
+[sub_resource type="LabelSettings" id="title_label_settings"]
+font_size = 28
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="CreationForm" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_form")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -280.0
+offset_right = 340.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layout" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "Create Your Character"
+label_settings = SubResource("title_label_settings")
+horizontal_alignment = 1
+
+[node name="MajorsHeader" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "Choose five major skills"
+
+[node name="SkillColumns" type="HBoxContainer" parent="Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="MajorsCounter" type="Label" parent="Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="FavoredHeader" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "Choose a favored attribute"
+
+[node name="FavoredRow" type="HBoxContainer" parent="Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PreviewLabel" type="Label" parent="Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BackButton" type="Button" parent="Panel/Layout/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"
+
+[node name="ConfirmButton" type="Button" parent="Panel/Layout/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm"

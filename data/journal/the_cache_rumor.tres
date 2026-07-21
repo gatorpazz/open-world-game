@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_cache_rumor"
+lore_sources = Array[StringName]([&"wester", &"licensed_crews"])
+text = "Wester, boss of the Longswathe crew, paid me earnest money in rumor form: a cache off the Scar route, under a roof older than any license. The town says so; Wester says the town is right. See it, come back, and the crews will talk shares."

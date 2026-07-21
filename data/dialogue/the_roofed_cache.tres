@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_wester_joined"]
+script = ExtResource("2")
+npc_id = &"wester"
+requires_journal = Array[StringName]([&"joined_the_licensed_crews"])
+text = "You're in the book now — the cache stays crew business, and crew business stays under its own roof. Ask Suddel for your share line; he'll pretend he hasn't already entered it."
+
+[sub_resource type="Resource" id="resp_wester_found"]
+script = ExtResource("2")
+npc_id = &"wester"
+requires_journal = Array[StringName]([&"found_the_roofed_cache"])
+blocked_by_journal = Array[StringName]([&"joined_the_licensed_crews"])
+text = "So you went, and you saw, and you came back with the kind of quiet that says it's true. Good enough. A share in the Longswathe, then — witnessed at Suddel's counter, entered licensed and fair. The sky bills everyone but you, walker. Time that arithmetic worked for a crew."
+journal_entry = &"joined_the_licensed_crews"
+
+[sub_resource type="Resource" id="resp_wester_reminder"]
+script = ExtResource("2")
+npc_id = &"wester"
+requires_journal = Array[StringName]([&"the_cache_rumor"])
+blocked_by_journal = Array[StringName]([&"found_the_roofed_cache"])
+text = "The cache keeps. Off the Scar route, under the old roof — you'll know it when the sky stops. Come back with it seen and we'll talk shares."
+
+[sub_resource type="Resource" id="resp_wester_pitch"]
+script = ExtResource("2")
+npc_id = &"wester"
+text = "Every line in a licensed book is exposure spent — that is the price of the open, and every crew pays it in minutes under sky. You? The sky doesn't bill you. So here's earnest money, rumor-shaped: there's a cache off the Scar route, under a roof older than any license. The town says so; the town is right. Go see it. Then come back, and we'll talk shares. And if you want [[the_crews_side|the crews' side]] of what the town's arguing about you, that's free."
+journal_entry = &"the_cache_rumor"
+
+[resource]
+script = ExtResource("1")
+id = &"the_roofed_cache"
+display_name = "the roofed cache"
+lore_sources = Array[StringName]([&"wester", &"licensed_crews", &"lastdoor", &"open_fields"])
+responses = Array[ExtResource("2")]([SubResource("resp_wester_joined"), SubResource("resp_wester_found"), SubResource("resp_wester_reminder"), SubResource("resp_wester_pitch")])

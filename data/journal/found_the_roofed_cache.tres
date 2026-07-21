@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"found_the_roofed_cache"
+lore_sources = Array[StringName]([&"licensed_crews", &"wester", &"open_fields"])
+text = "I found the roofed cache off the Scar route — goods under an old roof, exactly as the rumor tells it, a roof that predates every license. What it was for, and whose, the crews do not say. Wester wanted it seen; it is seen."

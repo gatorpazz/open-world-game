@@ -10,7 +10,14 @@ surface:
   - dialogue
   - quest
 game_ids:
+  - npc:wester
+  - quest:the_roofed_cache
+  - topic:the_roofed_cache
+  - topic:the_crews_side
   - journal:heard_the_partner_side
+  - journal:the_cache_rumor
+  - journal:found_the_roofed_cache
+  - journal:joined_the_licensed_crews
 ---
 
 ## Function
@@ -58,7 +65,9 @@ loses crew to the open some seasons, and walks the funeral line
 
 - The roofed cache (canon, [[licensed_crews]]): the Lastdoor rumor is
   true — and the cache's roof predates the crews. Wester offers the
-  secret as a share.
+  secret as a share. (Ruled, spec 010: the cache lies off the Scar
+  route — the covered stretch between the gate-country and the
+  [[drowned_stair]], where the [[open_fields]] press closest.)
 - The stranded crew / budget one roof short (canon, braided with the
   wardens' seed): Wester's people, Torrum's tables, the town knowing
   both numbers.
@@ -72,7 +81,8 @@ someone who no longer collects.
 
 ## Open questions
 
-- The crew's name. (Dialogue pass; Lastlight naming — a hoard word or
-  a lane name.)
+- ~~The crew's name~~ — ruled (spec 010, dialogue pass): the
+  **Longswathe** crew, named for the old-surface field the salvage
+  maps still hold. The crew's standing stays open.
 - What Wester thinks the cache's old roof was for. (Reserved-adjacent;
   route content.)

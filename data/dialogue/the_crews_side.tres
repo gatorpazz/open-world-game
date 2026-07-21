@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_wester_final"]
+script = ExtResource("2")
+npc_id = &"wester"
+requires_journal = Array[StringName]([&"heard_the_retest_side", &"heard_the_reading_side"])
+blocked_by_journal = Array[StringName]([&"the_town_takes_sides"])
+text = "So that's all three of us, then. Measured, read, or priced in. The sides don't sum, walker — sums are my trade, I'd know. Pick the arithmetic you can live with."
+journal_entry = &"the_town_takes_sides"
+
+[sub_resource type="Resource" id="resp_wester_side"]
+script = ExtResource("2")
+npc_id = &"wester"
+text = "The crews' want? Simple sums. Every walker we field pays the sky in minutes; the book prices every run by exposure spent. You walk free of the bill — partner with any crew on this island and their whole ledger breathes. The wardens want you measured, the order wants you read. I want you priced in. That's the honest one."
+journal_entry = &"heard_the_partner_side"
+
+[resource]
+script = ExtResource("1")
+id = &"the_crews_side"
+display_name = "the crews' side"
+lore_sources = Array[StringName]([&"wester", &"licensed_crews", &"the_untaken_arrival"])
+responses = Array[ExtResource("2")]([SubResource("resp_wester_final"), SubResource("resp_wester_side")])

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"wester"
+display_name = "Wester"
+description = "Boss of the Longswathe crew — weathered, wind-named, counting shares aloud. His licensed book sits at Suddel's counter; his offer sits with the one walker the sky won't bill."

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=12 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
@@ -46,6 +46,17 @@ script = ExtResource("2")
 npc_id = &"bryony"
 text = "Mind the wing-dust — it carries. You're the one the square couldn't read? Then you and my [[the_moth_cages|moths]] have something in common: everyone wants to know what you'd say."
 
+[sub_resource type="Resource" id="resp_wester_joined"]
+script = ExtResource("2")
+npc_id = &"wester"
+requires_journal = Array[StringName]([&"joined_the_licensed_crews"])
+text = "Share-mate. Suddel's got the book open and the road's got weather — ask him what's owed, and me [[the_roofed_cache|what's next]]."
+
+[sub_resource type="Resource" id="resp_wester"]
+script = ExtResource("2")
+npc_id = &"wester"
+text = "You'd be the rumor, then. I collect those — profitable habit. Come talk when you like: I've got [[the_roofed_cache|earnest money]] for the one walker the sky won't bill."
+
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")
 text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this roof will let you sit cold. If it's talk you want, [[lastdoor]] has plenty."
@@ -54,4 +65,4 @@ text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this r
 script = ExtResource("1")
 id = &"greeting"
 display_name = "Greeting"
-responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum"), SubResource("resp_bryony"), SubResource("resp_fallback")])
+responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum"), SubResource("resp_bryony"), SubResource("resp_wester_joined"), SubResource("resp_wester"), SubResource("resp_fallback")])

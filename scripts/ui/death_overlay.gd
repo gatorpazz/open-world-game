@@ -1,10 +1,10 @@
 class_name DeathOverlay
 extends Control
-## "You died" overlay (spec 004). Pauses the tree and releases the mouse;
-## Reload re-enters the current scene through Game. The persistent
-## identity survives (xp and loot kept, health re-derived full) while
-## world state resets — the stated v1 caveat; spec 007 (save/load)
-## replaces this with load-last-save.
+## "You died" overlay (spec 004, amended by 007). Pauses the tree and
+## releases the mouse; the button loads the last save, closing 004's
+## stated caveat. When no save exists (or the file is corrupt) it falls
+## back to re-entering the current scene through Game — the original 004
+## behavior: identity survives, health re-derives full, world resets.
 
 @onready var reload_button: Button = $Center/Layout/Reload
 
@@ -22,4 +22,5 @@ func open() -> void:
 func _on_reload_pressed() -> void:
 	get_tree().paused = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	Game.reload_current_scene()
+	if not Game.load_game():
+		Game.reload_current_scene()

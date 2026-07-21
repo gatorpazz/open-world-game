@@ -45,8 +45,9 @@ func change_scene(scene_path: String, spawn_point: StringName) -> void:
 
 
 ## Death reload (spec 004): re-enter the current world at its default
-## spawn. World state resets while the persistent identity survives —
-## spec 007 (save/load) replaces this with load-last-save.
+## spawn. World state resets while the persistent identity survives.
+## Since spec 007 the death overlay prefers load_game(); this remains
+## the fallback when no save exists, and the F6 debug path.
 func reload_current_scene() -> void:
 	if current_world == null or current_world.scene_file_path.is_empty():
 		push_warning("reload_current_scene: no reloadable current world")

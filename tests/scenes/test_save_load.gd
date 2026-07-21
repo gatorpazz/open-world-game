@@ -3,7 +3,6 @@ extends GutTest
 ## half of 5). Runs against a scratch save_path so a developer's real
 ## user://save.json is never touched.
 
-const GameScript := preload("res://scripts/systems/game.gd")
 const RAT_PELT := preload("res://data/items/rat_pelt.tres")
 const MAIN_SCENE := "res://scenes/main.tscn"
 const TEST_SAVE_PATH := "user://test_save_007.json"

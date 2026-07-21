@@ -42,7 +42,7 @@ Decoding needs *resolvers* — ItemDefs by id, the BalanceConfig — and no Reso
 | section | contents | notes |
 |---|---|---|
 | `save_version` | int | must equal `SaveCodec.SAVE_VERSION`; mismatch refuses the load (the migration hook) |
-| `scene_path` | String | must begin with `res://` **and** exist — a tampered save can never load from `user://` |
+| `scene_path` | String | must begin with `res://`, carry a scene extension (`.tscn`/`.scn`), **and** exist — a tampered save can never load from `user://`, nor smuggle a non-scene resource into the scene changer *(Amendment, implementation: the extension check was added after review — "exists" alone accepted any `res://` resource and crashed downstream; an extension allow-list beats a `ResourceLoader` type hint, which is ignored for cached files)* |
 | `player` | transform (12 floats: basis xyz axes then origin), head pitch, three current pools | pools live *here*, not on the sheet — the sheet derives maxes, the payload carries currents |
 | `sheet` / `inventory` / `journal` | the three identity resources | items and equipment as **ids only**; `config` never serialized (reassigned from `res://data/balance/` on decode) |
 
@@ -110,7 +110,7 @@ Decoding needs *resolvers* — ItemDefs by id, the BalanceConfig — and no Reso
 7. **Quicksave (scene):** `save_game()` writes the file and `has_save()` flips true; the no-world/no-player guard returns false and writes nothing; a `quicksave` input action through the player produces the file and a `HudNotice` child.
 8. **Load restores the world (scene):** mutate (grant xp, add item, add journal entry, move, take damage) → save → mutate further → load → a *fresh* world instance whose `Game` resources are *new* instances equal to the save-point values (the post-save entry absent), player position ≈ the saved position, current health the saved value — not max.
 9. **Death → last save (scene):** with a save present, the death overlay's button restores the save point; with none, it falls back to 004's default-spawn reload (existing `test_death_flow.gd` assertions hold on the fallback path).
-10. **Security (unit):** a payload whose `scene_path` is `user://evil.tscn` (or any non-`res://` or nonexistent path) decodes to null.
+10. **Security (unit):** a payload whose `scene_path` is `user://evil.tscn` (or any non-`res://`, nonexistent, or non-`PackedScene` path) decodes to null.
 
 ## How to implement
 

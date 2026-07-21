@@ -89,7 +89,7 @@ static func decode_save(
 		push_warning("decode_save: malformed scene_path")
 		return null
 	var scene_path := data["scene_path"] as String
-	if not scene_path.begins_with("res://") or not ResourceLoader.exists(scene_path):
+	if not _is_scene_path(scene_path) or not ResourceLoader.exists(scene_path):
 		push_warning("decode_save: scene_path '%s' refused" % scene_path)
 		return null
 	if not _is_player_dict(data["player"]):
@@ -321,6 +321,16 @@ static func _is_string_array(value: Variant) -> bool:
 		if not entry is String:
 			return false
 	return true
+
+
+## The security boundary for the scene changer: res:// only (never user://)
+## and a scene extension, so a tampered save cannot smuggle a non-scene
+## resource into load().instantiate(). Extension check over a
+## ResourceLoader type hint — hints are ignored for already-cached files.
+static func _is_scene_path(path: String) -> bool:
+	if not path.begins_with("res://"):
+		return false
+	return path.ends_with(".tscn") or path.ends_with(".scn")
 
 
 static func _is_player_dict(value: Variant) -> bool:

@@ -231,6 +231,13 @@ func test_scene_path_outside_res_is_refused() -> void:
 	missing["scene_path"] = "res://scenes/does_not_exist.tscn"
 	assert_null(SaveCodec.decode_save(missing, balance, items), "nonexistent scene refused")
 
+	var non_scene := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	non_scene["scene_path"] = "res://data/items/iron_sword.tres"
+	assert_null(
+		SaveCodec.decode_save(non_scene, balance, items),
+		"an existing res:// resource that is not a PackedScene is refused"
+	)
+
 
 # --- Helpers ---
 

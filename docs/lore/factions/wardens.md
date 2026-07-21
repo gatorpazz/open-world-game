@@ -93,9 +93,12 @@ counting something the tables have no column for.
 
 ## Open questions
 
-- The subgroup balance — Tally-keepers (instrument purists),
-  Gate-captains (practical enforcers), Doctrinists (theologians of
-  the tables) — who holds the captaincy now? (Quest-level casting,
-  spec 006/010.)
+- ~~The subgroup balance — who holds the captaincy now~~ — ruled (spec
+  010, director): a **Gate-captain** (the practical enforcers) holds
+  the Lastdoor captaincy; the standing request is operational — the
+  square must price crossings again — while the Doctrinists (the
+  tables' theologians) call it rite and the Tally-keepers (the
+  instrument purists) demand more instruments. The subgroup fight
+  stays live around the player.
 - What do the unpublished exceptions describe? (Reserved; adjacent to
   [[the_taking]]'s spoiler-high mechanism.)

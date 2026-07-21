@@ -20,23 +20,22 @@
 
 All three guilds are joinable **independently** in the slice: `joined_the_wardens`, `joined_the_licensed_crews`, and the existing `joined_the_reciters` never block each other. `blocked_by_journal` is reserved for *quest-level* conflicts (branch exclusion inside a chain, as in `the_skipped_name`); rank conflicts are Phase 2's faction spec. Recorded as a master-plan Decision Log row; the three faction entries carry a one-line Systems-impact note.
 
-### The warden opening chain (proposal — session finalizes)
+### The warden opening chain *(ruled — Phase 1 session, 2026-07-21)*
 
-Quest id proposal `for_the_tallies`. Built from canon seeds: the captain's standing request, the two-versions tally-log, the moth test, the town taking sides, with the banked **warden-captaincy lever** unbanked in-session. Branching shape mirrors `the_skipped_name`; envelope: 5–8 stages, ≥1 decision point, two terminal stages, `joined_the_wardens` on the join branch. Proposed skeleton:
+Quest id `for_the_tallies`. A **Gate-captain** holds the Lastdoor captaincy (the banked lever, unbanked): the standing request is *operational* — the square must price crossings again — while Doctrinists call it rite and Tally-keepers demand more instruments; the subgroup fight stays live around the player. Eight stages:
 
-| idx | journal entry (proposed) | outcome | trigger |
+| idx | journal entry | outcome | trigger |
 |---|---|---|---|
 | 0 | `woke_in_the_bait_square` | progress | wake JournalTrigger at the arrival marker (island's record only; no "how") |
-| 1 | `the_captains_request` | progress | warden-captain dialogue: return to the square under witness, for the tallies |
-| 2 | `the_town_takes_sides` | progress | courtship beat — the science / trial / bait readings from named faces |
+| 1 | `the_captains_request` | progress | Gate-captain dialogue: return to the square under witness, for the tallies |
+| 2 | `the_town_takes_sides` | progress | free-order courtship — three named faces (second warden, gate reciter, crew boss) give their guilds' readings; each writes its own flavor entry, and each carries a gated final-reading variant (requires the other two) that writes this stage — first-match ordering, specific first |
 | 3 | `the_two_tally_logs` | progress | evidence beat — the arrival-window log in two versions, a gated WorldItem document |
-| 4 | `stood_for_the_tallies` | progress | branch A — the retest: a gated JournalTrigger inside the scorch ring, under witness |
-| 5 | `joined_the_wardens` | complete | branch A payoff — the captain's offer; the captaincy lever is the session's ruling |
-| 6 | `refused_the_square` | complete | branch B — refusal through a faction-aligned response; excluded against A via `blocked_by_journal` |
+| 4 | `the_moth_test` | progress | the second warden's rehearsal beat: stand near the cage, for the tallies |
+| 5 | `stood_for_the_tallies` | progress | branch A — the retest: a gated JournalTrigger inside the scorch ring, under witness |
+| 6 | `joined_the_wardens` | complete | branch A payoff — the Gate-captain's offer |
+| 7 | `refused_the_square` | complete | branch B — refusal *(amended in-session: refusal DEFERS, not closes — a later make-good beat re-opens the captain's offer; the dialogue pass shapes it; `joined_the_wardens` may still land after `refused_the_square`)* |
 
-Default: refusal closes the warden join for the slice (a sanctioned quest-level `blocked_by_journal` use); the session may rule otherwise.
-
-**Side content:** the `joined_the_licensed_crews` beat hooks on the roofed-cache rumor (canon: a Lastdoor rumor; the cache landmark sits on the route). Session decides: pure dialogue beat (quests stay 3) or a 2–3-stage `the_roofed_cache` mini-quest (quests go to 4). The re-homed `the_skipped_name` + `a_small_favor` ship unchanged as data — placement only.
+**Side content *(ruled)*:** the crews join is the **`the_roofed_cache` mini-quest** (2–3 stages: the crew boss's rumor → the cache landmark on the scar route → return, `joined_the_licensed_crews`) — quests go to **4**. The re-homed `the_skipped_name` + `a_small_favor` ship unchanged as data — placement only.
 
 ### NPC roster (5 existing + ~5 proposed slots; roster session rules names per culture conventions)
 
@@ -60,7 +59,7 @@ All new entries via `new-lore-entry` (draft, inbound link from `lastdoor.md`, su
 | `scenes/world/lastdoor.tscn` | the hub: the never-fully-closed gate, market row (tansy), warehouse row, warden-post facade, chalk-tally walls, crew shrine; NPCs: swift, crew boss, market faces, gate reciter; doors → bait_square, warden post, suddels stores, (gate shrine), route |
 | `scenes/world/lastdoor_warden_post.tscn` | interior: captain + second warden, the tally-log WorldItem (gated), chain JournalGates |
 | `scenes/world/suddels_stores.tscn` | interior: suddel re-homed, `a_small_favor` intact, WorldContainers, the quarantine row's always-empty shelf |
-| `scenes/world/gate_shrine.tscn` *(session may fold into the exterior)* | kellom + ollun re-homed; the skipped-name nodes (columns trigger, staff, restored/gap/rubble gates) transplanted from `quest_debug.tscn`'s wiring |
+| `scenes/world/gate_shrine.tscn` *(ruled: a real interior, grown from the crew shrine of borrowed grief-tablets)* | kellom + ollun re-homed; the skipped-name nodes (columns trigger, staff, restored/gap/rubble gates) transplanted from `quest_debug.tscn`'s wiring |
 | `scenes/world/scar_route.tscn` | wilderness route: covered-edge pieces, scar_hounds ×2, vault_rats, the roofed-cache landmark + trigger, doors ← lastdoor / → drowned_stair |
 | `scenes/world/drowned_stair.tscn` | small dungeon: switchback flights, waterline, upper-flight caches, stair_drowned ×2–3 below the waterline, the sealed gate as diegetic dead end |
 
@@ -81,7 +80,7 @@ All new entries via `new-lore-entry` (draft, inbound link from `lastdoor.md`, su
 | `test_npc_defs` | 5 | 10 |
 | `test_dialogue_topics` | 9 | ~20 (greeting covers all 10 NPCs; every non-greeting topic keyword-reachable) |
 | `test_journal_entry_defs` | 10 | ~20 |
-| `test_quest_defs` | 2 | 3 (4 if the cache mini-quest is ruled in) |
+| `test_quest_defs` | 2 | 4 (`for_the_tallies` + `the_roofed_cache`, ruled) |
 | items | 15 | +1–3 (tally-log document; cache goods) |
 | creatures | 3 | 3 (placement only) |
 | lore entries | 56 | +5–8; kellom/ollun draft → reviewed |
@@ -102,7 +101,7 @@ Canon-packet before every line of player-facing text. The dialogue pass runs per
 1. **Counts (data):** all four validators green at the new EXPECTED_COUNTs; new items and placements validate.
 2. **Citation bridge (canon suite):** every new `.tres` stem claimed by exactly one entry's `game_ids`; every `lore_sources` id live; greeting covers all 10 NPCs from fresh state; every non-greeting topic `[[keyword]]`-reachable.
 3. **Quest data:** the warden chain (and cache quest if ruled) passes the full 006 validator — completable, terminal final stage, journal ids unique across quests.
-4. **Chain end-to-end (scene, `test_lastdoor_chain.gd`):** fresh journal → NOT_STARTED; wake trigger → ACTIVE; both branches walkable to their terminals; after one branch's entry the other branch's responses stop matching across NPCs; `joined_the_wardens` lands only on branch A.
+4. **Chain end-to-end (scene, `test_lastdoor_chain.gd`):** fresh journal → NOT_STARTED; wake trigger → ACTIVE; both branches walkable to their terminals; the free-order courtship stage writes only when all three readings are held, in any order. *(Amended in-session: refusal defers — after `refused_the_square` the make-good path may still land `joined_the_wardens`; the test asserts the deferred join works, not branch exclusion.)*
 5. **Three guilds independent (scene):** from one journal all three `joined_*` entries can be held simultaneously; no shipped response's `blocked_by_journal` lists another guild's join entry.
 6. **Scene lint (scene, `test_world_scenes.gd`):** every `scenes/world/*.tscn` instantiates headless; every TransitionDoor target + marker resolves; every JournalTrigger/JournalGate/WorldItem journal id resolves; every NPC def resolves; every world scene has a `default` marker.
 7. **Opening (scene):** `start_new_game` lands at bait_square `&"default"`; the wake entry is added exactly once (re-entry silent); a mid-chain save/load round-trip restores derived quest status.

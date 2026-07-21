@@ -11,10 +11,15 @@ extends Node
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const SPAWN_GROUP := &"spawn_points"
+const DEFAULT_SAVE_PATH := "user://save.json"
 
 var character_sheet: CharacterSheet
 var inventory: Inventory
 var journal: Journal
+
+## Where save_game/load_game read and write. Tests point this at a scratch
+## file so they never touch a real save.
+var save_path := DEFAULT_SAVE_PATH
 
 ## Parent of world scenes. Tests point this at a sandbox node; scene swaps
 ## only ever free worlds parented here, so Game can never free the test runner.
@@ -47,6 +52,56 @@ func reload_current_scene() -> void:
 		push_warning("reload_current_scene: no reloadable current world")
 		return
 	change_scene(current_world.scene_file_path, &"default")
+
+
+func has_save() -> bool:
+	return FileAccess.file_exists(save_path)
+
+
+## Quicksave (spec 007): snapshots the identity resources, the current
+## scene, and the player's transform and pools into save_path as
+## human-readable JSON. The caller shows any notice — Game stays UI-free.
+func save_game() -> bool:
+	if current_world == null or current_world.scene_file_path.is_empty() or player == null:
+		push_warning("save_game: nothing saveable (no current world or player)")
+		return false
+	var state := SaveCodec.SaveState.new()
+	state.scene_path = current_world.scene_file_path
+	state.player_transform = player.global_transform
+	state.head_pitch = player.head.rotation.x
+	state.current_health = player.stats.current_health
+	state.current_mana = player.stats.current_mana
+	state.current_stamina = player.stats.current_stamina
+	state.sheet = character_sheet
+	state.inventory = inventory
+	state.journal = journal
+	var file := FileAccess.open(save_path, FileAccess.WRITE)
+	if file == null:
+		push_warning("save_game: cannot open '%s' for writing" % save_path)
+		return false
+	file.store_string(JSON.stringify(SaveCodec.encode_save(state), "\t"))
+	return true
+
+
+## Load-last-save (spec 007). Decodes the whole file before touching any
+## state — a missing, corrupt, or tampered save returns false with Game
+## exactly as it was. The apply is deferred: callers fire from input
+## handlers inside the very scene about to be freed.
+func load_game() -> bool:
+	if not has_save():
+		push_warning("load_game: no save file at '%s'" % save_path)
+		return false
+	var json := JSON.new()
+	var parse_error := json.parse(FileAccess.get_file_as_string(save_path))
+	if parse_error != OK or not json.data is Dictionary:
+		push_warning("load_game: save file is not valid JSON")
+		return false
+	var balance := load(StatsComponent.BALANCE_PATH) as BalanceConfig
+	var state := SaveCodec.decode_save(json.data as Dictionary, balance, ItemLibrary.get_items())
+	if state == null:
+		return false
+	_apply_load.call_deferred(state)
+	return true
 
 
 ## Instances a fresh player at the named spawn marker and injects the
@@ -85,6 +140,23 @@ func _adopt_boot_scene() -> void:
 	if find_spawn_point(current_world, &"default") == null:
 		return
 	spawn_player(current_world, &"default")
+
+
+## The commit point of a load: the decoded resources replace the identity,
+## the saved world is re-entered (its JournalGates _ready against the
+## restored journal — the 006 cell-reload model), and the exact transform
+## and pools are applied in the same call stack, so the spawn-marker
+## positioning in spawn_player cannot win over them.
+func _apply_load(state: SaveCodec.SaveState) -> void:
+	character_sheet = state.sheet
+	inventory = state.inventory
+	journal = state.journal
+	_change_scene_now(state.scene_path, &"default")
+	player.global_transform = state.player_transform
+	player.head.rotation.x = state.head_pitch
+	player.stats.set_current_health(state.current_health)
+	player.stats.set_current_mana(state.current_mana)
+	player.stats.set_current_stamina(state.current_stamina)
 
 
 func _change_scene_now(scene_path: String, spawn_point: StringName) -> void:

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_name_restored"
+lore_sources = Array[StringName]([&"grief_court", &"reciters", &"kellom", &"ollun"])
+text = "We said it where the court could hear, and Kellom made it the order's answer: no declaration was ever filed, so by tablet law the name was never lawfully gone. The tablet is re-cut and back in its course, nine stones at its foot, and the circuit carries the name again. If a thing was ever said under the order's seal, it stays there — the law held, and the law asked no questions."

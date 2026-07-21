@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_gap_kept"
+lore_sources = Array[StringName]([&"grief_court", &"reciters", &"kellom", &"ollun"])
+text = "I brought it to Kellom as a thing to be said once. He heard it, and it is sealed — the order's quiet second currency, spent on the order itself. The gap in the wall was mortared smooth and blank, and the court keeps it so. Pebbles collect at its foot anyway. Ollun's rotation is one name shorter."

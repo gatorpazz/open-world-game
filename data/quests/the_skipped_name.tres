@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="QuestDef" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/quest_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/quest_stage.gd" id="2"]
+
+[sub_resource type="Resource" id="stage_joined"]
+script = ExtResource("2")
+journal_entry = &"joined_the_reciters"
+
+[sub_resource type="Resource" id="stage_walker"]
+script = ExtResource("2")
+journal_entry = &"the_walkers_name"
+
+[sub_resource type="Resource" id="stage_rope"]
+script = ExtResource("2")
+journal_entry = &"the_cut_rope"
+
+[sub_resource type="Resource" id="stage_staff"]
+script = ExtResource("2")
+journal_entry = &"the_waxed_staff"
+
+[sub_resource type="Resource" id="stage_restored"]
+script = ExtResource("2")
+journal_entry = &"the_name_restored"
+outcome = &"complete"
+
+[sub_resource type="Resource" id="stage_sealed"]
+script = ExtResource("2")
+journal_entry = &"the_gap_kept"
+outcome = &"complete"
+
+[resource]
+script = ExtResource("1")
+id = &"the_skipped_name"
+display_name = "The Skipped Name"
+lore_sources = Array[StringName]([&"reciters", &"grief_court", &"first_roof", &"kellom", &"ollun"])
+stages = Array[ExtResource("2")]([SubResource("stage_joined"), SubResource("stage_walker"), SubResource("stage_rope"), SubResource("stage_staff"), SubResource("stage_restored"), SubResource("stage_sealed")])

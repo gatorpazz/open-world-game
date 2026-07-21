@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_waxed_staff"
+lore_sources = Array[StringName]([&"reciters", &"first_roof", &"grief_court"])
+text = "Hung at the cut rope's end: a reciter's walking staff, its nine finger-stops filled with wax. Filled stops mean retirement, or censure. No reciter is missing from the circuit — so someone censured themself, and left the sentence where only the honored dead would read it."

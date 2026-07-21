@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"joined_the_reciters"
+lore_sources = Array[StringName]([&"reciters", &"grief_court", &"kellom", &"underfirst"])
+text = "At circuit's end I stood in the grief-court and was read aloud in the High Register. No one will translate what the reading said. The order has taken me as a novice — its own standing, under the rite's roof; no parish roll holds my name."

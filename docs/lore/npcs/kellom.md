@@ -9,6 +9,10 @@ spoiler: low
 surface:
   - dialogue
   - quest
+game_ids:
+  - npc:kellom
+  - topic:the_reading
+  - topic:tablet_law
 ---
 
 ## Function

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"ollun"
+display_name = "Ollun"
+description = "A young Walker of the circuit, wraps a size large and cinched with doubled knots, whose level voice carries one name more than the wall does."

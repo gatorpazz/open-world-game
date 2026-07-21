@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
@@ -13,6 +13,16 @@ script = ExtResource("2")
 npc_id = &"suddel"
 text = "Mind the counter, it's working hours. Two crews out, one due, and [[lastdoor]] wants its manifests moved before the bell — and the [[scar_hounds]] have the road jumpy besides. Say — if a fresh rat pelt crosses you, I could use [[a_small_favor|a small favor]]. Bounty's posted."
 
+[sub_resource type="Resource" id="resp_kellom"]
+script = ExtResource("2")
+npc_id = &"kellom"
+text = "The tables priced you and came up short; the Register has a longer patience. My petition stands: a reading at circuit's end, with the court as witness. Ask me of [[tablet_law|the law of the tablets]], and ask for [[the_reading]] when you are ready to be text."
+
+[sub_resource type="Resource" id="resp_ollun"]
+script = ExtResource("2")
+npc_id = &"ollun"
+text = "You've stood in the court, then. Everyone counts the tablets; nobody counts the voices. Count both and you come up one apart. The others walk faster past [[the_extra_name|the extra name]]. I don't."
+
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")
 text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this roof will let you sit cold. If it's talk you want, [[lastdoor]] has plenty."
@@ -21,4 +31,4 @@ text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this r
 script = ExtResource("1")
 id = &"greeting"
 display_name = "Greeting"
-responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_fallback")])
+responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_fallback")])

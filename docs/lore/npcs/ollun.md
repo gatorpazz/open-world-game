@@ -9,6 +9,11 @@ spoiler: low
 surface:
   - dialogue
   - quest
+game_ids:
+  - npc:ollun
+  - topic:the_extra_name
+  - topic:the_kept_name
+  - journal:the_walkers_name
 ---
 
 ## Function
@@ -57,8 +62,9 @@ Walks the [[grief_court]] circuit; sponsored into the rite young.
   where a Walker's rotation learns a name the wall no longer teaches.
 - Ollun's discipline hearing is the chain's ignored-path consequence —
   a case the order can only win by explaining what it cannot say.
-- The staff on the hooks (see [[reciters]]): Ollun noticed it first,
-  and has not told the copy-hall.
+- The waxed staff (see [[reciters]], braided with the chain): Ollun
+  noticed it first — the circuit closes where it hangs — and has not
+  told the copy-hall.
 
 ## Environmental storytelling
 

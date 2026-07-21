@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_restored"]
+script = ExtResource("2")
+npc_id = &"ollun"
+requires_journal = Array[StringName]([&"the_name_restored"])
+text = "The circuit carries it again. When I say it now, the wall says it back."
+
+[sub_resource type="Resource" id="resp_sealed"]
+script = ExtResource("2")
+npc_id = &"ollun"
+requires_journal = Array[StringName]([&"the_gap_kept"])
+text = "I walk past the blank course without breaking stride. That is discipline. Nobody asks what it costs."
+
+[sub_resource type="Resource" id="resp_choice"]
+script = ExtResource("2")
+npc_id = &"ollun"
+requires_journal = Array[StringName]([&"the_waxed_staff"])
+text = "The staff is the answer, wearing wax. Censure by someone's own hand — still walking, still level, still ours. So. Say [[the_kept_name|the kept name]] where the court can hear, or carry what you know to Kellom and his law. One or the other. Both cannot hold."
+
+[sub_resource type="Resource" id="resp_mid"]
+script = ExtResource("2")
+npc_id = &"ollun"
+requires_journal = Array[StringName]([&"the_walkers_name"])
+text = "Write it down first — that is all the Column-Readers will give me. Discipline wants my silence. The wall already has its own."
+
+[sub_resource type="Resource" id="resp_first"]
+script = ExtResource("2")
+npc_id = &"ollun"
+text = "You hear it too, then. It stands on no tablet — it stood. The mortar in the gap is newer than my staff, and nobody filed the island's heaviest act under [[tablet_law|the law of the tablets]] to make it so. I say the name because the wall cannot. I will not stop."
+journal_entry = &"the_walkers_name"
+
+[resource]
+script = ExtResource("1")
+id = &"the_extra_name"
+display_name = "the extra name"
+lore_sources = Array[StringName]([&"reciters", &"grief_court", &"ollun"])
+responses = Array[ExtResource("2")]([SubResource("resp_restored"), SubResource("resp_sealed"), SubResource("resp_choice"), SubResource("resp_mid"), SubResource("resp_first")])

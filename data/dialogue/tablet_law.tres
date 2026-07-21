@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_sealed"]
+script = ExtResource("2")
+npc_id = &"kellom"
+requires_journal = Array[StringName]([&"the_gap_kept"])
+text = "It was said once. It will not be said again — not by you, not by me, not by the wall."
+
+[sub_resource type="Resource" id="resp_restored"]
+script = ExtResource("2")
+npc_id = &"kellom"
+requires_journal = Array[StringName]([&"the_name_restored"])
+text = "The law held. Do not mistake it for mercy — the wall keeps what the roll keeps, and the roll is long."
+
+[sub_resource type="Resource" id="resp_absolve"]
+script = ExtResource("2")
+npc_id = &"kellom"
+requires_topics = Array[StringName]([&"the_kept_name"])
+requires_journal = Array[StringName]([&"the_waxed_staff"])
+blocked_by_journal = Array[StringName]([&"the_name_restored"])
+text = "Then bring it to me as a thing to be said once. — It is heard. It is sealed. The wall will keep the shape of what it cannot hold, and the court will keep the wall. Go and be quiet with it."
+journal_entry = &"the_gap_kept"
+
+[sub_resource type="Resource" id="resp_law"]
+script = ExtResource("2")
+npc_id = &"kellom"
+requires_journal = Array[StringName]([&"the_walkers_name"])
+text = "Additions, recitations, and the declaration of death — the rarest act under the roof. A name leaves the wall by declaration or not at all, and I have never stood at one. Fresh mortar is not procedure. You see the difficulty."
+
+[sub_resource type="Resource" id="resp_fallback"]
+script = ExtResource("2")
+npc_id = &"kellom"
+text = "The tablets hold the kept. The law holds the tablets. Ask again when you have stood in the court."
+
+[resource]
+script = ExtResource("1")
+id = &"tablet_law"
+display_name = "tablet law"
+lore_sources = Array[StringName]([&"reciters", &"grief_court", &"kellom"])
+responses = Array[ExtResource("2")]([SubResource("resp_sealed"), SubResource("resp_restored"), SubResource("resp_absolve"), SubResource("resp_law"), SubResource("resp_fallback")])

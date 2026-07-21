@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MiscDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/misc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"reciters_staff"
+display_name = "Waxed Reciter's Staff"
+description = "A reciter's walking staff, its nine finger-stops filled with wax. Filled stops mean retirement, or censure — and no reciter is missing from the circuit."
+weight = 1.5
+base_value = 2
+stackable = false

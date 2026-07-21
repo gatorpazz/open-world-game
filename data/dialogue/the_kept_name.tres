@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_done"]
+script = ExtResource("2")
+npc_id = &"ollun"
+requires_journal = Array[StringName]([&"the_name_restored"])
+text = "Kept, not dead. The roll is long — and longer by one, again."
+
+[sub_resource type="Resource" id="resp_expose"]
+script = ExtResource("2")
+npc_id = &"ollun"
+requires_journal = Array[StringName]([&"the_waxed_staff"])
+blocked_by_journal = Array[StringName]([&"the_gap_kept"])
+text = "Then stand with me at the wall, and we say it where the court can hear — and let the law follow us there. No declaration was ever filed; by the order's own law the name was never gone. Let Kellom make that the answer. — It is cut again. Nine stones at its foot. Kept, not dead. The roll is long."
+journal_entry = &"the_name_restored"
+
+[sub_resource type="Resource" id="resp_fallback"]
+script = ExtResource("2")
+npc_id = &"ollun"
+text = "The saying stopped. The wall keeps its mortar; I keep the discipline. Do not ask me for the name again."
+
+[resource]
+script = ExtResource("1")
+id = &"the_kept_name"
+display_name = "the kept name"
+lore_sources = Array[StringName]([&"reciters", &"grief_court", &"ollun", &"underfirst", &"first_kept_names"])
+responses = Array[ExtResource("2")]([SubResource("resp_done"), SubResource("resp_expose"), SubResource("resp_fallback")])

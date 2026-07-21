@@ -10,6 +10,9 @@ surface:
   - environment
   - dialogue
   - journal
+game_ids:
+  - journal:the_name_restored
+  - journal:the_gap_kept
 ---
 
 ## Function
@@ -64,9 +67,10 @@ rite's keepers are the [[reciters]].
 - A reciter has begun reading one extra name that appears on no tablet
   — the Walker [[ollun]], and the name is the removed one (ruled,
   quests pass).
-- The filled stops: a staff appeared on the court's hooks overnight,
-  finger-stops waxed in censure — and no reciter is missing from the
-  circuit.
+- The filled stops: a staff appeared overnight, finger-stops waxed in
+  censure — and no reciter is missing from the circuit. (Braided,
+  quests pass: the chain finds it hung at the [[first_roof]]'s cut
+  rope, where the circuit closes.)
 
 ## Environmental storytelling
 

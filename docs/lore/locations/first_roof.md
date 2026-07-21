@@ -10,6 +10,9 @@ surface:
   - environment
   - journal
   - dialogue
+game_ids:
+  - journal:the_cut_rope
+  - journal:the_waxed_staff
 ---
 
 ## Function

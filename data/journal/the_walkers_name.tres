@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_walkers_name"
+lore_sources = Array[StringName]([&"reciters", &"grief_court", &"ollun"])
+text = "The Walker Ollun recites a name that stands on no tablet, and will not stop. Where a tablet should hold it, the court wall shows fresh mortar and a gap — no declaration was ever filed. Discipline says stop the Walker; the Column-Readers say write the name down first."

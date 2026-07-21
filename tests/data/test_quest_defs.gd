@@ -6,7 +6,7 @@ extends GutTest
 
 const DIR := "res://data/quests"
 const JOURNAL_DIR := "res://data/journal"
-const EXPECTED_COUNT := 1
+const EXPECTED_COUNT := 2
 
 var _quests: Array[QuestDef] = []
 

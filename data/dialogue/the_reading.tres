@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_after"]
+script = ExtResource("2")
+npc_id = &"kellom"
+requires_journal = Array[StringName]([&"joined_the_reciters"])
+text = "You were read. The order argues the text still — hope to the Walkers, heresy to the Carvers, omen to us. Walk the circuit, novice. The argument will keep."
+
+[sub_resource type="Resource" id="resp_rite"]
+script = ExtResource("2")
+npc_id = &"kellom"
+text = "Stand at circuit's end, then. Be still, and be read. — It is done. What the Register said of you the order will argue for a season; what I say is simpler: kept under the rite's roof, a novice, by my word. No roll, no count. The tables priced you once and came up short; the columns take longer views."
+journal_entry = &"joined_the_reciters"
+
+[resource]
+script = ExtResource("1")
+id = &"the_reading"
+display_name = "the reading"
+lore_sources = Array[StringName]([&"reciters", &"kellom", &"underfirst", &"the_untaken_arrival"])
+responses = Array[ExtResource("2")]([SubResource("resp_after"), SubResource("resp_rite")])

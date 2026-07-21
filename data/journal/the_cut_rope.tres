@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"the_cut_rope"
+lore_sources = Array[StringName]([&"first_roof", &"grief_court"])
+text = "I walked the circuit to its close beneath the First Roof, where the oldest names run up the wall in hands nobody can fully read. The yearly rope across the collapsed lower gallery has been cut — from the far side — and the custom has no procedure for that."

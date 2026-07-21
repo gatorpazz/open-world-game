@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"kellom"
+display_name = "Kellom"
+description = "An old Column-Reader of the grief-rite, thin-wrapped and level-voiced, his staff's nine finger-stops worn shallow with age. He filed the petition to have the untaken stranger read aloud in the court."

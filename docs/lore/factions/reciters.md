@@ -9,6 +9,9 @@ surface:
   - dialogue
   - journal
   - quest
+game_ids:
+  - journal:joined_the_reciters
+  - item:reciters_staff
 ---
 
 ## Function

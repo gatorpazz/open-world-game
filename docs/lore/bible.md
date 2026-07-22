@@ -57,7 +57,10 @@ is one continuous temple.
   salvage, and rag-fungus pulp, with true daylight paper an archival
   treasure; heat and light are governed utilities — deeded in the
   Highroof, held as parish commons in Embershare; the rivalry between
-  the two regimes is deliberate and unresolved.
+  the two regimes is deliberate and unresolved. Gear follows the same
+  stocks (ruled, spec 014): blades are recast bell-bronze salvage,
+  helm, shield, and bow-lath are wright-offcut chitin, light armor is
+  oil-dark hound-hide — the island has no native iron or steel.
 - **Economy:** [[the_shares]] — bead-glass cash under three credit
   layers; heat-capped growth; toll, tithe, and the sea's share; the
   warden-declared seal of high-sky season.

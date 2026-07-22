@@ -71,3 +71,8 @@ the bronze's family album.
   outside world existed to trade with. When did the sea close, and is
   its closing the Coming's sea-half? (An unwritten fifteenth event;
   director ruling; candidate spoiler: high.)
+- Gear-bronze (ruled, spec 014: blades and scrap are recast bell-bronze
+  salvage) sits outside the Bell Rolls' voice-into-voice genealogy —
+  does the blade stream keep its own ledger, or is unrolled bronze the
+  founders' quiet scandal? (Reconcile with "every bell is made of older
+  bells" at [[bellworks]] in a future pass.)

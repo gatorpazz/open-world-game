@@ -1,10 +1,16 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="1_door"]
 [ext_resource type="PackedScene" path="res://scenes/world/journal_trigger.tscn" id="2_trigger"]
 [ext_resource type="PackedScene" path="res://scenes/creatures/creature.tscn" id="3_creature"]
 [ext_resource type="Resource" path="res://data/creatures/scar_hound.tres" id="4_scar_hound"]
 [ext_resource type="Resource" path="res://data/creatures/vault_rat.tres" id="5_vault_rat"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_container.tscn" id="6_container"]
+[ext_resource type="Script" path="res://scripts/resources/inventory.gd" id="7_inventory"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="8_item_stack"]
+[ext_resource type="Resource" path="res://data/items/rusty_claymore.tres" id="9_claymore"]
+[ext_resource type="Resource" path="res://data/items/leather_cuirass.tres" id="10_cuirass"]
+[ext_resource type="Resource" path="res://data/items/sack_of_ore.tres" id="11_ore"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.4, 0.42, 0.48, 1)
@@ -53,6 +59,27 @@ albedo_color = Color(0.2, 0.18, 0.16, 1)
 [sub_resource type="BoxMesh" id="mesh_old_roof"]
 material = SubResource("mat_old_roof")
 size = Vector3(6, 0.8, 6)
+
+[sub_resource type="Resource" id="stack_claymore"]
+script = ExtResource("8_item_stack")
+item = ExtResource("9_claymore")
+count = 1
+
+[sub_resource type="Resource" id="stack_cuirass"]
+script = ExtResource("8_item_stack")
+item = ExtResource("10_cuirass")
+count = 1
+
+[sub_resource type="Resource" id="stack_ore"]
+script = ExtResource("8_item_stack")
+item = ExtResource("11_ore")
+count = 1
+
+[sub_resource type="Resource" id="salvage_inventory"]
+resource_local_to_scene = true
+script = ExtResource("7_inventory")
+stacks = Array[ExtResource("8_item_stack")]([SubResource("stack_claymore"), SubResource("stack_cuirass"), SubResource("stack_ore")])
+gold = 0
 
 [node name="ScarRoute" type="Node3D"]
 
@@ -140,6 +167,11 @@ shape = SubResource("shape_cache_pillar")
 [node name="OldRoof" type="MeshInstance3D" parent="RoofedCache"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3.2, -4)
 mesh = SubResource("mesh_old_roof")
+
+[node name="SalvageCache" parent="RoofedCache" instance=ExtResource("6_container")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -4)
+display_name = "Old-Roof Cache"
+inventory = SubResource("salvage_inventory")
 
 [node name="CacheTrigger" parent="RoofedCache" instance=ExtResource("2_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -4)

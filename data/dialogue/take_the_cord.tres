@@ -1,7 +1,14 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="3"]
+[ext_resource type="Resource" path="res://data/items/iron_sword.tres" id="4"]
+
+[sub_resource type="Resource" id="give_sword"]
+script = ExtResource("3")
+item = ExtResource("4")
+count = 1
 
 [sub_resource type="Resource" id="resp_torrum_worn"]
 script = ExtResource("2")
@@ -14,16 +21,18 @@ script = ExtResource("2")
 npc_id = &"torrum"
 requires_journal = Array[StringName]([&"stood_for_the_tallies"])
 blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
-text = "Then it is entered: you serve, by standing. The post takes you — gate watches to start, the tables when you can read them, and the square's counsel when it matters. Counted and kept, warden."
+text = "Then it is entered: you serve, by standing. The post takes you — gate watches to start, the tables when you can read them, and the square's counsel when it matters. Draw a blade from the rack; the post arms its own. Counted and kept, warden."
 journal_entry = &"joined_the_wardens"
+give_items = Array[ExtResource("3")]([SubResource("give_sword")])
 
 [sub_resource type="Resource" id="resp_torrum_join_makegood"]
 script = ExtResource("2")
 npc_id = &"torrum"
 requires_journal = Array[StringName]([&"refused_the_square", &"the_moth_test"])
 blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
-text = "You came back to it the small way — cage first. Good. That is how doctrine walks. Entered: you serve. The square will keep."
+text = "You came back to it the small way — cage first. Good. That is how doctrine walks. Entered: you serve. Draw a blade from the rack; the post arms its own. The square will keep."
 journal_entry = &"joined_the_wardens"
+give_items = Array[ExtResource("3")]([SubResource("give_sword")])
 
 [sub_resource type="Resource" id="resp_torrum_not_yet"]
 script = ExtResource("2")

@@ -260,6 +260,6 @@ target_scene = "res://scenes/world/lastdoor_warden_post.tscn"
 spawn_point = &"from_exterior"
 
 [node name="DoorToShrine" parent="." instance=ExtResource("2_door")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -15.4)
 target_scene = "res://scenes/world/gate_shrine.tscn"
 spawn_point = &"from_exterior"

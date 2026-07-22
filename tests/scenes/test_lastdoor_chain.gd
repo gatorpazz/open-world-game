@@ -67,7 +67,7 @@ func test_branch_a_stand_and_take_the_cord() -> void:
 	_journal.add_entry(&"the_two_tally_logs")  # the gated WorldItem
 	_journal.add_entry(&"the_moth_test")  # the cage trigger
 	_journal.add_entry(&"stood_for_the_tallies")  # the retest trigger
-	_say(&"take_the_cord", &"torrum")
+	_say(&"take_the_cord", &"torrum", true)  # the join is a choice press now (spec 015)
 	assert_true(_journal.has_entry(&"joined_the_wardens"))
 	assert_eq(_status(), QuestEvaluator.Status.COMPLETED)
 
@@ -93,7 +93,7 @@ func test_branch_b_refusal_defers_and_the_make_good_rejoins() -> void:
 	var early := _pick(&"take_the_cord", &"torrum")
 	assert_eq(early.journal_entry, &"", "no join before the make-good")
 	_journal.add_entry(&"the_moth_test")  # the make-good: standing for the cage
-	_say(&"take_the_cord", &"torrum")
+	_say(&"take_the_cord", &"torrum", true)  # the make-good join is a choice press (spec 015)
 	assert_true(_journal.has_entry(&"joined_the_wardens"), "the deferred join lands")
 
 
@@ -106,7 +106,7 @@ func test_cache_chain_completes_through_wester() -> void:
 	assert_true(_journal.has_entry(&"the_cache_rumor"))
 	assert_eq(QuestEvaluator.status(_cache, _journal), QuestEvaluator.Status.ACTIVE)
 	_journal.add_entry(&"found_the_roofed_cache")  # the route trigger
-	_say(&"the_roofed_cache", &"wester")
+	_say(&"the_roofed_cache", &"wester", true)  # the share-line join is a choice press (spec 015)
 	assert_true(_journal.has_entry(&"joined_the_licensed_crews"))
 	assert_eq(QuestEvaluator.status(_cache, _journal), QuestEvaluator.Status.COMPLETED)
 
@@ -119,7 +119,7 @@ func test_each_join_still_offered_while_holding_the_other_two() -> void:
 	_journal.add_entry(&"joined_the_reciters")
 	_journal.add_entry(&"joined_the_licensed_crews")
 	_journal.add_entry(&"stood_for_the_tallies")
-	var cord := _pick(&"take_the_cord", &"torrum")
+	var cord := _pick(&"take_the_cord", &"torrum", true)  # the join commit (choice press, spec 015)
 	assert_not_null(cord)
 	assert_eq(cord.journal_entry, &"joined_the_wardens", "the wardens still take you")
 	# Crews: holding reciters + wardens must not block the share.
@@ -130,7 +130,7 @@ func test_each_join_still_offered_while_holding_the_other_two() -> void:
 	crews_journal.add_entry(&"found_the_roofed_cache")
 	var topics := DialogueLibrary.get_topics()
 	var share := DialogueEvaluator.pick_response(
-		topics[&"the_roofed_cache"], &"wester", crews_journal, _inventory
+		topics[&"the_roofed_cache"], &"wester", crews_journal, _inventory, true
 	)
 	assert_not_null(share)
 	assert_eq(share.journal_entry, &"joined_the_licensed_crews", "the crews still count you")

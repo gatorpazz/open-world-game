@@ -1,14 +1,30 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=10 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="3"]
 [ext_resource type="Resource" path="res://data/items/iron_sword.tres" id="4"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_choice.gd" id="5"]
 
 [sub_resource type="Resource" id="give_sword"]
 script = ExtResource("3")
 item = ExtResource("4")
 count = 1
+
+[sub_resource type="Resource" id="choice_join_stood"]
+script = ExtResource("5")
+text = "I stood for the tables. Give me the cord."
+topic = &"take_the_cord"
+
+[sub_resource type="Resource" id="choice_join_makegood"]
+script = ExtResource("5")
+text = "I came to it the small way. Give me the cord."
+topic = &"take_the_cord"
+
+[sub_resource type="Resource" id="choice_not_yet"]
+script = ExtResource("5")
+text = "Not yet."
+topic = &""
 
 [sub_resource type="Resource" id="resp_torrum_worn"]
 script = ExtResource("2")
@@ -21,6 +37,7 @@ script = ExtResource("2")
 npc_id = &"torrum"
 requires_journal = Array[StringName]([&"stood_for_the_tallies"])
 blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+choice_gated = true
 text = "Then it is entered: you serve, by standing. The post takes you — gate watches to start, the tables when you can read them, and the square's counsel when it matters. Draw a blade from the rack; the post arms its own. Counted and kept, warden."
 journal_entry = &"joined_the_wardens"
 give_items = Array[ExtResource("3")]([SubResource("give_sword")])
@@ -30,9 +47,26 @@ script = ExtResource("2")
 npc_id = &"torrum"
 requires_journal = Array[StringName]([&"refused_the_square", &"the_moth_test"])
 blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+choice_gated = true
 text = "You came back to it the small way — cage first. Good. That is how doctrine walks. Entered: you serve. Draw a blade from the rack; the post arms its own. The square will keep."
 journal_entry = &"joined_the_wardens"
 give_items = Array[ExtResource("3")]([SubResource("give_sword")])
+
+[sub_resource type="Resource" id="resp_torrum_prompt_stood"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"stood_for_the_tallies"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "You stood in the square, and the tables noticed. The cord is offered — knots for the service, beads for the crossings. It is yours to take, or not."
+choices = Array[ExtResource("5")]([SubResource("choice_join_stood"), SubResource("choice_not_yet")])
+
+[sub_resource type="Resource" id="resp_torrum_prompt_makegood"]
+script = ExtResource("2")
+npc_id = &"torrum"
+requires_journal = Array[StringName]([&"refused_the_square", &"the_moth_test"])
+blocked_by_journal = Array[StringName]([&"joined_the_wardens"])
+text = "You came at it the small way — cage first, doctrine after. That counts. The cord is offered. It is yours to take, or not."
+choices = Array[ExtResource("5")]([SubResource("choice_join_makegood"), SubResource("choice_not_yet")])
 
 [sub_resource type="Resource" id="resp_torrum_not_yet"]
 script = ExtResource("2")
@@ -44,4 +78,4 @@ script = ExtResource("1")
 id = &"take_the_cord"
 display_name = "take the cord"
 lore_sources = Array[StringName]([&"torrum", &"wardens"])
-responses = Array[ExtResource("2")]([SubResource("resp_torrum_worn"), SubResource("resp_torrum_join_stood"), SubResource("resp_torrum_join_makegood"), SubResource("resp_torrum_not_yet")])
+responses = Array[ExtResource("2")]([SubResource("resp_torrum_worn"), SubResource("resp_torrum_join_stood"), SubResource("resp_torrum_join_makegood"), SubResource("resp_torrum_prompt_stood"), SubResource("resp_torrum_prompt_makegood"), SubResource("resp_torrum_not_yet")])

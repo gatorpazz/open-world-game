@@ -1,7 +1,18 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_choice.gd" id="3"]
+
+[sub_resource type="Resource" id="choice_join_share"]
+script = ExtResource("3")
+text = "I saw the cache. Enter me a share line."
+topic = &"the_roofed_cache"
+
+[sub_resource type="Resource" id="choice_not_yet"]
+script = ExtResource("3")
+text = "Not yet."
+topic = &""
 
 [sub_resource type="Resource" id="resp_wester_joined"]
 script = ExtResource("2")
@@ -14,8 +25,17 @@ script = ExtResource("2")
 npc_id = &"wester"
 requires_journal = Array[StringName]([&"found_the_roofed_cache"])
 blocked_by_journal = Array[StringName]([&"joined_the_licensed_crews"])
+choice_gated = true
 text = "So you went, and you saw, and you came back with the kind of quiet that says it's true. Good enough. A share in the Longswathe, then — witnessed at Suddel's counter, entered licensed and fair. The sky bills everyone but you, walker. Time that arithmetic worked for a crew."
 journal_entry = &"joined_the_licensed_crews"
+
+[sub_resource type="Resource" id="resp_wester_prompt_found"]
+script = ExtResource("2")
+npc_id = &"wester"
+requires_journal = Array[StringName]([&"found_the_roofed_cache"])
+blocked_by_journal = Array[StringName]([&"joined_the_licensed_crews"])
+text = "You saw it — the roof older than the license, and the cache under it. That's earnest enough for me. A share in the Longswathe is yours for the taking, witnessed at Suddel's counter. Say the word."
+choices = Array[ExtResource("3")]([SubResource("choice_join_share"), SubResource("choice_not_yet")])
 
 [sub_resource type="Resource" id="resp_wester_reminder"]
 script = ExtResource("2")
@@ -35,4 +55,4 @@ script = ExtResource("1")
 id = &"the_roofed_cache"
 display_name = "the roofed cache"
 lore_sources = Array[StringName]([&"wester", &"licensed_crews", &"lastdoor", &"open_fields"])
-responses = Array[ExtResource("2")]([SubResource("resp_wester_joined"), SubResource("resp_wester_found"), SubResource("resp_wester_reminder"), SubResource("resp_wester_pitch")])
+responses = Array[ExtResource("2")]([SubResource("resp_wester_joined"), SubResource("resp_wester_found"), SubResource("resp_wester_prompt_found"), SubResource("resp_wester_reminder"), SubResource("resp_wester_pitch")])

@@ -10,6 +10,7 @@ surface:
   - journal
   - quest
 game_ids:
+  - faction:reciters
   - journal:joined_the_reciters
   - item:reciters_staff
 ---

@@ -39,6 +39,7 @@ const GAME_ID_FOLDERS: Dictionary[String, String] = {
 	"item": "items",
 	"creature": "creatures",
 	"quest": "quests",
+	"faction": "factions",
 }
 
 ## The reverse of the game_ids bridge (spec 006): data folders whose files
@@ -48,6 +49,7 @@ const CITED_DATA: Array[String] = [
 	"res://data/quests",
 	"res://data/dialogue",
 	"res://data/journal",
+	"res://data/factions",
 ]
 
 const SPINE_SECTIONS: Array[String] = [

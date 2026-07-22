@@ -9,6 +9,8 @@ surface:
   - dialogue
   - rumor
   - quest
+game_ids:
+  - faction:wardens
 ---
 
 ## Function

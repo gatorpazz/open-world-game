@@ -131,6 +131,15 @@ func test_blocked_only_response_is_not_unconditional() -> void:
 	)
 
 
+func test_choice_gated_only_response_is_not_unconditional() -> void:
+	var response := _response("x")
+	response.choice_gated = true
+	assert_false(
+		response.is_unconditional(),
+		"a gated commit ordered before later responses must not trip the unconditional-last rule"
+	)
+
+
 func test_cross_npc_branch_exclusion() -> void:
 	var offer_b := _response("Side with us instead.", &"npc_b")
 	offer_b.blocked_by_journal = [&"branch_a_taken"] as Array[StringName]

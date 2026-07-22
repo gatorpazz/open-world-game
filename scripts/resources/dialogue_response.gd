@@ -10,20 +10,29 @@ extends Resource
 ## Conditions. Empty npc_id means any NPC. blocked_by_journal is the
 ## negative gate (spec 006): the response matches only while the journal
 ## holds NONE of the listed entries — cross-NPC branch exclusion.
+## choice_gated (spec 013) hides the response from topic and keyword
+## clicks: it is eligible only when navigation came from a choice press.
 @export var npc_id: StringName = &""
 @export var requires_topics: Array[StringName] = []
 @export var requires_journal: Array[StringName] = []
 @export var blocked_by_journal: Array[StringName] = []
 @export var take_items: Array[ItemStack] = []
+@export var choice_gated: bool = false
 
 ## Effects. [[topic_id]] markup in text unlocks topics when displayed.
+## choices (spec 013) makes this response a prompt: the replies render as
+## buttons after it is spoken. A choice_gated commit targeted by a
+## same-topic prompt sits immediately BEFORE that prompt in `responses`,
+## so from_choice picks the commit and normal clicks fall through.
 @export_multiline var text: String
 @export var journal_entry: StringName = &""
 @export var give_items: Array[ItemStack] = []
+@export var choices: Array[DialogueChoice] = []
 
 
 ## True when every condition field is empty — an always-available fallback.
-## Responses after one of these in the same topic are unreachable.
+## Responses after one of these in the same topic are unreachable. A
+## choice_gated response is conditional by definition (spec 013).
 func is_unconditional() -> bool:
 	return (
 		npc_id == &""
@@ -31,4 +40,5 @@ func is_unconditional() -> bool:
 		and requires_journal.is_empty()
 		and blocked_by_journal.is_empty()
 		and take_items.is_empty()
+		and not choice_gated
 	)

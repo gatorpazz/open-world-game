@@ -1,0 +1,87 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="1_npc"]
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="2_door"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_item.tscn" id="3_world_item"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_container.tscn" id="4_container"]
+[ext_resource type="Script" path="res://scripts/resources/inventory.gd" id="5_inventory"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="6_item_stack"]
+[ext_resource type="Resource" path="res://data/npcs/suddel.tres" id="7_suddel"]
+[ext_resource type="Resource" path="res://data/items/rat_pelt.tres" id="8_rat_pelt"]
+[ext_resource type="Resource" path="res://data/items/sack_of_ore.tres" id="9_sack_of_ore"]
+[ext_resource type="Resource" path="res://data/items/mana_draught.tres" id="10_mana_draught"]
+
+[sub_resource type="StandardMaterial3D" id="mat_floor"]
+albedo_color = Color(0.4, 0.34, 0.28, 1)
+
+[sub_resource type="BoxMesh" id="mesh_floor"]
+material = SubResource("mat_floor")
+size = Vector3(12, 1, 10)
+
+[sub_resource type="BoxShape3D" id="shape_floor"]
+size = Vector3(12, 1, 10)
+
+[sub_resource type="StandardMaterial3D" id="mat_shelf"]
+albedo_color = Color(0.55, 0.48, 0.4, 1)
+
+[sub_resource type="BoxMesh" id="mesh_shelf"]
+material = SubResource("mat_shelf")
+size = Vector3(3, 2, 0.8)
+
+[sub_resource type="Resource" id="stack_ore"]
+script = ExtResource("6_item_stack")
+item = ExtResource("9_sack_of_ore")
+count = 2
+
+[sub_resource type="Resource" id="stack_draught"]
+script = ExtResource("6_item_stack")
+item = ExtResource("10_mana_draught")
+count = 1
+
+[sub_resource type="Resource" id="crate_inventory"]
+resource_local_to_scene = true
+script = ExtResource("5_inventory")
+stacks = Array[ExtResource("6_item_stack")]([SubResource("stack_ore"), SubResource("stack_draught")])
+gold = 0
+
+[node name="SuddelsStores" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 8, 0)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("mesh_floor")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("shape_floor")
+
+[node name="from_exterior" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 3)
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 3)
+
+[node name="Suddel" parent="." instance=ExtResource("1_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+def = ExtResource("7_suddel")
+
+[node name="StoresCrate" parent="." instance=ExtResource("4_container")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -3)
+display_name = "Stores Crate"
+inventory = SubResource("crate_inventory")
+
+[node name="RatPelt" parent="." instance=ExtResource("3_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
+item = ExtResource("8_rat_pelt")
+
+[node name="QuarantineShelf" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 1, -4)
+mesh = SubResource("mesh_shelf")
+
+[node name="DoorBack" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.5)
+target_scene = "res://scenes/world/lastdoor.tscn"
+spawn_point = &"from_stores"

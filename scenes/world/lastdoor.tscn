@@ -1,0 +1,243 @@
+[gd_scene load_steps=25 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="1_npc"]
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="2_door"]
+[ext_resource type="Resource" path="res://data/npcs/swift.tres" id="3_swift"]
+[ext_resource type="Resource" path="res://data/npcs/tansy.tres" id="4_tansy"]
+[ext_resource type="Resource" path="res://data/npcs/wren.tres" id="5_wren"]
+[ext_resource type="Resource" path="res://data/npcs/munnok.tres" id="6_munnok"]
+[ext_resource type="Resource" path="res://data/npcs/wester.tres" id="7_wester"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.3, 0.42, 0.6, 1)
+sky_horizon_color = Color(0.62, 0.66, 0.7, 1)
+ground_bottom_color = Color(0.2, 0.22, 0.25, 1)
+ground_horizon_color = Color(0.62, 0.66, 0.7, 1)
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("sky")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="mat_ground"]
+albedo_color = Color(0.42, 0.4, 0.36, 1)
+
+[sub_resource type="BoxMesh" id="mesh_ground"]
+material = SubResource("mat_ground")
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxShape3D" id="shape_ground"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="StandardMaterial3D" id="mat_gate"]
+albedo_color = Color(0.35, 0.28, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="mesh_gate_pillar"]
+material = SubResource("mat_gate")
+size = Vector3(2, 8, 2)
+
+[sub_resource type="BoxShape3D" id="shape_gate_pillar"]
+size = Vector3(2, 8, 2)
+
+[sub_resource type="BoxMesh" id="mesh_gate_lintel"]
+material = SubResource("mat_gate")
+size = Vector3(10, 1.5, 2)
+
+[sub_resource type="StandardMaterial3D" id="mat_building"]
+albedo_color = Color(0.5, 0.47, 0.42, 1)
+
+[sub_resource type="BoxMesh" id="mesh_building"]
+material = SubResource("mat_building")
+size = Vector3(8, 5, 6)
+
+[sub_resource type="BoxShape3D" id="shape_building"]
+size = Vector3(8, 5, 6)
+
+[sub_resource type="BoxMesh" id="mesh_stall"]
+material = SubResource("mat_gate")
+size = Vector3(3, 2.5, 2)
+
+[sub_resource type="BoxShape3D" id="shape_stall"]
+size = Vector3(3, 2.5, 2)
+
+[sub_resource type="StandardMaterial3D" id="mat_chalk"]
+albedo_color = Color(0.9, 0.9, 0.86, 1)
+
+[sub_resource type="BoxMesh" id="mesh_chalk_wall"]
+material = SubResource("mat_chalk")
+size = Vector3(6, 3, 0.5)
+
+[sub_resource type="BoxShape3D" id="shape_chalk_wall"]
+size = Vector3(6, 3, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="mat_shrine"]
+albedo_color = Color(0.55, 0.5, 0.42, 1)
+
+[sub_resource type="BoxMesh" id="mesh_shrine"]
+material = SubResource("mat_shrine")
+size = Vector3(6, 4, 5)
+
+[sub_resource type="BoxShape3D" id="shape_shrine"]
+size = Vector3(6, 4, 5)
+
+[node name="Lastdoor" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, 0.383, -0.321, 0, 0.643, 0.766, 0.5, -0.663, 0.557, 0, 14, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("mesh_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("shape_ground")
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.1, 18)
+
+[node name="from_bait_square" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 20)
+
+[node name="from_stores" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.1, -5)
+
+[node name="from_warden_post" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.1, -13)
+
+[node name="from_shrine" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.1, -13)
+
+[node name="LastGate" type="Node3D" parent="."]
+
+[node name="PillarWest" type="StaticBody3D" parent="LastGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4, 24)
+
+[node name="Mesh" type="MeshInstance3D" parent="LastGate/PillarWest"]
+mesh = SubResource("mesh_gate_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="LastGate/PillarWest"]
+shape = SubResource("shape_gate_pillar")
+
+[node name="PillarEast" type="StaticBody3D" parent="LastGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4, 24)
+
+[node name="Mesh" type="MeshInstance3D" parent="LastGate/PillarEast"]
+mesh = SubResource("mesh_gate_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="LastGate/PillarEast"]
+shape = SubResource("shape_gate_pillar")
+
+[node name="Lintel" type="MeshInstance3D" parent="LastGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 24)
+mesh = SubResource("mesh_gate_lintel")
+
+[node name="ChalkWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 23)
+
+[node name="Mesh" type="MeshInstance3D" parent="ChalkWall"]
+mesh = SubResource("mesh_chalk_wall")
+
+[node name="Collision" type="CollisionShape3D" parent="ChalkWall"]
+shape = SubResource("shape_chalk_wall")
+
+[node name="MarketRow" type="Node3D" parent="."]
+
+[node name="StallA" type="StaticBody3D" parent="MarketRow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1.25, 2)
+
+[node name="Mesh" type="MeshInstance3D" parent="MarketRow/StallA"]
+mesh = SubResource("mesh_stall")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketRow/StallA"]
+shape = SubResource("shape_stall")
+
+[node name="StallB" type="StaticBody3D" parent="MarketRow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1.25, -3)
+
+[node name="Mesh" type="MeshInstance3D" parent="MarketRow/StallB"]
+mesh = SubResource("mesh_stall")
+
+[node name="Collision" type="CollisionShape3D" parent="MarketRow/StallB"]
+shape = SubResource("shape_stall")
+
+[node name="WarehouseRow" type="Node3D" parent="."]
+
+[node name="WarehouseA" type="StaticBody3D" parent="WarehouseRow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2.5, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="WarehouseRow/WarehouseA"]
+mesh = SubResource("mesh_building")
+
+[node name="Collision" type="CollisionShape3D" parent="WarehouseRow/WarehouseA"]
+shape = SubResource("shape_building")
+
+[node name="WarehouseB" type="StaticBody3D" parent="WarehouseRow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2.5, 3)
+
+[node name="Mesh" type="MeshInstance3D" parent="WarehouseRow/WarehouseB"]
+mesh = SubResource("mesh_building")
+
+[node name="Collision" type="CollisionShape3D" parent="WarehouseRow/WarehouseB"]
+shape = SubResource("shape_building")
+
+[node name="WardenPost" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2.5, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="WardenPost"]
+mesh = SubResource("mesh_building")
+
+[node name="Collision" type="CollisionShape3D" parent="WardenPost"]
+shape = SubResource("shape_building")
+
+[node name="GateShrine" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="GateShrine"]
+mesh = SubResource("mesh_shrine")
+
+[node name="Collision" type="CollisionShape3D" parent="GateShrine"]
+shape = SubResource("shape_shrine")
+
+[node name="Swift" parent="." instance=ExtResource("1_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -15)
+def = ExtResource("3_swift")
+
+[node name="Tansy" parent="." instance=ExtResource("1_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
+def = ExtResource("4_tansy")
+
+[node name="Wren" parent="." instance=ExtResource("1_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 20)
+def = ExtResource("5_wren")
+
+[node name="Munnok" parent="." instance=ExtResource("1_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -1)
+def = ExtResource("6_munnok")
+
+[node name="Wester" parent="." instance=ExtResource("1_npc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2)
+def = ExtResource("7_wester")
+
+[node name="DoorToStores" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -3)
+target_scene = "res://scenes/world/suddels_stores.tscn"
+spawn_point = &"from_exterior"
+
+[node name="DoorToWardenPost" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -15)
+target_scene = "res://scenes/world/lastdoor_warden_post.tscn"
+spawn_point = &"from_exterior"
+
+[node name="DoorToShrine" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -15)
+target_scene = "res://scenes/world/gate_shrine.tscn"
+spawn_point = &"from_exterior"

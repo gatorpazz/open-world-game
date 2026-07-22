@@ -19,7 +19,7 @@ text = "I walk past the blank course without breaking stride. That is discipline
 script = ExtResource("2")
 npc_id = &"ollun"
 requires_journal = Array[StringName]([&"the_waxed_staff"])
-text = "The staff is the answer, wearing wax. Censure by someone's own hand — still walking, still level, still ours. So. Say [[the_kept_name|the kept name]] where the court can hear, or carry what you know to Kellom and his law. One or the other. Both cannot hold."
+text = "The staff is the answer, wearing wax. Censure by someone's own hand — still walking, still level, still ours. So now the choice is yours: say [[the_kept_name|the kept name]] with me at the wall — put the name back — or carry everything you know to Kellom and [[tablet_law|his law]], and let the order answer for itself. One or the other. Both cannot hold."
 
 [sub_resource type="Resource" id="resp_mid"]
 script = ExtResource("2")

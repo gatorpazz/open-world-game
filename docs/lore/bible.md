@@ -137,6 +137,10 @@ wildlife of the dark: [[hush_moths]], [[scar_hound]], [[vault_rat]].
 - **Forbidden tropes:** the Core promise bans, applied at review; hooks
   and rumors must serve at least one core tension (depth vs. sky · shelter
   vs. stagnation · grief vs. hope).
+- **Plain-meaning anchor (ruled, spec 010 playthrough):** every dialogue
+  response lands its plain meaning — who, what, what the player can do —
+  on first read; euphemism and metaphor season a line, never carry it
+  alone. Under-naming stays; riddling as the whole line does not.
 - **Lore-text markup:** cross-reference with flat `[[id]]` wikilinks only;
   quote example dialogue inside code fences so it never links.
 

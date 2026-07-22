@@ -33,7 +33,7 @@ text = "Additions, recitations, and the declaration of death — the rarest act 
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")
 npc_id = &"kellom"
-text = "The tablets hold the kept. The law holds the tablets. Ask again when you have stood in the court."
+text = "The tablets hold the kept — the names of the Taken, one tablet each, on the court's wall. The law holds the tablets: a name goes up when a Taking is witnessed, and comes down only by a declaration of death. Ask again when you have stood in the court."
 
 [resource]
 script = ExtResource("1")

@@ -48,7 +48,10 @@ Lastlight's sea-singing needed no penance.
 ## Systems impact
 
 Tablet law: additions, recitations, and the island's rarest act, the
-declaration of death. The recitation calendar structures civic time;
+declaration of death. (Ruled, spec 010 anchor pass: a name goes up
+when a Taking is witnessed; it comes down only by declaration — the
+mechanism the absolution-debt and lost-not-Taken hooks entail, now
+said plainly.) The recitation calendar structures civic time;
 the Column-Readers hold the only sanctioned access to the
 [[first_roof]]'s oldest text. Absolution — hearing a thing said and
 sealing it unsaid — is their quiet second currency. Joinable (spec

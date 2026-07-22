@@ -12,7 +12,7 @@ text = "You stood, the cage read, I entered it. No — I won't show you the slat
 [sub_resource type="Resource" id="resp_bryony_invite"]
 script = ExtResource("2")
 npc_id = &"bryony"
-text = "The moths follow what is spent — that is all a cage is. What my cages made of you that day is entered, sealed, and argued over by readers above my cord; you will not hear it from me. Stand near the cage now — that is honest work, and I will thank you for it. Stand in the square — just know the square was built to ask the sky questions. You would be the question. Ask me for [[the_wardens_side|the post's honest want]] and I will give it to you straight."
+text = "The moths gather where the art is spent — that is all a cage is, a living instrument. What my cages made of you that day is entered, sealed, and argued over by readers above my cord; you will not hear it from me. Stand near the cage now — that is honest work, and I will thank you for it. Stand in the square — just know the square was built to ask the sky questions. You would be the question. Ask me for [[the_wardens_side|the post's honest want]] and I will give it to you straight."
 
 [resource]
 script = ExtResource("1")

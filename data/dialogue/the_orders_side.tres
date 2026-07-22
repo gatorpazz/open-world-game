@@ -14,7 +14,7 @@ journal_entry = &"the_town_takes_sides"
 [sub_resource type="Resource" id="resp_dossun_side"]
 script = ExtResource("2")
 npc_id = &"dossun"
-text = "The order's want is the gentlest of the three, and the strangest: stand at circuit's end and be read. Not because we know what you are — we don't, and unlike some, we do not mind. The roll is how the island keeps what it cannot explain. Every name on these tablets is a question the sky never answered. Yours would be in good company."
+text = "The order's want is the gentlest of the three, and the strangest: stand at the grief-court when the circuit ends and be read into the roll — it would make you a novice of the order, if you choose it. Not because we know what you are — we don't, and unlike some, we do not mind. The roll is how the island keeps what it cannot explain. Every name on these tablets is a question the sky never answered. Yours would be in good company."
 journal_entry = &"heard_the_reading_side"
 
 [resource]

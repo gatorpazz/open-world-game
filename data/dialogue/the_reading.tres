@@ -12,7 +12,7 @@ text = "You were read. The order argues the text still — hope to the Walkers, 
 [sub_resource type="Resource" id="resp_rite"]
 script = ExtResource("2")
 npc_id = &"kellom"
-text = "Stand at circuit's end, then. Be still, and be read. — It is done. What the Register said of you the order will argue for a season; what I say is simpler: kept under the rite's roof, a novice, by my word. No roll, no count. The tables priced you once and came up short; the columns take longer views."
+text = "Stand at circuit's end, then. Be still, and be read. — It is done. You are one of us now: a novice of the order, by my word, no parish roll asked. What the Register said of you the order will argue for a season. The tables priced you once and came up short; the columns take longer views."
 journal_entry = &"joined_the_reciters"
 
 [resource]

@@ -16,12 +16,12 @@ text = "Mind the counter, it's working hours. Two crews out, one due, and [[last
 [sub_resource type="Resource" id="resp_kellom"]
 script = ExtResource("2")
 npc_id = &"kellom"
-text = "The tables priced you and came up short; the Register has a longer patience. My petition stands: a reading at circuit's end, with the court as witness. Ask me of [[tablet_law|the law of the tablets]], and ask for [[the_reading]] when you are ready to be text."
+text = "The wardens' tables could not measure you; my order offers a different answer. I have petitioned to read you into the roll at circuit's end, with the court as witness — it would make you one of us. Ask me of [[tablet_law|the law of the tablets]], and ask for [[the_reading]] when you are ready."
 
 [sub_resource type="Resource" id="resp_ollun"]
 script = ExtResource("2")
 npc_id = &"ollun"
-text = "You've stood in the court, then. Everyone counts the tablets; nobody counts the voices. Count both and you come up one apart. The others walk faster past [[the_extra_name|the extra name]]. I don't."
+text = "You've stood in the court, then. Here is what nobody says plainly: the wall lost a tablet, but my rotation still carries its name — I recite a name that is written nowhere. Everyone counts the tablets; nobody counts the voices. The others walk faster past [[the_extra_name|the extra name]]. I don't."
 
 [sub_resource type="Resource" id="resp_torrum_joined"]
 script = ExtResource("2")

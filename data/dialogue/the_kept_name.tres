@@ -7,14 +7,14 @@
 script = ExtResource("2")
 npc_id = &"ollun"
 requires_journal = Array[StringName]([&"the_name_restored"])
-text = "Kept, not dead. The roll is long — and longer by one, again."
+text = "Kept, not dead — that is the vow: the Taken are not mourned as dead; their names are kept on the wall and said aloud, every circuit. The roll is long — and longer by one, again."
 
 [sub_resource type="Resource" id="resp_expose"]
 script = ExtResource("2")
 npc_id = &"ollun"
 requires_journal = Array[StringName]([&"the_waxed_staff"])
 blocked_by_journal = Array[StringName]([&"the_gap_kept"])
-text = "Then stand with me at the wall, and we say it where the court can hear — and let the law follow us there. No declaration was ever filed; by the order's own law the name was never gone. Let Kellom make that the answer. — It is cut again. Nine stones at its foot. Kept, not dead. The roll is long."
+text = "Then stand with me at the wall, and we say the removed name aloud where the court can hear — and let the law follow us there. No declaration was ever filed; by the order's own law the name was never gone. Let Kellom make that the answer. — It is cut again. Nine stones at its foot. Kept, not dead. The roll is long."
 journal_entry = &"the_name_restored"
 
 [sub_resource type="Resource" id="resp_fallback"]

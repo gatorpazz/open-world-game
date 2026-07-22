@@ -1,0 +1,149 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="1_door"]
+[ext_resource type="PackedScene" path="res://scenes/world/journal_trigger.tscn" id="2_trigger"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.55, 0.62, 0.72, 1)
+sky_horizon_color = Color(0.75, 0.78, 0.8, 1)
+ground_bottom_color = Color(0.3, 0.3, 0.32, 1)
+ground_horizon_color = Color(0.75, 0.78, 0.8, 1)
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("sky")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="mat_ground"]
+albedo_color = Color(0.5, 0.46, 0.4, 1)
+
+[sub_resource type="BoxMesh" id="mesh_ground"]
+material = SubResource("mat_ground")
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxShape3D" id="shape_ground"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="mat_scorch"]
+albedo_color = Color(0.18, 0.16, 0.15, 1)
+
+[sub_resource type="CylinderMesh" id="mesh_ring_outer"]
+material = SubResource("mat_scorch")
+top_radius = 9.0
+bottom_radius = 9.0
+height = 0.05
+
+[sub_resource type="CylinderMesh" id="mesh_ring_mid"]
+material = SubResource("mat_scorch")
+top_radius = 6.0
+bottom_radius = 6.0
+height = 0.06
+
+[sub_resource type="StandardMaterial3D" id="mat_new_scorch"]
+albedo_color = Color(0.1, 0.08, 0.08, 1)
+
+[sub_resource type="CylinderMesh" id="mesh_ring_new"]
+material = SubResource("mat_new_scorch")
+top_radius = 2.5
+bottom_radius = 2.5
+height = 0.07
+
+[sub_resource type="StandardMaterial3D" id="mat_post"]
+albedo_color = Color(0.85, 0.83, 0.78, 1)
+
+[sub_resource type="BoxMesh" id="mesh_post"]
+material = SubResource("mat_post")
+size = Vector3(0.4, 3, 0.4)
+
+[sub_resource type="BoxShape3D" id="shape_post"]
+size = Vector3(0.4, 3, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="mat_blind"]
+albedo_color = Color(0.25, 0.2, 0.15, 1)
+
+[sub_resource type="BoxMesh" id="mesh_blind"]
+material = SubResource("mat_blind")
+size = Vector3(4, 2.5, 2)
+
+[sub_resource type="BoxShape3D" id="shape_blind"]
+size = Vector3(4, 2.5, 2)
+
+[node name="BaitSquare" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, 0.383, -0.321, 0, 0.643, 0.766, 0.5, -0.663, 0.557, 0, 16, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("mesh_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("shape_ground")
+
+[node name="RingOuter" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+mesh = SubResource("mesh_ring_outer")
+
+[node name="RingMid" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+mesh = SubResource("mesh_ring_mid")
+
+[node name="RingNew" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, 0)
+mesh = SubResource("mesh_ring_new")
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="from_lastdoor" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -20)
+
+[node name="TallyPostA" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.5, 6)
+
+[node name="Mesh" type="MeshInstance3D" parent="TallyPostA"]
+mesh = SubResource("mesh_post")
+
+[node name="Collision" type="CollisionShape3D" parent="TallyPostA"]
+shape = SubResource("shape_post")
+
+[node name="TallyPostB" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5, 6)
+
+[node name="Mesh" type="MeshInstance3D" parent="TallyPostB"]
+mesh = SubResource("mesh_post")
+
+[node name="Collision" type="CollisionShape3D" parent="TallyPostB"]
+shape = SubResource("shape_post")
+
+[node name="WardenBlind" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 12)
+
+[node name="Mesh" type="MeshInstance3D" parent="WardenBlind"]
+mesh = SubResource("mesh_blind")
+
+[node name="Collision" type="CollisionShape3D" parent="WardenBlind"]
+shape = SubResource("shape_blind")
+
+[node name="WakeTrigger" parent="." instance=ExtResource("2_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+journal_entry = &"woke_in_the_bait_square"
+
+[node name="RetestTrigger" parent="." instance=ExtResource("2_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.8)
+journal_entry = &"stood_for_the_tallies"
+requires_journal = Array[StringName]([&"the_captains_request"])
+
+[node name="DoorToLastdoor" parent="." instance=ExtResource("1_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23)
+target_scene = "res://scenes/world/lastdoor.tscn"
+spawn_point = &"from_bait_square"

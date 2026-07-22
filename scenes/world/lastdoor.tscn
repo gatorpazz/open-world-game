@@ -227,6 +227,11 @@ def = ExtResource("6_munnok")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2)
 def = ExtResource("7_wester")
 
+[node name="DoorToBaitSquare" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 23)
+target_scene = "res://scenes/world/bait_square.tscn"
+spawn_point = &"from_lastdoor"
+
 [node name="DoorToStores" parent="." instance=ExtResource("2_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -3)
 target_scene = "res://scenes/world/suddels_stores.tscn"

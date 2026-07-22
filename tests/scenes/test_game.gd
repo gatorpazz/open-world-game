@@ -163,6 +163,21 @@ func test_start_new_game_adopts_sheet_and_resets_identity() -> void:
 	)
 
 
+func test_start_new_game_wakes_in_the_bait_square() -> void:
+	# Spec 010, criterion 7: the opening lands in the square and the wake
+	# trigger writes the chain's first entry exactly once.
+	var majors: Array[StringName] = [&"blades", &"block", &"evocation", &"mending", &"sneak"]
+	_game.start_new_game(StatsComponent.build_creation_sheet(majors, &"endurance"))
+	await wait_process_frames(3)
+	assert_eq(_game.current_world.scene_file_path, "res://scenes/world/bait_square.tscn")
+	for i: int in 4:
+		await get_tree().physics_frame
+	assert_true(_game.journal.has_entry(&"woke_in_the_bait_square"), "the wake trigger fired")
+	assert_eq(
+		_game.journal.entries.count(&"woke_in_the_bait_square"), 1, "the entry is written once"
+	)
+
+
 func test_encumbered_player_moves_slower() -> void:
 	var player: Player = PLAYER_SCENE.instantiate()
 	add_child_autofree(player)

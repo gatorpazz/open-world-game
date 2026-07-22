@@ -12,7 +12,9 @@ extends Node
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const SPAWN_GROUP := &"spawn_points"
 const DEFAULT_SAVE_PATH := "user://save.json"
-const MAIN_SCENE_PATH := "res://scenes/main.tscn"
+## The new-game starting world (spec 010): the player wakes in the bait
+## square. main.tscn survives as the greybox test target.
+const MAIN_SCENE_PATH := "res://scenes/world/bait_square.tscn"
 
 var character_sheet: CharacterSheet
 var inventory: Inventory

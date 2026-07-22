@@ -228,7 +228,7 @@ static func sheet_from_dict(data: Dictionary, balance: BalanceConfig) -> Charact
 static func inventory_to_dict(inventory: Inventory) -> Dictionary:
 	var stacks: Array[Dictionary] = []
 	for stack: ItemStack in inventory.stacks:
-		stacks.append({"item": String(stack.item.id), "count": stack.count})
+		stacks.append({"item": String(stack.item.id), "count": stack.count, "stolen": stack.stolen})
 	var equipment := {}
 	for slot: StringName in inventory.equipment:
 		equipment[String(slot)] = String(inventory.equipment[slot].id)
@@ -264,6 +264,8 @@ static func inventory_from_dict(
 		var stack := ItemStack.new()
 		stack.item = items[item_id]
 		stack.count = int(stack_data["count"])
+		# Optional — pre-017 saves have no stolen key; those stacks decode clean.
+		stack.stolen = bool(stack_data.get("stolen", false))
 		stacks.append(stack)
 	var equipment: Dictionary[StringName, ItemDef] = {}
 	var raw_equipment := data["equipment"] as Dictionary

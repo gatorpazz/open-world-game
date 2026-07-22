@@ -70,8 +70,9 @@ A HUD sneak indicator (a stance glyph via `hud_notice.gd`) shows the stance is a
 
 **`CrimeRules`** (pure static, `scripts/crime/crime_rules.gd`):
 - `theft_bounty(item: ItemDef, config) -> int` — `maxi(1, ceili(item.base_value * config.theft_bounty_multiplier))`.
-- `fine_owed(ledger: BountyLedger, jurisdiction: StringName, config) -> int` — `ceili(get_bounty * config.fine_multiplier)` (v1 `fine_multiplier` = 1.0; the fine *is* the bounty, but the seam lets a later spec price it apart).
+- `fine_owed(bounty_amount: int, config) -> int` — `ceili(bounty_amount * config.fine_multiplier)` (the caller reads the raw bounty off `Game.bounty`, so `CrimeRules` stays decoupled from `BountyLedger`; v1 `fine_multiplier` = 1.0 — the fine *is* the bounty, but the seam lets a later spec price it apart).
 - `reputation_dock(config) -> int` — `config.crime_reputation_dock`.
+- `marks_stolen(owner_faction) -> bool` / `accrues_bounty(owner_faction, witnessed) -> bool` — the acquisition verdict, pure: any owned take is stolen; only a witnessed owned take accrues bounty.
 
 **The acquire choke point** — one function every take routes through (`ContainerPanel` take, `WorldItem` pickup, the merchant-stock grab). Given the source `owner_faction`:
 - **empty (unowned / yours):** a clean `add_item`, no crime.
@@ -143,7 +144,7 @@ Additive throughout. `stolen` defaults false and merges are guarded, so every ex
 
 1. **Lock odds** (`test_lock_rules.gd`): `pick_chance` is monotonic non-decreasing in `security_skill`, non-increasing in `lock_difficulty`, clamped `[0,1]`; difficulty far below skill ⇒ ~1.0, far above ⇒ ~0.0 (the deterministic endpoints the caller's roll leans on).
 2. **Witness** (`test_witness_query.gd`): `detection_radius` shrinks as `sneak_skill` rises and again when `crouched`; `is_witnessed` is true for an NPC in range with clear LOS, false when a wall blocks the ray (`LOS_MASK`) or the observer is beyond the radius; a crouched skilled actor is unseen where an upright novice is seen.
-3. **Crime math + acquire** (`test_crime_rules.gd`): `theft_bounty` = `base_value * multiplier` clamped ≥ 1; `fine_owed` scales bounty; the acquire helper leaves an unowned take clean, flags an owned take `stolen`, and only a witnessed owned take returns a bounty + dock.
+3. **Crime math + verdict** (`test_crime_rules.gd`): `theft_bounty` = `base_value * multiplier` clamped ≥ 1; `fine_owed` scales a raw bounty by `fine_multiplier`; `marks_stolen` is false for an empty owner and true for any owner; `accrues_bounty` is true only for an owned take that was witnessed; `reputation_dock` reads the config.
 4. **Theft** (`test_theft.gd`): taking an owned stack with a witness present flags it `stolen`, raises `Game.bounty` by the item's bounty, and docks Wardens reputation; taking the same stack unseen flags it `stolen` with no bounty and no dock; taking an unowned stack does neither.
 5. **Lockpicking** (`test_lockpicking.gd`): a `locked` container with no pick and no key stays closed (no-op); a held `key_id` opens it without consuming a pick; a pick attempt consumes exactly one `lockpick`; at a difficulty far below skill it opens, far above it stays locked (both consume the pick).
 6. **Stolen refusal** (a barter test): `is_sellable` is false for a `stolen` stack and true for a clean one; the sell list omits stolen stacks; a forced sell of a stolen stack is a no-op.

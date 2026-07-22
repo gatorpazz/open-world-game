@@ -25,16 +25,21 @@ const EQUIPMENT_SLOTS: Array[StringName] = [
 @export var gold: int = 0
 ## Only occupied slots are keyed.
 @export var equipment: Dictionary[StringName, ItemDef] = {}
+## The faction that owns this inventory's contents (spec 017); empty = yours.
+## Runtime-only on a merchant's live stock (rebuilt each session); the take
+## paths read it to decide whether an acquisition is theft.
+@export var owner_faction: StringName = &""
 
 
-## Adds count of item, merging into partial stacks up to max_stack.
-## Never blocked by weight.
-func add_item(item: ItemDef, count: int = 1) -> void:
+## Adds count of item, merging into partial stacks up to max_stack. A stolen
+## batch only merges into existing stolen stacks (and clean into clean), so
+## provenance never launders through stacking. Never blocked by weight.
+func add_item(item: ItemDef, count: int = 1, stolen: bool = false) -> void:
 	assert(item != null and count > 0)
 	var remaining := count
 	if item.stackable:
 		for stack: ItemStack in stacks:
-			if stack.item != item or stack.count >= item.max_stack:
+			if stack.item != item or stack.stolen != stolen or stack.count >= item.max_stack:
 				continue
 			var space := item.max_stack - stack.count
 			var moved := mini(space, remaining)
@@ -46,6 +51,7 @@ func add_item(item: ItemDef, count: int = 1) -> void:
 		var new_stack := ItemStack.new()
 		new_stack.item = item
 		new_stack.count = mini(remaining, item.max_stack)
+		new_stack.stolen = stolen
 		stacks.append(new_stack)
 		remaining -= new_stack.count
 

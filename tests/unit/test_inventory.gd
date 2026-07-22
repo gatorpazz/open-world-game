@@ -45,6 +45,31 @@ func test_non_stackables_never_merge() -> void:
 	assert_eq(_inventory.stacks[1].count, 1)
 
 
+# --- Stolen provenance (spec 017) ---
+
+
+func test_stolen_and_clean_stacks_do_not_merge() -> void:
+	_inventory.add_item(HEALING_DRAUGHT, 3)
+	_inventory.add_item(HEALING_DRAUGHT, 3, true)
+	assert_eq(_inventory.stacks.size(), 2, "stolen batch stays a distinct stack")
+	assert_false(_inventory.stacks[0].stolen, "the first batch is clean")
+	assert_true(_inventory.stacks[1].stolen, "the second batch is stolen")
+	assert_eq(_inventory.count_of(HEALING_DRAUGHT), 6, "count_of sums both")
+
+
+func test_stolen_batches_merge_with_each_other() -> void:
+	_inventory.add_item(HEALING_DRAUGHT, 4, true)
+	_inventory.add_item(HEALING_DRAUGHT, 3, true)
+	assert_eq(_inventory.stacks.size(), 1, "two stolen batches coalesce")
+	assert_eq(_inventory.stacks[0].count, 7)
+	assert_true(_inventory.stacks[0].stolen)
+
+
+func test_add_defaults_to_clean() -> void:
+	_inventory.add_item(HEALING_DRAUGHT, 1)
+	assert_false(_inventory.stacks[0].stolen, "add_item defaults stolen false")
+
+
 # --- Weight ---
 
 

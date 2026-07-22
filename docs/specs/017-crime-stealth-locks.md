@@ -41,7 +41,7 @@
 
 - `detection_radius(sneak_skill: int, crouched: bool, config: BalanceConfig) -> float` — **pure**. Base radius shrunk by sneak skill (lerp between `sneak_skill_min`/`max` endpoints) and further multiplied by `sneak_crouch_factor` when crouched. Higher skill + crouch = a smaller radius a thief can work inside. Tested directly.
 - `is_detected(observer_pos, actor_pos, sneaking, sneak_skill, config, space_state) -> bool` — distance ≤ `detection_radius` **and** clear LOS (`PhysicsRayQueryParameters3D` against `LOS_MASK`, exactly `creature.gd`'s ray). No RNG (ruling 1).
-- `is_witnessed(actor: Node3D, world: Node, sneak_skill: int, config) -> bool` — iterates the `world`'s `Npc` children, returns `true` on the first observer that `is_detected`. **This is the one function 018 calls** for unlicensed-casting enforcement. Takes the world node + its space state → testable with a built scene (a wall + an NPC), the `creature` test precedent.
+- `is_witnessed(actor: Node3D, world: Node, sneak_skill: int, sneaking: bool, config) -> bool` — iterates the `world`'s `Npc` descendants, returns `true` on the first observer within the sneak-scaled radius with a clear eye-height ray (the observer's own body — and the actor's, if it has one — excluded so only world geometry blocks, since placed NPCs sit on layer 1). **This is the one function 018 calls** for unlicensed-casting enforcement. Takes the world node → testable with a built scene (a wall + an NPC), the `creature` test precedent.
 
 *Rejected alternative — an authority tag on `NPCDef` so only wardens witness:* ruling 3 says any NPC reports, so no schema change is needed and the query stays a plain child-iteration.
 
@@ -131,7 +131,7 @@ Additive throughout. `stolen` defaults false and merges are guarded, so every ex
 | `scripts/crime/lock_rules.gd` | `LockRules` — pure pick-chance curve |
 | `scripts/crime/crime_rules.gd` | `CrimeRules` — theft-bounty / fine / reputation-dock math + the acquire choke helper |
 | `data/items/lockpick.tres` | a `MiscDef`, consumed per lockpick attempt |
-| `tests/unit/test_witness_query.gd` | `detection_radius` scaling + `is_witnessed` (built scene, LOS) |
+| `tests/scenes/test_witness_query.gd` | `detection_radius` scaling + `is_witnessed` (built scene, LOS) |
 | `tests/unit/test_lock_rules.gd` | pick-chance curve — monotonic, clamped, endpoint determinism |
 | `tests/unit/test_crime_rules.gd` | bounty/fine/dock math + the acquire outcomes |
 | `tests/scenes/test_theft.gd` | witnessed vs unwitnessed take → stolen flag + bounty |

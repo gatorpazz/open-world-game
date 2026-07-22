@@ -12,6 +12,15 @@ const NO_SAVE_TO_LOAD := "No save to load."
 ## draws — the pool noun stays deliberately unnamed in-world).
 const CAST_FAILED := "Nothing left to draw."
 const WORKING_LEARNED := "New working: %s"
+## Spec 017 crime notices — the sneak stance toggle, a witnessed theft, and
+## the locked/lockpick outcomes.
+const SNEAKING_ON := "Sneaking."
+const SNEAKING_OFF := "No longer sneaking."
+const CRIME_WITNESSED := "You were seen."
+const LOCKED := "It's locked."
+const LOCK_PICKED := "The lock gives."
+const LOCK_RESISTED := "The pick snaps. The lock holds."
+const NO_LOCKPICK := "You have nothing to pick it with."
 
 ## Timing is UI styling, not balance (spec 006's empty-BalanceConfig ruling).
 @export var display_seconds := 3.0

@@ -8,12 +8,19 @@ extends CharacterBody3D
 const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
 const INVENTORY_PANEL_SCENE := preload("res://scenes/ui/inventory_panel.tscn")
 const WORLD_ITEM_SCENE := preload("res://scenes/world/world_item.tscn")
+const BALANCE_PATH := "res://data/balance/balance_config.tres"
 ## How far in front of the player a dropped item lands.
 const DROP_DISTANCE := 1.0
 
 @export var speed := 6.0
 @export var jump_velocity := 4.8
 @export var mouse_sensitivity := 0.002
+@export var config: BalanceConfig
+
+## The crouch stance (spec 017): slows movement and shrinks the radius within
+## which an NPC can witness a crime. The take paths read this when deciding
+## whether a theft was seen.
+var sneaking := false
 
 ## The player's journal (spec 005) — injected identity like the sheet and
 ## inventory; a fresh one is built in _ready only when none was injected.
@@ -46,9 +53,17 @@ func setup_identity(
 	journal = player_journal
 
 
-## Flat speed scaled by encumbrance (the 001→002→003 hookup, criterion 7).
+## Flat speed scaled by encumbrance (the 001→002→003 hookup, criterion 7) and,
+## while crouched, by the sneak stance factor (spec 017).
 func get_move_speed() -> float:
-	return speed * inventory_component.get_speed_multiplier()
+	var stance := config.sneak_move_factor if sneaking else 1.0
+	return speed * inventory_component.get_speed_multiplier() * stance
+
+
+## Toggles the crouch stance (spec 017) and flashes the change on the HUD.
+func toggle_sneak() -> void:
+	sneaking = not sneaking
+	show_notice(HudNotice.SNEAKING_ON if sneaking else HudNotice.SNEAKING_OFF)
 
 
 ## Opens the journal reader (spec 005). Closing while open is the panel's
@@ -114,6 +129,8 @@ func show_notice(text: String) -> void:
 func _ready() -> void:
 	if journal == null:
 		journal = Journal.new()
+	if config == null:
+		config = load(BALANCE_PATH) as BalanceConfig
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	detector.target_changed.connect(hud_prompt.set_target)
 	hud_bars.bind(stats)
@@ -144,6 +161,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		open_journal()
 	elif event.is_action_pressed("inventory"):
 		open_inventory()
+	elif event.is_action_pressed("sneak"):
+		toggle_sneak()
 	elif event.is_action_pressed("quicksave"):
 		# Calls down into the sanctioned autoload's own mutation API (the
 		# TransitionDoor/DeathOverlay precedent); Game stays UI-free, so

@@ -10,9 +10,11 @@ extends RefCounted
 
 ## Bumped to 2 by the faction spec (015): "factions" section + first migration.
 ## Bumped to 3 by the barter spec (016): a "stash" section (the Game-owned
-## player bank) + v2 -> v3 migration seeding an empty stash. Migrations now
-## chain (a v1 save runs v1 -> v2 -> v3).
-const SAVE_VERSION := 3
+## player bank) + v2 -> v3 migration seeding an empty stash.
+## Bumped to 4 by the crime spec (017): a "bounty" section (the per-jurisdiction
+## legal debt) + v3 -> v4 migration seeding an empty ledger. Migrations chain (a
+## v1 save runs v1 -> v2 -> v3 -> v4).
+const SAVE_VERSION := 4
 
 const _SHEET_KEYS: Array[String] = [
 	"attributes",
@@ -32,6 +34,7 @@ const _ROOT_KEYS: Array[String] = [
 	"journal",
 	"factions",
 	"stash",
+	"bounty",
 ]
 const _PLAYER_KEYS: Array[String] = [
 	"transform",
@@ -59,6 +62,8 @@ class SaveState:
 	## The Game-owned player bank (spec 016) — the Inventory shape again, its
 	## own save section.
 	var stash: Inventory
+	## The per-jurisdiction bounty ledger (spec 017), its own save section.
+	var bounty: BountyLedger
 
 
 static func encode_save(state: SaveState) -> Dictionary:
@@ -78,6 +83,7 @@ static func encode_save(state: SaveState) -> Dictionary:
 		"journal": journal_to_dict(state.journal),
 		"factions": factions_to_dict(state.faction_standing),
 		"stash": inventory_to_dict(state.stash),
+		"bounty": bounty_to_dict(state.bounty),
 	}
 
 
@@ -126,6 +132,7 @@ static func decode_save(
 		and data["journal"] is Dictionary
 		and data["factions"] is Dictionary
 		and data["stash"] is Dictionary
+		and data["bounty"] is Dictionary
 	)
 	if not sections_are_dicts:
 		push_warning("decode_save: malformed identity sections")
@@ -135,12 +142,14 @@ static func decode_save(
 	var journal := journal_from_dict(data["journal"] as Dictionary)
 	var faction_standing := factions_from_dict(data["factions"] as Dictionary)
 	var stash := inventory_from_dict(data["stash"] as Dictionary, items)
+	var bounty := bounty_from_dict(data["bounty"] as Dictionary)
 	if (
 		sheet == null
 		or inventory == null
 		or journal == null
 		or faction_standing == null
 		or stash == null
+		or bounty == null
 	):
 		return null
 	var player := data["player"] as Dictionary
@@ -156,6 +165,7 @@ static func decode_save(
 	state.journal = journal
 	state.faction_standing = faction_standing
 	state.stash = stash
+	state.bounty = bounty
 	return state
 
 
@@ -338,9 +348,25 @@ static func factions_from_dict(data: Dictionary) -> FactionStanding:
 	return standing
 
 
+static func bounty_to_dict(ledger: BountyLedger) -> Dictionary:
+	return {"bounty": _ids_to_strings(ledger.bounty)}
+
+
+## Rebuilds the bounty ledger (spec 017): one jurisdiction -> int map, coerced
+## from JSON's String keys / float numbers like the faction maps. Null on any
+## malformed shape.
+static func bounty_from_dict(data: Dictionary) -> BountyLedger:
+	if not (data.has("bounty") and _is_id_number_dict(data["bounty"])):
+		push_warning("bounty_from_dict: malformed shape")
+		return null
+	var ledger := BountyLedger.new()
+	ledger.bounty = _strings_to_id_ints(data["bounty"])
+	return ledger
+
+
 ## Upgrades an older save dict to the current version, or returns {} when no
-## path exists. Migrations run in sequence: a v1 save chains v1 -> v2 -> v3,
-## each step adding the sections its target version expects.
+## path exists. Migrations run in sequence: a v1 save chains v1 -> v2 -> v3 ->
+## v4, each step adding the sections its target version expects.
 static func _migrated(
 	data: Dictionary, version: int, factions: Dictionary[StringName, FactionDef]
 ) -> Dictionary:
@@ -352,6 +378,9 @@ static func _migrated(
 	if current == 2:
 		result = _migrate_v2_to_v3(result)
 		current = 3
+	if current == 3:
+		result = _migrate_v3_to_v4(result)
+		current = 4
 	if current != SAVE_VERSION:
 		return {}
 	return result
@@ -375,6 +404,15 @@ static func _migrate_v1_to_v2(
 static func _migrate_v2_to_v3(data: Dictionary) -> Dictionary:
 	data["stash"] = inventory_to_dict(Inventory.new())
 	data["save_version"] = 3
+	return data
+
+
+## v3 had no bounty section. Seed an empty ledger — a v3 save is a v4 save whose
+## player never committed a witnessed crime. The rest of the payload is
+## untouched.
+static func _migrate_v3_to_v4(data: Dictionary) -> Dictionary:
+	data["bounty"] = bounty_to_dict(BountyLedger.new())
+	data["save_version"] = 4
 	return data
 
 

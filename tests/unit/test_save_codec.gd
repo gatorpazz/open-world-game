@@ -214,15 +214,16 @@ func test_factions_round_trip_through_json() -> void:
 		assert_true(key is StringName, "faction ids decode back to StringName")
 
 
-func test_v1_save_chains_through_v2_to_v3() -> void:
+func test_v1_save_chains_through_v2_v3_to_v4() -> void:
 	var balance := load(BALANCE_PATH) as BalanceConfig
 	var items := _make_items()
 	var v1 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
-	# A genuine v1 save predates both the factions and stash sections; membership
-	# lived only in the journal. Strip both sections, drop the version to 1, and
-	# hold the join entry — decode must chain v1 -> v2 -> v3.
+	# A genuine v1 save predates the factions, stash, and bounty sections;
+	# membership lived only in the journal. Strip all three, drop the version to
+	# 1, and hold the join entry — decode must chain v1 -> v2 -> v3 -> v4.
 	v1.erase("factions")
 	v1.erase("stash")
+	v1.erase("bounty")
 	v1["save_version"] = 1
 	(v1["journal"] as Dictionary)["entries"] = ["joined_the_wardens"]
 
@@ -238,6 +239,43 @@ func test_v1_save_chains_through_v2_to_v3() -> void:
 	assert_not_null(decoded.stash, "v2->v3 added the stash section")
 	assert_eq(decoded.stash.gold, 0, "the migrated stash starts empty")
 	assert_true(decoded.stash.stacks.is_empty(), "no items in a migrated stash")
+	assert_not_null(decoded.bounty, "v3->v4 added the bounty section")
+	assert_eq(decoded.bounty.get_bounty(&"wardens"), 0, "the migrated ledger starts clean")
+
+
+func test_v3_save_migrates_seeding_an_empty_bounty() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var v3 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	# A v3 save has factions and stash but predates the bounty section.
+	v3.erase("bounty")
+	v3["save_version"] = 3
+
+	var decoded := SaveCodec.decode_save(v3, balance, items, _factions())
+
+	assert_not_null(decoded, "a v3 save migrates instead of failing the load")
+	assert_eq(decoded.bounty.get_bounty(&"wardens"), 0, "the seeded ledger is clean")
+	assert_eq(decoded.stash.gold, 33, "the untouched v3 stash survives")
+	assert_eq(
+		decoded.faction_standing.get_rank(&"wardens"),
+		1,
+		"the untouched v3 factions section survives"
+	)
+
+
+func test_bounty_section_round_trips_through_json() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var state := _make_state(balance, items)  # bounty: 40 with the wardens
+
+	var decoded := SaveCodec.decode_save(
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items, _factions()
+	)
+
+	assert_not_null(decoded)
+	assert_eq(decoded.bounty.get_bounty(&"wardens"), 40, "bounty survives the round-trip")
+	for key: Variant in decoded.bounty.bounty:
+		assert_true(key is StringName, "jurisdiction ids decode back to StringName")
 
 
 func test_stash_section_round_trips_through_json() -> void:
@@ -357,6 +395,9 @@ func _make_state(
 	stash.gold = 33
 	stash.stacks = [_stack(items[&"sword"], 1)]
 	state.stash = stash
+	var bounty := BountyLedger.new()
+	bounty.add_bounty(&"wardens", 40)
+	state.bounty = bounty
 	return state
 
 

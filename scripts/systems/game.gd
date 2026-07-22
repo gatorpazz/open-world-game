@@ -28,6 +28,10 @@ var stash: Inventory
 ## joined_* journal entries. Reconciled from the journal at every scene entry
 ## and restored whole on load; SaveCodec serializes it.
 var faction_standing: FactionStanding
+## Per-jurisdiction bounty (spec 017): the legal debt a witnessed theft accrues,
+## cleared by paying a warden's fine. Identity, not world state — SaveCodec
+## serializes it (its own section, SAVE_VERSION 4).
+var bounty: BountyLedger
 
 ## Where save_game/load_game read and write. Tests point this at a scratch
 ## file so they never touch a real save.
@@ -48,6 +52,7 @@ func _ready() -> void:
 	journal = Journal.new()
 	faction_standing = FactionStanding.new()
 	stash = Inventory.new()
+	bounty = BountyLedger.new()
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
 
@@ -79,6 +84,7 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	journal = Journal.new()
 	faction_standing = FactionStanding.new()
 	stash = Inventory.new()
+	bounty = BountyLedger.new()
 	change_scene(MAIN_SCENE_PATH, &"default")
 
 
@@ -113,6 +119,7 @@ func save_game() -> bool:
 	state.journal = journal
 	state.faction_standing = faction_standing
 	state.stash = stash
+	state.bounty = bounty
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	if file == null:
 		push_warning("save_game: cannot open '%s' for writing" % save_path)
@@ -194,6 +201,7 @@ func _apply_load(state: SaveCodec.SaveState) -> void:
 	journal = state.journal
 	faction_standing = state.faction_standing
 	stash = state.stash
+	bounty = state.bounty
 	_change_scene_now(state.scene_path, &"default")
 	player.global_transform = state.player_transform
 	player.head.rotation.x = state.head_pitch

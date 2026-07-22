@@ -14,6 +14,7 @@ var _saved_inventory: Inventory
 var _saved_journal: Journal
 var _saved_faction_standing: FactionStanding
 var _saved_stash: Inventory
+var _saved_bounty: BountyLedger
 var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
@@ -27,6 +28,7 @@ func before_each() -> void:
 	_saved_journal = _game.journal
 	_saved_faction_standing = _game.faction_standing
 	_saved_stash = _game.stash
+	_saved_bounty = _game.bounty
 	_saved_world_parent = _game.world_parent
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
@@ -43,6 +45,7 @@ func before_each() -> void:
 	_game.journal = Journal.new()
 	_game.faction_standing = FactionStanding.new()
 	_game.stash = Inventory.new()
+	_game.bounty = BountyLedger.new()
 	_game.save_path = TEST_SAVE_PATH
 	_remove_scratch_file()
 
@@ -55,6 +58,7 @@ func after_each() -> void:
 	_game.journal = _saved_journal
 	_game.faction_standing = _saved_faction_standing
 	_game.stash = _saved_stash
+	_game.bounty = _saved_bounty
 	_game.world_parent = _saved_world_parent
 	_game.current_world = _saved_current_world
 	_game.player = _saved_player
@@ -186,6 +190,43 @@ func test_load_restores_the_stash() -> void:
 
 	assert_eq(_game.stash.gold, 50, "the saved stash gold is restored, not the drift")
 	assert_eq(_game.stash.count_of(RAT_PELT), 2, "stashed items are restored")
+
+
+func test_load_restores_the_bounty_ledger() -> void:
+	# The bounty ledger (spec 017) is its own Game-owned save section — a legal
+	# debt survives a save/load, and post-save drift is discarded.
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.bounty.add_bounty(&"wardens", 75)
+	assert_true(_game.save_game())
+
+	_game.bounty.add_bounty(&"wardens", 999)  # post-save drift, must be discarded
+
+	assert_true(_game.load_game())
+	await wait_process_frames(3)
+
+	assert_eq(
+		_game.bounty.get_bounty(&"wardens"), 75, "the saved bounty is restored, not the drift"
+	)
+
+
+func test_load_preserves_a_stolen_flag() -> void:
+	# The per-stack stolen flag (spec 017) rides in the inventory codec, so a hot
+	# item stays hot across a save/load.
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.inventory.add_item(RAT_PELT, 1, true)  # stolen
+	assert_true(_game.save_game())
+
+	assert_true(_game.load_game())
+	await wait_process_frames(3)
+
+	var stolen_pelt: ItemStack = null
+	for stack: ItemStack in _game.inventory.stacks:
+		if stack.item == RAT_PELT:
+			stolen_pelt = stack
+	assert_not_null(stolen_pelt, "the stolen pelt is restored")
+	assert_true(stolen_pelt.stolen, "and it is still flagged stolen")
 
 
 # --- Criterion 5 (scene half): refusal is atomic ---

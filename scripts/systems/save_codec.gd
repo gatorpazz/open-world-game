@@ -8,10 +8,11 @@ extends RefCounted
 ## behind push_warning guards; unknown item ids and equipment slots are
 ## skipped with a warning so a content rename never bricks a save.
 
-## Bumped to 2 by the faction spec (015): the payload gained a "factions"
-## section and, with it, the save system's first migration (v1 -> v2 seeds
-## faction records from the journal's joined_* entries).
-const SAVE_VERSION := 2
+## Bumped to 2 by the faction spec (015): "factions" section + first migration.
+## Bumped to 3 by the barter spec (016): a "stash" section (the Game-owned
+## player bank) + v2 -> v3 migration seeding an empty stash. Migrations now
+## chain (a v1 save runs v1 -> v2 -> v3).
+const SAVE_VERSION := 3
 
 const _SHEET_KEYS: Array[String] = [
 	"attributes",
@@ -30,6 +31,7 @@ const _ROOT_KEYS: Array[String] = [
 	"inventory",
 	"journal",
 	"factions",
+	"stash",
 ]
 const _PLAYER_KEYS: Array[String] = [
 	"transform",
@@ -54,6 +56,9 @@ class SaveState:
 	var inventory: Inventory
 	var journal: Journal
 	var faction_standing: FactionStanding
+	## The Game-owned player bank (spec 016) — the Inventory shape again, its
+	## own save section.
+	var stash: Inventory
 
 
 static func encode_save(state: SaveState) -> Dictionary:
@@ -72,6 +77,7 @@ static func encode_save(state: SaveState) -> Dictionary:
 		"inventory": inventory_to_dict(state.inventory),
 		"journal": journal_to_dict(state.journal),
 		"factions": factions_to_dict(state.faction_standing),
+		"stash": inventory_to_dict(state.stash),
 	}
 
 
@@ -119,6 +125,7 @@ static func decode_save(
 		and data["inventory"] is Dictionary
 		and data["journal"] is Dictionary
 		and data["factions"] is Dictionary
+		and data["stash"] is Dictionary
 	)
 	if not sections_are_dicts:
 		push_warning("decode_save: malformed identity sections")
@@ -127,7 +134,14 @@ static func decode_save(
 	var inventory := inventory_from_dict(data["inventory"] as Dictionary, items)
 	var journal := journal_from_dict(data["journal"] as Dictionary)
 	var faction_standing := factions_from_dict(data["factions"] as Dictionary)
-	if sheet == null or inventory == null or journal == null or faction_standing == null:
+	var stash := inventory_from_dict(data["stash"] as Dictionary, items)
+	if (
+		sheet == null
+		or inventory == null
+		or journal == null
+		or faction_standing == null
+		or stash == null
+	):
 		return null
 	var player := data["player"] as Dictionary
 	var state := SaveState.new()
@@ -141,6 +155,7 @@ static func decode_save(
 	state.inventory = inventory
 	state.journal = journal
 	state.faction_standing = faction_standing
+	state.stash = stash
 	return state
 
 
@@ -322,14 +337,22 @@ static func factions_from_dict(data: Dictionary) -> FactionStanding:
 
 
 ## Upgrades an older save dict to the current version, or returns {} when no
-## path exists. Migrations run in sequence; each adds the sections its target
-## version expects. Today only v1 -> v2 exists.
+## path exists. Migrations run in sequence: a v1 save chains v1 -> v2 -> v3,
+## each step adding the sections its target version expects.
 static func _migrated(
 	data: Dictionary, version: int, factions: Dictionary[StringName, FactionDef]
 ) -> Dictionary:
-	if version == 1:
-		return _migrate_v1_to_v2(data, factions)
-	return {}
+	var result := data
+	var current := version
+	if current == 1:
+		result = _migrate_v1_to_v2(result, factions)
+		current = 2
+	if current == 2:
+		result = _migrate_v2_to_v3(result)
+		current = 3
+	if current != SAVE_VERSION:
+		return {}
+	return result
 
 
 ## v1 had no factions section. Seed it from the joined_* journal entries the
@@ -342,6 +365,14 @@ static func _migrate_v1_to_v2(
 	FactionRules.reconcile(standing, _migration_journal_entries(data), factions)
 	data["factions"] = factions_to_dict(standing)
 	data["save_version"] = 2
+	return data
+
+
+## v2 had no stash section. Seed an empty player bank — a v2 save is a v3 save
+## whose stash was never opened. The rest of the payload is untouched.
+static func _migrate_v2_to_v3(data: Dictionary) -> Dictionary:
+	data["stash"] = inventory_to_dict(Inventory.new())
+	data["save_version"] = 3
 	return data
 
 

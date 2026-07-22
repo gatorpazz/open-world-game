@@ -231,4 +231,4 @@ func test_casting_adds_no_player_save_state() -> void:
 	# Selection and ward live on player nodes and rebuild on scene load;
 	# the sheet's skills already persist via 007. Casting joined nothing to
 	# the payload — the version is 2 as of the faction spec (015), not casting.
-	assert_eq(SaveCodec.SAVE_VERSION, 2)
+	assert_eq(SaveCodec.SAVE_VERSION, 3)

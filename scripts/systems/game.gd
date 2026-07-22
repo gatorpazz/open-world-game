@@ -19,6 +19,11 @@ const MAIN_SCENE_PATH := "res://scenes/world/bait_square.tscn"
 var character_sheet: CharacterSheet
 var inventory: Inventory
 var journal: Journal
+## The one sanctioned player bank (spec 016): a Game-owned Inventory separate
+## from what the player carries, deposited into at the Lastdoor stash chest and
+## serialized as its own save section. The world-state-from-journal fence holds
+## — this is identity, not world state.
+var stash: Inventory
 ## Per-faction reputation + rank (spec 015), the numeric layer over the
 ## joined_* journal entries. Reconciled from the journal at every scene entry
 ## and restored whole on load; SaveCodec serializes it.
@@ -42,6 +47,7 @@ func _ready() -> void:
 	inventory = Inventory.new()
 	journal = Journal.new()
 	faction_standing = FactionStanding.new()
+	stash = Inventory.new()
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
 
@@ -72,6 +78,7 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	inventory = Inventory.new()
 	journal = Journal.new()
 	faction_standing = FactionStanding.new()
+	stash = Inventory.new()
 	change_scene(MAIN_SCENE_PATH, &"default")
 
 
@@ -105,6 +112,7 @@ func save_game() -> bool:
 	state.inventory = inventory
 	state.journal = journal
 	state.faction_standing = faction_standing
+	state.stash = stash
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	if file == null:
 		push_warning("save_game: cannot open '%s' for writing" % save_path)
@@ -185,6 +193,7 @@ func _apply_load(state: SaveCodec.SaveState) -> void:
 	inventory = state.inventory
 	journal = state.journal
 	faction_standing = state.faction_standing
+	stash = state.stash
 	_change_scene_now(state.scene_path, &"default")
 	player.global_transform = state.player_transform
 	player.head.rotation.x = state.head_pitch

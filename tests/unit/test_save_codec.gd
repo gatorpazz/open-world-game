@@ -214,13 +214,15 @@ func test_factions_round_trip_through_json() -> void:
 		assert_true(key is StringName, "faction ids decode back to StringName")
 
 
-func test_v1_save_migrates_seeding_factions_from_the_journal() -> void:
+func test_v1_save_chains_through_v2_to_v3() -> void:
 	var balance := load(BALANCE_PATH) as BalanceConfig
 	var items := _make_items()
 	var v1 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
-	# A v1 save predates the factions section; membership lived only in the
-	# journal. Strip the section, drop the version, and hold the join entry.
+	# A genuine v1 save predates both the factions and stash sections; membership
+	# lived only in the journal. Strip both sections, drop the version to 1, and
+	# hold the join entry — decode must chain v1 -> v2 -> v3.
 	v1.erase("factions")
+	v1.erase("stash")
 	v1["save_version"] = 1
 	(v1["journal"] as Dictionary)["entries"] = ["joined_the_wardens"]
 
@@ -229,10 +231,50 @@ func test_v1_save_migrates_seeding_factions_from_the_journal() -> void:
 	assert_not_null(decoded, "a v1 save migrates instead of failing the load")
 	assert_true(
 		decoded.faction_standing.is_member(&"wardens"),
-		"migration seeded the Wardens record from the journal"
+		"v1->v2 seeded the Wardens record from the journal"
 	)
 	assert_eq(decoded.faction_standing.get_rank(&"wardens"), 0, "seeded at the joining rank")
 	assert_false(decoded.faction_standing.is_member(&"reciters"), "unheld factions are not seeded")
+	assert_not_null(decoded.stash, "v2->v3 added the stash section")
+	assert_eq(decoded.stash.gold, 0, "the migrated stash starts empty")
+	assert_true(decoded.stash.stacks.is_empty(), "no items in a migrated stash")
+
+
+func test_stash_section_round_trips_through_json() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var state := _make_state(balance, items)  # stash: 33 gold + one sword
+
+	var decoded := SaveCodec.decode_save(
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items, _factions()
+	)
+
+	assert_not_null(decoded)
+	assert_eq(decoded.stash.gold, 33, "stash gold survives")
+	assert_eq(decoded.stash.stacks.size(), 1, "stash stacks survive")
+	assert_same(
+		decoded.stash.stacks[0].item, items[&"sword"], "resolved to the resolver's instance"
+	)
+
+
+func test_v2_save_migrates_seeding_an_empty_stash() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var v2 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	# A v2 save has factions but predates the stash section.
+	v2.erase("stash")
+	v2["save_version"] = 2
+
+	var decoded := SaveCodec.decode_save(v2, balance, items, _factions())
+
+	assert_not_null(decoded, "a v2 save migrates instead of failing the load")
+	assert_eq(decoded.stash.gold, 0, "the seeded stash is empty")
+	assert_true(decoded.stash.stacks.is_empty(), "no items in a seeded stash")
+	assert_eq(
+		decoded.faction_standing.get_rank(&"wardens"),
+		1,
+		"the untouched v2 factions section survives"
+	)
 
 
 # --- Criteria 5 (unit half) and 10: atomic refusal + security ---
@@ -311,6 +353,10 @@ func _make_state(
 	var standing := FactionStanding.new()
 	standing.seed_if_absent(&"wardens", 1, 15)
 	state.faction_standing = standing
+	var stash := Inventory.new()
+	stash.gold = 33
+	stash.stacks = [_stack(items[&"sword"], 1)]
+	state.stash = stash
 	return state
 
 

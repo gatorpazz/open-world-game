@@ -13,6 +13,7 @@ var _saved_sheet: CharacterSheet
 var _saved_inventory: Inventory
 var _saved_journal: Journal
 var _saved_faction_standing: FactionStanding
+var _saved_stash: Inventory
 var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
@@ -25,6 +26,7 @@ func before_each() -> void:
 	_saved_inventory = _game.inventory
 	_saved_journal = _game.journal
 	_saved_faction_standing = _game.faction_standing
+	_saved_stash = _game.stash
 	_saved_world_parent = _game.world_parent
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
@@ -40,6 +42,7 @@ func before_each() -> void:
 	_game.inventory = Inventory.new()
 	_game.journal = Journal.new()
 	_game.faction_standing = FactionStanding.new()
+	_game.stash = Inventory.new()
 	_game.save_path = TEST_SAVE_PATH
 	_remove_scratch_file()
 
@@ -51,6 +54,7 @@ func after_each() -> void:
 	_game.inventory = _saved_inventory
 	_game.journal = _saved_journal
 	_game.faction_standing = _saved_faction_standing
+	_game.stash = _saved_stash
 	_game.world_parent = _saved_world_parent
 	_game.current_world = _saved_current_world
 	_game.player = _saved_player
@@ -164,6 +168,24 @@ func test_load_restores_faction_standing() -> void:
 		20,
 		"the saved reputation is restored — not the post-save drift, and reconcile did not reseed it"
 	)
+
+
+func test_load_restores_the_stash() -> void:
+	# The stash (spec 016) is its own Game-owned save section — a stashed item
+	# and its gold survive a save/load, and post-save drift is discarded.
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.stash.add_gold(50)
+	_game.stash.add_item(RAT_PELT, 2)
+	assert_true(_game.save_game())
+
+	_game.stash.add_gold(999)  # post-save drift, must be discarded
+
+	assert_true(_game.load_game())
+	await wait_process_frames(3)
+
+	assert_eq(_game.stash.gold, 50, "the saved stash gold is restored, not the drift")
+	assert_eq(_game.stash.count_of(RAT_PELT), 2, "stashed items are restored")
 
 
 # --- Criterion 5 (scene half): refusal is atomic ---

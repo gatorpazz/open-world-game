@@ -41,6 +41,11 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="TakerItems" type="ItemList" parent="Dim/Panel/Layout"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="Buttons" type="HBoxContainer" parent="Dim/Panel/Layout"]
 layout_mode = 2
 alignment = 1
@@ -53,6 +58,11 @@ text = "Take"
 [node name="TakeAll" type="Button" parent="Dim/Panel/Layout/Buttons"]
 layout_mode = 2
 text = "Take All"
+
+[node name="Deposit" type="Button" parent="Dim/Panel/Layout/Buttons"]
+visible = false
+layout_mode = 2
+text = "Deposit"
 
 [node name="Close" type="Button" parent="Dim/Panel/Layout/Buttons"]
 layout_mode = 2

@@ -15,10 +15,18 @@ class EffectReport:
 ## True when every condition on the response passes for this NPC and
 ## player state. take_items is an implicit condition: the player must hold
 ## every stack (loose or equipped — remove_item drains both), so a shown
-## response's effects can never fail.
+## response's effects can never fail. from_choice (spec 013) marks
+## navigation that came from a choice press — the only way a choice_gated
+## response becomes eligible.
 static func matches(
-	response: DialogueResponse, npc_id: StringName, journal: Journal, inventory: Inventory
+	response: DialogueResponse,
+	npc_id: StringName,
+	journal: Journal,
+	inventory: Inventory,
+	from_choice: bool = false,
 ) -> bool:
+	if response.choice_gated and not from_choice:
+		return false
 	if response.npc_id != &"" and response.npc_id != npc_id:
 		return false
 	for topic_id: StringName in response.requires_topics:
@@ -38,10 +46,14 @@ static func matches(
 
 ## The first response in array order whose conditions pass, or null.
 static func pick_response(
-	topic: DialogueTopicDef, npc_id: StringName, journal: Journal, inventory: Inventory
+	topic: DialogueTopicDef,
+	npc_id: StringName,
+	journal: Journal,
+	inventory: Inventory,
+	from_choice: bool = false,
 ) -> DialogueResponse:
 	for response: DialogueResponse in topic.responses:
-		if matches(response, npc_id, journal, inventory):
+		if matches(response, npc_id, journal, inventory, from_choice):
 			return response
 	return null
 

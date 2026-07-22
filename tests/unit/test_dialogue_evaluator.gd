@@ -149,6 +149,57 @@ func test_cross_npc_branch_exclusion() -> void:
 	assert_null(_pick(topic, &"npc_b"), "taking branch A at another NPC retires B's offer")
 
 
+# --- choice_gated / from_choice (spec 013, criterion 1) ---
+
+
+func test_choice_gated_response_rejected_without_from_choice() -> void:
+	var commit := _response("It is entered.", &"swift")
+	commit.choice_gated = true
+	assert_false(DialogueEvaluator.matches(commit, &"swift", _journal, _inventory))
+	assert_true(DialogueEvaluator.matches(commit, &"swift", _journal, _inventory, true))
+
+
+func test_choice_gated_response_still_ands_other_conditions() -> void:
+	var commit := _response("Only after the deed.", &"swift")
+	commit.choice_gated = true
+	commit.requires_journal = [&"a_deed"] as Array[StringName]
+	assert_false(
+		DialogueEvaluator.matches(commit, &"swift", _journal, _inventory, true),
+		"from_choice does not bypass the other gates"
+	)
+	_journal.add_entry(&"a_deed")
+	assert_true(DialogueEvaluator.matches(commit, &"swift", _journal, _inventory, true))
+
+
+func test_pick_response_skips_gated_and_falls_through_on_normal_click() -> void:
+	var commit := _response("It is entered.", &"swift")
+	commit.choice_gated = true
+	var prompt := _response("Will you say it?", &"swift")
+	var topic := _topic(&"the_decision", [commit, prompt])
+	assert_same(
+		_pick(topic, &"swift"), prompt, "a topic click falls through the gated commit to the prompt"
+	)
+
+
+func test_pick_response_from_choice_picks_gated_commit_in_array_order() -> void:
+	var commit := _response("It is entered.", &"swift")
+	commit.choice_gated = true
+	var prompt := _response("Will you say it?", &"swift")
+	var topic := _topic(&"the_decision", [commit, prompt])
+	var picked := DialogueEvaluator.pick_response(topic, &"swift", _journal, _inventory, true)
+	assert_same(picked, commit, "the same-topic commit-before-prompt convention (tablet law)")
+
+
+func test_available_topics_excludes_topic_whose_only_answer_is_gated() -> void:
+	var commit := _response("It is entered.", &"swift")
+	commit.choice_gated = true
+	var topics: Dictionary[StringName, DialogueTopicDef] = {
+		&"the_decision": _topic(&"the_decision", [commit]),
+	}
+	_journal.learn_topic(&"the_decision")
+	assert_eq(DialogueEvaluator.available_topics(topics, &"swift", _journal, _inventory).size(), 0)
+
+
 # --- available_topics (criterion 4) ---
 
 

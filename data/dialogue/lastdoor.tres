@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="resp_swift"]
 script = ExtResource("2")
 npc_id = &"swift"
-text = "Salvage town. Last roof before the open, and the gate never quite shuts — shut means someone's still out there. Bigger trade once, before the road broke at the Scar and every jar started paying twice. The careful go around by [[drowned_stair|the drowned stair]]; the sensible don't."
+text = "Salvage town. Last roof before the open, and the gate never quite shuts — shut means someone's still out there. Bigger trade once, before the road broke at the Scar and every jar started paying twice. Down at the Scar's floor there's [[drowned_stair|the drowned stair]] — old flights going down, not through. The careful cache high; the sensible don't go at all."
 
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")

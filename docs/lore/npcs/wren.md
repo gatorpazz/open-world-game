@@ -1,7 +1,7 @@
 ---
 title: Wren
 type: npc
-status: draft
+status: reviewed
 region: undervault
 culture: lastlight
 pitch: "The awning-mender who knows all three versions of the stranger's legend — and believes a fourth she isn't telling."
@@ -65,6 +65,9 @@ gossip to everyone.
 - The sawed counterweight rope (canon, [[lastdoor]]): her lee-side
   seat faces the gate. She has seen who climbs. She mends awnings, not
   quarrels.
+- The daylight canvas: the patch of true surface cloth in her kit is
+  priced beyond any roof's honesty. Where a gate-lee awning-mender got
+  archival-grade daylight cloth is a question worth a quiet trade.
 
 ## Environmental storytelling
 

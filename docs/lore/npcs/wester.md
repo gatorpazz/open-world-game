@@ -1,7 +1,7 @@
 ---
 title: Wester
 type: npc
-status: draft
+status: reviewed
 region: undervault
 culture: lastlight
 pitch: "The crew boss with a roof-shaped rumor and a partner-shaped offer — shares out at the gate, questions extra."
@@ -71,6 +71,9 @@ loses crew to the open some seasons, and walks the funeral line
 - The stranded crew / budget one roof short (canon, braided with the
   wardens' seed): Wester's people, Torrum's tables, the town knowing
   both numbers.
+- The other ledger (canon, [[suddel]]): the book the best crews keep,
+  which Suddel has never seen. Wester decides what goes in it — and
+  someone has asked Suddel to carry one number across.
 
 ## Environmental storytelling
 

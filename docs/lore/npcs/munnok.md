@@ -1,7 +1,7 @@
 ---
 title: Munnok
 type: npc
-status: draft
+status: reviewed
 region: undervault
 culture: underfirst
 pitch: "The warehouse hand who counts what comes through the gate — and recounts the legend in the version with the fewest words."
@@ -56,6 +56,9 @@ what the assessors will see first.
 - The counted telling: his numbers for the arrival window don't match
   either initialed log — because he counted something the wardens
   didn't. (What: dialogue-pass gap — flag, don't invent.)
+- The stacking order: what the assessors see first is Munnok's quiet
+  choice. A crew wants a particular crate seen last — and the price of
+  asking Munnok is his knowing it was ever asked.
 
 ## Environmental storytelling
 

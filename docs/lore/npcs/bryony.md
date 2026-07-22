@@ -1,7 +1,7 @@
 ---
 title: Bryony
 type: npc
-status: draft
+status: reviewed
 region: undervault
 culture: lastlight
 pitch: "The young warden who tends the moth cages — and tells the stranger, quietly, what half of the request is."
@@ -64,6 +64,9 @@ instruments, and neither will say which of them the moths like.
 - Her cage-logs for the arrival window are the one instrument record
   nobody has asked to see twice — and Bryony will not describe them
   unprompted.
+- The seal before the seal (canon, [[wardens]]): someone reads the
+  tallies before the wardens speak — and the post's tally-readers are
+  few enough to count. Bryony has counted, and hates the arithmetic.
 
 ## Environmental storytelling
 

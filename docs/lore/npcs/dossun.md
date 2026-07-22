@@ -1,7 +1,7 @@
 ---
 title: Dossun
 type: npc
-status: draft
+status: reviewed
 region: undervault
 culture: underfirst
 pitch: "The gate reciter who keeps a shrine of borrowed tablets for the ones the order won't say are dead."
@@ -69,6 +69,9 @@ declaration of death breaks both orders' books.
 - The borrowed tablets: every tablet in his shrine is on loan from the
   wall's law — and someone at the court has begun asking for them
   back.
+- The blacked token's twin: [[wester]] carries a share-token gone
+  black; its twin hangs in Dossun's case. Who the pair mourns, neither
+  man will say first.
 
 ## Environmental storytelling
 

@@ -19,6 +19,10 @@ const MAIN_SCENE_PATH := "res://scenes/world/bait_square.tscn"
 var character_sheet: CharacterSheet
 var inventory: Inventory
 var journal: Journal
+## Per-faction reputation + rank (spec 015), the numeric layer over the
+## joined_* journal entries. Reconciled from the journal at every scene entry
+## and restored whole on load; SaveCodec serializes it.
+var faction_standing: FactionStanding
 
 ## Where save_game/load_game read and write. Tests point this at a scratch
 ## file so they never touch a real save.
@@ -37,6 +41,7 @@ func _ready() -> void:
 	)
 	inventory = Inventory.new()
 	journal = Journal.new()
+	faction_standing = FactionStanding.new()
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
 
@@ -66,11 +71,20 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	character_sheet = sheet
 	inventory = Inventory.new()
 	journal = Journal.new()
+	faction_standing = FactionStanding.new()
 	change_scene(MAIN_SCENE_PATH, &"default")
 
 
 func has_save() -> bool:
 	return FileAccess.file_exists(save_path)
+
+
+## Whether the player holds a charter from the named faction (spec 015):
+## a member at or above its charter_rank. 018 gates the casting tiers on this.
+func is_chartered_under(faction_id: StringName) -> bool:
+	return FactionRules.is_chartered_under(
+		faction_id, faction_standing, FactionLibrary.get_factions()
+	)
 
 
 ## Quicksave (spec 007): snapshots the identity resources, the current
@@ -123,6 +137,7 @@ func load_game() -> bool:
 ## persistent identity — before add_child, so the player's components skip
 ## building defaults in _ready.
 func spawn_player(world: Node, spawn_point: StringName) -> Player:
+	_reconcile_factions()
 	var new_player: Player = PLAYER_SCENE.instantiate()
 	new_player.setup_identity(character_sheet, inventory, journal)
 	world.add_child(new_player)
@@ -184,3 +199,13 @@ func _change_scene_now(scene_path: String, spawn_point: StringName) -> void:
 		get_tree().current_scene = next
 	current_world = next
 	spawn_player(next, spawn_point)
+
+
+## Seeds a faction record for every joined_* entry the journal holds (spec
+## 015), at every scene entry — the 006 cell-reload cadence. Idempotent, so a
+## reputation dock or rank-up is never reset. Guarded for the debug/test paths
+## that drive spawn_player before identity is built.
+func _reconcile_factions() -> void:
+	if faction_standing == null or journal == null:
+		return
+	FactionRules.reconcile(faction_standing, journal.entries, FactionLibrary.get_factions())

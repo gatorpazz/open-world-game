@@ -6,7 +6,7 @@ extends GutTest
 const DIR := "res://data/dialogue"
 const NPC_DIR := "res://data/npcs"
 const JOURNAL_DIR := "res://data/journal"
-const EXPECTED_COUNT := 17
+const EXPECTED_COUNT := 21
 
 var _topics: Array[DialogueTopicDef] = []
 var _topic_ids: Dictionary[StringName, bool] = {}

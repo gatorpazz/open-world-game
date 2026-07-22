@@ -9,6 +9,11 @@ spoiler: low
 surface:
   - dialogue
   - rumor
+game_ids:
+  - npc:wren
+  - topic:the_three_versions
+  - topic:the_folk_mark
+  - journal:heard_the_three_versions
 ---
 
 ## Function
@@ -25,7 +30,10 @@ awning-stubs that let Lastdoor roof its last open stretches in
 minutes. Her stall-side seat by the Last Gate hears everything, and
 she retells the [[the_untaken_arrival]] in all three versions the
 season has produced — warm, dry, and exact about which teller
-believes which. Asked what the nine-strokes-and-one-crossed chalk
+believes which. (Ratified, spec 010 dialogue pass — the three
+tellings: the wardens' way, exposure beyond doctrine, all numbers;
+the parish way, a mercy sent roofless; the crews' way, proof the sky
+can be beaten. Folk attributions, not faction positions.) Asked what the nine-strokes-and-one-crossed chalk
 mark means, she goes bright and vague in the same breath: a folk mark
 nobody will explain to the stranger it refers to (canon), and Wren
 least of all, fondly.

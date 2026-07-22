@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_wren_mark"]
+script = ExtResource("2")
+npc_id = &"wren"
+text = "The chalk? Nine strokes and a tenth crossed through. Everyone knows what it means and nobody will say — that's how you know it means something. Ask me another one, love."
+
+[sub_resource type="Resource" id="resp_munnok_mark"]
+script = ExtResource("2")
+npc_id = &"munnok"
+text = "Nine and one crossed. Not my chalk, not my count. Some things get counted without getting said — leave it."
+
+[resource]
+script = ExtResource("1")
+id = &"the_folk_mark"
+display_name = "the chalk mark"
+lore_sources = Array[StringName]([&"the_untaken_arrival", &"wren", &"munnok"])
+responses = Array[ExtResource("2")]([SubResource("resp_wren_mark"), SubResource("resp_munnok_mark")])

@@ -9,6 +9,8 @@ spoiler: low
 surface:
   - dialogue
   - rumor
+game_ids:
+  - npc:munnok
 ---
 
 ## Function

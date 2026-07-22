@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=14 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
@@ -57,6 +57,21 @@ script = ExtResource("2")
 npc_id = &"wester"
 text = "You'd be the rumor, then. I collect those — profitable habit. Come talk when you like: I've got [[the_roofed_cache|earnest money]] for the one walker the sky won't bill."
 
+[sub_resource type="Resource" id="resp_dossun"]
+script = ExtResource("2")
+npc_id = &"dossun"
+text = "You're the one the square kept — kindly meant, that. This is the gate shrine: [[the_gate_shrine|borrowed names, borrowed patience]]. And the order has [[the_orders_side|an asking]] for you, gentler than most."
+
+[sub_resource type="Resource" id="resp_wren"]
+script = ExtResource("2")
+npc_id = &"wren"
+text = "Mind the needle, love. Come for your legend? Sit — it's told [[the_three_versions|three ways]] this season, and I do all the voices. Just don't ask about [[the_folk_mark|the chalk]]."
+
+[sub_resource type="Resource" id="resp_munnok"]
+script = ExtResource("2")
+npc_id = &"munnok"
+text = "Working. Talk fast. You'll be wanting [[the_three_versions|the counted version]] of what happened to you, I expect — everyone does, once they've heard the sung ones."
+
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")
 text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this roof will let you sit cold. If it's talk you want, [[lastdoor]] has plenty."
@@ -65,4 +80,4 @@ text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this r
 script = ExtResource("1")
 id = &"greeting"
 display_name = "Greeting"
-responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum"), SubResource("resp_bryony"), SubResource("resp_wester_joined"), SubResource("resp_wester"), SubResource("resp_fallback")])
+responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum"), SubResource("resp_bryony"), SubResource("resp_wester_joined"), SubResource("resp_wester"), SubResource("resp_dossun"), SubResource("resp_wren"), SubResource("resp_munnok"), SubResource("resp_fallback")])

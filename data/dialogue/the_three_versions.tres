@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_wren_versions"]
+script = ExtResource("2")
+npc_id = &"wren"
+text = "Three ways it's told, and I'll give you all three for the price of standing still. The wardens' way: exposure beyond doctrine, untaken, unexplained — all numbers, no wonder. The parish way: a mercy, sent roofless and spared to shame nobody in particular. The crews' way: proof the sky can be beaten, and drinks are owed to whoever learns the trick. Which do I believe? Love, I mend awnings. I believe in cover."
+journal_entry = &"heard_the_three_versions"
+
+[sub_resource type="Resource" id="resp_munnok_counted"]
+script = ExtResource("2")
+npc_id = &"munnok"
+text = "Versions. Hnh. Here's the counted one: found at first bell, logged by second, two initialed copies by third. However long the tallies say, that's how long it was. The rest is singing. Count it yourself against the post's log sometime — I'll say nothing."
+
+[resource]
+script = ExtResource("1")
+id = &"the_three_versions"
+display_name = "the three versions"
+lore_sources = Array[StringName]([&"wren", &"munnok", &"the_untaken_arrival"])
+responses = Array[ExtResource("2")]([SubResource("resp_wren_versions"), SubResource("resp_munnok_counted")])

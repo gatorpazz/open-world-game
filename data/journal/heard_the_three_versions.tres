@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JournalEntryDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/journal_entry_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"heard_the_three_versions"
+lore_sources = Array[StringName]([&"wren", &"the_untaken_arrival"])
+text = "Wren, the awning-mender at the Last Gate, performed my legend in all three of its tellings — the wardens' numbers, the parish's mercy, the crews' toast. She believes none of them aloud. I lay in that square, and even I could not say which telling is mine."

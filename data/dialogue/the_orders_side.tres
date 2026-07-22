@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_dossun_final"]
+script = ExtResource("2")
+npc_id = &"dossun"
+requires_journal = Array[StringName]([&"heard_the_retest_side", &"heard_the_partner_side"])
+blocked_by_journal = Array[StringName]([&"the_town_takes_sides"])
+text = "Then you have heard the other two. Measured, priced — and now kept. The sides do not sum, and the order does not mind: the roll holds what does not sum. That is rather the point."
+journal_entry = &"the_town_takes_sides"
+
+[sub_resource type="Resource" id="resp_dossun_side"]
+script = ExtResource("2")
+npc_id = &"dossun"
+text = "The order's want is the gentlest of the three, and the strangest: stand at circuit's end and be read. Not because we know what you are — we don't, and unlike some, we do not mind. The roll is how the island keeps what it cannot explain. Every name on these tablets is a question the sky never answered. Yours would be in good company."
+journal_entry = &"heard_the_reading_side"
+
+[resource]
+script = ExtResource("1")
+id = &"the_orders_side"
+display_name = "the order's side"
+lore_sources = Array[StringName]([&"dossun", &"reciters", &"the_untaken_arrival"])
+responses = Array[ExtResource("2")]([SubResource("resp_dossun_final"), SubResource("resp_dossun_side")])

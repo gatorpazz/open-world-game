@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"munnok"
+display_name = "Munnok"
+description = "A warehouse-row hand — sack-dust, a counting-string worn business-plain, and the counted version of everything, nothing added."

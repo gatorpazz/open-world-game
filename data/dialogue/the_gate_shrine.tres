@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_dossun_shrine"]
+script = ExtResource("2")
+npc_id = &"dossun"
+text = "Every tablet here is borrowed — lent from the wall's law for the ones the open keeps. Lost, the crews say, which is the worse word to have to say. I tend the names until the court asks for its tablets back — and lately, someone is asking. The reading itself is granted at the court, not here: ask for [[the_reading]] when you are ready to be text."
+
+[resource]
+script = ExtResource("1")
+id = &"the_gate_shrine"
+display_name = "the gate shrine"
+lore_sources = Array[StringName]([&"dossun", &"lastdoor", &"reciters"])
+responses = Array[ExtResource("2")]([SubResource("resp_dossun_shrine")])

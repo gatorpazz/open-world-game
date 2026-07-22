@@ -3,7 +3,7 @@ extends GutTest
 ## acceptance criterion 11).
 
 const DIR := "res://data/journal"
-const EXPECTED_COUNT := 24
+const EXPECTED_COUNT := 25
 
 var _defs: Array[JournalEntryDef] = []
 

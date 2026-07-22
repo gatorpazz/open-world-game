@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"wren"
+display_name = "Wren"
+description = "The gate's awning-mender — needle-case at the wrist, a patched sky-scarf, and every version of every story told in the gate's lee."

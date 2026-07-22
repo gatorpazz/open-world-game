@@ -10,6 +10,9 @@ surface:
   - dialogue
   - quest
 game_ids:
+  - npc:dossun
+  - topic:the_orders_side
+  - topic:the_gate_shrine
   - journal:heard_the_reading_side
 ---
 

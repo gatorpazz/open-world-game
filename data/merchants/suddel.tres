@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MerchantDef" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/merchant_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="2"]
+[ext_resource type="Resource" path="res://data/items/healing_draught.tres" id="3"]
+[ext_resource type="Resource" path="res://data/items/mana_draught.tres" id="4"]
+
+[sub_resource type="Resource" id="stock_healing"]
+script = ExtResource("2")
+item = ExtResource("3")
+count = 5
+
+[sub_resource type="Resource" id="stock_mana"]
+script = ExtResource("2")
+item = ExtResource("4")
+count = 3
+
+[resource]
+script = ExtResource("1")
+id = &"suddel"
+display_name = "Suddel's Stores"
+npc_id = &"suddel"
+merchant_gold = 150
+stock = Array[ExtResource("2")]([SubResource("stock_healing"), SubResource("stock_mana")])
+buys = Array[StringName]([&"consumable", &"misc"])
+price_multiplier = 1.0

@@ -66,6 +66,14 @@ extends Resource
 @export var spell_sweep_radius: float = 0.3
 @export var xp_per_cast: int = 5
 
+@export_group("Economy")
+## Barter price spread (spec 016). The player buys at base_value * markup and
+## sells at base_value * fraction; fraction < markup guarantees sell <= buy —
+## the merchant margin. A regional price_multiplier and (spec 019) a persuasion
+## factor scale both ends; neither lives here (per-def / per-attempt).
+@export var barter_buy_markup: float = 1.5
+@export var barter_sell_fraction: float = 0.5
+
 @export_group("Creatures")
 @export var creature_wander_speed_multiplier: float = 0.4
 @export var creature_wander_radius: float = 5.0

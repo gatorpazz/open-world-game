@@ -14,10 +14,15 @@ const HEALING_DRAUGHT := preload("res://data/items/healing_draught.tres")
 
 var _player: Player
 var _npc: Npc
+var _game: Node
+var _saved_bounty: BountyLedger
 
 
 func before_each() -> void:
 	DialogueLibrary.reset()
+	_game = get_node("/root/Game")
+	_saved_bounty = _game.bounty
+	_game.bounty = BountyLedger.new()
 	_player = PLAYER_SCENE.instantiate()
 	add_child_autofree(_player)
 	_npc = NPC_SCENE.instantiate()
@@ -28,6 +33,7 @@ func before_each() -> void:
 func after_each() -> void:
 	get_tree().paused = false
 	DialogueLibrary.reset()
+	_game.bounty = _saved_bounty
 
 
 func _open_panel() -> DialoguePanel:
@@ -155,6 +161,42 @@ func test_give_gold_reward_pays_the_player_through_the_component() -> void:
 	panel._apply_effects(reward)
 	assert_eq(_player.inventory_component.inventory.gold, 40, "gold paid")
 	assert_signal_emitted(_player.inventory_component, "gold_changed")
+
+
+func test_pay_fine_settles_the_standing_bounty() -> void:
+	# The warden confrontation's pay branch (spec 017): the fine leaves the
+	# player through the component and the ledger clears.
+	_game.bounty.add_bounty(Theft.JURISDICTION, 40)
+	var panel := _open_panel()
+	_player.inventory_component.add_gold(100)
+	var settle := DialogueResponse.new()
+	settle.text = "Here's what I owe."
+	settle.pay_fine = true
+	panel._apply_effects(settle)
+	assert_eq(_game.bounty.get_bounty(Theft.JURISDICTION), 0, "the bounty clears")
+	assert_eq(_player.inventory_component.inventory.gold, 60, "the fine (40) was spent")
+
+
+func test_pay_fine_is_a_noop_when_nothing_is_owed() -> void:
+	# The topic is always present; at zero owed it moves no state (the non-modal,
+	# mutate-nothing dialogue culture).
+	var panel := _open_panel()
+	_player.inventory_component.add_gold(100)
+	var settle := DialogueResponse.new()
+	settle.pay_fine = true
+	panel._apply_effects(settle)
+	assert_eq(_player.inventory_component.inventory.gold, 100, "no fine spent when clean")
+
+
+func test_pay_fine_refused_when_the_player_cannot_cover_it() -> void:
+	_game.bounty.add_bounty(Theft.JURISDICTION, 40)
+	var panel := _open_panel()
+	_player.inventory_component.add_gold(10)  # short of the 40 fine
+	var settle := DialogueResponse.new()
+	settle.pay_fine = true
+	panel._apply_effects(settle)
+	assert_eq(_game.bounty.get_bounty(Theft.JURISDICTION), 40, "the debt stands")
+	assert_eq(_player.inventory_component.inventory.gold, 10, "no partial payment")
 
 
 func test_trade_topic_opens_the_barter_counter() -> void:

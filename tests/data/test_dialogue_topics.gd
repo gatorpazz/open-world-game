@@ -6,7 +6,7 @@ extends GutTest
 const DIR := "res://data/dialogue"
 const NPC_DIR := "res://data/npcs"
 const JOURNAL_DIR := "res://data/journal"
-const EXPECTED_COUNT := 22
+const EXPECTED_COUNT := 24  # +2 (017): the_reckoning + pay_the_fine
 
 var _topics: Array[DialogueTopicDef] = []
 var _topic_ids: Dictionary[StringName, bool] = {}

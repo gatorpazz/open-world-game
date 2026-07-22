@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_torrum_pay"]
+script = ExtResource("2")
+npc_id = &"torrum"
+choice_gated = true
+pay_fine = true
+text = "The post takes what the tables carry, walker — no more, no less. Whatever the count reads, it reads plainly here."
+
+[resource]
+script = ExtResource("1")
+id = &"pay_the_fine"
+display_name = "settle the count"
+lore_sources = Array[StringName]([&"torrum", &"wardens", &"the_shares"])
+responses = Array[ExtResource("2")]([SubResource("resp_torrum_pay")])

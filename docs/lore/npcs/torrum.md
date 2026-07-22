@@ -16,6 +16,8 @@ game_ids:
   - topic:refuse_the_square
   - topic:take_the_cord
   - topic:the_two_tally_logs
+  - topic:the_reckoning
+  - topic:pay_the_fine
   - journal:the_captains_request
   - journal:stood_for_the_tallies
   - journal:joined_the_wardens

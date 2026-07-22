@@ -135,6 +135,27 @@ func _apply_effects(response: DialogueResponse) -> void:
 		_inventory_component.add_item(stack.item, stack.count)
 	if response.give_gold != 0:
 		_inventory_component.add_gold(response.give_gold)
+	if response.pay_fine:
+		_settle_fine()
+
+
+## The warden confrontation's pay branch (spec 017): spends the standing fine
+## through the component (so gold_changed fires) and clears the ledger. Reading
+## and clearing Game.bounty here is the narrow, spec-sanctioned Game access —
+## this panel is the confrontation's anchor, the stash-chest precedent. A
+## non-modal, mutate-nothing topic: at zero owed it just reports, no state moves.
+func _settle_fine() -> void:
+	var owed := Game.bounty.get_bounty(Theft.JURISDICTION)
+	if owed <= 0:
+		_append_notice("You owe nothing.")
+		return
+	var config := load(StatsComponent.BALANCE_PATH) as BalanceConfig
+	var fine := CrimeRules.fine_owed(owed, config)
+	if not _inventory_component.spend_gold(fine):
+		_append_notice("You cannot cover the %d owed." % fine)
+		return
+	Game.bounty.clear(Theft.JURISDICTION)
+	_append_notice("Paid: %d in fines." % fine)
 
 
 func _rebuild_topic_list() -> void:

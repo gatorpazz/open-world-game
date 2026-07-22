@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="1_npc"]
 [ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="2_door"]
@@ -8,6 +8,11 @@
 [ext_resource type="Resource" path="res://data/npcs/torrum.tres" id="6_torrum"]
 [ext_resource type="Resource" path="res://data/npcs/bryony.tres" id="7_bryony"]
 [ext_resource type="Resource" path="res://data/items/tally_log_copy.tres" id="8_tally_log"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_container.tscn" id="9_container"]
+[ext_resource type="Script" path="res://scripts/resources/inventory.gd" id="10_inventory"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="11_item_stack"]
+[ext_resource type="Resource" path="res://data/items/scrimshaw_token.tres" id="12_scrimshaw"]
+[ext_resource type="Resource" path="res://data/items/lockpick.tres" id="13_lockpick"]
 
 [sub_resource type="StandardMaterial3D" id="mat_floor"]
 albedo_color = Color(0.36, 0.36, 0.4, 1)
@@ -36,6 +41,17 @@ size = Vector3(2, 0.3, 0.3)
 [sub_resource type="BoxMesh" id="mesh_shelf"]
 material = SubResource("mat_floor")
 size = Vector3(2, 1, 0.6)
+
+[sub_resource type="Resource" id="stack_scrimshaw"]
+script = ExtResource("11_item_stack")
+item = ExtResource("12_scrimshaw")
+count = 1
+
+[sub_resource type="Resource" id="locker_inventory"]
+resource_local_to_scene = true
+script = ExtResource("10_inventory")
+stacks = Array[ExtResource("11_item_stack")]([SubResource("stack_scrimshaw")])
+gold = 0
 
 [node name="LastdoorWardenPost" type="Node3D"]
 
@@ -100,3 +116,15 @@ journal_entry = &"the_two_tally_logs"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.5)
 target_scene = "res://scenes/world/lastdoor.tscn"
 spawn_point = &"from_warden_post"
+
+[node name="Lockpick" parent="." instance=ExtResource("3_world_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1.6, -4.4)
+item = ExtResource("13_lockpick")
+
+[node name="WardenLocker" parent="." instance=ExtResource("9_container")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, -3)
+display_name = "Sealed Warden Locker"
+inventory = SubResource("locker_inventory")
+owner_faction = &"wardens"
+locked = true
+lock_difficulty = 20

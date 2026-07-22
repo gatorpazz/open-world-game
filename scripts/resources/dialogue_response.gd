@@ -35,6 +35,10 @@ extends Resource
 ## emits barter_requested and the Npc opens it). Only meaningful on an Npc
 ## whose scene carries a merchant_def; a no-op otherwise.
 @export var opens_barter: bool = false
+## Warden confrontation (spec 017): a spoken response with this set settles the
+## player's standing bounty — spends the fine and clears the ledger, or reports
+## that nothing is owed / can't be covered. The "pay" branch of pay-or-refuse.
+@export var pay_fine: bool = false
 
 
 ## True when every condition field is empty — an always-available fallback.

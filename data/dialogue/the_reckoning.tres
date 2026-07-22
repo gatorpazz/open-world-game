@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_choice.gd" id="3"]
+
+[sub_resource type="Resource" id="choice_settle"]
+script = ExtResource("3")
+text = "Settle what I owe."
+topic = &"pay_the_fine"
+
+[sub_resource type="Resource" id="choice_leave"]
+script = ExtResource("3")
+text = "Leave it on the tables."
+
+[sub_resource type="Resource" id="resp_torrum_reckoning"]
+script = ExtResource("2")
+npc_id = &"torrum"
+text = "Every wrist carries a count here, walker — what's crossed, what's owed. Wealth is worn, so a thing lifted is a thing missed at a glance, and the number finds my post. If the tables carry one against you, untie it in beads and it clears. If they don't, they read clean. No heat in it — the tables hold what's owed the same as what's crossed."
+choices = Array[ExtResource("3")]([SubResource("choice_settle"), SubResource("choice_leave")])
+
+[resource]
+script = ExtResource("1")
+id = &"the_reckoning"
+display_name = "a standing count"
+lore_sources = Array[StringName]([&"torrum", &"wardens", &"the_shares", &"the_taking"])
+responses = Array[ExtResource("2")]([SubResource("resp_torrum_reckoning")])

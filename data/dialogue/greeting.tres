@@ -39,7 +39,7 @@ text = "You stood. The post noticed — the post is built of noticing. [[take_th
 [sub_resource type="Resource" id="resp_torrum"]
 script = ExtResource("2")
 npc_id = &"torrum"
-text = "Captain Torrum. You're the stranger who cost my square its arithmetic — good, saves introductions. We should talk about [[for_the_tallies|the tallies]]."
+text = "Captain Torrum. You're the stranger who cost my square its arithmetic — good, saves introductions. We should talk about [[for_the_tallies|the tallies]]. And the post keeps [[the_reckoning|a standing count]] on every wrist — raise it if the tables carry one against you."
 
 [sub_resource type="Resource" id="resp_bryony"]
 script = ExtResource("2")

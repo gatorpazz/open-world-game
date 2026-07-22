@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="FactionDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/faction_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/faction_rank.gd" id="2"]
+
+[sub_resource type="Resource" id="rank_runner"]
+script = ExtResource("2")
+id = &"crew_runner"
+title = "Runner"
+reputation_min = 0
+skill_id = &""
+skill_min = 0
+
+[sub_resource type="Resource" id="rank_sharesman"]
+script = ExtResource("2")
+id = &"crew_sharesman"
+title = "Sharesman"
+reputation_min = 10
+skill_id = &"sneak"
+skill_min = 25
+
+[sub_resource type="Resource" id="rank_quartermaster"]
+script = ExtResource("2")
+id = &"crew_quartermaster"
+title = "Quartermaster"
+reputation_min = 25
+skill_id = &"sneak"
+skill_min = 50
+
+[resource]
+script = ExtResource("1")
+id = &"licensed_crews"
+display_name = "The Licensed Crews"
+lore_sources = Array[StringName]([&"licensed_crews", &"open_fields"])
+join_journal_entry = &"joined_the_licensed_crews"
+ranks = Array[ExtResource("2")]([SubResource("rank_runner"), SubResource("rank_sharesman"), SubResource("rank_quartermaster")])
+charter_rank = -1
+rivals = Array[StringName]([])

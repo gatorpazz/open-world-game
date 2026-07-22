@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="FactionDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/faction_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/faction_rank.gd" id="2"]
+
+[sub_resource type="Resource" id="rank_gatewatch"]
+script = ExtResource("2")
+id = &"warden_gatewatch"
+title = "Gatewatch"
+reputation_min = 0
+skill_id = &""
+skill_min = 0
+
+[sub_resource type="Resource" id="rank_tallyreader"]
+script = ExtResource("2")
+id = &"warden_tallyreader"
+title = "Tally-reader"
+reputation_min = 10
+skill_id = &"security"
+skill_min = 25
+
+[sub_resource type="Resource" id="rank_gatecaptain"]
+script = ExtResource("2")
+id = &"warden_gatecaptain"
+title = "Gate-captain"
+reputation_min = 25
+skill_id = &"security"
+skill_min = 50
+
+[resource]
+script = ExtResource("1")
+id = &"wardens"
+display_name = "The Wardens"
+lore_sources = Array[StringName]([&"wardens", &"warden_doctrine"])
+join_journal_entry = &"joined_the_wardens"
+ranks = Array[ExtResource("2")]([SubResource("rank_gatewatch"), SubResource("rank_tallyreader"), SubResource("rank_gatecaptain")])
+charter_rank = 1
+rivals = Array[StringName]([])

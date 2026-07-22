@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="FactionDef" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/faction_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/faction_rank.gd" id="2"]
+
+[sub_resource type="Resource" id="rank_novice"]
+script = ExtResource("2")
+id = &"reciter_novice"
+title = "Novice"
+reputation_min = 0
+skill_id = &""
+skill_min = 0
+
+[sub_resource type="Resource" id="rank_keeper"]
+script = ExtResource("2")
+id = &"reciter_keeper"
+title = "Keeper"
+reputation_min = 10
+skill_id = &"persuasion"
+skill_min = 25
+
+[sub_resource type="Resource" id="rank_columnreader"]
+script = ExtResource("2")
+id = &"reciter_columnreader"
+title = "Column-Reader"
+reputation_min = 25
+skill_id = &"persuasion"
+skill_min = 50
+
+[resource]
+script = ExtResource("1")
+id = &"reciters"
+display_name = "The Reciters"
+lore_sources = Array[StringName]([&"reciters", &"first_kept_names"])
+join_journal_entry = &"joined_the_reciters"
+ranks = Array[ExtResource("2")]([SubResource("rank_novice"), SubResource("rank_keeper"), SubResource("rank_columnreader")])
+charter_rank = -1
+rivals = Array[StringName]([])

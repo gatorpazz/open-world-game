@@ -212,11 +212,11 @@ mesh = SubResource("mesh_shrine")
 shape = SubResource("shape_shrine")
 
 [node name="Swift" parent="." instance=ExtResource("1_npc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -13.5)
 def = ExtResource("3_swift")
 
 [node name="Tansy" parent="." instance=ExtResource("1_npc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, 0)
 def = ExtResource("4_tansy")
 
 [node name="Wren" parent="." instance=ExtResource("1_npc")]

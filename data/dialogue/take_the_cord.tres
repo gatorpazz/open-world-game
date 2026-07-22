@@ -13,12 +13,12 @@ count = 1
 
 [sub_resource type="Resource" id="choice_join_stood"]
 script = ExtResource("5")
-text = "I stood for the tables. Give me the cord."
+text = "I stood for the tables. I'll take the cord."
 topic = &"take_the_cord"
 
 [sub_resource type="Resource" id="choice_join_makegood"]
 script = ExtResource("5")
-text = "I came to it the small way. Give me the cord."
+text = "I came to it the small way. I'll take the cord."
 topic = &"take_the_cord"
 
 [sub_resource type="Resource" id="choice_not_yet"]

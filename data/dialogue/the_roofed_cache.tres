@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="choice_join_share"]
 script = ExtResource("3")
-text = "I saw the cache. Enter me a share line."
+text = "I saw the cache. I'll take the share."
 topic = &"the_roofed_cache"
 
 [sub_resource type="Resource" id="choice_not_yet"]

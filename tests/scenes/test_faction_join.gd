@@ -10,10 +10,12 @@ const NPC_SCENE := preload("res://scenes/world/npc.tscn")
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const TORRUM := preload("res://data/npcs/torrum.tres")
 const WESTER := preload("res://data/npcs/wester.tres")
+const KELLOM := preload("res://data/npcs/kellom.tres")
 
-const CORD_JOIN_STOOD := "I stood for the tables. Give me the cord."
-const CORD_JOIN_MAKEGOOD := "I came to it the small way. Give me the cord."
-const CACHE_JOIN := "I saw the cache. Enter me a share line."
+const CORD_JOIN_STOOD := "I stood for the tables. I'll take the cord."
+const CORD_JOIN_MAKEGOOD := "I came to it the small way. I'll take the cord."
+const CACHE_JOIN := "I saw the cache. I'll take the share."
+const READING_JOIN := "I'll stand at circuit's end, and be read."
 const NOT_YET := "Not yet."
 
 var _player: Player
@@ -92,6 +94,27 @@ func test_wester_cache_join_commits_and_seeds_membership() -> void:
 	_press_choice(panel, CACHE_JOIN)
 	assert_true(_player.journal.has_entry(&"joined_the_licensed_crews"), "the crew join commits")
 	assert_true(_reconciled().is_member(&"licensed_crews"))
+
+
+func test_reciters_reading_join_commits_and_seeds_membership() -> void:
+	# the reading is offered unconditionally by Kellom; the join is the act of
+	# standing to be read, now routed through a prompt.
+	var panel := _open(KELLOM)
+	panel.show_topic(&"the_reading")
+	assert_true(panel.choices_box.visible, "the reading is offered as a prompt")
+	assert_eq((panel.choices_box.get_child(0) as Button).text, READING_JOIN)
+	_press_choice(panel, READING_JOIN)
+	assert_true(_player.journal.has_entry(&"joined_the_reciters"), "the reciters join commits")
+	assert_true(_reconciled().is_member(&"reciters"))
+
+
+func test_reading_topic_click_cannot_fire_the_gated_join() -> void:
+	var panel := _open(KELLOM)
+	panel.show_topic(&"the_reading")  # a plain click presents the prompt, never the commit
+	assert_false(
+		_player.journal.has_entry(&"joined_the_reciters"),
+		"the gated reading join resists topic clicks"
+	)
 
 
 func _open(def: NPCDef) -> DialoguePanel:

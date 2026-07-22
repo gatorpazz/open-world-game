@@ -1,7 +1,18 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_choice.gd" id="3"]
+
+[sub_resource type="Resource" id="choice_be_read"]
+script = ExtResource("3")
+text = "I'll stand at circuit's end, and be read."
+topic = &"the_reading"
+
+[sub_resource type="Resource" id="choice_not_yet"]
+script = ExtResource("3")
+text = "Not yet."
+topic = &""
 
 [sub_resource type="Resource" id="resp_after"]
 script = ExtResource("2")
@@ -12,12 +23,21 @@ text = "You were read. The order argues the text still — hope to the Walkers, 
 [sub_resource type="Resource" id="resp_rite"]
 script = ExtResource("2")
 npc_id = &"kellom"
+blocked_by_journal = Array[StringName]([&"joined_the_reciters"])
+choice_gated = true
 text = "Stand at circuit's end, then. Be still, and be read. — It is done. You are one of us now: a novice of the order, by my word, no parish roll asked. What the Register said of you the order will argue for a season. The tables priced you once and came up short; the columns take longer views."
 journal_entry = &"joined_the_reciters"
+
+[sub_resource type="Resource" id="resp_prompt"]
+script = ExtResource("2")
+npc_id = &"kellom"
+blocked_by_journal = Array[StringName]([&"joined_the_reciters"])
+text = "The petition is filed; the court will read you at circuit's end. Stand and be read, and you are entered a novice — no parish roll asked. Or let the circuit turn once more, and come when you are ready."
+choices = Array[ExtResource("3")]([SubResource("choice_be_read"), SubResource("choice_not_yet")])
 
 [resource]
 script = ExtResource("1")
 id = &"the_reading"
 display_name = "the reading"
 lore_sources = Array[StringName]([&"reciters", &"kellom", &"underfirst", &"the_untaken_arrival"])
-responses = Array[ExtResource("2")]([SubResource("resp_after"), SubResource("resp_rite")])
+responses = Array[ExtResource("2")]([SubResource("resp_after"), SubResource("resp_rite"), SubResource("resp_prompt")])

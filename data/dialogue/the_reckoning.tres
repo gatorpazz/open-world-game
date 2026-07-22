@@ -16,7 +16,8 @@ text = "Leave it on the tables."
 [sub_resource type="Resource" id="resp_torrum_reckoning"]
 script = ExtResource("2")
 npc_id = &"torrum"
-text = "Every wrist carries a count here, walker — what's crossed, what's owed. Wealth is worn, so a thing lifted is a thing missed at a glance, and the number finds my post. If the tables carry one against you, untie it in beads and it clears. If they don't, they read clean. No heat in it — the tables hold what's owed the same as what's crossed."
+requires_bounty = true
+text = "There's a count against you, walker — a thing lifted, and the number found my post. Wealth's worn here; theft is an intimate business. Untie what you owe in beads and it's off the tables, clean. Or leave it standing — the tables hold what's owed the same as what's crossed, and they don't forget. No heat in it either way."
 choices = Array[ExtResource("3")]([SubResource("choice_settle"), SubResource("choice_leave")])
 
 [resource]

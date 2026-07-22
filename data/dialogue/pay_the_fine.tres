@@ -8,7 +8,7 @@ script = ExtResource("2")
 npc_id = &"torrum"
 choice_gated = true
 pay_fine = true
-text = "The post takes what the tables carry, walker — no more, no less. Whatever the count reads, it reads plainly here."
+text = "Hold it out, then — the tables don't haggle."
 
 [resource]
 script = ExtResource("1")

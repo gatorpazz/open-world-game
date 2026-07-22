@@ -24,8 +24,11 @@ static func matches(
 	journal: Journal,
 	inventory: Inventory,
 	from_choice: bool = false,
+	bounty: int = 0,
 ) -> bool:
 	if response.choice_gated and not from_choice:
+		return false
+	if response.requires_bounty and bounty <= 0:
 		return false
 	if response.npc_id != &"" and response.npc_id != npc_id:
 		return false
@@ -51,9 +54,10 @@ static func pick_response(
 	journal: Journal,
 	inventory: Inventory,
 	from_choice: bool = false,
+	bounty: int = 0,
 ) -> DialogueResponse:
 	for response: DialogueResponse in topic.responses:
-		if matches(response, npc_id, journal, inventory, from_choice):
+		if matches(response, npc_id, journal, inventory, from_choice, bounty):
 			return response
 	return null
 
@@ -65,13 +69,14 @@ static func available_topics(
 	npc_id: StringName,
 	journal: Journal,
 	inventory: Inventory,
+	bounty: int = 0,
 ) -> Array[DialogueTopicDef]:
 	var available: Array[DialogueTopicDef] = []
 	for topic_id: StringName in journal.known_topics:
 		if topic_id == DialogueTopicDef.GREETING_ID or not topics.has(topic_id):
 			continue
 		var topic: DialogueTopicDef = topics[topic_id]
-		if pick_response(topic, npc_id, journal, inventory) != null:
+		if pick_response(topic, npc_id, journal, inventory, false, bounty) != null:
 			available.append(topic)
 	return available
 

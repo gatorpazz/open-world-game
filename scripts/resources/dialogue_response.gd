@@ -18,6 +18,10 @@ extends Resource
 @export var blocked_by_journal: Array[StringName] = []
 @export var take_items: Array[ItemStack] = []
 @export var choice_gated: bool = false
+## Game-state condition (spec 017): the response matches only while the player
+## carries a bounty with the jurisdiction — so the warden reckoning surfaces
+## only when there is a fine to settle. The panel passes the live bounty in.
+@export var requires_bounty: bool = false
 
 ## Effects. [[topic_id]] markup in text unlocks topics when displayed.
 ## choices (spec 013) makes this response a prompt: the replies render as
@@ -52,4 +56,5 @@ func is_unconditional() -> bool:
 		and blocked_by_journal.is_empty()
 		and take_items.is_empty()
 		and not choice_gated
+		and not requires_bounty
 	)

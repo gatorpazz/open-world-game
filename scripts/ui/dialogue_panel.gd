@@ -69,7 +69,7 @@ func show_topic(topic_id: StringName, from_choice: bool = false) -> void:
 		return
 	var inventory := _inventory_component.inventory
 	var response := DialogueEvaluator.pick_response(
-		topics[topic_id], _npc.id, _journal, inventory, from_choice
+		topics[topic_id], _npc.id, _journal, inventory, from_choice, _current_bounty()
 	)
 	if response == null:
 		# A known keyword this NPC can't answer: say so instead of a silent
@@ -158,9 +158,20 @@ func _settle_fine() -> void:
 	_append_notice("Paid: %d in fines." % fine)
 
 
+## The player's standing bounty with the jurisdiction (spec 017) — the narrow,
+## spec-sanctioned Game read (the stash-chest precedent), gating the reckoning
+## topic to only surface while a fine is owed.
+func _current_bounty() -> int:
+	return Game.bounty.get_bounty(Theft.JURISDICTION)
+
+
 func _rebuild_topic_list() -> void:
 	_available = DialogueEvaluator.available_topics(
-		DialogueLibrary.get_topics(), _npc.id, _journal, _inventory_component.inventory
+		DialogueLibrary.get_topics(),
+		_npc.id,
+		_journal,
+		_inventory_component.inventory,
+		_current_bounty()
 	)
 	topic_list.clear()
 	for topic: DialogueTopicDef in _available:

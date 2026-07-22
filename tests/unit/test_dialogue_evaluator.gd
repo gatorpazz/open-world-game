@@ -58,6 +58,38 @@ func test_fallback_serves_other_npcs() -> void:
 	assert_same(_pick(topic, &"suddel"), fallback)
 
 
+func test_requires_bounty_gates_on_the_passed_bounty() -> void:
+	# Spec 017: the warden reckoning surfaces only while a fine is owed.
+	var reckoning := _response("There's a count against you.", &"torrum")
+	reckoning.requires_bounty = true
+	var topic := _topic(&"the_reckoning", [reckoning])
+	_journal.learn_topic(&"the_reckoning")
+	var topics: Dictionary[StringName, DialogueTopicDef] = {&"the_reckoning": topic}
+
+	# Clean: not matched, and the topic is not offered.
+	assert_null(
+		DialogueEvaluator.pick_response(topic, &"torrum", _journal, _inventory, false, 0),
+		"no bounty ⇒ no reckoning response"
+	)
+	assert_eq(
+		DialogueEvaluator.available_topics(topics, &"torrum", _journal, _inventory, 0).size(),
+		0,
+		"no bounty ⇒ the reckoning topic is hidden"
+	)
+
+	# Owing: matched, and the topic surfaces.
+	assert_same(
+		DialogueEvaluator.pick_response(topic, &"torrum", _journal, _inventory, false, 40),
+		reckoning,
+		"a standing bounty ⇒ the reckoning answers"
+	)
+	assert_eq(
+		DialogueEvaluator.available_topics(topics, &"torrum", _journal, _inventory, 40).size(),
+		1,
+		"a standing bounty ⇒ the reckoning topic appears"
+	)
+
+
 func test_requires_topics_gates_until_known() -> void:
 	var gated := _response("Now that you know of it...")
 	gated.requires_topics = [&"the_secret"] as Array[StringName]

@@ -10,6 +10,7 @@ extends CanvasLayer
 signal closed
 
 const NOTICE_COLOR := "#8a8a8a"
+const PLAYER_COLOR := "#d8c07a"
 
 var _npc: NPCDef
 var _journal: Journal
@@ -21,6 +22,7 @@ var _available: Array[DialogueTopicDef] = []
 @onready var transcript: RichTextLabel = $Dim/Panel/Layout/Body/Transcript
 @onready var topic_list: ItemList = $Dim/Panel/Layout/Body/Topics
 @onready var goodbye_button: Button = $Dim/Panel/Layout/Buttons/Goodbye
+@onready var choices_box: VBoxContainer = $Dim/Panel/Layout/Choices
 
 
 func _ready() -> void:
@@ -54,13 +56,18 @@ func close() -> void:
 ## Speaks this NPC's response to the topic: renders it into the transcript,
 ## applies its effects, and rebuilds the topic list so keywords the player
 ## just read appear immediately. A topic this NPC cannot answer is a no-op.
-func show_topic(topic_id: StringName) -> void:
+## Prompts are non-modal (spec 013): any navigation lapses a pending
+## choice, which re-presents on re-ask since showing it mutates nothing.
+func show_topic(topic_id: StringName, from_choice: bool = false) -> void:
+	_clear_choices()
 	var topics := DialogueLibrary.get_topics()
 	if not topics.has(topic_id):
 		push_warning("show_topic: unknown topic '%s'" % topic_id)
 		return
 	var inventory := _inventory_component.inventory
-	var response := DialogueEvaluator.pick_response(topics[topic_id], _npc.id, _journal, inventory)
+	var response := DialogueEvaluator.pick_response(
+		topics[topic_id], _npc.id, _journal, inventory, from_choice
+	)
 	if response == null:
 		# A known keyword this NPC can't answer: say so instead of a silent
 		# no-op — a highlighted keyword that does nothing reads as broken.
@@ -71,6 +78,8 @@ func show_topic(topic_id: StringName) -> void:
 	_apply_item_effects(response)
 	_append_notices(response, report)
 	_rebuild_topic_list()
+	if not response.choices.is_empty():
+		_present_choices(response)
 
 
 func _on_topic_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
@@ -79,6 +88,31 @@ func _on_topic_clicked(index: int, _at_position: Vector2, _mouse_button_index: i
 
 func _on_keyword_clicked(meta: Variant) -> void:
 	show_topic(StringName(String(meta)))
+
+
+## Renders a prompt's replies as buttons (spec 013). The topic list and
+## Goodbye stay live — the prompt is an offer, not a lock.
+func _present_choices(response: DialogueResponse) -> void:
+	for choice: DialogueChoice in response.choices:
+		var button := Button.new()
+		button.text = choice.text
+		button.pressed.connect(_on_choice_pressed.bind(choice))
+		choices_box.add_child(button)
+	choices_box.visible = true
+
+
+func _on_choice_pressed(choice: DialogueChoice) -> void:
+	_clear_choices()
+	transcript.append_text('[i][color=%s]— "%s"[/color][/i]\n\n' % [PLAYER_COLOR, choice.text])
+	if choice.topic == &"":
+		return
+	show_topic(choice.topic, true)
+
+
+func _clear_choices() -> void:
+	for child: Node in choices_box.get_children():
+		child.queue_free()
+	choices_box.visible = false
 
 
 ## Item exchanges go through the component, not the raw Inventory, so the

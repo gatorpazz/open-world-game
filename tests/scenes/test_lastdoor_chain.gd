@@ -26,14 +26,17 @@ func after_all() -> void:
 	DialogueLibrary.reset()
 
 
-func _pick(topic_id: StringName, npc_id: StringName) -> DialogueResponse:
+func _pick(topic_id: StringName, npc_id: StringName, from_choice: bool = false) -> DialogueResponse:
 	var topics := DialogueLibrary.get_topics()
-	return DialogueEvaluator.pick_response(topics[topic_id], npc_id, _journal, _inventory)
+	return DialogueEvaluator.pick_response(
+		topics[topic_id], npc_id, _journal, _inventory, from_choice
+	)
 
 
 ## Picks and applies the first matching response — a real dialogue turn.
-func _say(topic_id: StringName, npc_id: StringName) -> DialogueResponse:
-	var response := _pick(topic_id, npc_id)
+## from_choice models a choice-button press (spec 013).
+func _say(topic_id: StringName, npc_id: StringName, from_choice: bool = false) -> DialogueResponse:
+	var response := _pick(topic_id, npc_id, from_choice)
 	assert_not_null(response, "%s / %s has a matching response" % [topic_id, npc_id])
 	if response != null:
 		DialogueEvaluator.apply_effects(response, _journal)
@@ -84,7 +87,7 @@ func test_courtship_closes_only_on_the_third_reading() -> void:
 func test_branch_b_refusal_defers_and_the_make_good_rejoins() -> void:
 	_journal.add_entry(&"woke_in_the_bait_square")
 	_say(&"for_the_tallies", &"torrum")
-	_say(&"refuse_the_square", &"torrum")
+	_say(&"refuse_the_square", &"torrum", true)  # the refusal is a choice press now (spec 013)
 	assert_true(_journal.has_entry(&"refused_the_square"))
 	assert_eq(_status(), QuestEvaluator.Status.COMPLETED, "refusal is a terminal stage")
 	var early := _pick(&"take_the_cord", &"torrum")

@@ -1,7 +1,17 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_choice.gd" id="3"]
+
+[sub_resource type="Resource" id="choice_expose"]
+script = ExtResource("3")
+text = "I'll stand with you. We say the kept name at the wall."
+topic = &"the_kept_name"
+
+[sub_resource type="Resource" id="choice_to_kellom"]
+script = ExtResource("3")
+text = "No. I carry this to Kellom and his law."
 
 [sub_resource type="Resource" id="resp_restored"]
 script = ExtResource("2")
@@ -20,6 +30,7 @@ script = ExtResource("2")
 npc_id = &"ollun"
 requires_journal = Array[StringName]([&"the_waxed_staff"])
 text = "The staff is the answer, wearing wax. Censure by someone's own hand — still walking, still level, still ours. So now the choice is yours: say [[the_kept_name|the kept name]] with me at the wall — put the name back — or carry everything you know to Kellom and [[tablet_law|his law]], and let the order answer for itself. One or the other. Both cannot hold."
+choices = Array[ExtResource("3")]([SubResource("choice_expose"), SubResource("choice_to_kellom")])
 
 [sub_resource type="Resource" id="resp_mid"]
 script = ExtResource("2")

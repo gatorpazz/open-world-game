@@ -1,7 +1,17 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_choice.gd" id="3"]
+
+[sub_resource type="Resource" id="choice_seal"]
+script = ExtResource("3")
+text = "I say it once. Seal it unsaid."
+topic = &"tablet_law"
+
+[sub_resource type="Resource" id="choice_not_yet"]
+script = ExtResource("3")
+text = "Not yet. I keep what I know."
 
 [sub_resource type="Resource" id="resp_sealed"]
 script = ExtResource("2")
@@ -21,8 +31,18 @@ npc_id = &"kellom"
 requires_topics = Array[StringName]([&"the_kept_name"])
 requires_journal = Array[StringName]([&"the_waxed_staff"])
 blocked_by_journal = Array[StringName]([&"the_name_restored"])
+choice_gated = true
 text = "Then bring it to me as a thing to be said once. — It is heard. It is sealed. The wall will keep the shape of what it cannot hold, and the court will keep the wall. Go and be quiet with it."
 journal_entry = &"the_gap_kept"
+
+[sub_resource type="Resource" id="resp_absolve_prompt"]
+script = ExtResource("2")
+npc_id = &"kellom"
+requires_topics = Array[StringName]([&"the_kept_name"])
+requires_journal = Array[StringName]([&"the_waxed_staff"])
+blocked_by_journal = Array[StringName]([&"the_name_restored"])
+text = "You come carrying the staff and the name it answers for. The law has no procedure for what was done — but absolution has: a thing said once, heard once, sealed unsaid. Say it to me as that, and it ends under seal. Or keep it, and the law keeps waiting. Choose."
+choices = Array[ExtResource("3")]([SubResource("choice_seal"), SubResource("choice_not_yet")])
 
 [sub_resource type="Resource" id="resp_law"]
 script = ExtResource("2")
@@ -40,4 +60,4 @@ script = ExtResource("1")
 id = &"tablet_law"
 display_name = "tablet law"
 lore_sources = Array[StringName]([&"reciters", &"grief_court", &"kellom"])
-responses = Array[ExtResource("2")]([SubResource("resp_sealed"), SubResource("resp_restored"), SubResource("resp_absolve"), SubResource("resp_law"), SubResource("resp_fallback")])
+responses = Array[ExtResource("2")]([SubResource("resp_sealed"), SubResource("resp_restored"), SubResource("resp_absolve"), SubResource("resp_absolve_prompt"), SubResource("resp_law"), SubResource("resp_fallback")])

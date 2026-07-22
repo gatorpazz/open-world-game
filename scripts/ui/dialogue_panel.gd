@@ -110,7 +110,10 @@ func _on_choice_pressed(choice: DialogueChoice) -> void:
 
 
 func _clear_choices() -> void:
+	# remove_child before queue_free so the box empties immediately —
+	# a re-presented prompt must not stack onto still-dying buttons.
 	for child: Node in choices_box.get_children():
+		choices_box.remove_child(child)
 		child.queue_free()
 	choices_box.visible = false
 

@@ -93,8 +93,14 @@ func test_responses_are_well_formed() -> void:
 					continue
 				assert_ne(choice.text, "", "%s choice has a player line" % topic.id)
 				assert_false(
-					choice.text.contains("[[") or choice.text.contains("]]"),
-					"%s: player lines carry no [[markup]] — one unlock mechanism" % topic.id
+					choice.text.contains("[") or choice.text.contains("]"),
+					(
+						(
+							"%s: player lines are plain text — no [[markup]] (one unlock "
+							+ "mechanism) and no brackets at all (rendered raw into BBCode)"
+						)
+						% topic.id
+					)
 				)
 				assert_eq(
 					DialogueMarkup.extract_topic_ids(choice.text).size(),

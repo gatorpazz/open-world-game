@@ -18,6 +18,7 @@ text = "You already stood. Refusing now would confuse the tables, and me. Let th
 [sub_resource type="Resource" id="resp_torrum_refuse"]
 script = ExtResource("2")
 npc_id = &"torrum"
+choice_gated = true
 text = "Then it is entered: the stranger declines. No heat in it — the tables hold refusals too. The offer cools; the gate does not close. If you ever change your mind, start small. Bryony's cage counts."
 journal_entry = &"refused_the_square"
 

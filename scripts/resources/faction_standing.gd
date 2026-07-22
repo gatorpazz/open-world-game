@@ -33,7 +33,7 @@ func get_rank(faction_id: StringName) -> int:
 func adjust_reputation(faction_id: StringName, delta: int) -> void:
 	if not rank.has(faction_id):
 		return
-	reputation[faction_id] = reputation[faction_id] + delta
+	reputation[faction_id] = get_reputation(faction_id) + delta
 
 
 ## Seeds a fresh record — idempotent: a faction that already has a record is

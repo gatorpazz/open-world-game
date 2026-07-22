@@ -87,6 +87,22 @@ func test_responses_are_well_formed() -> void:
 					continue
 				assert_not_null(stack.item, "%s item stack has an item" % topic.id)
 				assert_gt(stack.count, 0, "%s item stack count is positive" % topic.id)
+			for choice: DialogueChoice in response.choices:
+				assert_not_null(choice, "%s choices are DialogueChoices" % topic.id)
+				if choice == null:
+					continue
+				assert_ne(choice.text, "", "%s choice has a player line" % topic.id)
+				assert_false(
+					choice.text.contains("[[") or choice.text.contains("]]"),
+					"%s: player lines carry no [[markup]] — one unlock mechanism" % topic.id
+				)
+				assert_eq(
+					DialogueMarkup.extract_topic_ids(choice.text).size(),
+					0,
+					"%s: player lines never unlock topics" % topic.id
+				)
+				if choice.topic != &"":
+					_assert_resolves(choice.topic, DIR, "DialogueTopicDef", String(topic.id))
 
 
 func test_markup_resolves_and_parses_cleanly() -> void:
@@ -116,6 +132,80 @@ func test_no_response_follows_an_unconditional_one() -> void:
 			)
 
 
+func test_choice_prompts_offer_a_real_decision() -> void:
+	# Director ruling (spec 013): a prompt offers >= 2 replies — a choice
+	# of one is a continue button, not a decision.
+	var prompts := 0
+	for topic: DialogueTopicDef in _topics:
+		for response: DialogueResponse in topic.responses:
+			if response.choices.is_empty():
+				continue
+			prompts += 1
+			assert_gt(
+				response.choices.size(),
+				1,
+				"%s: a choice prompt offers at least two replies" % topic.id
+			)
+	if prompts == 0:
+		pass_test("no choice prompts in the data — rule holds vacuously")
+
+
+func test_choice_targets_are_answerable_by_the_prompting_npc() -> void:
+	# Static shape check (the greeting-coverage style): journal state can't
+	# be evaluated here, but a target topic with no response for the
+	# prompting NPC at all is certainly broken.
+	var checked := 0
+	for topic: DialogueTopicDef in _topics:
+		for response: DialogueResponse in topic.responses:
+			if response.choices.is_empty() or response.npc_id == &"":
+				continue
+			checked += 1
+			for choice: DialogueChoice in response.choices:
+				if choice == null or choice.topic == &"":
+					continue
+				var target: DialogueTopicDef = (
+					load(DIR.path_join(String(choice.topic) + ".tres")) as DialogueTopicDef
+				)
+				if target == null:
+					continue  # resolution already failed in well-formedness
+				var answerable := false
+				for candidate: DialogueResponse in target.responses:
+					if candidate.npc_id == &"" or candidate.npc_id == response.npc_id:
+						answerable = true
+						break
+				assert_true(
+					answerable,
+					(
+						"%s: choice target %s has a response %s could speak"
+						% [topic.id, choice.topic, response.npc_id]
+					)
+				)
+	if checked == 0:
+		pass_test("no choice prompts in the data — rule holds vacuously")
+
+
+func test_choice_gated_responses_are_reachable() -> void:
+	# Every topic holding a gated commit must be some choice's target
+	# somewhere, or the commit is unreachable content.
+	var targeted: Dictionary[StringName, bool] = {}
+	for topic: DialogueTopicDef in _topics:
+		for response: DialogueResponse in topic.responses:
+			for choice: DialogueChoice in response.choices:
+				if choice != null and choice.topic != &"":
+					targeted[choice.topic] = true
+	var gated := 0
+	for topic: DialogueTopicDef in _topics:
+		for response: DialogueResponse in topic.responses:
+			if response.choice_gated:
+				gated += 1
+				assert_true(
+					targeted.has(topic.id),
+					"%s holds a gated commit but is no choice's target" % topic.id
+				)
+	if gated == 0:
+		pass_test("no gated commits in the data — rule holds vacuously")
+
+
 func test_greeting_covers_every_npc_from_a_fresh_state() -> void:
 	# A fresh state (empty journal, empty inventory) passes responses whose
 	# positive gates are all empty (blocked_by_journal passes vacuously —
@@ -136,6 +226,7 @@ func test_greeting_covers_every_npc_from_a_fresh_state() -> void:
 				response.requires_topics.is_empty()
 				and response.requires_journal.is_empty()
 				and response.take_items.is_empty()
+				and not response.choice_gated
 			)
 			if npc_matches and fresh_passes:
 				covered = true
@@ -143,16 +234,21 @@ func test_greeting_covers_every_npc_from_a_fresh_state() -> void:
 		assert_true(covered, "%s has a greeting from a fresh state" % npc.id)
 
 
-func test_every_non_greeting_topic_is_reachable_by_keyword() -> void:
-	var marked_somewhere: Dictionary[StringName, bool] = {}
+func test_every_non_greeting_topic_is_reachable_by_keyword_or_choice() -> void:
+	# Amended by spec 013: a choice target is a reachability path too —
+	# the refusal retrofit leaves refuse_the_square choice-target-only.
+	var reachable: Dictionary[StringName, bool] = {}
 	for topic: DialogueTopicDef in _topics:
 		for response: DialogueResponse in topic.responses:
 			for marked: StringName in DialogueMarkup.extract_topic_ids(response.text):
-				marked_somewhere[marked] = true
+				reachable[marked] = true
+			for choice: DialogueChoice in response.choices:
+				if choice != null and choice.topic != &"":
+					reachable[choice.topic] = true
 	for topic: DialogueTopicDef in _topics:
 		if topic.id == DialogueTopicDef.GREETING_ID:
 			continue
 		assert_true(
-			marked_somewhere.has(topic.id),
-			"%s appears as a [[keyword]] in at least one response" % topic.id
+			reachable.has(topic.id),
+			"%s appears as a [[keyword]] or choice target in at least one response" % topic.id
 		)

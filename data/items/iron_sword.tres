@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"iron_sword"
-display_name = "Iron Sword"
-description = "A plain but serviceable iron blade."
+display_name = "Bronze Sword"
+description = "A plain, serviceable blade of recast bell-bronze, worn to a working shine."
 weight = 8.0
 base_value = 50
 damage = 8

@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"rusty_claymore"
-display_name = "Rusty Claymore"
-description = "A heavy two-handed sword, pitted with rust but still dangerous."
+display_name = "Verdigris Greatblade"
+description = "A heavy two-handed blade of old salvage bronze, green-pitted to the tang but still dangerous."
 weight = 16.0
 base_value = 40
 damage = 12

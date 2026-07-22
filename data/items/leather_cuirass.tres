@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"leather_cuirass"
-display_name = "Leather Cuirass"
-description = "Boiled leather chest armor, light and quiet."
+display_name = "Hound-Hide Jack"
+description = "Oil-dark scar-hound hide, worked light and quiet. The coat swallows lamplight, on or off the hound."
 weight = 9.0
 base_value = 35
 slot = &"chest"

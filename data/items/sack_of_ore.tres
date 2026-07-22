@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1")
 id = &"sack_of_ore"
-display_name = "Sack of Ore"
-description = "A burlap sack of unrefined iron ore. Back-breakingly heavy."
+display_name = "Sack of Bronze Scrap"
+description = "A rope-stitched sack of broken bell-bronze salvage, bound for the recasters. Back-breakingly heavy."
 weight = 30.0
 base_value = 10

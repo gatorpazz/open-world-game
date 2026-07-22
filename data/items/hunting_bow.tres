@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"hunting_bow"
-display_name = "Hunting Bow"
-description = "A simple wooden bow made for taking small game."
+display_name = "Chitin-Lath Bow"
+description = "A sprung bow of chitin laths, made for taking small game along the terrace rims."
 weight = 5.0
 base_value = 45
 damage = 6

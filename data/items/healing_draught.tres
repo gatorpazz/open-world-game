@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = &"healing_draught"
 display_name = "Healing Draught"
-description = "A bitter red tonic that knits wounds closed."
+description = "A salter's brine-bitter tonic from the stores shelf. It knits wounds closed."
 weight = 0.5
 base_value = 20
 stackable = true

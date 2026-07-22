@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"wooden_shield"
-display_name = "Wooden Shield"
-description = "A round shield of banded oak."
+display_name = "Chitin Roundshield"
+description = "A round shield of oiled offcut plate, wright-lashed at the rim. Regard slides off shell — so, folk say, does a blow."
 weight = 6.0
 base_value = 25
 slot = &"off_hand"

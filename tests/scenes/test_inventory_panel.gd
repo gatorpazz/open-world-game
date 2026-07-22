@@ -52,7 +52,7 @@ func test_lists_stacks_then_occupied_equipment_slots() -> void:
 	assert_eq(_panel.row_count(), 3, "two stacks + one occupied slot")
 	assert_string_contains(_panel.row_text(0), "Healing Draught x2")
 	assert_string_contains(_panel.row_text(1), "Rat Pelt x1")
-	assert_string_contains(_panel.row_text(2), "[E] main_hand — Iron Sword")
+	assert_string_contains(_panel.row_text(2), "[E] main_hand — Bronze Sword")
 
 
 func test_stack_rows_show_total_weight() -> void:
@@ -90,7 +90,7 @@ func test_selected_action_follows_row_type() -> void:
 	assert_true(_panel.primary_button.disabled)
 	_select_row_of("Healing Draught")
 	assert_eq(_panel.selected_action(), &"use")
-	_select_row_of("Iron Sword")
+	_select_row_of("Bronze Sword")
 	assert_eq(_panel.selected_action(), &"equip")
 	_select_row_of("Rat Pelt")
 	assert_eq(_panel.selected_action(), &"none", "plain items have no action")
@@ -118,26 +118,26 @@ func test_use_consumes_one_and_restores_through_stats() -> void:
 
 func test_equip_moves_stack_row_to_equipment_and_back() -> void:
 	_items.add_item(IRON_SWORD)
-	_select_row_of("Iron Sword x1")
+	_select_row_of("Bronze Sword x1")
 	assert_true(_panel.primary_action())
 	assert_eq(_panel.row_count(), 1)
-	assert_string_contains(_panel.row_text(0), "[E] main_hand — Iron Sword")
+	assert_string_contains(_panel.row_text(0), "[E] main_hand — Bronze Sword")
 	_select_row_of("[E] main_hand")
 	assert_true(_panel.primary_action())
-	assert_string_contains(_panel.row_text(0), "Iron Sword x1")
+	assert_string_contains(_panel.row_text(0), "Bronze Sword x1")
 
 
 func test_two_handed_equip_clears_off_hand_in_the_same_refresh() -> void:
 	_items.add_item(WOODEN_SHIELD)
 	_items.equip(WOODEN_SHIELD)
 	_items.add_item(RUSTY_CLAYMORE)
-	_select_row_of("Rusty Claymore")
+	_select_row_of("Verdigris Greatblade")
 	assert_true(_panel.primary_action())
 	var texts: Array[String] = []
 	for i: int in _panel.row_count():
 		texts.append(_panel.row_text(i))
-	assert_string_contains("\n".join(texts), "[E] main_hand — Rusty Claymore")
-	assert_string_contains("\n".join(texts), "Wooden Shield x1", "shield returned to stacks")
+	assert_string_contains("\n".join(texts), "[E] main_hand — Verdigris Greatblade")
+	assert_string_contains("\n".join(texts), "Chitin Roundshield x1", "shield returned to stacks")
 	assert_false("\n".join(texts).contains("[E] off_hand"))
 
 

@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"iron_helm"
-display_name = "Iron Helm"
-description = "A heavy iron helmet with a nasal guard."
+display_name = "Chitin Helm"
+description = "A heavy helm of oiled offcut chitin, wright-lashed, nasal guard and all."
 weight = 5.0
 base_value = 30
 slot = &"head"

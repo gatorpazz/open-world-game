@@ -1,0 +1,156 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="1_door"]
+[ext_resource type="PackedScene" path="res://scenes/world/journal_trigger.tscn" id="2_trigger"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_container.tscn" id="3_container"]
+[ext_resource type="PackedScene" path="res://scenes/creatures/creature.tscn" id="4_creature"]
+[ext_resource type="Script" path="res://scripts/resources/inventory.gd" id="5_inventory"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="6_item_stack"]
+[ext_resource type="Resource" path="res://data/creatures/stair_drowned.tres" id="7_stair_drowned"]
+[ext_resource type="Resource" path="res://data/items/healing_draught.tres" id="8_healing_draught"]
+[ext_resource type="Resource" path="res://data/items/flawed_gem.tres" id="9_flawed_gem"]
+
+[sub_resource type="StandardMaterial3D" id="mat_stone"]
+albedo_color = Color(0.28, 0.28, 0.32, 1)
+
+[sub_resource type="BoxMesh" id="mesh_platform"]
+material = SubResource("mat_stone")
+size = Vector3(14, 1, 10)
+
+[sub_resource type="BoxShape3D" id="shape_platform"]
+size = Vector3(14, 1, 10)
+
+[sub_resource type="BoxMesh" id="mesh_ramp"]
+material = SubResource("mat_stone")
+size = Vector3(4, 1, 12)
+
+[sub_resource type="BoxShape3D" id="shape_ramp"]
+size = Vector3(4, 1, 12)
+
+[sub_resource type="StandardMaterial3D" id="mat_water"]
+albedo_color = Color(0.1, 0.2, 0.3, 0.6)
+transparency = 1
+
+[sub_resource type="BoxMesh" id="mesh_water"]
+material = SubResource("mat_water")
+size = Vector3(16, 0.1, 12)
+
+[sub_resource type="StandardMaterial3D" id="mat_seal"]
+albedo_color = Color(0.15, 0.14, 0.16, 1)
+
+[sub_resource type="BoxMesh" id="mesh_seal"]
+material = SubResource("mat_seal")
+size = Vector3(6, 6, 1)
+
+[sub_resource type="BoxShape3D" id="shape_seal"]
+size = Vector3(6, 6, 1)
+
+[sub_resource type="Resource" id="stack_draughts"]
+script = ExtResource("6_item_stack")
+item = ExtResource("8_healing_draught")
+count = 2
+
+[sub_resource type="Resource" id="stack_gem"]
+script = ExtResource("6_item_stack")
+item = ExtResource("9_flawed_gem")
+count = 1
+
+[sub_resource type="Resource" id="cache_inventory"]
+resource_local_to_scene = true
+script = ExtResource("5_inventory")
+stacks = Array[ExtResource("6_item_stack")]([SubResource("stack_draughts"), SubResource("stack_gem")])
+gold = 0
+
+[node name="DrownedStair" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 8, 0)
+light_energy = 0.4
+
+[node name="UpperFlight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="UpperFlight"]
+mesh = SubResource("mesh_platform")
+
+[node name="Collision" type="CollisionShape3D" parent="UpperFlight"]
+shape = SubResource("shape_platform")
+
+[node name="RampA" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.943, -0.333, 0, 0.333, 0.943, 0, -2.5, -10)
+
+[node name="Mesh" type="MeshInstance3D" parent="RampA"]
+mesh = SubResource("mesh_ramp")
+
+[node name="Collision" type="CollisionShape3D" parent="RampA"]
+shape = SubResource("shape_ramp")
+
+[node name="MidFlight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.5, -20)
+
+[node name="Mesh" type="MeshInstance3D" parent="MidFlight"]
+mesh = SubResource("mesh_platform")
+
+[node name="Collision" type="CollisionShape3D" parent="MidFlight"]
+shape = SubResource("shape_platform")
+
+[node name="RampB" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.943, -0.333, 0, 0.333, 0.943, 0, -6.5, -30)
+
+[node name="Mesh" type="MeshInstance3D" parent="RampB"]
+mesh = SubResource("mesh_ramp")
+
+[node name="Collision" type="CollisionShape3D" parent="RampB"]
+shape = SubResource("shape_ramp")
+
+[node name="LowerFlight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.5, -40)
+
+[node name="Mesh" type="MeshInstance3D" parent="LowerFlight"]
+mesh = SubResource("mesh_platform")
+
+[node name="Collision" type="CollisionShape3D" parent="LowerFlight"]
+shape = SubResource("shape_platform")
+
+[node name="Waterline" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, -40)
+mesh = SubResource("mesh_water")
+
+[node name="SealedGate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, -45.5)
+
+[node name="Mesh" type="MeshInstance3D" parent="SealedGate"]
+mesh = SubResource("mesh_seal")
+
+[node name="Collision" type="CollisionShape3D" parent="SealedGate"]
+shape = SubResource("shape_seal")
+
+[node name="from_route" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 3)
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 3)
+
+[node name="StairTrigger" parent="." instance=ExtResource("2_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+journal_entry = &"heard_of_the_stair"
+
+[node name="UpperCache" parent="." instance=ExtResource("3_container")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3)
+display_name = "Cache-Knotted Crate"
+inventory = SubResource("cache_inventory")
+
+[node name="Creatures" type="Node3D" parent="."]
+
+[node name="StairDrownedA" parent="Creatures" instance=ExtResource("4_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -8, -40)
+def = ExtResource("7_stair_drowned")
+
+[node name="StairDrownedB" parent="Creatures" instance=ExtResource("4_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -8, -38)
+def = ExtResource("7_stair_drowned")
+
+[node name="DoorBack" parent="." instance=ExtResource("1_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.5)
+target_scene = "res://scenes/world/scar_route.tscn"
+spawn_point = &"from_stair"

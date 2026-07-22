@@ -116,6 +116,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.1, -13)
 [node name="from_shrine" type="Marker3D" parent="." groups=["spawn_points"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.1, -13)
 
+[node name="from_route" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0.1, 4)
+
 [node name="LastGate" type="Node3D" parent="."]
 
 [node name="PillarWest" type="StaticBody3D" parent="LastGate"]
@@ -226,6 +229,11 @@ def = ExtResource("6_munnok")
 [node name="Wester" parent="." instance=ExtResource("1_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2)
 def = ExtResource("7_wester")
+
+[node name="DoorToRoute" parent="." instance=ExtResource("2_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 4)
+target_scene = "res://scenes/world/scar_route.tscn"
+spawn_point = &"from_lastdoor"
 
 [node name="DoorToBaitSquare" parent="." instance=ExtResource("2_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 23)

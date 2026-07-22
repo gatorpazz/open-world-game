@@ -1,0 +1,171 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="1_door"]
+[ext_resource type="PackedScene" path="res://scenes/world/journal_trigger.tscn" id="2_trigger"]
+[ext_resource type="PackedScene" path="res://scenes/creatures/creature.tscn" id="3_creature"]
+[ext_resource type="Resource" path="res://data/creatures/scar_hound.tres" id="4_scar_hound"]
+[ext_resource type="Resource" path="res://data/creatures/vault_rat.tres" id="5_vault_rat"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.4, 0.42, 0.48, 1)
+sky_horizon_color = Color(0.6, 0.6, 0.62, 1)
+ground_bottom_color = Color(0.22, 0.22, 0.24, 1)
+ground_horizon_color = Color(0.6, 0.6, 0.62, 1)
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="env"]
+background_mode = 2
+sky = SubResource("sky")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="mat_ground"]
+albedo_color = Color(0.38, 0.36, 0.34, 1)
+
+[sub_resource type="BoxMesh" id="mesh_ground"]
+material = SubResource("mat_ground")
+size = Vector3(80, 1, 20)
+
+[sub_resource type="BoxShape3D" id="shape_ground"]
+size = Vector3(80, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="mat_cover"]
+albedo_color = Color(0.3, 0.26, 0.22, 1)
+
+[sub_resource type="BoxMesh" id="mesh_cover"]
+material = SubResource("mat_cover")
+size = Vector3(12, 4, 1)
+
+[sub_resource type="BoxShape3D" id="shape_cover"]
+size = Vector3(12, 4, 1)
+
+[sub_resource type="BoxMesh" id="mesh_cache_pillar"]
+material = SubResource("mat_cover")
+size = Vector3(0.8, 3, 0.8)
+
+[sub_resource type="BoxShape3D" id="shape_cache_pillar"]
+size = Vector3(0.8, 3, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="mat_old_roof"]
+albedo_color = Color(0.2, 0.18, 0.16, 1)
+
+[sub_resource type="BoxMesh" id="mesh_old_roof"]
+material = SubResource("mat_old_roof")
+size = Vector3(6, 0.8, 6)
+
+[node name="ScarRoute" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, 0.383, -0.321, 0, 0.643, 0.766, 0.5, -0.663, 0.557, 0, 16, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("mesh_ground")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("shape_ground")
+
+[node name="default" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.1, 0)
+
+[node name="from_lastdoor" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.1, 0)
+
+[node name="from_stair" type="Marker3D" parent="." groups=["spawn_points"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.1, 0)
+
+[node name="CoverA" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2, 9)
+
+[node name="Mesh" type="MeshInstance3D" parent="CoverA"]
+mesh = SubResource("mesh_cover")
+
+[node name="Collision" type="CollisionShape3D" parent="CoverA"]
+shape = SubResource("shape_cover")
+
+[node name="CoverB" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 9)
+
+[node name="Mesh" type="MeshInstance3D" parent="CoverB"]
+mesh = SubResource("mesh_cover")
+
+[node name="Collision" type="CollisionShape3D" parent="CoverB"]
+shape = SubResource("shape_cover")
+
+[node name="RoofedCache" type="Node3D" parent="."]
+
+[node name="PillarA" type="StaticBody3D" parent="RoofedCache"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="RoofedCache/PillarA"]
+mesh = SubResource("mesh_cache_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="RoofedCache/PillarA"]
+shape = SubResource("shape_cache_pillar")
+
+[node name="PillarB" type="StaticBody3D" parent="RoofedCache"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.5, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="RoofedCache/PillarB"]
+mesh = SubResource("mesh_cache_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="RoofedCache/PillarB"]
+shape = SubResource("shape_cache_pillar")
+
+[node name="PillarC" type="StaticBody3D" parent="RoofedCache"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, -2)
+
+[node name="Mesh" type="MeshInstance3D" parent="RoofedCache/PillarC"]
+mesh = SubResource("mesh_cache_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="RoofedCache/PillarC"]
+shape = SubResource("shape_cache_pillar")
+
+[node name="PillarD" type="StaticBody3D" parent="RoofedCache"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.5, -2)
+
+[node name="Mesh" type="MeshInstance3D" parent="RoofedCache/PillarD"]
+mesh = SubResource("mesh_cache_pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="RoofedCache/PillarD"]
+shape = SubResource("shape_cache_pillar")
+
+[node name="OldRoof" type="MeshInstance3D" parent="RoofedCache"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3.2, -4)
+mesh = SubResource("mesh_old_roof")
+
+[node name="CacheTrigger" parent="RoofedCache" instance=ExtResource("2_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -4)
+journal_entry = &"found_the_roofed_cache"
+requires_journal = Array[StringName]([&"the_cache_rumor"])
+
+[node name="Creatures" type="Node3D" parent="."]
+
+[node name="ScarHoundA" parent="Creatures" instance=ExtResource("3_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -4)
+def = ExtResource("4_scar_hound")
+
+[node name="ScarHoundB" parent="Creatures" instance=ExtResource("3_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 4)
+def = ExtResource("4_scar_hound")
+
+[node name="VaultRat" parent="Creatures" instance=ExtResource("3_creature")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 5)
+def = ExtResource("5_vault_rat")
+
+[node name="DoorToLastdoor" parent="." instance=ExtResource("1_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0, 0)
+target_scene = "res://scenes/world/lastdoor.tscn"
+spawn_point = &"from_route"
+
+[node name="DoorToStair" parent="." instance=ExtResource("1_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 0)
+target_scene = "res://scenes/world/drowned_stair.tscn"
+spawn_point = &"from_route"

@@ -9,6 +9,10 @@ extends CanvasLayer
 ## tests call.
 
 signal closed
+## Drop one of the selected carried stack into the world (spec 016). The panel
+## removes it through the component; the Player spawns a WorldItem — signals
+## up, calls down. A dropped item is world state and does not survive a save.
+signal drop_requested(item: ItemDef)
 
 enum RowKind { STACK, EQUIPPED }
 
@@ -29,11 +33,13 @@ var _rows: Array[Dictionary] = []
 @onready var item_list: ItemList = $Dim/Panel/Layout/Items
 @onready var footer_label: Label = $Dim/Panel/Layout/Footer
 @onready var primary_button: Button = $Dim/Panel/Layout/Buttons/Primary
+@onready var drop_button: Button = $Dim/Panel/Layout/Buttons/Drop
 @onready var close_button: Button = $Dim/Panel/Layout/Buttons/Close
 
 
 func _ready() -> void:
 	primary_button.pressed.connect(_on_primary_pressed)
+	drop_button.pressed.connect(_on_drop_pressed)
 	close_button.pressed.connect(close)
 	item_list.item_selected.connect(select_row)
 
@@ -114,6 +120,26 @@ func primary_action() -> bool:
 	return false
 
 
+## Whether the selection is a carried stack (droppable). Equipped rows and no
+## selection are not.
+func can_drop() -> bool:
+	var row := _selected_row()
+	return not row.is_empty() and row[&"kind"] == RowKind.STACK
+
+
+## Drops one of the selected carried stack: removes it through the component
+## (its signals refresh the list) and asks the Player to spawn it. No-op unless
+## a carried stack is selected.
+func drop_selected() -> bool:
+	if not can_drop():
+		return false
+	var item: ItemDef = _selected_row()[&"item"]
+	if not _items.remove_item(item, 1):
+		return false
+	drop_requested.emit(item)
+	return true
+
+
 ## Full re-render, preserving the selection by (kind, item-or-slot)
 ## identity; a vanished row clears the selection.
 func _refresh() -> void:
@@ -170,6 +196,7 @@ func _update_primary() -> void:
 	var action := selected_action()
 	primary_button.text = ACTION_LABELS[action]
 	primary_button.disabled = action == &"none"
+	drop_button.disabled = not can_drop()
 
 
 func _update_footer() -> void:
@@ -189,6 +216,10 @@ func _update_footer() -> void:
 
 func _on_primary_pressed() -> void:
 	primary_action()
+
+
+func _on_drop_pressed() -> void:
+	drop_selected()
 
 
 func _on_inventory_changed() -> void:

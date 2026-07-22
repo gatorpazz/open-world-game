@@ -184,3 +184,23 @@ func test_inventory_action_exists_and_player_opens_one_panel() -> void:
 	assert_same(player._inventory_panel, first, "a second call adds nothing")
 	first.close()
 	assert_null(player._inventory_panel, "closed clears the player's reference")
+
+
+# --- Drop (spec 016, criterion 6) ---
+
+
+func test_drop_removes_one_and_emits_the_item() -> void:
+	_items.add_item(HEALING_DRAUGHT, 2)
+	_select_row_of("Healing Draught")
+	assert_true(_panel.drop_selected(), "a carried stack drops")
+	assert_signal_emitted_with_parameters(_panel, "drop_requested", [HEALING_DRAUGHT])
+	assert_eq(_items.inventory.count_of(HEALING_DRAUGHT), 1, "one left; the row refreshed")
+
+
+func test_drop_disabled_on_equipped_and_no_selection() -> void:
+	_items.add_item(IRON_SWORD)
+	_items.equip(IRON_SWORD)
+	_select_row_of("[E] main_hand")
+	assert_false(_panel.can_drop(), "equipped rows are not droppable")
+	assert_true(_panel.drop_button.disabled, "drop button disabled on an equipped row")
+	assert_false(_panel.drop_selected(), "drop on an equipped row is a no-op")

@@ -27,6 +27,8 @@ extends Resource
 @export_multiline var text: String
 @export var journal_entry: StringName = &""
 @export var give_items: Array[ItemStack] = []
+## Coin paid to the player (spec 016) — the gold quest reward. 0 = none.
+@export var give_gold: int = 0
 @export var choices: Array[DialogueChoice] = []
 ## Barter entry (spec 016): a spoken response with this set opens the NPC's
 ## merchant counter (the panel is a separate window, so the DialoguePanel

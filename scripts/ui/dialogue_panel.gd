@@ -78,7 +78,7 @@ func show_topic(topic_id: StringName, from_choice: bool = false) -> void:
 		return
 	transcript.append_text(DialogueMarkup.to_bbcode(response.text, _display_names) + "\n\n")
 	var report := DialogueEvaluator.apply_effects(response, _journal)
-	_apply_item_effects(response)
+	_apply_effects(response)
 	_append_notices(response, report)
 	_rebuild_topic_list()
 	if not response.choices.is_empty():
@@ -125,14 +125,16 @@ func _clear_choices() -> void:
 	choices_box.visible = false
 
 
-## Item exchanges go through the component, not the raw Inventory, so the
-## player-side signals fire (the ContainerPanel precedent). pick_response's
+## Item and gold exchanges go through the component, not the raw Inventory, so
+## the player-side signals fire (the ContainerPanel precedent). pick_response's
 ## implicit take_items condition guarantees the take succeeds.
-func _apply_item_effects(response: DialogueResponse) -> void:
+func _apply_effects(response: DialogueResponse) -> void:
 	for stack: ItemStack in response.take_items:
 		_inventory_component.remove_item(stack.item, stack.count)
 	for stack: ItemStack in response.give_items:
 		_inventory_component.add_item(stack.item, stack.count)
+	if response.give_gold != 0:
+		_inventory_component.add_gold(response.give_gold)
 
 
 func _rebuild_topic_list() -> void:
@@ -153,6 +155,8 @@ func _append_notices(response: DialogueResponse, report: DialogueEvaluator.Effec
 		_append_notice("Gave: %s x%d." % [stack.item.display_name, stack.count])
 	for stack: ItemStack in response.give_items:
 		_append_notice("Received: %s x%d." % [stack.item.display_name, stack.count])
+	if response.give_gold != 0:
+		_append_notice("Received: %d gold." % response.give_gold)
 
 
 func _append_notice(message: String) -> void:

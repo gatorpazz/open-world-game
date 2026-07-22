@@ -142,6 +142,20 @@ func test_item_exchange_goes_through_the_component_and_its_signals() -> void:
 	panel.close()
 
 
+func test_give_gold_reward_pays_the_player_through_the_component() -> void:
+	# The gold quest reward (spec 016): a give_gold response adds coin through
+	# the component so gold_changed fires. Driven directly with a fabricated
+	# response — no content needed to prove the effect path.
+	var panel := _open_panel()
+	watch_signals(_player.inventory_component)
+	var reward := DialogueResponse.new()
+	reward.text = "For your trouble."
+	reward.give_gold = 40
+	panel._apply_effects(reward)
+	assert_eq(_player.inventory_component.inventory.gold, 40, "gold paid")
+	assert_signal_emitted(_player.inventory_component, "gold_changed")
+
+
 func test_unanswerable_keyword_click_says_so() -> void:
 	# Swift cannot answer suddel-only a_small_favor: clicking its keyword
 	# appends a notice instead of a silent no-op.

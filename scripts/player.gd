@@ -7,6 +7,9 @@ extends CharacterBody3D
 
 const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
 const INVENTORY_PANEL_SCENE := preload("res://scenes/ui/inventory_panel.tscn")
+const WORLD_ITEM_SCENE := preload("res://scenes/world/world_item.tscn")
+## How far in front of the player a dropped item lands.
+const DROP_DISTANCE := 1.0
 
 @export var speed := 6.0
 @export var jump_velocity := 4.8
@@ -71,11 +74,27 @@ func open_inventory() -> void:
 	_inventory_panel = INVENTORY_PANEL_SCENE.instantiate()
 	add_child(_inventory_panel)
 	_inventory_panel.closed.connect(_on_inventory_panel_closed)
+	_inventory_panel.drop_requested.connect(_on_drop_requested)
 	_inventory_panel.open(inventory_component, stats)
 
 
 func _on_inventory_panel_closed() -> void:
 	_inventory_panel = null
+
+
+## Spawns a dropped stack's single unit as a WorldItem just in front of the
+## player (spec 016). Parented to the world (the player's parent), not the
+## player. World state — it does not survive a save. A no-op if the player
+## isn't parented into a world (debug/headless).
+func _on_drop_requested(item: ItemDef) -> void:
+	var world := get_parent()
+	if world == null:
+		return
+	var drop := WORLD_ITEM_SCENE.instantiate() as WorldItem
+	drop.item = item
+	drop.count = 1
+	world.add_child(drop)
+	drop.global_position = global_position - global_transform.basis.z * DROP_DISTANCE
 
 
 func _on_cast_failed() -> void:

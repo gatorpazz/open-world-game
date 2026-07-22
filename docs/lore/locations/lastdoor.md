@@ -11,6 +11,7 @@ surface:
   - environment
 game_ids:
   - topic:lastdoor
+  - journal:the_gate_never_closes
 ---
 
 ## Function

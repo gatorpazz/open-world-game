@@ -7,6 +7,7 @@
 [ext_resource type="Resource" path="res://data/npcs/wren.tres" id="5_wren"]
 [ext_resource type="Resource" path="res://data/npcs/munnok.tres" id="6_munnok"]
 [ext_resource type="Resource" path="res://data/npcs/wester.tres" id="7_wester"]
+[ext_resource type="PackedScene" path="res://scenes/world/journal_trigger.tscn" id="8_trigger"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.3, 0.42, 0.6, 1)
@@ -229,6 +230,14 @@ def = ExtResource("6_munnok")
 [node name="Wester" parent="." instance=ExtResource("1_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2)
 def = ExtResource("7_wester")
+
+[node name="ChalkTrigger" parent="." instance=ExtResource("8_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 21.5)
+journal_entry = &"the_chalk_by_the_gate"
+
+[node name="GateTrigger" parent="." instance=ExtResource("8_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
+journal_entry = &"the_gate_never_closes"
 
 [node name="DoorToRoute" parent="." instance=ExtResource("2_door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 4)

@@ -14,6 +14,7 @@ surface:
 game_ids:
   - journal:woke_in_the_bait_square
   - journal:the_town_takes_sides
+  - journal:the_chalk_by_the_gate
 ---
 
 ## Function

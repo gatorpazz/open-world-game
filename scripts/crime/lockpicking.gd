@@ -23,8 +23,13 @@ static func try_open(locked: bool, difficulty: int, key_id: StringName, actor: P
 	if not items.has(LOCKPICK_ID) or inventory.count_of(items[LOCKPICK_ID]) == 0:
 		actor.show_notice(HudNotice.NO_LOCKPICK)
 		return false
-	actor.inventory_component.remove_item(items[LOCKPICK_ID], 1)
 	var security: int = actor.stats.sheet.skills.get(&"security", 0)
-	var opened := randf() < LockRules.pick_chance(security, difficulty, actor.config)
+	var chance := LockRules.pick_chance(security, difficulty, actor.config)
+	# A lock beyond your reach can't be forced — don't waste a pick teaching that.
+	if chance <= 0.0:
+		actor.show_notice(HudNotice.LOCK_TOO_HARD)
+		return false
+	actor.inventory_component.remove_item(items[LOCKPICK_ID], 1)
+	var opened := randf() < chance
 	actor.show_notice(HudNotice.LOCK_PICKED if opened else HudNotice.LOCK_RESISTED)
 	return opened

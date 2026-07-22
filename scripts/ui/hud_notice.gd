@@ -20,6 +20,7 @@ const CRIME_WITNESSED := "You were seen."
 const LOCKED := "It's locked."
 const LOCK_PICKED := "The lock gives."
 const LOCK_RESISTED := "The pick snaps. The lock holds."
+const LOCK_TOO_HARD := "This lock is beyond your skill."
 const NO_LOCKPICK := "You have nothing to pick it with."
 
 ## Timing is UI styling, not balance (spec 006's empty-BalanceConfig ruling).

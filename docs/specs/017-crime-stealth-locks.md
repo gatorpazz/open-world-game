@@ -55,14 +55,14 @@ A HUD sneak indicator (a stance glyph via `hud_notice.gd`) shows the stance is a
 
 ### Lockpicking — the roll (`scripts/crime/lock_rules.gd` pure + world nodes)
 
-**`LockRules.pick_chance(security_skill: int, lock_difficulty: int, config) -> float`**, clamped `[0.0, 1.0]` — the success probability from the skill-vs-difficulty gap, curve endpoints (`lock_skill_min`/`max`, `lock_difficulty_scale`) in the Crime balance group (mirroring `damage_skill_min`/`max`). **Pure & tested on the curve** (monotonic in skill, clamped); the **caller rolls** (`randf() < chance`), so pure logic stays RNG-free and tests hit the deterministic clamp endpoints (difficulty far below skill ⇒ ~1.0; far above ⇒ ~0.0).
+**`LockRules.pick_chance(security_skill: int, lock_difficulty: int, config) -> float`** = `clampf(1 - difficulty / (security + lock_base_competence), 0, 1)` — a lock inside your *reach* (`security + base_competence`) opens reliably (a fresh character, security 5, picks an easy difficulty-5 lock ~83%), the odds fall off fast toward your reach, and a lock **at or beyond** your reach is `0.0` — it cannot be forced without more skill. **Rebalanced from the shipped symmetric-0.5 curve after a 2026-07-22 playtest** where that curve capped a novice near 52% on *every* lock (a coin-flip on trivial locks). **Pure & tested** (monotonic in skill and difficulty, clamped; the novice-opens-easy and beyond-reach anchors); the **caller rolls** (`randf() < chance`), so pure logic stays RNG-free.
 
 **Lock state** is scene-authored placement data (like a container's loot, not a balance number) on `WorldContainer` / `StashContainer` / `hinged_door` / `transition_door`:
 `locked: bool = false`, `lock_difficulty: int = 0`, `key_id: StringName = &""` (optional — a held key opens it outright).
 
 **The gate** in `ContainerPanel.open` / the door interact: if `locked` and the player holds no matching `key_id` —
 - no `lockpick` in inventory → HUD "locked" no-op;
-- else consume one `lockpick` (a `MiscDef`, `data/items/lockpick.tres`), roll `pick_chance`; **success** unlocks (`locked = false`, open proceeds), **failure** reports via HUD (the pick is spent either way — the Morrowind cost). No minigame (the 016 no-click-gamble culture applies to the *interaction*, not the odds).
+- else check `pick_chance`: a chance of **0** (a lock beyond your reach) refuses without spending a pick (HUD "beyond your skill"); otherwise consume one `lockpick` (a `MiscDef`, `data/items/lockpick.tres`) and roll — **success** unlocks (`locked = false`, open proceeds), **failure** reports via HUD (the pick is spent — the Morrowind cost). No minigame (the 016 no-click-gamble culture applies to the *interaction*, not the odds).
 
 ### Theft → bounty (`scripts/crime/crime_rules.gd` pure + `BountyLedger` on `Game`)
 
@@ -105,7 +105,7 @@ A new `@export_group("Crime")`, both the `.gd` `@export` and `balance_config.tre
 | `sneak_skill_min` / `sneak_skill_max` | 5 / 100 | radius-scaling skill endpoints |
 | `sneak_skilled_radius_factor` | 0.3 | radius multiplier at `sneak_skill_max` |
 | `sneak_move_factor` | 0.5 | move-speed multiplier while crouched |
-| `lock_difficulty_scale` | 100 | skill-lead needed to reach a pick-chance endpoint |
+| `lock_base_competence` | 25 | the skill floor a novice brings to a lock (the pick-chance denominator) |
 | `theft_bounty_multiplier` | 1.0 | bounty per stolen `base_value` |
 | `fine_multiplier` | 1.0 | fine per bounty (the 019 seam) |
 | `crime_reputation_dock` | 5 | reputation lost per witnessed theft |
@@ -147,7 +147,7 @@ Bounty save coverage folds into the existing save suites rather than a new file:
 
 ## Acceptance criteria (GUT tests)
 
-1. **Lock odds** (`test_lock_rules.gd`): `pick_chance` is monotonic non-decreasing in `security_skill`, non-increasing in `lock_difficulty`, clamped `[0,1]`; difficulty far below skill ⇒ ~1.0, far above ⇒ ~0.0 (the deterministic endpoints the caller's roll leans on).
+1. **Lock odds** (`test_lock_rules.gd`): `pick_chance` is monotonic non-decreasing in `security_skill`, non-increasing in `lock_difficulty`, clamped `[0,1]`; a trivial lock (difficulty 0) is 1.0, a novice reliably (> 0.75) opens an easy lock, a lock at/beyond reach is 0.0, and more skill lifts the odds on a fixed lock.
 2. **Witness** (`test_witness_query.gd`): `detection_radius` shrinks as `sneak_skill` rises and again when `crouched`; `is_witnessed` is true for an NPC in range with clear LOS, false when a wall blocks the ray (`LOS_MASK`) or the observer is beyond the radius; a crouched skilled actor is unseen where an upright novice is seen.
 3. **Crime math + verdict** (`test_crime_rules.gd`): `theft_bounty` = `base_value * multiplier` clamped ≥ 1; `fine_owed` scales a raw bounty by `fine_multiplier`; `marks_stolen` is false for an empty owner and true for any owner; `accrues_bounty` is true only for an owned take that was witnessed; `reputation_dock` reads the config.
 4. **Theft** (`test_theft.gd`): taking an owned stack with a witness present flags it `stolen`, raises `Game.bounty` by the item's bounty, and docks Wardens reputation; taking the same stack unseen flags it `stolen` with no bounty and no dock; taking an unowned stack does neither.

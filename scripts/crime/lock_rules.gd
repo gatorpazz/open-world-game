@@ -8,11 +8,12 @@ extends RefCounted
 ## endpoints stay testable.
 
 
-## The chance a single pick attempt opens a lock. An even 0.5 at parity
-## (skill == difficulty), rising toward 1.0 as skill leads and falling toward
-## 0.0 as difficulty leads; a full lock_difficulty_scale of lead in either
-## direction reaches the clamp. Monotonic non-decreasing in security_skill,
-## non-increasing in lock_difficulty.
+## The chance a single pick attempt opens a lock: 1 - difficulty / reach, where
+## reach = security_skill + base_competence. A lock well inside your reach opens
+## reliably (even a novice picks easy locks), it falls off fast as difficulty
+## climbs toward your reach, and a lock at or beyond your reach is 0.0 — it
+## cannot be forced without more skill. Monotonic non-decreasing in
+## security_skill, non-increasing in lock_difficulty; clamped to [0, 1].
 static func pick_chance(security_skill: int, lock_difficulty: int, config: BalanceConfig) -> float:
-	var lead := float(security_skill - lock_difficulty) / float(config.lock_difficulty_scale)
-	return clampf(0.5 + 0.5 * lead, 0.0, 1.0)
+	var reach := float(security_skill + config.lock_base_competence)
+	return clampf(1.0 - float(lock_difficulty) / reach, 0.0, 1.0)

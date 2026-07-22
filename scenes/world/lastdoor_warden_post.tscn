@@ -127,4 +127,4 @@ display_name = "Sealed Warden Locker"
 inventory = SubResource("locker_inventory")
 owner_faction = &"wardens"
 locked = true
-lock_difficulty = 20
+lock_difficulty = 5

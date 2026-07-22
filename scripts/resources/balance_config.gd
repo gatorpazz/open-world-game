@@ -88,11 +88,14 @@ extends Resource
 @export var sneak_skilled_radius_factor: float = 0.3
 ## Crouch move-speed multiplier (feeds Player.get_speed_multiplier).
 @export var sneak_move_factor: float = 0.5
-## Lockpicking (spec 017). pick_chance runs from ~0 to ~1 across the skill-vs-
-## difficulty gap around an even 0.5 at parity; the caller rolls randf() <
-## chance. lock_difficulty_scale sets how wide that gap must be to reach an
-## endpoint (a full scale of skill lead ⇒ certain success).
-@export var lock_difficulty_scale: int = 100
+## Lockpicking (spec 017, rebalanced). pick_chance = 1 - difficulty / (security +
+## base_competence): a lock at or below your reach opens reliably, one above it
+## falls off fast, one beyond your reach entirely (difficulty ≥ security +
+## competence) can't be forced at all. base_competence is the floor of skill a
+## novice brings — it lets security 5 open an easy (difficulty ≤ ~10) lock most
+## tries, while a difficulty-30+ lock still needs training. The caller rolls
+## randf() < chance.
+@export var lock_base_competence: int = 25
 ## Theft economics (spec 017). Bounty per stolen base_value; the fine charged
 ## per bounty (the 019 seam, pinned 1.0); reputation lost per witnessed theft.
 @export var theft_bounty_multiplier: float = 1.0

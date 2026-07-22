@@ -47,10 +47,10 @@ func test_a_trivial_lock_opens_and_consumes_one_pick() -> void:
 	assert_eq(_picks_held(), 0, "the attempt spent the pick")
 
 
-func test_an_impossible_lock_holds_but_still_costs_the_pick() -> void:
-	_set_security(100)
+func test_a_lock_beyond_reach_holds_and_wastes_no_pick() -> void:
+	# A lock past your reach (chance 0) can't be forced — the gate refuses before
+	# spending a pick, so the player isn't taxed for learning it's impossible.
+	_set_security(5)
 	_player.inventory_component.add_item(LOCKPICK, 1)
-	assert_false(
-		Lockpicking.try_open(true, 10000, &"", _player), "difficulty far above skill ⇒ holds"
-	)
-	assert_eq(_picks_held(), 0, "a failed attempt still spends the pick")
+	assert_false(Lockpicking.try_open(true, 10000, &"", _player), "beyond reach ⇒ holds")
+	assert_eq(_picks_held(), 1, "no pick spent on an impossible lock")

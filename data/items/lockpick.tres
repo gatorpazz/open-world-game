@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MiscDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/misc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"lockpick"
+display_name = "Lockpick"
+description = "A hooked sliver of chitin-spring, filed thin. It bends to a lock's wards once, maybe twice, before it snaps."
+weight = 0.1
+base_value = 5
+stackable = true
+max_stack = 20

@@ -101,12 +101,11 @@ A new `@export_group("Crime")`, both the `.gd` `@export` and `balance_config.tre
 | `sneak_crouch_factor` | 0.5 | radius multiplier while crouched |
 | `sneak_skill_min` / `sneak_skill_max` | 5 / 100 | radius-scaling skill endpoints |
 | `sneak_skilled_radius_factor` | 0.3 | radius multiplier at `sneak_skill_max` |
-| `lock_skill_min` / `lock_skill_max` | 5 / 100 | pick-chance curve endpoints |
-| `lock_difficulty_scale` | 100 | difficulty normaliser |
+| `sneak_move_factor` | 0.5 | move-speed multiplier while crouched |
+| `lock_difficulty_scale` | 100 | skill-lead needed to reach a pick-chance endpoint |
 | `theft_bounty_multiplier` | 1.0 | bounty per stolen `base_value` |
 | `fine_multiplier` | 1.0 | fine per bounty (the 019 seam) |
 | `crime_reputation_dock` | 5 | reputation lost per witnessed theft |
-| `sneak_move_factor` | 0.5 | move-speed multiplier while crouched |
 
 No hardcoded values in scripts (the Golden Rule) — every number above is read from the config.
 

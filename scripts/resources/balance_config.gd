@@ -74,6 +74,31 @@ extends Resource
 @export var barter_buy_markup: float = 1.5
 @export var barter_sell_fraction: float = 0.5
 
+@export_group("Crime")
+## Sneak detection (spec 017). Deterministic: an observer sees an actor within
+## detection_radius with clear LOS. Skill and crouch shrink the radius — a
+## skilled crouched thief works inside a smaller circle. No RNG (locks roll,
+## sneak is fixed — the director ruling).
+@export var sneak_base_detection_radius: float = 12.0
+@export var sneak_crouch_factor: float = 0.5
+## Radius-scaling skill endpoints: at sneak_skill_min the radius is full, at
+## sneak_skill_max it is multiplied by sneak_skilled_radius_factor.
+@export var sneak_skill_min: int = 5
+@export var sneak_skill_max: int = 100
+@export var sneak_skilled_radius_factor: float = 0.3
+## Crouch move-speed multiplier (feeds Player.get_speed_multiplier).
+@export var sneak_move_factor: float = 0.5
+## Lockpicking (spec 017). pick_chance runs from ~0 to ~1 across the skill-vs-
+## difficulty gap around an even 0.5 at parity; the caller rolls randf() <
+## chance. lock_difficulty_scale sets how wide that gap must be to reach an
+## endpoint (a full scale of skill lead ⇒ certain success).
+@export var lock_difficulty_scale: int = 100
+## Theft economics (spec 017). Bounty per stolen base_value; the fine charged
+## per bounty (the 019 seam, pinned 1.0); reputation lost per witnessed theft.
+@export var theft_bounty_multiplier: float = 1.0
+@export var fine_multiplier: float = 1.0
+@export var crime_reputation_dock: int = 5
+
 @export_group("Creatures")
 @export var creature_wander_speed_multiplier: float = 0.4
 @export var creature_wander_radius: float = 5.0

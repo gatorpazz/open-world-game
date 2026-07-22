@@ -3,7 +3,7 @@ extends GutTest
 
 const ITEMS_DIR := "res://data/items"
 const SKILLS_DIR := "res://data/skills"
-const EXPECTED_ITEM_COUNT := 16  # 12 starter + 2 creature loot (004) + 1 quest item (006) + 1 chain document (010)
+const EXPECTED_ITEM_COUNT := 17  # 16 through spec 010 + 1 lockpick (017)
 const VALID_ARMOR_SKILLS: Array[StringName] = [&"heavy_armor", &"light_armor"]
 const JEWELRY_SLOTS: Array[StringName] = [&"ring", &"amulet"]
 

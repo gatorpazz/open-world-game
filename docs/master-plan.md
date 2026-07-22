@@ -96,7 +96,7 @@ Spec queue (planned 2026-07-22 — the four planning rulings and the defaults ar
 
 | # | spec | status |
 |---|---|---|
-| 013 | Dialogue choice prompts (player-voiced decision replies as buttons; amends 005; retrofits the two shipped decision points) | queued (Wave 1) |
+| 013 | Dialogue choice prompts (player-voiced decision replies as buttons; amends 005; retrofits the two shipped decision points) | in progress (Wave 1; spec drafted 2026-07-22 — director rulings: non-modal prompts, `DialogueChoice` sub-resource, refuse+defer, ≥ 2 replies per prompt) |
 | 014 | Material re-skin pass (content mini-spec: chitin/rope/lava-glass over the generic-medieval scaffold; ids stay stable; closes audit debt 1) | queued (Wave 1) |
 | 015 | Faction system (`FactionDef` + rank sub-resources; numeric reputation/rank on `Game`; advancement checks; exclusivity policy; charter state + `is_chartered_under()`; migrates the three `joined_*` entries; `SAVE_VERSION` → 2 + first migration) | queued (Wave 2) |
 | 016 | Barter economy v1 (`MerchantDef`; barter panel off dialogue; pure price math with persuasion as the inert-friendly price lever; drop-to-world; the player stash; gold quest rewards unlocked; 2–3 Lastdoor merchants; regional multiplier as hook) | queued (Wave 2) |

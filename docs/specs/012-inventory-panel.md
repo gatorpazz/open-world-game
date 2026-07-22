@@ -8,7 +8,7 @@
 
 **In:** an in-world overlay panel opened with a new `inventory` action (**I**): view carried stacks (name, count, weight) and equipped gear (`[E]` rows), use consumables, equip and unequip gear, a footer line (gold, weight/capacity + ENCUMBERED, armor rating), tests.
 
-**Out (later specs / backlog):** dropping items into the world · depositing into containers (this supersedes `world_container.gd`'s "depositing comes with the real inventory UI" note — the comment is amended to point at Phase 2 barter/deposit) · item icons, tooltips, descriptions · sorting/filtering · drag-and-drop · hotkey/quickslot consumable use · gold interactions from the panel.
+**Out (later specs / backlog):** dropping items into the world *(re-ruled during the 010 exit playthrough: the encumbered-with-no-drop trap is a known, accepted slice tradeoff — relief waits for Phase 2 barter/deposit)* · depositing into containers (this supersedes `world_container.gd`'s "depositing comes with the real inventory UI" note — the comment is amended to point at Phase 2 barter/deposit) · item icons, tooltips, descriptions · sorting/filtering · drag-and-drop · hotkey/quickslot consumable use · gold interactions from the panel.
 
 ## Design
 

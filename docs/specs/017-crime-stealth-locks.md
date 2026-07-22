@@ -74,11 +74,13 @@ A HUD sneak indicator (a stance glyph via `hud_notice.gd`) shows the stance is a
 - `reputation_dock(config) -> int` — `config.crime_reputation_dock`.
 - `marks_stolen(owner_faction) -> bool` / `accrues_bounty(owner_faction, witnessed) -> bool` — the acquisition verdict, pure: any owned take is stolen; only a witnessed owned take accrues bounty.
 
-**The acquire choke point** — one function every take routes through (`ContainerPanel` take, `WorldItem` pickup, the merchant-stock grab). Given the source `owner_faction`:
+**The acquire choke point** — `Theft.acquire(actor, taker, item, count, owner_faction)`, the one function every take routes through (`ContainerPanel` take of an owned source, `WorldItem` pickup, the `BarterPanel` Steal). Given the source `owner_faction`:
 - **empty (unowned / yours):** a clean `add_item`, no crime.
 - **non-empty:** the taken stack is flagged `stolen` (it isn't yours). Then `WitnessQuery.is_witnessed`:
-  - **witnessed:** `Game.bounty.add_bounty(&"wardens", theft_bounty(item))` + `Game.faction_standing.adjust_reputation(&"wardens", -reputation_dock)` (**the first live caller of the 015 setter**) + HUD "you were seen."
+  - **witnessed:** `Game.report_theft(JURISDICTION, theft_bounty(item), reputation_dock)` — Game raises its own bounty ledger *and* docks reputation via `FactionStanding.adjust_reputation` (**the first live caller of the 015 setter**; a no-op for a non-member) + HUD "you were seen."
   - **unwitnessed:** stolen-flagged, no bounty, no dock (you got away with it — but the goods are still hot for merchants).
+
+`owner_faction` marks *who* owns the goods (any non-empty value — the merchant's stock is tagged with its `MerchantDef.id`); the bounty always accrues to the **jurisdiction**, a `Theft.JURISDICTION` constant pinned to `&"wardens"` — the canon enforcer of the one shipped settlement (`docs/lore/factions/wardens.md`). Per-settlement jurisdiction is Phase 3 world-production data. The **lock gate** is the sibling orchestrator `Lockpicking.try_open(locked, difficulty, key_id, actor)`, called by each container/door interact handler before it opens: a held key opens free, else one `lockpick` is spent and `LockRules.pick_chance` is rolled.
 
 **Merchant-stock grab** — honor 016's "grab path": a minimal **Steal** action on the barter panel's merchant (owned) side routes through the *same* acquire choke point, so stealing the on-offer goods and looting an owned crate share one code path.
 
@@ -129,7 +131,9 @@ Additive throughout. `stolen` defaults false and merges are guarded, so every ex
 | `scripts/resources/bounty_ledger.gd` | `BountyLedger extends Resource` — per-jurisdiction bounty ints |
 | `scripts/crime/witness_query.gd` | `WitnessQuery` — deterministic detection + LOS over NPCs (018 reuses `is_witnessed`) |
 | `scripts/crime/lock_rules.gd` | `LockRules` — pure pick-chance curve |
-| `scripts/crime/crime_rules.gd` | `CrimeRules` — theft-bounty / fine / reputation-dock math + the acquire choke helper |
+| `scripts/crime/crime_rules.gd` | `CrimeRules` — pure theft-bounty / fine / reputation-dock math + the stolen/bounty verdict |
+| `scripts/crime/theft.gd` | `Theft` — the acquire choke: ties CrimeRules + WitnessQuery to the live game (flags stolen, calls `Game.report_theft`) |
+| `scripts/crime/lockpicking.gd` | `Lockpicking` — the lock gate: key/pick check + the `LockRules` roll, spends a pick |
 | `data/items/lockpick.tres` | a `MiscDef`, consumed per lockpick attempt |
 | `tests/scenes/test_witness_query.gd` | `detection_radius` scaling + `is_witnessed` (built scene, LOS) |
 | `tests/unit/test_lock_rules.gd` | pick-chance curve — monotonic, clamped, endpoint determinism |

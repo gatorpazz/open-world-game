@@ -18,7 +18,10 @@ var _merchant: Inventory
 var _taker: InventoryComponent
 var _config: BalanceConfig
 var _def: MerchantDef
-## The player stacks shown on the sell side, in list order — only can_sell
+## The player, for the Steal path (spec 017) — grabbing the on-offer goods runs
+## through the acquire choke, so it can be witnessed like any theft.
+var _actor: Player = null
+## The player stacks shown on the sell side, in list order — only sellable
 ## items appear, so a sell row index is NOT a player-inventory index.
 var _sellable: Array[ItemStack] = []
 
@@ -28,23 +31,30 @@ var _sellable: Array[ItemStack] = []
 @onready var footer_label: Label = $Dim/Panel/Layout/Footer
 @onready var buy_button: Button = $Dim/Panel/Layout/Buttons/Buy
 @onready var sell_button: Button = $Dim/Panel/Layout/Buttons/Sell
+@onready var steal_button: Button = $Dim/Panel/Layout/Buttons/Steal
 @onready var close_button: Button = $Dim/Panel/Layout/Buttons/Close
 
 
 func _ready() -> void:
 	buy_button.pressed.connect(_on_buy_pressed)
 	sell_button.pressed.connect(_on_sell_pressed)
+	steal_button.pressed.connect(_on_steal_pressed)
 	close_button.pressed.connect(close)
 
 
 ## merchant.gold is the barter purse; merchant.stacks is the for-sale stock.
 func open(
-	merchant: Inventory, taker: InventoryComponent, config: BalanceConfig, def: MerchantDef
+	merchant: Inventory,
+	taker: InventoryComponent,
+	config: BalanceConfig,
+	def: MerchantDef,
+	actor: Player = null
 ) -> void:
 	_merchant = merchant
 	_taker = taker
 	_config = config
 	_def = def
+	_actor = actor
 	title_label.text = def.display_name
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -94,6 +104,19 @@ func sell_row(index: int) -> bool:
 	return true
 
 
+## Steals one unit of the merchant's stack at row `index` — the on-offer grab
+## (spec 017), routed through the acquire choke so an owned take is flagged and,
+## if seen, fined. False (no-op) when the row is invalid or no actor is known.
+func steal_row(index: int) -> bool:
+	if _actor == null or index < 0 or index >= _merchant.stacks.size():
+		return false
+	var item := _merchant.stacks[index].item
+	Theft.acquire(_actor, _taker, item, 1, _merchant.owner_faction)
+	_merchant.remove_item(item, 1)
+	_refresh()
+	return true
+
+
 func buy_row_count() -> int:
 	return _merchant.stacks.size()
 
@@ -127,7 +150,7 @@ func _rebuild_sell() -> void:
 	sell_list.clear()
 	_sellable.clear()
 	for stack: ItemStack in _taker.inventory.stacks:
-		if not BarterRules.can_sell(stack.item, _def):
+		if not BarterRules.is_sellable(stack, _def):
 			continue
 		_sellable.append(stack)
 		var price := BarterRules.sell_price(stack.item, _config, _def.price_multiplier)
@@ -151,3 +174,9 @@ func _on_sell_pressed() -> void:
 	var selected := sell_list.get_selected_items()
 	if not selected.is_empty():
 		sell_row(selected[0])
+
+
+func _on_steal_pressed() -> void:
+	var selected := buy_list.get_selected_items()
+	if not selected.is_empty():
+		steal_row(selected[0])

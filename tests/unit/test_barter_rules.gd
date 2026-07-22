@@ -70,3 +70,19 @@ func test_empty_buys_accepts_anything() -> void:
 	var anything := MerchantDef.new()
 	anything.buys = []
 	assert_true(BarterRules.can_sell(_items[&"iron_sword"], anything), "empty buys = accepts all")
+
+
+func test_is_sellable_refuses_stolen_stacks() -> void:
+	var suddel := _merchants[&"suddel"]  # buys consumable, misc
+	var clean := ItemStack.new()
+	clean.item = _items[&"healing_draught"]
+	var hot := ItemStack.new()
+	hot.item = _items[&"healing_draught"]
+	hot.stolen = true
+	assert_true(BarterRules.is_sellable(clean, suddel), "a clean in-category stack sells")
+	assert_false(
+		BarterRules.is_sellable(hot, suddel), "a stolen stack is refused (blanket, no fence)"
+	)
+	var off := ItemStack.new()
+	off.item = _items[&"iron_sword"]  # off-category for the salter
+	assert_false(BarterRules.is_sellable(off, suddel), "off-category is still refused")

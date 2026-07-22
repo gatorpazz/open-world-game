@@ -24,8 +24,8 @@ func _ready() -> void:
 	_was_encumbered = is_encumbered()
 
 
-func add_item(item: ItemDef, count: int = 1) -> void:
-	inventory.add_item(item, count)
+func add_item(item: ItemDef, count: int = 1, stolen: bool = false) -> void:
+	inventory.add_item(item, count, stolen)
 	item_added.emit(item, count)
 	_refresh_encumbrance()
 

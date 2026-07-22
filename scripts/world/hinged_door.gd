@@ -5,12 +5,17 @@ extends StaticBody3D
 
 @export var open_angle_degrees: float = 100.0
 @export var swing_seconds: float = 0.4
-
-@onready var interactable: Interactable = $Interactable
+## Lock (spec 017): a locked door must be picked (or opened with key_id) before
+## it will swing. Once opened it stays unlocked for the session.
+@export var locked := false
+@export var lock_difficulty := 0
+@export var key_id: StringName = &""
 
 var is_open := false
 
 var _tween: Tween
+
+@onready var interactable: Interactable = $Interactable
 
 
 func _ready() -> void:
@@ -31,5 +36,11 @@ func toggle() -> void:
 	)
 
 
-func _on_interacted(_by: Node) -> void:
+func _on_interacted(by: Node) -> void:
+	var player := by as Player
+	# A locked door only opens once picked; a closed door re-shuts freely.
+	if player != null and not is_open:
+		if not Lockpicking.try_open(locked, lock_difficulty, key_id, player):
+			return
+		locked = false
 	toggle()

@@ -100,6 +100,15 @@ func is_chartered_under(faction_id: StringName) -> bool:
 	)
 
 
+## Records a witnessed theft (spec 017): the jurisdiction's bounty rises and,
+## if the player is one of its members, its reputation is docked. Game mutates
+## its own state — the Theft orchestrator computes the amounts (from CrimeRules
+## + the balance config) and calls down, the save_game/change_scene precedent.
+func report_theft(jurisdiction: StringName, bounty_amount: int, reputation_dock: int) -> void:
+	bounty.add_bounty(jurisdiction, bounty_amount)
+	faction_standing.adjust_reputation(jurisdiction, -reputation_dock)
+
+
 ## Quicksave (spec 007): snapshots the identity resources, the current
 ## scene, and the player's transform and pools into save_path as
 ## human-readable JSON. The caller shows any notice — Game stays UI-free.

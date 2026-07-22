@@ -75,7 +75,9 @@ func _on_barter_requested() -> void:
 	add_child(_barter_panel)
 	_barter_panel.closed.connect(_on_barter_panel_closed)
 	var config := load(StatsComponent.BALANCE_PATH) as BalanceConfig
-	_barter_panel.open(_merchant_inventory, _last_player.inventory_component, config, merchant_def)
+	_barter_panel.open(
+		_merchant_inventory, _last_player.inventory_component, config, merchant_def, _last_player
+	)
 
 
 func _on_barter_panel_closed() -> void:
@@ -88,6 +90,9 @@ func _on_barter_panel_closed() -> void:
 func _build_merchant_inventory() -> Inventory:
 	var inventory := Inventory.new()
 	inventory.gold = merchant_def.merchant_gold
+	# The stock is owned by the merchant (spec 017): grabbing it is theft. The
+	# id marks it owned; the bounty still accrues to the jurisdiction (Theft).
+	inventory.owner_faction = merchant_def.id
 	for stack: ItemStack in merchant_def.stock:
 		inventory.add_item(stack.item, stack.count)
 	return inventory

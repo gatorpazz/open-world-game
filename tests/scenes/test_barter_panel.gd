@@ -99,6 +99,23 @@ func test_sell_list_omits_off_category_items() -> void:
 	assert_eq(_panel.sell_row_count(), 1, "only the consumable is sellable to the salter")
 
 
+func test_sell_list_omits_stolen_stacks() -> void:
+	# A hot draught the salter would otherwise buy (spec 017 blanket refusal).
+	_merchant.gold = 100
+	_items.add_item(HEALING_DRAUGHT, 2)  # clean — sellable
+	_items.add_item(HEALING_DRAUGHT, 1, true)  # stolen — refused, a distinct stack
+	_open(SUDDEL)
+	assert_eq(_panel.sell_row_count(), 1, "only the clean draught stack is sellable")
+
+
+func test_steal_is_a_noop_without_an_actor() -> void:
+	# The standalone fixture opens with no player, so the grab path stays inert.
+	_merchant.add_item(IRON_SWORD, 1)
+	_open(TANSY)
+	assert_false(_panel.steal_row(0), "no actor, no grab")
+	assert_eq(_merchant.count_of(IRON_SWORD), 1, "the stock is untouched")
+
+
 func test_selling_refused_when_merchant_cannot_pay() -> void:
 	_merchant.gold = 5
 	_items.add_item(IRON_HELM, 1)

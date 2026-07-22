@@ -49,3 +49,10 @@ static func sell_price(
 ## Whether this merchant trades in the item's category. Empty buys = anything.
 static func can_sell(item: ItemDef, merchant: MerchantDef) -> bool:
 	return merchant.buys.is_empty() or merchant.buys.has(item_category(item))
+
+
+## Whether the player may sell this stack: an in-category item that isn't stolen
+## (spec 017 — blanket refusal of hot goods; no fence yet). Takes the stack for
+## the flag; can_sell stays item-only for callers that don't have a stack.
+static func is_sellable(stack: ItemStack, merchant: MerchantDef) -> bool:
+	return not stack.stolen and can_sell(stack.item, merchant)

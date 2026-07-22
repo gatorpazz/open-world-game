@@ -8,6 +8,9 @@ extends StaticBody3D
 ## Optional quest hook (spec 006): journal entry added on pickup — the
 ## "concrete item or document" trigger. Empty = no journal effect.
 @export var journal_entry: StringName = &""
+## Owner (spec 017): non-empty means taking this is theft (flagged stolen, and
+## bounty if witnessed). Empty = free for the taking. Dropped items stay empty.
+@export var owner_faction: StringName = &""
 
 @onready var interactable: Interactable = $Interactable
 
@@ -28,7 +31,7 @@ func _on_interacted(by: Node) -> void:
 	var player := by as Player
 	if player == null:
 		return
-	player.inventory_component.add_item(item, count)
+	Theft.acquire(player, player.inventory_component, item, count, owner_faction)
 	if journal_entry != &"" and player.journal.add_entry(journal_entry):
 		player.show_notice(HudNotice.JOURNAL_UPDATED)
 	queue_free()

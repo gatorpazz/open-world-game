@@ -11,6 +11,9 @@ signal closed
 var _source: Inventory
 var _taker: InventoryComponent
 var _allow_deposit := false
+## The player, passed only when the source may be owned (spec 017) — the take
+## path routes through the acquire choke so an owned take is flagged/reported.
+var _actor: Player = null
 
 @onready var title_label: Label = $Dim/Panel/Layout/Title
 @onready var item_list: ItemList = $Dim/Panel/Layout/Items
@@ -32,11 +35,16 @@ func _ready() -> void:
 ## so the player-side signals fire. In deposit mode the player's own stacks
 ## show below and Deposit moves them into `source` (the stash).
 func open(
-	source: Inventory, taker: InventoryComponent, title := "Container", allow_deposit := false
+	source: Inventory,
+	taker: InventoryComponent,
+	title := "Container",
+	allow_deposit := false,
+	actor: Player = null
 ) -> void:
 	_source = source
 	_taker = taker
 	_allow_deposit = allow_deposit
+	_actor = actor
 	title_label.text = title
 	taker_list.visible = allow_deposit
 	deposit_button.visible = allow_deposit
@@ -81,10 +89,16 @@ func close() -> void:
 	queue_free()
 
 
+## Moves one stack to the taker. When the source is owned and the actor is
+## known, the take runs through the acquire choke (theft); otherwise a plain
+## transfer (loot, the stash).
 func _take_stack(stack: ItemStack) -> void:
 	var item := stack.item
 	var count := stack.count
-	_taker.add_item(item, count)
+	if _source.owner_faction != &"" and _actor != null:
+		Theft.acquire(_actor, _taker, item, count, _source.owner_faction)
+	else:
+		_taker.add_item(item, count)
 	_source.remove_item(item, count)
 
 

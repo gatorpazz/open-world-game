@@ -8,6 +8,9 @@ extends CanvasLayer
 ## a text-rich pillar). The scene root is process_mode = ALWAYS.
 
 signal closed
+## A spoken response asked to open the merchant counter (spec 016). The Npc
+## owns the barter panel (as it owns this one), so it listens and opens it.
+signal barter_requested
 
 const NOTICE_COLOR := "#8a8a8a"
 const PLAYER_COLOR := "#d8c07a"
@@ -80,6 +83,10 @@ func show_topic(topic_id: StringName, from_choice: bool = false) -> void:
 	_rebuild_topic_list()
 	if not response.choices.is_empty():
 		_present_choices(response)
+	# Last, so nothing else runs on this panel afterward: the Npc closes it and
+	# opens the counter in the same synchronous emit.
+	if response.opens_barter:
+		barter_requested.emit()
 
 
 func _on_topic_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:

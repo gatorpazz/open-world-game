@@ -28,6 +28,11 @@ extends Resource
 @export var journal_entry: StringName = &""
 @export var give_items: Array[ItemStack] = []
 @export var choices: Array[DialogueChoice] = []
+## Barter entry (spec 016): a spoken response with this set opens the NPC's
+## merchant counter (the panel is a separate window, so the DialoguePanel
+## emits barter_requested and the Npc opens it). Only meaningful on an Npc
+## whose scene carries a merchant_def; a no-op otherwise.
+@export var opens_barter: bool = false
 
 
 ## True when every condition field is empty — an always-available fallback.

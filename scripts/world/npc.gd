@@ -22,6 +22,9 @@ var _merchant_inventory: Inventory = null
 ## The player from the current interaction — the barter panel needs its
 ## InventoryComponent, and barter_requested fires after open().
 var _last_player: Player = null
+## True only across the dialogue -> barter hand-off, so the dialogue close it
+## triggers does not clear _last_player before the counter opens.
+var _opening_barter := false
 
 @onready var interactable: Interactable = $Interactable
 
@@ -55,6 +58,8 @@ func _on_interacted(by: Node) -> void:
 
 func _on_panel_closed() -> void:
 	_panel = null
+	if not _opening_barter:
+		_last_player = null
 
 
 ## Closes the dialogue panel and opens the counter over the live merchant
@@ -63,7 +68,9 @@ func _on_barter_requested() -> void:
 	if merchant_def == null or _merchant_inventory == null or _last_player == null:
 		return
 	if _panel != null:
+		_opening_barter = true
 		_panel.close()
+		_opening_barter = false
 	_barter_panel = BARTER_SCENE.instantiate()
 	add_child(_barter_panel)
 	_barter_panel.closed.connect(_on_barter_panel_closed)
@@ -73,6 +80,7 @@ func _on_barter_requested() -> void:
 
 func _on_barter_panel_closed() -> void:
 	_barter_panel = null
+	_last_player = null
 
 
 ## The runtime stock + purse, rebuilt from the def (spec 016). gold IS the

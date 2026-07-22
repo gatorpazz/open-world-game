@@ -8,6 +8,7 @@ const NPC_SCENE := preload("res://scenes/world/npc.tscn")
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const SWIFT := preload("res://data/npcs/swift.tres")
 const SUDDEL := preload("res://data/npcs/suddel.tres")
+const SUDDEL_MERCHANT := preload("res://data/merchants/suddel.tres")
 const RAT_PELT := preload("res://data/items/rat_pelt.tres")
 const HEALING_DRAUGHT := preload("res://data/items/healing_draught.tres")
 
@@ -154,6 +155,35 @@ func test_give_gold_reward_pays_the_player_through_the_component() -> void:
 	panel._apply_effects(reward)
 	assert_eq(_player.inventory_component.inventory.gold, 40, "gold paid")
 	assert_signal_emitted(_player.inventory_component, "gold_changed")
+
+
+func test_trade_topic_opens_the_barter_counter() -> void:
+	# A merchant NPC's trade response (opens_barter) fires barter_requested;
+	# the Npc closes dialogue and opens the BarterPanel over its live stock.
+	var suddel: Npc = NPC_SCENE.instantiate()
+	suddel.def = SUDDEL
+	suddel.merchant_def = SUDDEL_MERCHANT
+	add_child_autofree(suddel)
+	suddel.interactable.interact(_player)
+	_player.journal.learn_topic(&"trade")
+	var panel: DialoguePanel = suddel._panel
+	panel.show_topic(&"trade")
+	await wait_process_frames(1)
+	assert_null(suddel._panel, "the dialogue panel closed on the barter hand-off")
+	assert_not_null(suddel._barter_panel, "the counter opened")
+	assert_eq(
+		suddel._barter_panel.buy_row_count(),
+		SUDDEL_MERCHANT.stock.size(),
+		"the counter shows the merchant's stock"
+	)
+	suddel._barter_panel.close()
+
+
+func test_non_merchant_ignores_a_barter_response() -> void:
+	# Swift has no merchant_def: a barter_requested would find nothing to open.
+	var panel := _open_panel()
+	panel.barter_requested.emit()
+	assert_null(_npc._barter_panel, "no counter without a merchant_def")
 
 
 func test_unanswerable_keyword_click_says_so() -> void:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="1_npc"]
 [ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="2_door"]
 [ext_resource type="Resource" path="res://data/npcs/swift.tres" id="3_swift"]
 [ext_resource type="Resource" path="res://data/npcs/tansy.tres" id="4_tansy"]
+[ext_resource type="Resource" path="res://data/merchants/tansy.tres" id="9_tansy_merchant"]
 [ext_resource type="Resource" path="res://data/npcs/wren.tres" id="5_wren"]
 [ext_resource type="Resource" path="res://data/npcs/munnok.tres" id="6_munnok"]
 [ext_resource type="Resource" path="res://data/npcs/wester.tres" id="7_wester"]
@@ -218,6 +219,7 @@ def = ExtResource("3_swift")
 [node name="Tansy" parent="." instance=ExtResource("1_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, 0)
 def = ExtResource("4_tansy")
+merchant_def = ExtResource("9_tansy_merchant")
 
 [node name="Wren" parent="." instance=ExtResource("1_npc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 20)

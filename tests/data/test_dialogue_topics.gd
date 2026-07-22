@@ -6,7 +6,7 @@ extends GutTest
 const DIR := "res://data/dialogue"
 const NPC_DIR := "res://data/npcs"
 const JOURNAL_DIR := "res://data/journal"
-const EXPECTED_COUNT := 21
+const EXPECTED_COUNT := 22
 
 var _topics: Array[DialogueTopicDef] = []
 var _topic_ids: Dictionary[StringName, bool] = {}
@@ -31,6 +31,14 @@ func _assert_resolves(id: StringName, dir: String, type_name: String, context: S
 
 func test_expected_count() -> void:
 	assert_eq(_topics.size(), EXPECTED_COUNT, "update EXPECTED_COUNT when adding topics")
+
+
+func test_give_gold_is_never_negative() -> void:
+	# give_gold is a reward effect (spec 016) — content must never encode a
+	# negative "reward" the pay-out path would silently subtract.
+	for topic: DialogueTopicDef in _topics:
+		for response: DialogueResponse in topic.responses:
+			assert_gte(response.give_gold, 0, "%s: a give_gold reward is never negative" % topic.id)
 
 
 func test_ids_are_unique_and_match_filenames() -> void:

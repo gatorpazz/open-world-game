@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=17 format=3]
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
@@ -11,7 +11,7 @@ text = "Another stranger off the covers, and this one still has both boots. If y
 [sub_resource type="Resource" id="resp_suddel"]
 script = ExtResource("2")
 npc_id = &"suddel"
-text = "Mind the counter, it's working hours. Two crews out, one due, and [[lastdoor]] wants its manifests moved before the bell — and the [[scar_hounds]] have the road jumpy besides. Say — if a fresh rat pelt crosses you, I could use [[a_small_favor|a small favor]]. Bounty's posted."
+text = "Mind the counter, it's working hours. Two crews out, one due, and [[lastdoor]] wants its manifests moved before the bell — and the [[scar_hounds]] have the road jumpy besides. Say — if a fresh rat pelt crosses you, I could use [[a_small_favor|a small favor]]. Bounty's posted. And the stores counter's open on the bell — beads or goods, we can [[trade]]."
 
 [sub_resource type="Resource" id="resp_kellom"]
 script = ExtResource("2")
@@ -72,6 +72,11 @@ script = ExtResource("2")
 npc_id = &"munnok"
 text = "Working. Talk fast. You'll be wanting [[the_three_versions|the counted version]] of what happened to you, I expect — everyone does, once they've heard the sung ones."
 
+[sub_resource type="Resource" id="resp_tansy"]
+script = ExtResource("2")
+npc_id = &"tansy"
+text = "Market row, love — simples strung overhead and drying well. First dose to any who need it, no bead asked. Past that, if you've salvage or beads, look the stall over and we'll [[trade]]."
+
 [sub_resource type="Resource" id="resp_fallback"]
 script = ExtResource("2")
 text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this roof will let you sit cold. If it's talk you want, [[lastdoor]] has plenty."
@@ -80,4 +85,4 @@ text = "Hm. You're new. Guest-portion's whatever's warm, and no one under this r
 script = ExtResource("1")
 id = &"greeting"
 display_name = "Greeting"
-responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum"), SubResource("resp_bryony"), SubResource("resp_wester_joined"), SubResource("resp_wester"), SubResource("resp_dossun"), SubResource("resp_wren"), SubResource("resp_munnok"), SubResource("resp_fallback")])
+responses = Array[ExtResource("2")]([SubResource("resp_swift"), SubResource("resp_suddel"), SubResource("resp_kellom"), SubResource("resp_ollun"), SubResource("resp_torrum_joined"), SubResource("resp_torrum_stood"), SubResource("resp_torrum"), SubResource("resp_bryony"), SubResource("resp_wester_joined"), SubResource("resp_wester"), SubResource("resp_dossun"), SubResource("resp_wren"), SubResource("resp_munnok"), SubResource("resp_tansy"), SubResource("resp_fallback")])

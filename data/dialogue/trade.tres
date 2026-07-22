@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_suddel_trade"]
+script = ExtResource("2")
+npc_id = &"suddel"
+text = "Counter's open, then. Draughts, rope, lamp-oil — all posted to the bead. Show me beads or pelts and we'll enter it."
+opens_barter = true
+
+[sub_resource type="Resource" id="resp_tansy_trade"]
+script = ExtResource("2")
+npc_id = &"tansy"
+text = "Look the stall over, love. Simples dried and a rarity or two if the crews were kind. Tell me what you'll take and what you're offering."
+opens_barter = true
+
+[resource]
+script = ExtResource("1")
+id = &"trade"
+display_name = "trade"
+lore_sources = Array[StringName]([&"suddel", &"tansy"])
+responses = Array[ExtResource("2")]([SubResource("resp_suddel_trade"), SubResource("resp_tansy_trade")])

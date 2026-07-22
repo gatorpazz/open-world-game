@@ -20,9 +20,10 @@ count = 1
 script = ExtResource("2")
 npc_id = &"suddel"
 take_items = Array[ExtResource("3")]([SubResource("take_pelt")])
-text = "One pelt, posted bounty, entered. Here — a draught from stores for your trouble. Counted and kept — and the book doesn't forget a favor."
+text = "One pelt, posted bounty, entered. Here — a draught from stores and ten beads off the bounty string for your trouble. Counted and kept — and the book doesn't forget a favor."
 journal_entry = &"suddels_stores_favor"
 give_items = Array[ExtResource("3")]([SubResource("give_draught")])
+give_gold = 10
 
 [sub_resource type="Resource" id="resp_suddel_done"]
 script = ExtResource("2")

@@ -8,7 +8,10 @@ extends RefCounted
 ## behind push_warning guards; unknown item ids and equipment slots are
 ## skipped with a warning so a content rename never bricks a save.
 
-const SAVE_VERSION := 1
+## Bumped to 2 by the faction spec (015): the payload gained a "factions"
+## section and, with it, the save system's first migration (v1 -> v2 seeds
+## faction records from the journal's joined_* entries).
+const SAVE_VERSION := 2
 
 const _SHEET_KEYS: Array[String] = [
 	"attributes",
@@ -26,6 +29,7 @@ const _ROOT_KEYS: Array[String] = [
 	"sheet",
 	"inventory",
 	"journal",
+	"factions",
 ]
 const _PLAYER_KEYS: Array[String] = [
 	"transform",
@@ -49,6 +53,7 @@ class SaveState:
 	var sheet: CharacterSheet
 	var inventory: Inventory
 	var journal: Journal
+	var faction_standing: FactionStanding
 
 
 static func encode_save(state: SaveState) -> Dictionary:
@@ -66,6 +71,7 @@ static func encode_save(state: SaveState) -> Dictionary:
 		"sheet": sheet_to_dict(state.sheet),
 		"inventory": inventory_to_dict(state.inventory),
 		"journal": journal_to_dict(state.journal),
+		"factions": factions_to_dict(state.faction_standing),
 	}
 
 
@@ -74,16 +80,29 @@ static func encode_save(state: SaveState) -> Dictionary:
 ## check is the future migration hook; the scene_path allow-list is the
 ## security boundary (a tampered save must never load outside res://).
 static func decode_save(
-	data: Dictionary, balance: BalanceConfig, items: Dictionary[StringName, ItemDef]
+	data: Dictionary,
+	balance: BalanceConfig,
+	items: Dictionary[StringName, ItemDef],
+	factions: Dictionary[StringName, FactionDef]
 ) -> SaveState:
-	if not data.has_all(_ROOT_KEYS):
-		push_warning("decode_save: missing sections")
-		return null
-	if not (data["save_version"] is float or data["save_version"] is int):
+	# Version is handled BEFORE the section check so an older save can be
+	# migrated up (a migration adds the sections a newer version expects).
+	if not (
+		data.has("save_version") and (data["save_version"] is float or data["save_version"] is int)
+	):
 		push_warning("decode_save: malformed save_version")
 		return null
-	if int(data["save_version"]) != SAVE_VERSION:
-		push_warning("decode_save: unsupported save_version %d" % int(data["save_version"]))
+	var version := int(data["save_version"])
+	if version > SAVE_VERSION:
+		push_warning("decode_save: unsupported save_version %d" % version)
+		return null
+	if version < SAVE_VERSION:
+		data = _migrated(data, version, factions)
+		if data.is_empty():
+			push_warning("decode_save: no migration path from save_version %d" % version)
+			return null
+	if not data.has_all(_ROOT_KEYS):
+		push_warning("decode_save: missing sections")
 		return null
 	if not data["scene_path"] is String:
 		push_warning("decode_save: malformed scene_path")
@@ -99,6 +118,7 @@ static func decode_save(
 		data["sheet"] is Dictionary
 		and data["inventory"] is Dictionary
 		and data["journal"] is Dictionary
+		and data["factions"] is Dictionary
 	)
 	if not sections_are_dicts:
 		push_warning("decode_save: malformed identity sections")
@@ -106,7 +126,8 @@ static func decode_save(
 	var sheet := sheet_from_dict(data["sheet"] as Dictionary, balance)
 	var inventory := inventory_from_dict(data["inventory"] as Dictionary, items)
 	var journal := journal_from_dict(data["journal"] as Dictionary)
-	if sheet == null or inventory == null or journal == null:
+	var faction_standing := factions_from_dict(data["factions"] as Dictionary)
+	if sheet == null or inventory == null or journal == null or faction_standing == null:
 		return null
 	var player := data["player"] as Dictionary
 	var state := SaveState.new()
@@ -119,6 +140,7 @@ static func decode_save(
 	state.sheet = sheet
 	state.inventory = inventory
 	state.journal = journal
+	state.faction_standing = faction_standing
 	return state
 
 
@@ -272,6 +294,71 @@ static func journal_from_dict(data: Dictionary) -> Journal:
 	journal.entries = _strings_to_id_array(data["entries"])
 	journal.known_topics = _strings_to_id_array(data["known_topics"])
 	return journal
+
+
+static func factions_to_dict(standing: FactionStanding) -> Dictionary:
+	return {
+		"reputation": _ids_to_strings(standing.reputation),
+		"rank": _ids_to_strings(standing.rank),
+	}
+
+
+## Rebuilds the faction standing (spec 015): two id -> int maps, coerced from
+## JSON's String keys / float numbers like the sheet's dictionaries. Null on
+## any malformed shape.
+static func factions_from_dict(data: Dictionary) -> FactionStanding:
+	var shape_valid := (
+		data.has_all(["reputation", "rank"])
+		and _is_id_number_dict(data["reputation"])
+		and _is_id_number_dict(data["rank"])
+	)
+	if not shape_valid:
+		push_warning("factions_from_dict: malformed shape")
+		return null
+	var standing := FactionStanding.new()
+	standing.reputation = _strings_to_id_ints(data["reputation"])
+	standing.rank = _strings_to_id_ints(data["rank"])
+	return standing
+
+
+## Upgrades an older save dict to the current version, or returns {} when no
+## path exists. Migrations run in sequence; each adds the sections its target
+## version expects. Today only v1 -> v2 exists.
+static func _migrated(
+	data: Dictionary, version: int, factions: Dictionary[StringName, FactionDef]
+) -> Dictionary:
+	if version == 1:
+		return _migrate_v1_to_v2(data, factions)
+	return {}
+
+
+## v1 had no factions section. Seed it from the joined_* journal entries the
+## same way runtime reconcile does — a v1 save is a v2 save whose faction
+## records were never seeded. The journal itself is untouched.
+static func _migrate_v1_to_v2(
+	data: Dictionary, factions: Dictionary[StringName, FactionDef]
+) -> Dictionary:
+	var standing := FactionStanding.new()
+	FactionRules.reconcile(standing, _migration_journal_entries(data), factions)
+	data["factions"] = factions_to_dict(standing)
+	data["save_version"] = 2
+	return data
+
+
+## Best-effort read of the journal's entry ids from a raw save dict, for
+## migration only — malformed or missing shapes yield an empty list rather
+## than failing (the full journal validation happens later in decode).
+static func _migration_journal_entries(data: Dictionary) -> Array[StringName]:
+	var result: Array[StringName] = []
+	if not (data.has("journal") and data["journal"] is Dictionary):
+		return result
+	var journal := data["journal"] as Dictionary
+	if not (journal.has("entries") and journal["entries"] is Array):
+		return result
+	for value: Variant in journal["entries"] as Array:
+		if value is String:
+			result.append(StringName(value as String))
+	return result
 
 
 static func _ids_to_strings(source: Dictionary[StringName, int]) -> Dictionary:

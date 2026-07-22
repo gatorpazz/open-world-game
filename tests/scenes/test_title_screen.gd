@@ -137,4 +137,4 @@ func test_created_sheet_round_trips_through_save_and_load() -> void:
 	assert_eq(_game.character_sheet.attributes[&"willpower"], cfg.attribute_favored_start)
 	assert_eq(_game.character_sheet.attributes[&"strength"], cfg.attribute_start)
 	assert_eq(_game.character_sheet.major_skills, CREATION_MAJORS)
-	assert_eq(SaveCodec.SAVE_VERSION, 1, "creation added no save schema")
+	assert_eq(SaveCodec.SAVE_VERSION, 2, "save schema is v2 as of the faction spec (015)")

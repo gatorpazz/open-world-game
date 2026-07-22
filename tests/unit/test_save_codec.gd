@@ -1,7 +1,8 @@
 extends GutTest
 ## Unit tests for SaveCodec section codecs (spec 007, criteria 1-3 and the
-## unknown-id half of criterion 5). Every round-trip passes through an actual
-## JSON string — that is what proves the String/float coarseness handling.
+## unknown-id half of criterion 5) plus the factions section and the first
+## v1->v2 migration (spec 015, criterion 4). Every round-trip passes through an
+## actual JSON string — that is what proves the String/float coarseness handling.
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 const SKILL_IDS: Array[StringName] = [
@@ -170,7 +171,7 @@ func test_full_payload_round_trips_transform_and_pools() -> void:
 	var state := _make_state(balance, items)
 
 	var decoded := SaveCodec.decode_save(
-		_json_round_trip(SaveCodec.encode_save(state)), balance, items
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items, _factions()
 	)
 
 	assert_not_null(decoded)
@@ -194,6 +195,46 @@ func test_decoded_basis_is_orthonormal() -> void:
 	assert_eq(transform.origin, Vector3(3.0, 0.5, -2.0), "origin untouched")
 
 
+# --- Spec 015 criterion 4: factions section + first migration ---
+
+
+func test_factions_round_trip_through_json() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var state := _make_state(balance, items)  # standing: wardens rank 1, reputation 15
+
+	var decoded := SaveCodec.decode_save(
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items, _factions()
+	)
+
+	assert_not_null(decoded)
+	assert_eq(decoded.faction_standing.get_rank(&"wardens"), 1, "rank survives the round-trip")
+	assert_eq(decoded.faction_standing.get_reputation(&"wardens"), 15, "reputation survives")
+	for key: Variant in decoded.faction_standing.rank:
+		assert_true(key is StringName, "faction ids decode back to StringName")
+
+
+func test_v1_save_migrates_seeding_factions_from_the_journal() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var v1 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	# A v1 save predates the factions section; membership lived only in the
+	# journal. Strip the section, drop the version, and hold the join entry.
+	v1.erase("factions")
+	v1["save_version"] = 1
+	(v1["journal"] as Dictionary)["entries"] = ["joined_the_wardens"]
+
+	var decoded := SaveCodec.decode_save(v1, balance, items, _factions())
+
+	assert_not_null(decoded, "a v1 save migrates instead of failing the load")
+	assert_true(
+		decoded.faction_standing.is_member(&"wardens"),
+		"migration seeded the Wardens record from the journal"
+	)
+	assert_eq(decoded.faction_standing.get_rank(&"wardens"), 0, "seeded at the joining rank")
+	assert_false(decoded.faction_standing.is_member(&"reciters"), "unheld factions are not seeded")
+
+
 # --- Criteria 5 (unit half) and 10: atomic refusal + security ---
 
 
@@ -202,21 +243,26 @@ func test_decode_save_refuses_bad_payloads() -> void:
 	var items := _make_items()
 	var good := SaveCodec.encode_save(_make_state(balance, items))
 
-	assert_null(SaveCodec.decode_save({}, balance, items), "missing sections")
+	assert_null(SaveCodec.decode_save({}, balance, items, _factions()), "missing sections")
 
 	var wrong_version := _json_round_trip(good)
 	wrong_version["save_version"] = SaveCodec.SAVE_VERSION + 1
-	assert_null(SaveCodec.decode_save(wrong_version, balance, items), "future version refused")
+	assert_null(
+		SaveCodec.decode_save(wrong_version, balance, items, _factions()), "future version refused"
+	)
 
 	var bad_sheet := _json_round_trip(good)
 	bad_sheet["sheet"] = {"level": 3}
 	assert_null(
-		SaveCodec.decode_save(bad_sheet, balance, items), "one bad section fails the whole decode"
+		SaveCodec.decode_save(bad_sheet, balance, items, _factions()),
+		"one bad section fails the whole decode"
 	)
 
 	var bad_transform := _json_round_trip(good)
 	(bad_transform["player"] as Dictionary)["transform"] = [1.0, 2.0]
-	assert_null(SaveCodec.decode_save(bad_transform, balance, items), "short transform refused")
+	assert_null(
+		SaveCodec.decode_save(bad_transform, balance, items, _factions()), "short transform refused"
+	)
 
 
 func test_scene_path_outside_res_is_refused() -> void:
@@ -225,16 +271,18 @@ func test_scene_path_outside_res_is_refused() -> void:
 
 	var evil := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
 	evil["scene_path"] = "user://evil.tscn"
-	assert_null(SaveCodec.decode_save(evil, balance, items), "user:// scene refused")
+	assert_null(SaveCodec.decode_save(evil, balance, items, _factions()), "user:// scene refused")
 
 	var missing := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
 	missing["scene_path"] = "res://scenes/does_not_exist.tscn"
-	assert_null(SaveCodec.decode_save(missing, balance, items), "nonexistent scene refused")
+	assert_null(
+		SaveCodec.decode_save(missing, balance, items, _factions()), "nonexistent scene refused"
+	)
 
 	var non_scene := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
 	non_scene["scene_path"] = "res://data/items/iron_sword.tres"
 	assert_null(
-		SaveCodec.decode_save(non_scene, balance, items),
+		SaveCodec.decode_save(non_scene, balance, items, _factions()),
 		"an existing res:// resource that is not a PackedScene is refused"
 	)
 
@@ -260,11 +308,18 @@ func _make_state(
 	var journal := Journal.new()
 	journal.entries = [&"arrival"]
 	state.journal = journal
+	var standing := FactionStanding.new()
+	standing.seed_if_absent(&"wardens", 1, 15)
+	state.faction_standing = standing
 	return state
 
 
 func _json_round_trip(data: Dictionary) -> Dictionary:
 	return JSON.parse_string(JSON.stringify(data)) as Dictionary
+
+
+func _factions() -> Dictionary[StringName, FactionDef]:
+	return FactionLibrary.get_factions()
 
 
 func _make_sheet(balance: BalanceConfig) -> CharacterSheet:

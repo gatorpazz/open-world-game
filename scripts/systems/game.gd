@@ -104,6 +104,7 @@ func save_game() -> bool:
 	state.sheet = character_sheet
 	state.inventory = inventory
 	state.journal = journal
+	state.faction_standing = faction_standing
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	if file == null:
 		push_warning("save_game: cannot open '%s' for writing" % save_path)
@@ -126,7 +127,9 @@ func load_game() -> bool:
 		push_warning("load_game: save file is not valid JSON")
 		return false
 	var balance := load(StatsComponent.BALANCE_PATH) as BalanceConfig
-	var state := SaveCodec.decode_save(json.data as Dictionary, balance, ItemLibrary.get_items())
+	var state := SaveCodec.decode_save(
+		json.data as Dictionary, balance, ItemLibrary.get_items(), FactionLibrary.get_factions()
+	)
 	if state == null:
 		return false
 	_apply_load.call_deferred(state)
@@ -181,6 +184,7 @@ func _apply_load(state: SaveCodec.SaveState) -> void:
 	character_sheet = state.sheet
 	inventory = state.inventory
 	journal = state.journal
+	faction_standing = state.faction_standing
 	_change_scene_now(state.scene_path, &"default")
 	player.global_transform = state.player_transform
 	player.head.rotation.x = state.head_pitch

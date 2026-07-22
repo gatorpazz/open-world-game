@@ -227,8 +227,8 @@ func test_skill_crossing_a_tier_announces_the_new_working() -> void:
 	assert_eq(_casting.get_selected().id, &"minor_bolt", "selection survives the refresh")
 
 
-func test_no_new_game_state_save_version_untouched() -> void:
+func test_casting_adds_no_player_save_state() -> void:
 	# Selection and ward live on player nodes and rebuild on scene load;
-	# the sheet's skills already persist via 007. Nothing joined the
-	# payload, so the version must still be 1.
-	assert_eq(SaveCodec.SAVE_VERSION, 1)
+	# the sheet's skills already persist via 007. Casting joined nothing to
+	# the payload — the version is 2 as of the faction spec (015), not casting.
+	assert_eq(SaveCodec.SAVE_VERSION, 2)

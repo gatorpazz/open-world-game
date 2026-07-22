@@ -12,6 +12,7 @@ var _sandbox: Node3D
 var _saved_sheet: CharacterSheet
 var _saved_inventory: Inventory
 var _saved_journal: Journal
+var _saved_faction_standing: FactionStanding
 var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
@@ -23,6 +24,7 @@ func before_each() -> void:
 	_saved_sheet = _game.character_sheet
 	_saved_inventory = _game.inventory
 	_saved_journal = _game.journal
+	_saved_faction_standing = _game.faction_standing
 	_saved_world_parent = _game.world_parent
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
@@ -37,6 +39,7 @@ func before_each() -> void:
 	)
 	_game.inventory = Inventory.new()
 	_game.journal = Journal.new()
+	_game.faction_standing = FactionStanding.new()
 	_game.save_path = TEST_SAVE_PATH
 	_remove_scratch_file()
 
@@ -47,6 +50,7 @@ func after_each() -> void:
 	_game.character_sheet = _saved_sheet
 	_game.inventory = _saved_inventory
 	_game.journal = _saved_journal
+	_game.faction_standing = _saved_faction_standing
 	_game.world_parent = _saved_world_parent
 	_game.current_world = _saved_current_world
 	_game.player = _saved_player
@@ -65,6 +69,7 @@ func test_save_game_writes_file_and_flips_has_save() -> void:
 	assert_true(parsed is Dictionary, "the save is readable JSON")
 	assert_eq(int((parsed as Dictionary)["save_version"]), SaveCodec.SAVE_VERSION)
 	assert_eq((parsed as Dictionary)["scene_path"], MAIN_SCENE)
+	assert_true((parsed as Dictionary).has("factions"), "the v2 payload carries a factions section")
 
 
 func test_save_game_guard_refuses_without_world_or_player() -> void:
@@ -130,6 +135,34 @@ func test_load_restores_scene_position_pools_and_identity() -> void:
 		_game.player.stats.current_health,
 		_game.character_sheet.get_max_health(),
 		"pools restore to the saved value, not to max"
+	)
+
+
+# --- Spec 015 (scene half): faction standing round-trips ---
+
+
+func test_load_restores_faction_standing() -> void:
+	# Join before entering: reconcile on scene entry seeds the record from the
+	# journal's joined_* entry (the additive contract).
+	_game.journal.add_entry(&"joined_the_wardens")
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	assert_true(_game.faction_standing.is_member(&"wardens"), "join seeded on scene entry")
+	# A reputation value the journal alone can't reconstruct — the thing the
+	# save section exists to preserve.
+	_game.faction_standing.adjust_reputation(&"wardens", 20)
+	assert_true(_game.save_game())
+
+	_game.faction_standing.adjust_reputation(&"wardens", 999)  # post-save drift, must be discarded
+
+	assert_true(_game.load_game())
+	await wait_process_frames(3)
+
+	assert_true(_game.faction_standing.is_member(&"wardens"), "membership restored")
+	assert_eq(
+		_game.faction_standing.get_reputation(&"wardens"),
+		20,
+		"the saved reputation is restored — not the post-save drift, and reconcile did not reseed it"
 	)
 
 

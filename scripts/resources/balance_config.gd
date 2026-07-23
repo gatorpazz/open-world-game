@@ -171,6 +171,11 @@ extends Resource
 @export var price_factor_min: float = 0.8
 @export var price_factor_max: float = 1.2
 
+@export_group("Enchant")
+## A bound `ward` charm's pool lifetime when its def leaves duration at 0 (spec
+## 023). Magnitude scaling reuses the Magic group (spell_power) — no duplicate.
+@export var enchant_ward_default_duration: float = 20.0
+
 @export_group("Creatures")
 @export var creature_wander_speed_multiplier: float = 0.4
 @export var creature_wander_radius: float = 5.0

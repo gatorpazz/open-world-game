@@ -10,3 +10,7 @@ extends Resource
 @export var base_value: int = 0
 @export var stackable: bool = false
 @export var max_stack: int = 1
+## An optional bound working (spec 023): the stored regard this object holds,
+## fired by its trigger (a worn charm, a weapon's on-hit discharge, or an
+## on-use charge). null = a plain item. Additive — every existing item is plain.
+@export var bound_working: BoundWorkingDef

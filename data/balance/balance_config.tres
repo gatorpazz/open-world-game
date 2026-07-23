@@ -66,6 +66,7 @@ lock_base_competence = 25
 theft_bounty_multiplier = 1.0
 fine_multiplier = 1.0
 crime_reputation_dock = 5
+enchant_ward_default_duration = 20.0
 creature_wander_speed_multiplier = 0.4
 creature_wander_radius = 5.0
 creature_idle_time_min = 1.0

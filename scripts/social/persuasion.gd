@@ -39,8 +39,8 @@ static func _outcome_line(move: StringName, success: bool) -> String:
 		DispositionRules.BRIBE:
 			if success:
 				return "The beads change hands; they warm."
-			return "They pocket the beads and stay cool."
+			return "They take the beads and stay cool."
 		_:
 			if success:
-				return "Your regard lands; they soften."
+				return "They warm to the good word."
 			return "The good word falls flat."

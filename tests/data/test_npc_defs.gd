@@ -3,6 +3,7 @@ extends GutTest
 ## criterion 10).
 
 const DIR := "res://data/npcs"
+const FACTION_DIR := "res://data/factions"
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 const EXPECTED_COUNT := 11
 
@@ -50,3 +51,13 @@ func test_schedules_are_within_the_day() -> void:
 		var to := def.schedule.present_to_bell
 		assert_between(from, 0, config.bells_per_day - 1, "%s schedule from-bell in range" % def.id)
 		assert_between(to, 0, config.bells_per_day, "%s schedule to-bell in range" % def.id)
+
+
+## An NPC's optional faction tag (spec 019) must resolve to a FactionDef — a
+## dangling faction would silently contribute nothing to disposition.
+func test_factions_resolve() -> void:
+	for def: NPCDef in _defs:
+		if def.faction == &"":
+			continue
+		var path := FACTION_DIR.path_join(String(def.faction) + ".tres")
+		assert_true(ResourceLoader.exists(path), "%s faction '%s' resolves" % [def.id, def.faction])

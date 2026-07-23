@@ -13,6 +13,11 @@ game_ids:
   - npc:suddel
   - topic:a_small_favor
   - topic:trade
+  - topic:the_soft_word
+  - topic:praise_the_book
+  - topic:lean_on_the_counter
+  - topic:slide_the_beads
+  - topic:the_lean_stores
   - journal:suddel_wants_a_pelt
   - journal:suddels_stores_favor
   - quest:a_small_favor

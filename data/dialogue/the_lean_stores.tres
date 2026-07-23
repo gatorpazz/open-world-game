@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_suddel_lean_stores"]
+script = ExtResource("2")
+npc_id = &"suddel"
+requires_disposition = 45
+text = "You've dealt me fair, so here's a straight measure back: the stores run lean this circuit. Lamp-oil's short and the crews that owe me are slow to square it. Buy your oil now, before the next high-sky seal doubles the price. Keep it off the roll — a quiet word between us, not the book's."
+
+[resource]
+script = ExtResource("1")
+id = &"the_lean_stores"
+display_name = "the lean stores"
+lore_sources = Array[StringName]([&"suddel", &"the_shares", &"licensed_crews"])
+responses = Array[ExtResource("2")]([SubResource("resp_suddel_lean_stores")])

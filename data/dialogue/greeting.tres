@@ -11,7 +11,7 @@ text = "Another stranger off the covers, and this one still has both boots. If y
 [sub_resource type="Resource" id="resp_suddel"]
 script = ExtResource("2")
 npc_id = &"suddel"
-text = "Mind the counter, it's working hours. Two crews out, one due, and [[lastdoor]] wants its manifests moved before the bell — and the [[scar_hounds]] have the road jumpy besides. Say — if a fresh rat pelt crosses you, I could use [[a_small_favor|a small favor]]. Bounty's posted. And the stores counter's open on the bell — beads or goods, we can [[trade]]."
+text = "Mind the counter, it's working hours. Two crews out, one due, and [[lastdoor]] wants its manifests moved before the bell — and the [[scar_hounds]] have the road jumpy besides. Say — if a fresh rat pelt crosses you, I could use [[a_small_favor|a small favor]]. Bounty's posted. And the stores counter's open on the bell — beads or goods, we can [[trade]]. Posted prices, mind — though a counter runs on more than beads, if you'd try [[the_soft_word|a soft word]]."
 
 [sub_resource type="Resource" id="resp_kellom"]
 script = ExtResource("2")

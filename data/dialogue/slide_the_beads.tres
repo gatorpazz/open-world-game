@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_suddel_beads"]
+script = ExtResource("2")
+npc_id = &"suddel"
+choice_gated = true
+persuade = &"bribe"
+text = "Beads talk plainer than most. Slide them, then — and we'll see if they say enough to move the counting end."
+
+[resource]
+script = ExtResource("1")
+id = &"slide_the_beads"
+display_name = "a few beads"
+lore_sources = Array[StringName]([&"suddel", &"the_shares"])
+responses = Array[ExtResource("2")]([SubResource("resp_suddel_beads")])

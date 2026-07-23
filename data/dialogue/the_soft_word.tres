@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_choice.gd" id="3"]
+
+[sub_resource type="Resource" id="choice_praise"]
+script = ExtResource("3")
+text = "Your book's straight — everyone says you deal square."
+topic = &"praise_the_book"
+
+[sub_resource type="Resource" id="choice_lean"]
+script = ExtResource("3")
+text = "Straight book or not, the post could weigh your counter twice."
+topic = &"lean_on_the_counter"
+
+[sub_resource type="Resource" id="choice_beads"]
+script = ExtResource("3")
+text = "A few beads across the counter, to smooth it."
+topic = &"slide_the_beads"
+
+[sub_resource type="Resource" id="resp_suddel_soft"]
+script = ExtResource("2")
+npc_id = &"suddel"
+text = "A soft word. Well — the counter hears them all, and enters most in the book. Say your piece, walker. Warm me right and I'll tell you what [[the_lean_stores|the stores are short on]]."
+choices = Array[ExtResource("3")]([SubResource("choice_praise"), SubResource("choice_lean"), SubResource("choice_beads")])
+
+[resource]
+script = ExtResource("1")
+id = &"the_soft_word"
+display_name = "a soft word"
+lore_sources = Array[StringName]([&"suddel", &"the_shares", &"underfirst"])
+responses = Array[ExtResource("2")]([SubResource("resp_suddel_soft")])

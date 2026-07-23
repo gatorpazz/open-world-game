@@ -14,3 +14,4 @@ id = &"suddel"
 display_name = "Suddel"
 description = "Quartermaster to a licensed salvage crew, keeping the counter inside the Last Gate — pelts bought at posted bounty, stores sold at posted prices, everything entered."
 schedule = SubResource("schedule_gate_bells")
+faction = &"licensed_crews"

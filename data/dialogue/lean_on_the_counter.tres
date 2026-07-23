@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DialogueTopicDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/dialogue_topic_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/dialogue_response.gd" id="2"]
+
+[sub_resource type="Resource" id="resp_suddel_lean"]
+script = ExtResource("2")
+npc_id = &"suddel"
+choice_gated = true
+persuade = &"intimidate"
+text = "A threat across my own counter. Bold. Careful it's not your own wrist the post counts against next, walker — I keep the bounty book, and it cuts both ways. Say the rest."
+
+[resource]
+script = ExtResource("1")
+id = &"lean_on_the_counter"
+display_name = "a heavy word"
+lore_sources = Array[StringName]([&"suddel", &"wardens", &"the_shares"])
+responses = Array[ExtResource("2")]([SubResource("resp_suddel_lean")])

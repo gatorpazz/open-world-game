@@ -3,6 +3,7 @@ extends GutTest
 ## criterion 10).
 
 const DIR := "res://data/npcs"
+const BALANCE_PATH := "res://data/balance/balance_config.tres"
 const EXPECTED_COUNT := 11
 
 var _defs: Array[NPCDef] = []
@@ -35,3 +36,17 @@ func test_ids_are_unique_and_match_filenames() -> void:
 func test_display_names_are_non_empty() -> void:
 	for def: NPCDef in _defs:
 		assert_ne(def.display_name, "", "%s has a display name" % def.id)
+
+
+## A scheduled NPC's present-window (spec 020) must sit within the day's bells;
+## a zero-width window (always present) is allowed. Out-of-range bells would
+## make the NPC vanish forever or never.
+func test_schedules_are_within_the_day() -> void:
+	var config := load(BALANCE_PATH) as BalanceConfig
+	for def: NPCDef in _defs:
+		if def.schedule == null:
+			continue
+		var from := def.schedule.present_from_bell
+		var to := def.schedule.present_to_bell
+		assert_between(from, 0, config.bells_per_day - 1, "%s schedule from-bell in range" % def.id)
+		assert_between(to, 0, config.bells_per_day, "%s schedule to-bell in range" % def.id)

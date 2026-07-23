@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=27 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/world/npc.tscn" id="1_npc"]
+[ext_resource type="PackedScene" path="res://scenes/world/rest_point.tscn" id="10_bed"]
 [ext_resource type="PackedScene" path="res://scenes/world/transition_door.tscn" id="2_door"]
 [ext_resource type="Resource" path="res://data/npcs/swift.tres" id="3_swift"]
 [ext_resource type="Resource" path="res://data/npcs/tansy.tres" id="4_tansy"]
@@ -265,3 +266,7 @@ spawn_point = &"from_exterior"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -15.4)
 target_scene = "res://scenes/world/gate_shrine.tscn"
 spawn_point = &"from_exterior"
+
+[node name="Bed" parent="." instance=ExtResource("10_bed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 14)
+display_name = "Crew Cot"

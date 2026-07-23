@@ -68,6 +68,8 @@ is one continuous temple.
   only the Taken go up. Travel is roofed galleries, covered under-roads,
   and priced open sprints; no open water, no unshafted flight. News moves
   by bell-code, shaft-echo, and runners.
+- **Time:** [[telling_time]] — no sun to read, so the day is a round of
+  bells and the long count is the nine-day circuit of the grief-rite.
 
 ## Historical spine
 

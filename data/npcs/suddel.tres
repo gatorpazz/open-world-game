@@ -1,9 +1,16 @@
-[gd_resource type="Resource" script_class="NPCDef" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="NPCDef" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/npc_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/npc_schedule.gd" id="2"]
+
+[sub_resource type="Resource" id="schedule_gate_bells"]
+script = ExtResource("2")
+present_from_bell = 2
+present_to_bell = 10
 
 [resource]
 script = ExtResource("1")
 id = &"suddel"
 display_name = "Suddel"
 description = "Quartermaster to a licensed salvage crew, keeping the counter inside the Last Gate — pelts bought at posted bounty, stores sold at posted prices, everything entered."
+schedule = SubResource("schedule_gate_bells")

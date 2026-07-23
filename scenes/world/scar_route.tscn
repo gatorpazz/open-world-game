@@ -81,7 +81,7 @@ script = ExtResource("7_inventory")
 stacks = Array[ExtResource("8_item_stack")]([SubResource("stack_claymore"), SubResource("stack_cuirass"), SubResource("stack_ore")])
 gold = 0
 
-[node name="ScarRoute" type="Node3D"]
+[node name="ScarRoute" type="Node3D" groups=["wild_rest"]]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("env")

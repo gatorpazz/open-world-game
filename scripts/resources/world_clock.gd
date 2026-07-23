@@ -6,7 +6,7 @@ extends Resource
 ## (the NoticeLedger pattern) — held on Game, serialized by SaveCodec. Both
 ## tunables (bells_per_day, circuit_length) come from BalanceConfig.
 
-## New games and migrated saves start on a morning bell of the first circuit-day.
+## New games and migrated saves start a few bells into the first circuit-day.
 const START_BELL := 3.0
 
 @export var day: int = 1

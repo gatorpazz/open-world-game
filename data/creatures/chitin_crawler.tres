@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CreatureDef" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/creature_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="2"]
+[ext_resource type="Resource" path="res://data/items/raw_chitin.tres" id="3"]
+
+[sub_resource type="Resource" id="loot_1"]
+script = ExtResource("2")
+item = ExtResource("3")
+count = 2
+
+[resource]
+script = ExtResource("1")
+id = &"chitin_crawler"
+display_name = "Chitin-Crawler"
+description = "A low, plated scuttler of the galleries, amber-black and oil-sheened — the beast the wrights cut their offcut chitin from. Slow, armored, and bad-tempered when cornered."
+max_health = 40.0
+aggressive = true
+damage = 8
+armor = 8
+attack_reach = 1.8
+attack_range = 0.0
+attack_cooldown = 2.0
+move_speed = 3.0
+detect_radius = 9.0
+leash_radius = 16.0
+loot = Array[ExtResource("2")]([SubResource("loot_1")])

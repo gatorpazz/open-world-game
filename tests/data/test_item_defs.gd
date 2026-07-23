@@ -3,7 +3,7 @@ extends GutTest
 
 const ITEMS_DIR := "res://data/items"
 const SKILLS_DIR := "res://data/skills"
-const EXPECTED_ITEM_COUNT := 24  # 21 through spec 022 + 3 bound-working items (023)
+const EXPECTED_ITEM_COUNT := 26  # 24 through spec 023 + raw_chitin + spore_sac (024)
 const VALID_ARMOR_SKILLS: Array[StringName] = [&"heavy_armor", &"light_armor"]
 const JEWELRY_SLOTS: Array[StringName] = [&"ring", &"amulet"]
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MiscDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/misc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"raw_chitin"
+display_name = "Raw Chitin"
+description = "A plate of amber-black chitin prised from a crawler's back — the wrights' offcut stock before it is oiled and worked. It sells by the plate at any crew counter."
+weight = 1.5
+base_value = 10
+stackable = true
+max_stack = 20

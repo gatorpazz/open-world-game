@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CreatureDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/creature_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"hush_moths"
+display_name = "Hush-Moths"
+description = "A soft cloud of pale moths of the roofed dark, drifting to lamp-light and freshly spent regard. They crowd a flame and scatter from a hand — omen, not quarry."
+max_health = 4.0
+aggressive = false
+damage = 1
+armor = 0
+attack_reach = 1.0
+attack_range = 0.0
+attack_cooldown = 2.0
+move_speed = 2.5
+detect_radius = 8.0
+leash_radius = 12.0

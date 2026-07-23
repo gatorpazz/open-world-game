@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BoundWorkingDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/bound_working_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"steady_hand"
+display_name = "Steadying"
+description = "A hearth-charm marked into a worn bead — it steadies the blade-hand. No aspect to it, free as any oven-blessing; the charm is the object's own."
+trigger = &"constant"
+effect = &"fortify"
+skill_id = &""
+magnitude = 8.0
+duration = 0.0
+subject = &"blades"

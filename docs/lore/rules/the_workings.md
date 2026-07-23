@@ -145,6 +145,13 @@ the same motion as the morning lamp-lighting.
   ([[the_shares]]) — is a rich wrist a small gathering, and does
   wealth carry sky-risk? (Feature-shaped hole; director + spec 008.)
   Spec 022 leans on the hold-claim for a brewer's ground lava-glass
-  ("Lava-Glass Grit", a mana reagent) but does not rule the give-back —
-  whether stored regard can be released back to a person stays reserved.
-  (Director.)
+  ("Lava-Glass Grit", a mana reagent). ~~The give-back — whether stored
+  regard can be released back to a person~~ — **ruled (spec 023): a
+  worked thing may give its regard back.** A bound working is a stored
+  working the object holds and releases — as a standing charm (a
+  blessing-mark on gear), a weapon's discharge into what it strikes, or a
+  glass bead spent to give a mender's Tide back into the flesh. The regard
+  is the object's, blessed or charged at forging, so releasing it is not
+  the wielder's own working (bound workings draw no notice). Whether a
+  *person* can be a lasting holder — a rich wrist as a standing gathering —
+  stays the open half. (Director + spec 023.)

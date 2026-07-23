@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ArmorDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/armor_def.gd" id="1"]
+[ext_resource type="Resource" path="res://data/bound_workings/steady_hand.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"steadying_bead"
+display_name = "Steadying Bead"
+description = "A lava-glass bead worn on a cord, marked with a hearth-charm that steadies the blade-hand. Worked glass holds the charge; this one holds a blessing."
+weight = 0.2
+base_value = 160
+stackable = false
+max_stack = 1
+bound_working = ExtResource("2")
+slot = &"amulet"
+armor_rating = 0
+skill_id = &""

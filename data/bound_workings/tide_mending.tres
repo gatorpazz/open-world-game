@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BoundWorkingDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/bound_working_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"tide_mending"
+display_name = "Tide-Mending"
+description = "A Tide working held in worked glass, spent to give its stored regard back into the one who carries it — a mender's charge in the hand."
+trigger = &"on_use"
+effect = &"heal"
+skill_id = &"mending"
+magnitude = 14.0
+duration = 0.0
+subject = &""

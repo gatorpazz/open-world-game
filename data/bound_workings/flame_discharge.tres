@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BoundWorkingDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/bound_working_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"flame_discharge"
+display_name = "Kindling"
+description = "A Flame working bound into a set bead. Struck, it lets its heat go into whatever the blade finds — the object's regard, not the wielder's."
+trigger = &"on_hit"
+effect = &"damage"
+skill_id = &"evocation"
+magnitude = 6.0
+duration = 0.0
+subject = &""

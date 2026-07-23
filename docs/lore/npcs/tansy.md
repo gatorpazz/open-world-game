@@ -87,3 +87,9 @@ strangers.
   spec 022 gives the player to brew a draught anywhere: is a traveling
   simpler's roll its own named thing, or just the trade's tools carried?
   (Content-introduced by 022; unfixed.)
+- Spec 023 stocks her rare shelf with worked charms (a Kindled Blade, a
+  Tide-Bead, a Steadying Bead) — bound-working goods of bell-bronze and
+  lava-glass, not the botanical/daylight salvage her hoard is documented
+  around. Does she deal in the crews' worked charms too, or should these
+  sit with a charm-seller a later settlement adds? (Content-introduced by
+  023; placement unfixed — the iron-gear precedent.)

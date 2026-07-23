@@ -3,7 +3,7 @@ extends GutTest
 
 const ITEMS_DIR := "res://data/items"
 const SKILLS_DIR := "res://data/skills"
-const EXPECTED_ITEM_COUNT := 21  # 17 through spec 017 + 3 ingredients + 1 brewing kit (022)
+const EXPECTED_ITEM_COUNT := 24  # 21 through spec 022 + 3 bound-working items (023)
 const VALID_ARMOR_SKILLS: Array[StringName] = [&"heavy_armor", &"light_armor"]
 const JEWELRY_SLOTS: Array[StringName] = [&"ring", &"amulet"]
 
@@ -20,7 +20,7 @@ func before_all() -> void:
 			_items.append(item)
 
 
-func test_exactly_twelve_items() -> void:
+func test_expected_item_count() -> void:
 	assert_eq(_items.size(), EXPECTED_ITEM_COUNT)
 
 

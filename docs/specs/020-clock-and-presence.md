@@ -1,6 +1,6 @@
 # Spec 020 — Clock & NPC Presence (real-time bells)
 
-**Status:** ready to implement
+**Status:** complete (2026-07-23)
 **Depends on:** 005 (`Journal` — the day-stamp this closes 005's deferral for; `JournalPanel` renders "Day N"), 007 (`SaveCodec` — this bumps it to v6 with its fourth migration; `Game`-held identity the clock joins), 003/004 (`Npc`/`Creature` — presence toggles `Npc` visibility; rest checks for hostile `Creature`s), 017 (the `StashContainer` world-station + narrow-`Game`-access precedent the bed reuses; `Game.report_*`/ledger-section save pattern the clock mirrors)
 **Consumed by:** 019 (day-stamped journal + the clock are ambient; no hard dep), 021 (fast-travel — deferred to Phase 3 — will advance the clock per route), Phase 3 (high-sky season keys off the clock; NPC daily life deepens the schedule)
 
@@ -45,11 +45,11 @@
 
 **`NPCSchedule extends Resource`** (a sub-resource in the `NPCDef.tres`, the `ItemStack`/`DialogueChoice` pattern): `@export var present_from_bell: int`, `@export var present_to_bell: int` — present when `from ≤ bell < to`. **`NPCDef` gains `@export var schedule: NPCSchedule`** (null = always present — the sanctioned amendment, the second after nothing; NPCDef otherwise stays minimal). `Npc` connects `Game.time_changed` and calls `_update_presence()` on scene entry + each rollover: hides the mesh + disables the `Interactable`/collision when absent (world-state-derived-from-clock — no save blob, the merchant live-rebuild fence). Content: a few Lastdoor NPCs (e.g. Suddel/Tansy counter windows) get schedules; the demo shows a counter shuttering between bells.
 
-### Rest — the key + the bed (`scripts/player.gd`, `scripts/world/rest_point.gd`, `scripts/ui/rest_panel.gd`)
+### Rest — the key + the bed (`scripts/player.gd`, `scripts/world/rest_point.gd`)
 
-- A **`rest` input** → `Player.try_rest()`: wilderness rest. Blocked (HUD notice) when a **hostile `Creature`** is near (any creature in `CHASE`/`ATTACK`, the 004 states) or when the scene is **not** wilderness (settlements need a bed). A world scene declares wilderness via a group on its root (e.g. `&"wild_rest"`) — no per-scene script.
-- A **`RestPoint`** node (the `StashContainer` Interactable pattern) is the settlement **bed**: interacting opens the rest panel (still blocked by nearby hostiles).
-- **`RestPanel`** (the `ContainerPanel` lifecycle): pick how many bells to pass → `Game.clock.advance(bells)` + restore health/stamina by `config.rest_heal_per_bell × bells` through the `StatsComponent` deltas. The advance emits `time_changed` (presence + HUD update).
+- A **`rest` input** → `Player.try_rest()`: wilderness rest. Blocked (HUD notice) when a **hostile `Creature`** is near or when the scene is **not** wilderness (settlements need a bed). A world scene declares wilderness via a group on its root (`&"wild_rest"`) — no per-scene script. Hostile detection is a **group query**: creatures join a `&"hostile"` group as they enter `CHASE`/`ATTACK` (a `Creature.state` setter maintains it), so `Player.hostiles_near()` never reaches into sibling creature state (signals-up, gdscript-conventions review).
+- A **`RestPoint`** node (the `StashContainer` Interactable pattern) is the settlement **bed**: interacting rests the player directly (still blocked by nearby hostiles).
+- **Rest is a fixed span, not a duration picker** (amended — no `RestPanel`): `Player.rest()` calls `Game.advance_time(config.rest_bells)` (the one clock-mutation API) + restores health **and** stamina by `config.rest_heal_per_bell × config.rest_bells` through the `StatsComponent` deltas. The advance emits `time_changed` (presence + HUD update). A "rest how many bells?" panel is backlog — the director's ruling (rest-in-the-safe-open / bed-in-town) needs no duration choice for v1, and a fixed restful span is the simpler seam.
 
 ### HUD clock (`scripts/ui/hud_clock.gd` + player HUD)
 
@@ -57,7 +57,7 @@ A small persistent HUD label bound to `Game.time_changed` showing the current **
 
 ### `BalanceConfig` Time group (`scripts/resources/balance_config.gd` + `.tres`)
 
-`@export_group("Time")`: `bells_per_day: int` (e.g. 12), `circuit_length: int` (9 — canon), `real_seconds_per_bell: float` (e.g. 30 → a 12-bell day ≈ 6 min), `rest_heal_per_bell: float` (health+stamina restored per bell rested), plus a `WorldClock.START_BELL` const (a morning bell). Every number config-sourced.
+`@export_group("Time")`: `bells_per_day: int` (12), `circuit_length: int` (9 — canon), `real_seconds_per_bell: float` (30 → a 12-bell day ≈ 6 min), `rest_heal_per_bell: float` (health+stamina restored per bell rested), `rest_bells: int` (8 — the fixed span a rest passes), plus a `WorldClock.START_BELL` const (a few bells into the day). Every number config-sourced.
 
 ### Ripple check (why little else changes)
 
@@ -86,7 +86,7 @@ Additive. `Game.clock` is one new save section (v5 saves migrate); the tick is g
 2. **Clock save** (`test_clock_save.gd` / `test_save_codec.gd` / `test_save_load.gd`): a save/load round-trips `day` + `bell` and the file carries `"save_version": 6`; a **v5 payload (no `clock`)** decodes to v6 with the seeded start time; a **v1 payload** chains v1→…→v6; a `SAVE_VERSION + 1` payload is still refused.
 3. **Journal day-stamp**: `add_entry(id, day)` stores the day parallel to the id; a round-trip preserves `entry_days`; a pre-020 journal dict (no `entry_days`) decodes with zero-days; the panel labels stamped entries "Day N".
 4. **Presence** (`test_presence.gd`): a scheduled `Npc` is visible/interactable inside its window and hidden/inert outside it; toggling `Game.clock` across the boundary and emitting `time_changed` flips it; an unscheduled NPC is always present.
-5. **Rest** (`test_rest.gd`): resting advances the clock by the chosen bells and restores health+stamina by the config rate; the `rest` key is refused with a hostile creature near and refused in a non-wilderness scene; the bed `RestPoint` opens the rest panel; both are refused near a hostile.
+5. **Rest** (`test_rest.gd`): resting advances the clock by `config.rest_bells` and restores health+stamina by the config rate; the `rest` key is refused with a hostile creature near and refused in a non-wilderness scene; the bed `RestPoint` rests the player directly; both are refused near a hostile.
 
 Not machine-validated (human / canon-keeper review): the clock/rest prose + the time lore stub under the plain-meaning anchor, the bell/circuit tuning, the presence and rest feel.
 
@@ -98,6 +98,6 @@ One commit each, full suite green (605 →) before each:
 2. `WorldClock` + `Game.clock` + `_process` tick + `time_changed` + `SaveCodec` v6 + `_migrate_v5_to_v6` + Time tunables; flip the four guards; clock + save tests (criteria 1, 2). (`clock: SAVE_VERSION 6 — the real-time bell clock`)
 3. Journal day-stamps (`Journal.entry_days` + `add_entry(id, day)` + evaluator/caller threading + codec + panel) (criterion 3). (`clock: day-stamped journal entries — closing 005's deferral`)
 4. `NPCSchedule` + `NPCDef.schedule` + `Npc` presence toggling on `time_changed` + a couple scheduled defs + `test_presence` (criterion 4). (`clock: presence-lite — the counter shutters between bells`)
-5. The `rest` input + `RestPoint` bed + `RestPanel` + wilderness/hostile gating + heal + `HudClock` + `test_rest` (criterion 5). (`clock: rest and the bell readout`)
+5. The `rest` input + `RestPoint` bed + fixed-span rest (no `RestPanel`, amended) + wilderness/hostile gating + heal + `HudClock` + `test_rest` (criterion 5). (`clock: rest and the bell readout`)
 6. Canon-packet pass → the time lore stub (`new-lore-entry`) + the clock/rest HUD strings + a `RestPoint` placed + scheduled-NPC content; `canon-keeper-reviewer` first. (`content: bells, the circuit, and a place to rest`)
 7. Docs housekeeping — Decision Log rows + status + §4 (020 complete, 021 deferred); CLAUDE.md focus. (`docs: spec 020 complete`)

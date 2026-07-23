@@ -7,6 +7,7 @@ extends CharacterBody3D
 
 const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
 const INVENTORY_PANEL_SCENE := preload("res://scenes/ui/inventory_panel.tscn")
+const BREWING_PANEL_SCENE := preload("res://scenes/ui/brewing_panel.tscn")
 const WORLD_ITEM_SCENE := preload("res://scenes/world/world_item.tscn")
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 ## How far in front of the player a dropped item lands.
@@ -28,6 +29,7 @@ var journal: Journal
 
 var _journal_panel: JournalPanel = null
 var _inventory_panel: InventoryPanel = null
+var _brewing_panel: BrewingPanel = null
 
 @onready var head: Node3D = $Head
 @onready var detector: InteractionDetector = $Head/Camera3D/InteractionDetector
@@ -95,6 +97,26 @@ func open_inventory() -> void:
 
 func _on_inventory_panel_closed() -> void:
 	_inventory_panel = null
+
+
+## Opens the brewing panel (spec 022) — only while the carried Simpler's Kit is
+## held (the apparatus gate); otherwise a HUD notice. The panel-lifecycle
+## pattern of the journal/inventory panels.
+func open_brewing() -> void:
+	if _brewing_panel != null:
+		return
+	var kit: ItemDef = ItemLibrary.get_items().get(AlchemyRules.APPARATUS_ID)
+	if kit == null or inventory_component.inventory.count_of(kit) == 0:
+		show_notice(HudNotice.NO_BREWING_KIT)
+		return
+	_brewing_panel = BREWING_PANEL_SCENE.instantiate()
+	add_child(_brewing_panel)
+	_brewing_panel.closed.connect(_on_brewing_panel_closed)
+	_brewing_panel.open(inventory_component, stats, config)
+
+
+func _on_brewing_panel_closed() -> void:
+	_brewing_panel = null
 
 
 ## Spawns a dropped stack's single unit as a WorldItem just in front of the
@@ -184,6 +206,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		open_inventory()
 	elif event.is_action_pressed("sneak"):
 		toggle_sneak()
+	elif event.is_action_pressed("brew"):
+		open_brewing()
 	elif event.is_action_pressed("quicksave"):
 		# Calls down into the sanctioned autoload's own mutation API (the
 		# TransitionDoor/DeathOverlay precedent); Game stays UI-free, so

@@ -18,6 +18,8 @@ const WORKING_LEARNED := "New working: %s"
 const WORKING_NOTICED := "The working draws regard."
 const WORKING_SEEN := "A warden marks the working."
 const OVERCAST := "You are overcast — the sky has your measure."
+## Spec 022 — brewing needs the carried kit.
+const NO_BREWING_KIT := "You have no brewing kit."
 ## Spec 017 crime notices — the sneak stance toggle, a witnessed theft, and
 ## the locked/lockpick outcomes.
 const SNEAKING_ON := "Sneaking."

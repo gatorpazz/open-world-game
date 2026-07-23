@@ -8,6 +8,8 @@ extends Control
 @onready var stamina_bar: ProgressBar = $Stamina
 @onready var mana_bar: ProgressBar = $Mana
 @onready var ward_bar: ProgressBar = $Ward
+@onready var notice_bar: ProgressBar = $Notice
+@onready var overcast_label: Label = $Overcast
 
 
 func bind(stats: StatsComponent) -> void:
@@ -22,6 +24,17 @@ func bind(stats: StatsComponent) -> void:
 func bind_ward(combat: PlayerCombat) -> void:
 	combat.ward_changed.connect(_on_ward_changed)
 	ward_bar.hide()  # no ward until one is cast
+
+
+## Sets the notice bar + overcast beacon (spec 018). Notice lives on Game, not a
+## signalling component, so the Player pushes it here — on scene entry and after
+## each working. The bar shows once any regard is drawn; the beacon lights at
+## overcast (permanently, since notice never falls).
+func set_notice(notice: int, threshold: int, overcast: bool) -> void:
+	notice_bar.visible = notice > 0
+	notice_bar.max_value = maxi(threshold, 1)
+	notice_bar.value = notice
+	overcast_label.visible = overcast
 
 
 func _on_health_changed(current: float, max_value: float) -> void:

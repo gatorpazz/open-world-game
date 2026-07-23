@@ -124,6 +124,19 @@ func _on_spell_learned(spell: SpellDef) -> void:
 ## The casting node signals up; the Player (the Node3D actor) drives enforcement.
 func _on_working_cast(spell: SpellDef) -> void:
 	Working.report(self, spell)
+	refresh_notice()
+
+
+## Pushes the persisted notice (spec 018) to the HUD — on scene entry and after
+## each working. Notice is Game identity, not a signalling component, so the
+## Player bridges it to the bars (the narrow, sanctioned Game read, the stash
+## precedent). The beacon lights at overcast.
+func refresh_notice() -> void:
+	hud_bars.set_notice(
+		Game.notice.get_notice(),
+		config.overcast_threshold,
+		Game.notice.is_overcast(config.overcast_threshold)
+	)
 
 
 ## Queues a brief fading HUD line (spec 006) — for journal writes outside
@@ -141,6 +154,7 @@ func _ready() -> void:
 	detector.target_changed.connect(hud_prompt.set_target)
 	hud_bars.bind(stats)
 	hud_bars.bind_ward(combat)
+	refresh_notice()  # shows any notice carried in from the save
 	combat.died.connect(death_overlay.open)
 	casting.cast_failed.connect(_on_cast_failed)
 	casting.spell_learned.connect(_on_spell_learned)

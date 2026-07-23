@@ -83,6 +83,18 @@ func test_a_witnessed_unlicensed_working_draws_a_bounty() -> void:
 	)
 
 
+func test_the_hud_shows_notice_and_lights_the_beacon() -> void:
+	_game.notice.add(30)
+	_player.refresh_notice()
+	assert_true(_player.hud_bars.notice_bar.visible, "the notice bar shows once regard is drawn")
+	assert_eq(_player.hud_bars.notice_bar.value, 30.0, "at the drawn value")
+	assert_false(_player.hud_bars.overcast_label.visible, "the beacon is dark below the threshold")
+
+	_game.notice.add(_config.overcast_threshold)  # now overcast
+	_player.refresh_notice()
+	assert_true(_player.hud_bars.overcast_label.visible, "the beacon lights at overcast")
+
+
 func test_overcast_is_always_witnessed() -> void:
 	# Already overcast, and no NPC present — the sky still has your measure.
 	_game.notice.add(_config.overcast_threshold)

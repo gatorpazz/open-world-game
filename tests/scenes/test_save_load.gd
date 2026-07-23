@@ -268,6 +268,24 @@ func test_load_restores_the_disposition_ledger() -> void:
 	assert_eq(_game.disposition.get_modifier(&"suddel"), 18, "the saved modifier is restored")
 
 
+func test_load_restores_playtime() -> void:
+	# Playtime (spec 025) rides the versioned payload — the total survives a
+	# save/load, and post-save drift is discarded.
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.playtime_seconds = 1234.0
+	assert_true(_game.save_game())
+
+	_game.playtime_seconds = 9999.0  # post-save drift, must be discarded
+
+	assert_true(_game.load_game())
+	await wait_process_frames(3)
+
+	# A few post-load process frames tick playtime a hair; tolerance clears that
+	# but still tells the restored 1234 from the discarded 9999 drift.
+	assert_almost_eq(_game.playtime_seconds, 1234.0, 5.0, "the saved playtime is restored")
+
+
 func test_load_preserves_a_stolen_flag() -> void:
 	# The per-stack stolen flag (spec 017) rides in the inventory codec, so a hot
 	# item stays hot across a save/load.

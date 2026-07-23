@@ -49,6 +49,10 @@ var clock: WorldClock
 ## faction reputation, and overcast). Identity — SaveCodec serializes it (its own
 ## section, SAVE_VERSION 7).
 var disposition: DispositionLedger
+## Total real seconds played (spec 025): ticked in _process during gameplay,
+## shown in save-slot metadata. Identity — SaveCodec serializes it (SAVE_VERSION
+## 8).
+var playtime_seconds: float = 0.0
 
 ## Where save_game/load_game read and write. Tests point this at a scratch
 ## file so they never touch a real save.
@@ -89,6 +93,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if current_world == null or player == null:
 		return
+	playtime_seconds += delta
 	clock.advance(delta / _config.real_seconds_per_bell, _config)
 	if clock.get_bell() != _last_bell:
 		_last_bell = clock.get_bell()
@@ -135,6 +140,7 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	notice = NoticeLedger.new()
 	clock = WorldClock.new()
 	disposition = DispositionLedger.new()
+	playtime_seconds = 0.0
 	_last_bell = -1  # force a resync time_changed on the next tick
 	change_scene(MAIN_SCENE_PATH, &"default")
 
@@ -232,6 +238,7 @@ func save_game() -> bool:
 	state.notice = notice
 	state.clock = clock
 	state.disposition = disposition
+	state.playtime = playtime_seconds
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	if file == null:
 		push_warning("save_game: cannot open '%s' for writing" % save_path)
@@ -317,6 +324,7 @@ func _apply_load(state: SaveCodec.SaveState) -> void:
 	notice = state.notice
 	clock = state.clock
 	disposition = state.disposition
+	playtime_seconds = state.playtime
 	_last_bell = -1  # force a resync time_changed to the loaded time on the next tick
 	_change_scene_now(state.scene_path, &"default")
 	player.global_transform = state.player_transform

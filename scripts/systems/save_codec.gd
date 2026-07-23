@@ -18,9 +18,11 @@ extends RefCounted
 ## Bumped to 6 by the clock spec (020): a "clock" section (circuit-day + bell) +
 ## v5 -> v6 migration seeding a start time.
 ## Bumped to 7 by the persuasion spec (019): a "disposition" section (the per-NPC
-## modifier ledger) + v6 -> v7 migration seeding an empty ledger. Migrations
-## chain (a v1 save runs v1 -> v2 -> ... -> v7).
-const SAVE_VERSION := 7
+## modifier ledger) + v6 -> v7 migration seeding an empty ledger.
+## Bumped to 8 by the save-furniture spec (025): a top-level "playtime" scalar
+## (real seconds played) + v7 -> v8 migration seeding 0. Migrations chain (a v1
+## save runs v1 -> v2 -> ... -> v8).
+const SAVE_VERSION := 8
 
 const _SHEET_KEYS: Array[String] = [
 	"attributes",
@@ -44,6 +46,7 @@ const _ROOT_KEYS: Array[String] = [
 	"notice",
 	"clock",
 	"disposition",
+	"playtime",
 ]
 const _PLAYER_KEYS: Array[String] = [
 	"transform",
@@ -79,6 +82,8 @@ class SaveState:
 	var clock: WorldClock
 	## The per-NPC disposition modifier ledger (spec 019), its own save section.
 	var disposition: DispositionLedger
+	## Total real seconds played (spec 025) — a top-level scalar, not a section.
+	var playtime: float
 
 
 static func encode_save(state: SaveState) -> Dictionary:
@@ -102,6 +107,7 @@ static func encode_save(state: SaveState) -> Dictionary:
 		"notice": notice_to_dict(state.notice),
 		"clock": clock_to_dict(state.clock),
 		"disposition": disposition_to_dict(state.disposition),
+		"playtime": state.playtime,
 	}
 
 
@@ -158,6 +164,9 @@ static func decode_save(
 	if not sections_are_dicts:
 		push_warning("decode_save: malformed identity sections")
 		return null
+	if not (data["playtime"] is float or data["playtime"] is int):
+		push_warning("decode_save: malformed playtime")
+		return null
 	var sheet := sheet_from_dict(data["sheet"] as Dictionary, balance)
 	var inventory := inventory_from_dict(data["inventory"] as Dictionary, items)
 	var journal := journal_from_dict(data["journal"] as Dictionary)
@@ -196,6 +205,7 @@ static func decode_save(
 	state.notice = notice
 	state.clock = clock
 	state.disposition = disposition
+	state.playtime = float(data["playtime"])
 	return state
 
 
@@ -482,6 +492,9 @@ static func _migrated(
 	if current == 6:
 		result = _migrate_v6_to_v7(result)
 		current = 7
+	if current == 7:
+		result = _migrate_v7_to_v8(result)
+		current = 8
 	if current != SAVE_VERSION:
 		return {}
 	return result
@@ -538,6 +551,14 @@ static func _migrate_v5_to_v6(data: Dictionary) -> Dictionary:
 static func _migrate_v6_to_v7(data: Dictionary) -> Dictionary:
 	data["disposition"] = disposition_to_dict(DispositionLedger.new())
 	data["save_version"] = 7
+	return data
+
+
+## v7 had no playtime. Seed 0 — a v7 save is a v8 save whose clock was never
+## totted up in real seconds. The rest is untouched.
+static func _migrate_v7_to_v8(data: Dictionary) -> Dictionary:
+	data["playtime"] = 0.0
+	data["save_version"] = 8
 	return data
 
 

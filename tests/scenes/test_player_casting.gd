@@ -232,4 +232,4 @@ func test_casting_adds_no_player_save_state() -> void:
 	# sheet's skills already persist via 007. The casting node joins nothing to
 	# the payload — later specs bump the version (the clock is Game identity,
 	# → 6), not the player casting node.
-	assert_eq(SaveCodec.SAVE_VERSION, 7)
+	assert_eq(SaveCodec.SAVE_VERSION, 8)

@@ -137,4 +137,4 @@ func test_created_sheet_round_trips_through_save_and_load() -> void:
 	assert_eq(_game.character_sheet.attributes[&"willpower"], cfg.attribute_favored_start)
 	assert_eq(_game.character_sheet.attributes[&"strength"], cfg.attribute_start)
 	assert_eq(_game.character_sheet.major_skills, CREATION_MAJORS)
-	assert_eq(SaveCodec.SAVE_VERSION, 7, "save schema is v7 as of the persuasion spec (019)")
+	assert_eq(SaveCodec.SAVE_VERSION, 8, "save schema is v8 as of the save-furniture spec (025)")

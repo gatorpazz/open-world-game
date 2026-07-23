@@ -362,6 +362,36 @@ func test_v6_save_migrates_seeding_an_empty_disposition() -> void:
 	assert_eq(decoded.clock.day, 4, "the untouched v6 clock survives")
 
 
+func test_playtime_round_trips_through_json() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var state := _make_state(balance, items)  # playtime: 3725.0
+
+	var decoded := SaveCodec.decode_save(
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items, _factions()
+	)
+
+	assert_not_null(decoded)
+	assert_almost_eq(decoded.playtime, 3725.0, 0.001, "playtime survives the round-trip")
+
+
+func test_v7_save_migrates_seeding_zero_playtime() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var v7 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	# A v7 save has the disposition ledger but predates playtime.
+	v7.erase("playtime")
+	v7["save_version"] = 7
+
+	var decoded := SaveCodec.decode_save(v7, balance, items, _factions())
+
+	assert_not_null(decoded, "a v7 save migrates instead of failing the load")
+	assert_eq(decoded.playtime, 0.0, "the seeded playtime is zero")
+	assert_eq(
+		decoded.disposition.get_modifier(&"suddel"), 12, "the untouched v7 disposition survives"
+	)
+
+
 func test_v3_save_migrates_seeding_an_empty_bounty() -> void:
 	var balance := load(BALANCE_PATH) as BalanceConfig
 	var items := _make_items()
@@ -527,6 +557,7 @@ func _make_state(
 	var disposition := DispositionLedger.new()
 	disposition.adjust(&"suddel", 12)
 	state.disposition = disposition
+	state.playtime = 3725.0  # 1h 2m 5s
 	return state
 
 

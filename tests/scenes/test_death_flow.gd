@@ -7,6 +7,7 @@ extends GutTest
 const IRON_SWORD := preload("res://data/items/iron_sword.tres")
 const MAIN_SCENE := "res://scenes/main.tscn"
 const TEST_SAVE_PATH := "user://test_death_007.json"
+const TEST_SAVES_DIR := "user://test_death_saves"
 
 var _game: Node
 var _sandbox: Node3D
@@ -17,6 +18,7 @@ var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
 var _saved_save_path: String
+var _saved_saves_dir: String
 
 
 func before_each() -> void:
@@ -28,6 +30,7 @@ func before_each() -> void:
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
 	_saved_save_path = _game.save_path
+	_saved_saves_dir = _game.saves_dir
 	_sandbox = Node3D.new()
 	add_child_autofree(_sandbox)
 	_game.world_parent = _sandbox
@@ -41,6 +44,7 @@ func before_each() -> void:
 	# A scratch path with no file: the fallback tests must never see a
 	# developer's real save, and the save-present test writes only here.
 	_game.save_path = TEST_SAVE_PATH
+	_game.saves_dir = TEST_SAVES_DIR
 	_remove_scratch_file()
 
 
@@ -48,6 +52,7 @@ func after_each() -> void:
 	get_tree().paused = false
 	_remove_scratch_file()
 	_game.save_path = _saved_save_path
+	_game.saves_dir = _saved_saves_dir
 	_game.character_sheet = _saved_sheet
 	_game.inventory = _saved_inventory
 	_game.journal = _saved_journal
@@ -131,3 +136,5 @@ func test_death_button_loads_last_save_when_one_exists() -> void:
 func _remove_scratch_file() -> void:
 	if FileAccess.file_exists(TEST_SAVE_PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SAVE_PATH))
+	for slot_id: StringName in SaveSlots.SLOT_IDS:
+		SaveSlots.delete(TEST_SAVES_DIR, slot_id)

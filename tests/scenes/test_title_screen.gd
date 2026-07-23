@@ -7,6 +7,7 @@ extends GutTest
 const TITLE_SCENE := preload("res://scenes/ui/title_screen.tscn")
 const TITLE_SCENE_PATH := "res://scenes/ui/title_screen.tscn"
 const SCRATCH_SAVE := "user://test_title_save.json"
+const SCRATCH_SAVES_DIR := "user://test_title_saves"
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 const CREATION_MAJORS: Array[StringName] = [
 	&"ranged",
@@ -26,6 +27,7 @@ var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
 var _saved_save_path: String
+var _saved_saves_dir: String
 
 
 func before_each() -> void:
@@ -37,12 +39,14 @@ func before_each() -> void:
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
 	_saved_save_path = _game.save_path
+	_saved_saves_dir = _game.saves_dir
 	_sandbox = Node3D.new()
 	add_child_autofree(_sandbox)
 	_game.world_parent = _sandbox
 	_game.current_world = null
 	_game.player = null
 	_game.save_path = SCRATCH_SAVE
+	_game.saves_dir = SCRATCH_SAVES_DIR
 	_remove_scratch()
 	_game.character_sheet = StatsComponent.build_default_sheet(
 		StatsComponent.DEFAULT_MAJOR_SKILLS.duplicate()
@@ -62,11 +66,14 @@ func after_each() -> void:
 	_game.current_world = _saved_current_world
 	_game.player = _saved_player
 	_game.save_path = _saved_save_path
+	_game.saves_dir = _saved_saves_dir
 
 
 func _remove_scratch() -> void:
 	if FileAccess.file_exists(SCRATCH_SAVE):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(SCRATCH_SAVE))
+	for slot_id: StringName in SaveSlots.SLOT_IDS:
+		SaveSlots.delete(SCRATCH_SAVES_DIR, slot_id)
 
 
 func _write_scratch(content: String) -> void:

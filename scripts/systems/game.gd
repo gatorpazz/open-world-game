@@ -16,6 +16,7 @@ signal time_changed(day: int, bell: int)
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const SPAWN_GROUP := &"spawn_points"
 const DEFAULT_SAVE_PATH := "user://save.json"
+const DEFAULT_SAVES_DIR := "user://saves"
 ## The new-game starting world (spec 010): the player wakes in the bait
 ## square. main.tscn survives as the greybox test target.
 const MAIN_SCENE_PATH := "res://scenes/world/bait_square.tscn"
@@ -54,9 +55,12 @@ var disposition: DispositionLedger
 ## 8).
 var playtime_seconds: float = 0.0
 
-## Where save_game/load_game read and write. Tests point this at a scratch
-## file so they never touch a real save.
+## The legacy single-save path (pre-025): adopted once as the quicksave slot.
+## Tests point this at a scratch file.
 var save_path := DEFAULT_SAVE_PATH
+## The save-slots directory (spec 025): quicksave + numbered manual slots live
+## here. Tests point this at a scratch dir so they never touch a real save.
+var saves_dir := DEFAULT_SAVES_DIR
 
 ## Parent of world scenes. Tests point this at a sandbox node; scene swaps
 ## only ever free worlds parented here, so Game can never free the test runner.
@@ -145,8 +149,14 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	change_scene(MAIN_SCENE_PATH, &"default")
 
 
+## Whether any save slot exists (spec 025) — Continue is offered when so. Adopts
+## a legacy save.json into the quicksave slot first (once).
 func has_save() -> bool:
-	return FileAccess.file_exists(save_path)
+	SaveSlots.adopt_legacy(saves_dir, save_path)
+	for slot_id: StringName in SaveSlots.SLOT_IDS:
+		if SaveSlots.exists(saves_dir, slot_id):
+			return true
+	return false
 
 
 ## Whether the player holds a charter from the named faction (spec 015):
@@ -215,13 +225,15 @@ func disposition_of(npc_def: NPCDef, config: BalanceConfig) -> int:
 	)
 
 
-## Quicksave (spec 007): snapshots the identity resources, the current
-## scene, and the player's transform and pools into save_path as
-## human-readable JSON. The caller shows any notice — Game stays UI-free.
-func save_game() -> bool:
+## Saves to a slot (spec 007 + 025): snapshots the identity resources, the
+## current scene, and the player's transform and pools into the slot, wrapped
+## under a metadata header. Defaults to the quicksave slot (F5). The caller shows
+## any notice — Game stays UI-free.
+func save_game(slot_id := SaveSlots.QUICKSAVE) -> bool:
 	if current_world == null or current_world.scene_file_path.is_empty() or player == null:
 		push_warning("save_game: nothing saveable (no current world or player)")
 		return false
+	SaveSlots.adopt_legacy(saves_dir, save_path)  # consume an orphaned legacy save first
 	var state := SaveCodec.SaveState.new()
 	state.scene_path = current_world.scene_file_path
 	state.player_transform = player.global_transform
@@ -239,30 +251,35 @@ func save_game() -> bool:
 	state.clock = clock
 	state.disposition = disposition
 	state.playtime = playtime_seconds
-	var file := FileAccess.open(save_path, FileAccess.WRITE)
-	if file == null:
-		push_warning("save_game: cannot open '%s' for writing" % save_path)
-		return false
-	file.store_string(JSON.stringify(SaveCodec.encode_save(state), "\t"))
-	return true
+	return SaveSlots.write(saves_dir, slot_id, _build_save_meta(), SaveCodec.encode_save(state))
 
 
-## Load-last-save (spec 007). Decodes the whole file before touching any
-## state — a missing, corrupt, or tampered save returns false with Game
-## exactly as it was. The apply is deferred: callers fire from input
-## handlers inside the very scene about to be freed.
-func load_game() -> bool:
-	if not has_save():
-		push_warning("load_game: no save file at '%s'" % save_path)
-		return false
-	var json := JSON.new()
-	var parse_error := json.parse(FileAccess.get_file_as_string(save_path))
-	if parse_error != OK or not json.data is Dictionary:
-		push_warning("load_game: save file is not valid JSON")
+## The save-slot metadata header (spec 025): a display-only summary read cheaply
+## by the save/load menu, built fresh each save.
+func _build_save_meta() -> Dictionary:
+	return {
+		"saved": Time.get_datetime_string_from_system(),
+		"day": clock.get_day(),
+		"bell": clock.get_bell(),
+		"scene": current_world.scene_file_path,
+		"level": character_sheet.level,
+		"playtime": playtime_seconds,
+	}
+
+
+## Loads a slot (spec 007 + 025). Decodes the whole payload before touching any
+## state — a missing, corrupt, or tampered save returns false with Game exactly
+## as it was. Defaults to the quicksave slot (F9). The apply is deferred: callers
+## fire from input handlers inside the very scene about to be freed.
+func load_game(slot_id := SaveSlots.QUICKSAVE) -> bool:
+	SaveSlots.adopt_legacy(saves_dir, save_path)
+	var payload := SaveSlots.read_payload(saves_dir, slot_id)
+	if payload.is_empty():
+		push_warning("load_game: no readable save in slot '%s'" % slot_id)
 		return false
 	var balance := load(StatsComponent.BALANCE_PATH) as BalanceConfig
 	var state := SaveCodec.decode_save(
-		json.data as Dictionary, balance, ItemLibrary.get_items(), FactionLibrary.get_factions()
+		payload, balance, ItemLibrary.get_items(), FactionLibrary.get_factions()
 	)
 	if state == null:
 		return false

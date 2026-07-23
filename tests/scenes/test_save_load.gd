@@ -6,6 +6,7 @@ extends GutTest
 const RAT_PELT := preload("res://data/items/rat_pelt.tres")
 const MAIN_SCENE := "res://scenes/main.tscn"
 const TEST_SAVE_PATH := "user://test_save_007.json"
+const TEST_SAVES_DIR := "user://test_saves_007"
 
 var _game: Node
 var _sandbox: Node3D
@@ -21,6 +22,7 @@ var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
 var _saved_save_path: String
+var _saved_saves_dir: String
 
 
 func before_each() -> void:
@@ -37,6 +39,7 @@ func before_each() -> void:
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
 	_saved_save_path = _game.save_path
+	_saved_saves_dir = _game.saves_dir
 	_sandbox = Node3D.new()
 	add_child_autofree(_sandbox)
 	_game.world_parent = _sandbox
@@ -53,12 +56,14 @@ func before_each() -> void:
 	_game.notice = NoticeLedger.new()
 	_game.clock = WorldClock.new()
 	_game.save_path = TEST_SAVE_PATH
+	_game.saves_dir = TEST_SAVES_DIR
 	_remove_scratch_file()
 
 
 func after_each() -> void:
 	_remove_scratch_file()
 	_game.save_path = _saved_save_path
+	_game.saves_dir = _saved_saves_dir
 	_game.character_sheet = _saved_sheet
 	_game.inventory = _saved_inventory
 	_game.journal = _saved_journal
@@ -81,11 +86,12 @@ func test_save_game_writes_file_and_flips_has_save() -> void:
 	assert_false(_game.has_save(), "no save before the first quicksave")
 	assert_true(_game.save_game())
 	assert_true(_game.has_save())
-	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(TEST_SAVE_PATH))
-	assert_true(parsed is Dictionary, "the save is readable JSON")
-	assert_eq(int((parsed as Dictionary)["save_version"]), SaveCodec.SAVE_VERSION)
-	assert_eq((parsed as Dictionary)["scene_path"], MAIN_SCENE)
-	assert_true((parsed as Dictionary).has("factions"), "the v2 payload carries a factions section")
+	# save_game writes the quicksave slot, wrapped under a meta header (spec 025).
+	var payload := SaveSlots.read_payload(TEST_SAVES_DIR, &"quicksave")
+	assert_false(payload.is_empty(), "the quicksave slot holds a readable payload")
+	assert_eq(int(payload["save_version"]), SaveCodec.SAVE_VERSION)
+	assert_eq(payload["scene_path"], MAIN_SCENE)
+	assert_true(payload.has("factions"), "the payload carries a factions section")
 
 
 func test_save_game_guard_refuses_without_world_or_player() -> void:
@@ -286,6 +292,36 @@ func test_load_restores_playtime() -> void:
 	assert_almost_eq(_game.playtime_seconds, 1234.0, 5.0, "the saved playtime is restored")
 
 
+func test_saves_and_loads_a_named_slot() -> void:
+	# A manual slot round-trips independently of the quicksave slot (spec 025).
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.stash.gold = 77
+	assert_true(_game.save_game(&"slot_2"))
+
+	_game.stash.gold = 5  # drift after the save
+
+	assert_true(_game.load_game(&"slot_2"))
+	await wait_process_frames(3)
+
+	assert_eq(_game.stash.gold, 77, "the named slot restored the saved stash")
+
+
+func test_slot_metadata_carries_the_live_game() -> void:
+	# A saved slot's metadata header summarizes the live game (spec 025).
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.clock.day = 5
+	_game.playtime_seconds = 100.0
+	assert_true(_game.save_game(&"slot_1"))
+
+	var meta := SaveSlots.read_meta(TEST_SAVES_DIR, &"slot_1")
+	assert_eq(int(meta.get("day")), 5, "metadata carries the clock day")
+	assert_eq(int(meta.get("level")), _game.character_sheet.level, "metadata carries the level")
+	assert_true(String(meta.get("scene")).ends_with(".tscn"), "metadata carries the scene")
+	assert_almost_eq(float(meta.get("playtime")), 100.0, 5.0, "metadata carries playtime")
+
+
 func test_load_preserves_a_stolen_flag() -> void:
 	# The per-stack stolen flag (spec 017) rides in the inventory codec, so a hot
 	# item stays hot across a save/load.
@@ -346,3 +382,5 @@ func _action(action_name: StringName) -> InputEventAction:
 func _remove_scratch_file() -> void:
 	if FileAccess.file_exists(TEST_SAVE_PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_SAVE_PATH))
+	for slot_id: StringName in SaveSlots.SLOT_IDS:
+		SaveSlots.delete(TEST_SAVES_DIR, slot_id)

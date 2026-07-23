@@ -8,7 +8,7 @@
 
 **In:** a `SpellDef` content type + `SpellLibrary` (fourth copy of the Item/Quest/Dialogue library shape), skill-gated spell learning derived from the `CharacterSheet` (no new durable state), a `cast` input (RMB) + `cycle_spell` input (R), instant-hit evocation bolts through the existing HurtBox/defense pipeline, mending self-heal, a temporary ward absorb pool that soaks damage before health, passive mana regen, use-based xp for the three magic schools, HUD mana bar + ward bar + selected-spell label, 5 hand-authored starter spells, debug scene, tests.
 
-**Out (later specs / backlog):** elemental damage types (damage stays one untyped float — wards soak everything) · projectile spells (immediate-hit only, the 004 precedent; dice-roll spell failure **rejected permanently** for the same reason as to-hit rolls) · touch/area/creature-targeted mending or buffs · creature casters and creature wards (player-only) · spell purchase/teaching UX (skill level is the only gate in v1) · spellmaking · concentration/channeled spells · regard/notice cost, the overcast state, licensing enforcement, levitation and the tri-key (the_workings flags these as director + later-spec territory — mechanically deferred; the tier mapping below keeps the door open) · silence/interrupt mechanics · magic resistance.
+**Out (later specs / backlog):** elemental damage types (damage stays one untyped float — wards soak everything) · projectile spells (immediate-hit only, the 004 precedent; dice-roll spell failure **rejected permanently** for the same reason as to-hit rolls) · touch/area/creature-targeted mending or buffs · creature casters and creature wards (player-only) · spell purchase/teaching UX (skill level is the only gate in v1) · spellmaking · concentration/channeled spells · regard/notice cost, the overcast state, licensing enforcement (**shipped in spec 018 — notice as a never-clearing ledger, overcast as permanently remarkable, the charter as a soft notice-gate, witnessed unlicensed workings drawing notice + a warden bounty; the tier mapping below was the seam**), levitation and the tri-key (still deferred — not queued, the_workings' separate tri-key) · silence/interrupt mechanics · magic resistance.
 
 ## Design
 
@@ -55,7 +55,7 @@ Whiffed bolts and full-health mends grant nothing (the connect-to-earn precedent
 
 - `min_skill` maps onto the licensing tiers of `docs/lore/rules/the_workings.md`: **0 = hearth-charm, 25 = chartered craft, 50 = ordained aspect-work**. Data uses only these three values in v1 (validator-enforced), so the progression gate *is* the lore's licensing ladder.
 - The aspect↔school mapping (the Flame / the Stone / the Tide vs evocation / mending / warding) is **not fixed canon**. Display names, descriptions, and HUD notice terminology MUST be authored through the `canon-packet` skill (spec 011 protocol) before the spell content commit; this spec fixes placeholder ids and mechanics only and invents no flavor. Any dangling `[[link]]`s created get stub entries; the mapping question goes to the director, never an agent.
-- Regard cost, the overcast, and levitation are Open (director + later spec).
+- Regard cost and the overcast were Open (director + later spec) — **closed by spec 018** (`SpellDef.license_order` names the aspect order; unlicensed casting draws notice on `Game.notice`; overcast is notice past `overcast_threshold`). Levitation + the tri-key stay Open (not queued).
 
 ### `SpellDef` (`scripts/resources/spell_def.gd` — new content type per the Golden Rule)
 

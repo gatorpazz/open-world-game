@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/interaction/interaction_detector.gd" id="2_detector"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/hud_notice.tscn" id="10_notice"]
 [ext_resource type="Script" path="res://scripts/magic/player_casting.gd" id="11_casting"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud_spell.tscn" id="12_spell"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud_clock.tscn" id="13_clock"]
 
 [sub_resource type="CapsuleShape3D" id="capsule"]
 radius = 0.35
@@ -87,5 +88,7 @@ hurt_box = NodePath("../HurtBox")
 [node name="HudSpell" parent="HUD" instance=ExtResource("12_spell")]
 
 [node name="HudNotice" parent="HUD" instance=ExtResource("10_notice")]
+
+[node name="HudClock" parent="HUD" instance=ExtResource("13_clock")]
 
 [node name="DeathOverlay" parent="HUD" instance=ExtResource("9_death")]

@@ -84,6 +84,9 @@ extends Resource
 @export var circuit_length: int = 9
 @export var real_seconds_per_bell: float = 30.0
 @export var rest_heal_per_bell: float = 8.0
+## How many bells a single rest passes (a full restful span; v1 has no duration
+## picker).
+@export var rest_bells: int = 8
 
 @export_group("Alchemy")
 ## Brewing (spec 022). A brew yields output_count + alchemy_skill /

@@ -12,6 +12,9 @@ const WORLD_ITEM_SCENE := preload("res://scenes/world/world_item.tscn")
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 ## How far in front of the player a dropped item lands.
 const DROP_DISTANCE := 1.0
+## Scenes in this group permit wilderness rest (spec 020); settlements do not
+## and need a bed (a RestPoint).
+const WILD_REST_GROUP := &"wild_rest"
 
 @export var speed := 6.0
 @export var jump_velocity := 4.8
@@ -37,6 +40,7 @@ var _brewing_panel: BrewingPanel = null
 @onready var hud_bars: HudBars = $HUD/HudBars
 @onready var hud_notice: HudNotice = $HUD/HudNotice
 @onready var hud_spell: HudSpell = $HUD/HudSpell
+@onready var hud_clock: HudClock = $HUD/HudClock
 @onready var death_overlay: DeathOverlay = $HUD/DeathOverlay
 @onready var stats: StatsComponent = $Stats
 @onready var inventory_component: InventoryComponent = $Inventory
@@ -119,6 +123,38 @@ func _on_brewing_panel_closed() -> void:
 	_brewing_panel = null
 
 
+## Rest attempt from the rest key (spec 020): the wilderness path. You may rest
+## in the open only where it is safe (no danger near) and only in a wilderness
+## scene (settlements need a bed — a RestPoint).
+func try_rest() -> void:
+	if hostiles_near():
+		show_notice(HudNotice.REST_ENEMIES_NEAR)
+		return
+	var world := get_parent()
+	if world == null or not world.is_in_group(WILD_REST_GROUP):
+		show_notice(HudNotice.REST_NEED_BED)
+		return
+	rest()
+
+
+## Passes a restful span (spec 020): advances the clock by config.rest_bells and
+## restores health + stamina. Called after the wilderness/bed gate passes; the
+## RestPoint bed calls it directly.
+func rest() -> void:
+	Game.advance_time(float(config.rest_bells))
+	var heal := config.rest_heal_per_bell * config.rest_bells
+	stats.apply_health_delta(heal)
+	stats.apply_stamina_delta(heal)
+	show_notice(HudNotice.RESTED)
+
+
+## Whether any creature is hunting the player (CHASE/ATTACK) — rest is blocked
+## while it is. Creatures maintain the HOSTILE_GROUP themselves as they change
+## state (signals-up, not a reach-in); the RestPoint bed checks this too.
+func hostiles_near() -> bool:
+	return not get_tree().get_nodes_in_group(Creature.HOSTILE_GROUP).is_empty()
+
+
 ## Spawns a dropped stack's single unit as a WorldItem just in front of the
 ## player (spec 016). Parented to the world (the player's parent), not the
 ## player. World state — it does not survive a save. A no-op if the player
@@ -176,6 +212,7 @@ func _ready() -> void:
 	detector.target_changed.connect(hud_prompt.set_target)
 	hud_bars.bind(stats)
 	hud_bars.bind_ward(combat)
+	hud_clock.bind()
 	refresh_notice()  # shows any notice carried in from the save
 	combat.died.connect(death_overlay.open)
 	casting.cast_failed.connect(_on_cast_failed)
@@ -208,6 +245,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_sneak()
 	elif event.is_action_pressed("brew"):
 		open_brewing()
+	elif event.is_action_pressed("rest"):
+		try_rest()
 	elif event.is_action_pressed("quicksave"):
 		# Calls down into the sanctioned autoload's own mutation API (the
 		# TransitionDoor/DeathOverlay precedent); Game stays UI-free, so

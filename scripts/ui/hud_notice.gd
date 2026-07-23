@@ -20,6 +20,10 @@ const WORKING_SEEN := "A warden marks the working."
 const OVERCAST := "You are overcast — the sky has your measure."
 ## Spec 022 — brewing needs the carried kit.
 const NO_BREWING_KIT := "You have no brewing kit."
+## Spec 020 — rest.
+const RESTED := "You rest, and wake the better for it."
+const REST_ENEMIES_NEAR := "You cannot rest with danger near."
+const REST_NEED_BED := "You need a bed to rest here."
 ## Spec 017 crime notices — the sneak stance toggle, a witnessed theft, and
 ## the locked/lockpick outcomes.
 const SNEAKING_ON := "Sneaking."

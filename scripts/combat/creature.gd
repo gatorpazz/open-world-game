@@ -12,6 +12,9 @@ enum State { IDLE, WANDER, CHASE, ATTACK, DEAD }
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 const CONTAINER_SCENE := preload("res://scenes/world/world_container.tscn")
+## Creatures hunting the player (CHASE/ATTACK) join this group so rest (spec 020)
+## can check for danger without any script reaching into creature state.
+const HOSTILE_GROUP := &"hostile"
 ## Line-of-sight rays test world geometry (layer 1) only.
 const LOS_MASK := 0b1
 ## Eye height for line-of-sight rays.
@@ -22,7 +25,8 @@ const ARRIVE_DISTANCE := 0.3
 @export var def: CreatureDef
 @export var config: BalanceConfig
 
-var state: State = State.IDLE
+var state: State = State.IDLE:
+	set = _set_state
 var health: float = 0.0
 ## The thing being hunted. Refreshed from Game.player when unset; tests
 ## assign it directly.
@@ -44,6 +48,16 @@ func _ready() -> void:
 	_home = global_position
 	hurt_box.hit_taken.connect(_on_hit_taken)
 	_enter_idle()
+
+
+## State setter: keeps the HOSTILE_GROUP membership in lockstep with the state,
+## so danger checks (spec 020 rest) are a group query, never a state reach-in.
+func _set_state(value: State) -> void:
+	state = value
+	if value == State.CHASE or value == State.ATTACK:
+		add_to_group(HOSTILE_GROUP)
+	else:
+		remove_from_group(HOSTILE_GROUP)
 
 
 func _physics_process(delta: float) -> void:

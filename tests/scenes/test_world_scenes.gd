@@ -12,6 +12,7 @@ const PREFABS: Array[String] = [
 	"hinged_door.tscn",
 	"journal_trigger.tscn",
 	"npc.tscn",
+	"rest_point.tscn",
 	"stash_container.tscn",
 	"transition_door.tscn",
 	"world_container.tscn",

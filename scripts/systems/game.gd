@@ -89,6 +89,15 @@ func _process(delta: float) -> void:
 		time_changed.emit(clock.get_day(), clock.get_bell())
 
 
+## Advances the clock by `bells` (spec 020 — rest; later fast-travel), emitting
+## time_changed so the HUD and scheduled NPCs update. Game owns the tick, so the
+## signal stays here and the _process dedup is kept consistent.
+func advance_time(bells: float) -> void:
+	clock.advance(bells, _config)
+	_last_bell = clock.get_bell()
+	time_changed.emit(clock.get_day(), clock.get_bell())
+
+
 ## Morrowind-style load-door transition. Deferred: it is triggered from
 ## interaction signal chains inside the very scene about to be freed.
 func change_scene(scene_path: String, spawn_point: StringName) -> void:

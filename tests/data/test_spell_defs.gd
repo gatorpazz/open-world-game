@@ -55,6 +55,23 @@ func test_min_skill_is_a_licensing_tier() -> void:
 		assert_has(VALID_MIN_SKILLS, def.min_skill, "%s min_skill is a tier" % def.id)
 
 
+func test_license_order_matches_the_tier() -> void:
+	# Spec 018 invariant: hearth-charm (min_skill 0) is license-free; every
+	# chartered/ordained working names a known aspect order.
+	for def: SpellDef in _defs:
+		if def.min_skill == 0:
+			assert_eq(def.license_order, &"", "%s is hearth-charm — no license" % def.id)
+		else:
+			assert_ne(
+				def.license_order, &"", "%s (tier %d) names an order" % [def.id, def.min_skill]
+			)
+			assert_has(
+				WorkingRules.ASPECT_ORDERS,
+				def.license_order,
+				"%s license_order is a known aspect order" % def.id
+			)
+
+
 func test_numeric_fields_are_in_sane_ranges() -> void:
 	for def: SpellDef in _defs:
 		assert_gt(def.mana_cost, 0.0, "%s mana_cost" % def.id)

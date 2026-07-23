@@ -9,6 +9,7 @@ display_name = "Greatroof"
 description = "Chartered stone-work: a standing roof of regard that outlasts what strikes it."
 skill_id = &"warding"
 min_skill = 25
+license_order = &"stone_order"
 mana_cost = 25.0
 magnitude = 45.0
 duration = 30.0

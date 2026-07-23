@@ -9,6 +9,7 @@ display_name = "Flamelash"
 description = "Ordained aspect-work of the flame-tenders: the Flame's full attention, turned on a target."
 skill_id = &"evocation"
 min_skill = 50
+license_order = &"flame_order"
 mana_cost = 22.0
 magnitude = 20.0
 duration = 0.0

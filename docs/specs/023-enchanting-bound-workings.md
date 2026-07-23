@@ -1,6 +1,8 @@
 # Spec 023 — Enchanting-analog (bound workings)
 
-**Status:** ready to implement
+**Status:** complete (2026-07-23)
+
+**Implementation notes (amendments):** the effect coverage shipped is the tested set — **on-hit** `damage`, **constant** `resist` + `fortify`, **on-use** `heal` (the give-back). Constant `ward` pool-seeding and on-use `damage`/`ward` are recognized by the vocabulary but not yet wired (a mis-authored one is a safe no-op / `push_warning`, no charge wasted); they join a later pass. The def validator shipped as a **smoke test in commit 2** (the type had no content yet) and expanded to the full per-def validator in commit 7 with the first defs — avoids risky empty-loop tests. `EnchantRules` + `BoundWorkingLibrary` live in `scripts/enchant/`. Content: 3 items into Tansy's rare stock (placement logged as a `tansy.md` Open-questions line — her canon stock is botanical/daylight salvage, the iron-gear precedent); the give-back ratification resolved the reserved `the_workings` line (person-as-holder half still reserved).
 **Depends on:** 008 (`SpellDef`/`CombatMath.spell_power` — the aspect magnitude-scaling a bound working reuses; the aspect skills evocation/mending/warding), 004 (`HurtBox`/`take_hit`/`player_combat` — the on-hit discharge rides the defense pipeline), 001/002 (`ItemDef` + `InventoryComponent` equip/use — the item carrier and the constant/on-use hooks), 016 (`MerchantDef.stock` — the rare-stock acquisition path), 018 (`the_workings` notice economy — bound workings are ruled notice-free, so this is the *non*-dependency the ruling settles), 011 (`the_workings` — the give-back ratification lands here)
 **Consumed by:** 024 (creature loot may drop a bound-working item), Phase 3 (a real enchanting bench + soul-charge recharge + faction-rank reward delivery + on-worn fortify-attribute)
 

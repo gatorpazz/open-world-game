@@ -20,6 +20,7 @@ var _journal: Journal
 var _inventory_component: InventoryComponent
 var _display_names: Dictionary[StringName, String] = {}
 var _available: Array[DialogueTopicDef] = []
+var _config: BalanceConfig
 
 @onready var title_label: Label = $Dim/Panel/Layout/Title
 @onready var transcript: RichTextLabel = $Dim/Panel/Layout/Body/Transcript
@@ -40,6 +41,7 @@ func open(npc: NPCDef, journal: Journal, inventory_component: InventoryComponent
 	_npc = npc
 	_journal = journal
 	_inventory_component = inventory_component
+	_config = load(StatsComponent.BALANCE_PATH) as BalanceConfig
 	var topics := DialogueLibrary.get_topics()
 	for topic_id: StringName in topics:
 		_display_names[topic_id] = topics[topic_id].display_name
@@ -68,8 +70,17 @@ func show_topic(topic_id: StringName, from_choice: bool = false) -> void:
 		push_warning("show_topic: unknown topic '%s'" % topic_id)
 		return
 	var inventory := _inventory_component.inventory
-	var response := DialogueEvaluator.pick_response(
-		topics[topic_id], _npc.id, _journal, inventory, from_choice, _current_bounty()
+	var response := (
+		DialogueEvaluator
+		. pick_response(
+			topics[topic_id],
+			_npc.id,
+			_journal,
+			inventory,
+			from_choice,
+			_current_bounty(),
+			_current_disposition(),
+		)
 	)
 	if response == null:
 		# A known keyword this NPC can't answer: say so instead of a silent
@@ -165,13 +176,31 @@ func _current_bounty() -> int:
 	return Game.bounty.get_bounty(Theft.JURISDICTION)
 
 
+## The NPC's effective disposition (spec 019): base + faction reputation + the
+## per-NPC modifier − overcast, composed by DispositionRules. The narrow,
+## spec-sanctioned Game reads (the _current_bounty precedent), gating topics that
+## only open once a stranger has warmed to the player.
+func _current_disposition() -> int:
+	var faction_rep := 0
+	if _npc.faction != &"":
+		faction_rep = Game.faction_standing.get_reputation(_npc.faction)
+	var base := DispositionRules.base_of(_npc, _config)
+	var modifier := Game.disposition.get_modifier(_npc.id)
+	var overcast := Game.notice.is_overcast(_config.overcast_threshold)
+	return DispositionRules.disposition(base, faction_rep, modifier, overcast, _config)
+
+
 func _rebuild_topic_list() -> void:
-	_available = DialogueEvaluator.available_topics(
-		DialogueLibrary.get_topics(),
-		_npc.id,
-		_journal,
-		_inventory_component.inventory,
-		_current_bounty()
+	_available = (
+		DialogueEvaluator
+		. available_topics(
+			DialogueLibrary.get_topics(),
+			_npc.id,
+			_journal,
+			_inventory_component.inventory,
+			_current_bounty(),
+			_current_disposition(),
+		)
 	)
 	topic_list.clear()
 	for topic: DialogueTopicDef in _available:

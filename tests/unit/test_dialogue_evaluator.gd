@@ -90,6 +90,46 @@ func test_requires_bounty_gates_on_the_passed_bounty() -> void:
 	)
 
 
+func test_requires_disposition_gates_on_the_passed_disposition() -> void:
+	# Spec 019: a warmed-stranger topic opens only at/above its disposition.
+	var confided := _response("Since you've been kind to me...", &"tansy")
+	confided.requires_disposition = 60
+	var topic := _topic(&"a_confidence", [confided])
+	_journal.learn_topic(&"a_confidence")
+	var topics: Dictionary[StringName, DialogueTopicDef] = {&"a_confidence": topic}
+
+	# Below the threshold: hidden (disposition is the 7th arg, after bounty).
+	assert_null(
+		DialogueEvaluator.pick_response(topic, &"tansy", _journal, _inventory, false, 0, 40),
+		"cold disposition ⇒ no confidence"
+	)
+	assert_eq(
+		DialogueEvaluator.available_topics(topics, &"tansy", _journal, _inventory, 0, 40).size(),
+		0,
+		"cold disposition ⇒ the topic is hidden"
+	)
+
+	# At the threshold: shown.
+	assert_same(
+		DialogueEvaluator.pick_response(topic, &"tansy", _journal, _inventory, false, 0, 60),
+		confided,
+		"warm disposition ⇒ the confidence answers"
+	)
+	assert_eq(
+		DialogueEvaluator.available_topics(topics, &"tansy", _journal, _inventory, 0, 60).size(),
+		1,
+		"warm disposition ⇒ the topic appears"
+	)
+
+
+func test_zero_disposition_gate_is_always_eligible_and_unconditional() -> void:
+	var plain := _response("A plain word.")
+	assert_true(plain.is_unconditional(), "no gate ⇒ unconditional")
+	var gated := _response("A guarded word.")
+	gated.requires_disposition = 30
+	assert_false(gated.is_unconditional(), "a disposition gate is a condition")
+
+
 func test_requires_topics_gates_until_known() -> void:
 	var gated := _response("Now that you know of it...")
 	gated.requires_topics = [&"the_secret"] as Array[StringName]

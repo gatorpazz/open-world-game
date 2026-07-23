@@ -20,6 +20,7 @@ const DEFAULT_SAVES_DIR := "user://saves"
 ## The new-game starting world (spec 010): the player wakes in the bait
 ## square. main.tscn survives as the greybox test target.
 const MAIN_SCENE_PATH := "res://scenes/world/bait_square.tscn"
+const TITLE_SCENE_PATH := "res://scenes/ui/title_screen.tscn"
 
 var character_sheet: CharacterSheet
 var inventory: Inventory
@@ -147,6 +148,16 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	playtime_seconds = 0.0
 	_last_bell = -1  # force a resync time_changed on the next tick
 	change_scene(MAIN_SCENE_PATH, &"default")
+
+
+## Returns to the title screen (spec 025 pause menu → Quit to Title). Clears the
+## play refs so the real-time tick stops, then swaps the whole scene to the title
+## — a menu, not a world, so it spawns no player. Deferred (a scene swap from an
+## input handler must not run mid-frame); the caller unpauses.
+func quit_to_title() -> void:
+	current_world = null
+	player = null
+	get_tree().change_scene_to_file.call_deferred(TITLE_SCENE_PATH)
 
 
 ## Whether any save slot exists (spec 025) — Continue is offered when so. Adopts

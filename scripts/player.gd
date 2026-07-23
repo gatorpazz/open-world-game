@@ -6,6 +6,7 @@ extends CharacterBody3D
 ## quicksave/quickload, Esc to release the mouse (click to recapture).
 
 const JOURNAL_PANEL_SCENE := preload("res://scenes/ui/journal_panel.tscn")
+const PAUSE_MENU_SCENE := preload("res://scenes/ui/pause_menu.tscn")
 const INVENTORY_PANEL_SCENE := preload("res://scenes/ui/inventory_panel.tscn")
 const BREWING_PANEL_SCENE := preload("res://scenes/ui/brewing_panel.tscn")
 const WORLD_ITEM_SCENE := preload("res://scenes/world/world_item.tscn")
@@ -31,6 +32,7 @@ var sneaking := false
 var journal: Journal
 
 var _journal_panel: JournalPanel = null
+var _pause_menu: PauseMenu = null
 var _inventory_panel: InventoryPanel = null
 var _brewing_panel: BrewingPanel = null
 
@@ -85,6 +87,21 @@ func open_journal() -> void:
 
 func _on_journal_panel_closed() -> void:
 	_journal_panel = null
+
+
+## Opens the Esc pause menu (spec 025) — the journal-panel pattern: it pauses the
+## tree, so this handler never fires again while it is up.
+func open_pause_menu() -> void:
+	if _pause_menu != null:
+		return
+	_pause_menu = PAUSE_MENU_SCENE.instantiate()
+	add_child(_pause_menu)
+	_pause_menu.closed.connect(_on_pause_menu_closed)
+	_pause_menu.open()
+
+
+func _on_pause_menu_closed() -> void:
+	_pause_menu = null
 
 
 ## Opens the inventory panel (spec 012) — the journal-panel pattern: it
@@ -257,7 +274,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not Game.load_game():
 			show_notice(HudNotice.NO_SAVE_TO_LOAD)
 	elif event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		open_pause_menu()
 	elif (
 		event is InputEventMouseButton
 		and event.pressed

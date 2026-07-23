@@ -39,6 +39,8 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
+		# Consume it so a pause menu hosting this sub-panel does not also close.
+		get_viewport().set_input_as_handled()
 		close()
 
 

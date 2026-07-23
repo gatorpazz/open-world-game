@@ -56,6 +56,23 @@ func test_buying_moves_item_to_player_and_coin_to_merchant() -> void:
 	assert_signal_emitted(_items, "gold_changed")
 
 
+func test_a_friendly_merchant_charges_less_to_buy() -> void:
+	# Spec 019: the disposition factor the Npc computes flows into the panel's
+	# price calls. A factor below 1 (a friendly merchant) discounts buying.
+	_merchant.gold = 100
+	_merchant.add_item(IRON_SWORD, 1)
+	_items.add_gold(100)
+	_panel = PANEL_SCENE.instantiate() as BarterPanel
+	add_child_autofree(_panel)
+	_panel.open(_merchant, _items, BALANCE, TANSY, null, 0.8)  # friendly factor
+	var full := BarterRules.buy_price(IRON_SWORD, BALANCE, TANSY.price_multiplier)
+	var discounted := BarterRules.buy_price(IRON_SWORD, BALANCE, TANSY.price_multiplier, 0.8)
+	assert_lt(discounted, full, "a friendly factor discounts the price")
+
+	assert_true(_panel.buy_row(0), "buy succeeds at the discounted price")
+	assert_eq(_panel.player_gold(), 100 - discounted, "player paid the discounted price")
+
+
 func test_buying_refused_when_player_cannot_afford() -> void:
 	_merchant.gold = 100
 	_merchant.add_item(IRON_SWORD, 1)

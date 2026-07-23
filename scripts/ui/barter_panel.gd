@@ -18,6 +18,10 @@ var _merchant: Inventory
 var _taker: InventoryComponent
 var _config: BalanceConfig
 var _def: MerchantDef
+## The merchant's disposition price factor (spec 019): < 1 for a friendly
+## merchant (cheaper), > 1 for a cold one. 1.0 = neutral (the default when a
+## counter opens with no NPC disposition, e.g. a test).
+var _persuasion_factor: float = BarterRules.NEUTRAL_PERSUASION
 ## The player, for the Steal path (spec 017) — grabbing the on-offer goods runs
 ## through the acquire choke, so it can be witnessed like any theft.
 var _actor: Player = null
@@ -48,13 +52,15 @@ func open(
 	taker: InventoryComponent,
 	config: BalanceConfig,
 	def: MerchantDef,
-	actor: Player = null
+	actor: Player = null,
+	persuasion_factor: float = BarterRules.NEUTRAL_PERSUASION
 ) -> void:
 	_merchant = merchant
 	_taker = taker
 	_config = config
 	_def = def
 	_actor = actor
+	_persuasion_factor = persuasion_factor
 	title_label.text = def.display_name
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -74,7 +80,7 @@ func buy_row(index: int) -> bool:
 	if index < 0 or index >= _merchant.stacks.size():
 		return false
 	var item := _merchant.stacks[index].item
-	var price := BarterRules.buy_price(item, _config, _def.price_multiplier)
+	var price := BarterRules.buy_price(item, _config, _def.price_multiplier, _persuasion_factor)
 	if _taker.inventory.gold < price:
 		return false
 	_taker.spend_gold(price)
@@ -93,7 +99,7 @@ func sell_row(index: int) -> bool:
 	var item := _sellable[index].item
 	if not BarterRules.can_sell(item, _def):
 		return false
-	var price := BarterRules.sell_price(item, _config, _def.price_multiplier)
+	var price := BarterRules.sell_price(item, _config, _def.price_multiplier, _persuasion_factor)
 	if _merchant.gold < price:
 		return false
 	_merchant.spend_gold(price)
@@ -142,7 +148,9 @@ func _refresh() -> void:
 func _rebuild_buy() -> void:
 	buy_list.clear()
 	for stack: ItemStack in _merchant.stacks:
-		var price := BarterRules.buy_price(stack.item, _config, _def.price_multiplier)
+		var price := BarterRules.buy_price(
+			stack.item, _config, _def.price_multiplier, _persuasion_factor
+		)
 		buy_list.add_item("%s x%d — %dg" % [stack.item.display_name, stack.count, price])
 
 
@@ -153,7 +161,9 @@ func _rebuild_sell() -> void:
 		if not BarterRules.is_sellable(stack, _def):
 			continue
 		_sellable.append(stack)
-		var price := BarterRules.sell_price(stack.item, _config, _def.price_multiplier)
+		var price := BarterRules.sell_price(
+			stack.item, _config, _def.price_multiplier, _persuasion_factor
+		)
 		sell_list.add_item("%s x%d — %dg" % [stack.item.display_name, stack.count, price])
 
 

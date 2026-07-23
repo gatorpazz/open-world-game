@@ -201,13 +201,7 @@ func _current_bounty() -> int:
 ## spec-sanctioned Game reads (the _current_bounty precedent), gating topics that
 ## only open once a stranger has warmed to the player.
 func _current_disposition() -> int:
-	var faction_rep := 0
-	if _npc.faction != &"":
-		faction_rep = Game.faction_standing.get_reputation(_npc.faction)
-	var base := DispositionRules.base_of(_npc, _config)
-	var modifier := Game.disposition.get_modifier(_npc.id)
-	var overcast := Game.notice.is_overcast(_config.overcast_threshold)
-	return DispositionRules.disposition(base, faction_rep, modifier, overcast, _config)
+	return Game.disposition_of(_npc, _config)
 
 
 func _rebuild_topic_list() -> void:

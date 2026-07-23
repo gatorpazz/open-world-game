@@ -92,8 +92,18 @@ func _on_barter_requested() -> void:
 	add_child(_barter_panel)
 	_barter_panel.closed.connect(_on_barter_panel_closed)
 	var config := load(StatsComponent.BALANCE_PATH) as BalanceConfig
-	_barter_panel.open(
-		_merchant_inventory, _last_player.inventory_component, config, merchant_def, _last_player
+	# The merchant's disposition softens or hardens the counter (spec 019).
+	var factor := DispositionRules.price_factor(Game.disposition_of(def, config), config)
+	(
+		_barter_panel
+		. open(
+			_merchant_inventory,
+			_last_player.inventory_component,
+			config,
+			merchant_def,
+			_last_player,
+			factor,
+		)
 	)
 
 

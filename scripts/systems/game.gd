@@ -189,6 +189,26 @@ func report_persuasion(npc_id: StringName, delta: int) -> void:
 	disposition.adjust(npc_id, delta)
 
 
+## An NPC's effective disposition (spec 019): composes base + faction reputation
+## + the per-NPC modifier − overcast through the pure DispositionRules from the
+## three Game ledgers it owns. The one place the composition's Game reads live —
+## the dialogue gate and the barter price nudge both call here.
+func disposition_of(npc_def: NPCDef, config: BalanceConfig) -> int:
+	var faction_rep := 0
+	if npc_def.faction != &"":
+		faction_rep = faction_standing.get_reputation(npc_def.faction)
+	return (
+		DispositionRules
+		. disposition(
+			DispositionRules.base_of(npc_def, config),
+			faction_rep,
+			disposition.get_modifier(npc_def.id),
+			notice.is_overcast(config.overcast_threshold),
+			config,
+		)
+	)
+
+
 ## Quicksave (spec 007): snapshots the identity resources, the current
 ## scene, and the player's transform and pools into save_path as
 ## human-readable JSON. The caller shows any notice — Game stays UI-free.

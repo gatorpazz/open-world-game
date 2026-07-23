@@ -32,6 +32,10 @@ var faction_standing: FactionStanding
 ## cleared by paying a warden's fine. Identity, not world state — SaveCodec
 ## serializes it (its own section, SAVE_VERSION 4).
 var bounty: BountyLedger
+## Notice (spec 018): the never-clearing regard an unlicensed working draws;
+## past its threshold the caster is overcast. Identity — SaveCodec serializes it
+## (its own section, SAVE_VERSION 5).
+var notice: NoticeLedger
 
 ## Where save_game/load_game read and write. Tests point this at a scratch
 ## file so they never touch a real save.
@@ -53,6 +57,7 @@ func _ready() -> void:
 	faction_standing = FactionStanding.new()
 	stash = Inventory.new()
 	bounty = BountyLedger.new()
+	notice = NoticeLedger.new()
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
 
@@ -85,6 +90,7 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	faction_standing = FactionStanding.new()
 	stash = Inventory.new()
 	bounty = BountyLedger.new()
+	notice = NoticeLedger.new()
 	change_scene(MAIN_SCENE_PATH, &"default")
 
 
@@ -105,6 +111,20 @@ func is_chartered_under(faction_id: StringName) -> bool:
 ## its own state — the Theft orchestrator computes the amounts (from CrimeRules
 ## + the balance config) and calls down, the save_game/change_scene precedent.
 func report_theft(jurisdiction: StringName, bounty_amount: int, reputation_dock: int) -> void:
+	_record_offense(jurisdiction, bounty_amount, reputation_dock)
+
+
+## Records a witnessed unlicensed working (spec 018): the same legal path as a
+## theft — the jurisdiction's bounty rises and, for a member, its reputation is
+## docked. Notice (the magical mark) accrues separately, on Game.notice. The
+## Working orchestrator computes the amounts.
+func report_working(jurisdiction: StringName, bounty_amount: int, reputation_dock: int) -> void:
+	_record_offense(jurisdiction, bounty_amount, reputation_dock)
+
+
+## The shared legal consequence of a witnessed offense (theft or working): a
+## jurisdiction bounty plus a reputation dock. Game mutates only its own state.
+func _record_offense(jurisdiction: StringName, bounty_amount: int, reputation_dock: int) -> void:
 	bounty.add_bounty(jurisdiction, bounty_amount)
 	faction_standing.adjust_reputation(jurisdiction, -reputation_dock)
 
@@ -129,6 +149,7 @@ func save_game() -> bool:
 	state.faction_standing = faction_standing
 	state.stash = stash
 	state.bounty = bounty
+	state.notice = notice
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	if file == null:
 		push_warning("save_game: cannot open '%s' for writing" % save_path)
@@ -211,6 +232,7 @@ func _apply_load(state: SaveCodec.SaveState) -> void:
 	faction_standing = state.faction_standing
 	stash = state.stash
 	bounty = state.bounty
+	notice = state.notice
 	_change_scene_now(state.scene_path, &"default")
 	player.global_transform = state.player_transform
 	player.head.rotation.x = state.head_pitch

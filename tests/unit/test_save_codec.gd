@@ -214,16 +214,17 @@ func test_factions_round_trip_through_json() -> void:
 		assert_true(key is StringName, "faction ids decode back to StringName")
 
 
-func test_v1_save_chains_through_v2_v3_to_v4() -> void:
+func test_v1_save_chains_through_to_v5() -> void:
 	var balance := load(BALANCE_PATH) as BalanceConfig
 	var items := _make_items()
 	var v1 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
-	# A genuine v1 save predates the factions, stash, and bounty sections;
-	# membership lived only in the journal. Strip all three, drop the version to
-	# 1, and hold the join entry — decode must chain v1 -> v2 -> v3 -> v4.
+	# A genuine v1 save predates the factions, stash, bounty, and notice
+	# sections; membership lived only in the journal. Strip all four, drop the
+	# version to 1, and hold the join entry — decode must chain v1 -> ... -> v5.
 	v1.erase("factions")
 	v1.erase("stash")
 	v1.erase("bounty")
+	v1.erase("notice")
 	v1["save_version"] = 1
 	(v1["journal"] as Dictionary)["entries"] = ["joined_the_wardens"]
 
@@ -241,6 +242,36 @@ func test_v1_save_chains_through_v2_v3_to_v4() -> void:
 	assert_true(decoded.stash.stacks.is_empty(), "no items in a migrated stash")
 	assert_not_null(decoded.bounty, "v3->v4 added the bounty section")
 	assert_eq(decoded.bounty.get_bounty(&"wardens"), 0, "the migrated ledger starts clean")
+	assert_not_null(decoded.notice, "v4->v5 added the notice section")
+	assert_eq(decoded.notice.get_notice(), 0, "the migrated notice starts clean")
+
+
+func test_v4_save_migrates_seeding_clean_notice() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var v4 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	# A v4 save has bounty but predates the notice section.
+	v4.erase("notice")
+	v4["save_version"] = 4
+
+	var decoded := SaveCodec.decode_save(v4, balance, items, _factions())
+
+	assert_not_null(decoded, "a v4 save migrates instead of failing the load")
+	assert_eq(decoded.notice.get_notice(), 0, "the seeded notice is clean")
+	assert_eq(decoded.bounty.get_bounty(&"wardens"), 40, "the untouched v4 bounty survives")
+
+
+func test_notice_section_round_trips_through_json() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var state := _make_state(balance, items)  # notice: 70
+
+	var decoded := SaveCodec.decode_save(
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items, _factions()
+	)
+
+	assert_not_null(decoded)
+	assert_eq(decoded.notice.get_notice(), 70, "notice survives the round-trip")
 
 
 func test_v3_save_migrates_seeding_an_empty_bounty() -> void:
@@ -398,6 +429,9 @@ func _make_state(
 	var bounty := BountyLedger.new()
 	bounty.add_bounty(&"wardens", 40)
 	state.bounty = bounty
+	var notice := NoticeLedger.new()
+	notice.add(70)
+	state.notice = notice
 	return state
 
 

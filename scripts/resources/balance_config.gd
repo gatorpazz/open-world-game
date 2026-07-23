@@ -66,6 +66,16 @@ extends Resource
 @export var spell_sweep_radius: float = 0.3
 @export var xp_per_cast: int = 5
 
+@export_group("Notice")
+## Casting an unlicensed working (spec 018) draws this much notice each time;
+## notice never clears. At or past overcast_threshold the caster is overcast —
+## permanently remarkable. A witnessed unlicensed working also draws a warden
+## fine (unlicensed_working_fine) into the bounty ledger; the reputation dock
+## reuses crime_reputation_dock (an offense is an offense).
+@export var notice_per_unlicensed_working: int = 10
+@export var overcast_threshold: int = 100
+@export var unlicensed_working_fine: int = 15
+
 @export_group("Economy")
 ## Barter price spread (spec 016). The player buys at base_value * markup and
 ## sells at base_value * fraction; fraction < markup guarantees sell <= buy —

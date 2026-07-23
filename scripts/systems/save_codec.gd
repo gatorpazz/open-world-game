@@ -12,9 +12,11 @@ extends RefCounted
 ## Bumped to 3 by the barter spec (016): a "stash" section (the Game-owned
 ## player bank) + v2 -> v3 migration seeding an empty stash.
 ## Bumped to 4 by the crime spec (017): a "bounty" section (the per-jurisdiction
-## legal debt) + v3 -> v4 migration seeding an empty ledger. Migrations chain (a
-## v1 save runs v1 -> v2 -> v3 -> v4).
-const SAVE_VERSION := 4
+## legal debt) + v3 -> v4 migration seeding an empty ledger.
+## Bumped to 5 by the magic-v2 spec (018): a "notice" section (the never-clearing
+## regard ledger) + v4 -> v5 migration seeding notice 0. Migrations chain (a v1
+## save runs v1 -> v2 -> v3 -> v4 -> v5).
+const SAVE_VERSION := 5
 
 const _SHEET_KEYS: Array[String] = [
 	"attributes",
@@ -35,6 +37,7 @@ const _ROOT_KEYS: Array[String] = [
 	"factions",
 	"stash",
 	"bounty",
+	"notice",
 ]
 const _PLAYER_KEYS: Array[String] = [
 	"transform",
@@ -64,6 +67,8 @@ class SaveState:
 	var stash: Inventory
 	## The per-jurisdiction bounty ledger (spec 017), its own save section.
 	var bounty: BountyLedger
+	## The never-clearing notice ledger (spec 018), its own save section.
+	var notice: NoticeLedger
 
 
 static func encode_save(state: SaveState) -> Dictionary:
@@ -84,6 +89,7 @@ static func encode_save(state: SaveState) -> Dictionary:
 		"factions": factions_to_dict(state.faction_standing),
 		"stash": inventory_to_dict(state.stash),
 		"bounty": bounty_to_dict(state.bounty),
+		"notice": notice_to_dict(state.notice),
 	}
 
 
@@ -133,6 +139,7 @@ static func decode_save(
 		and data["factions"] is Dictionary
 		and data["stash"] is Dictionary
 		and data["bounty"] is Dictionary
+		and data["notice"] is Dictionary
 	)
 	if not sections_are_dicts:
 		push_warning("decode_save: malformed identity sections")
@@ -143,6 +150,7 @@ static func decode_save(
 	var faction_standing := factions_from_dict(data["factions"] as Dictionary)
 	var stash := inventory_from_dict(data["stash"] as Dictionary, items)
 	var bounty := bounty_from_dict(data["bounty"] as Dictionary)
+	var notice := notice_from_dict(data["notice"] as Dictionary)
 	if (
 		sheet == null
 		or inventory == null
@@ -150,6 +158,7 @@ static func decode_save(
 		or faction_standing == null
 		or stash == null
 		or bounty == null
+		or notice == null
 	):
 		return null
 	var player := data["player"] as Dictionary
@@ -166,6 +175,7 @@ static func decode_save(
 	state.faction_standing = faction_standing
 	state.stash = stash
 	state.bounty = bounty
+	state.notice = notice
 	return state
 
 
@@ -364,6 +374,21 @@ static func bounty_from_dict(data: Dictionary) -> BountyLedger:
 	return ledger
 
 
+static func notice_to_dict(ledger: NoticeLedger) -> Dictionary:
+	return {"notice": ledger.notice}
+
+
+## Rebuilds the notice ledger (spec 018): a single int, coerced from JSON's
+## float. Null on any malformed shape.
+static func notice_from_dict(data: Dictionary) -> NoticeLedger:
+	if not (data.has("notice") and (data["notice"] is float or data["notice"] is int)):
+		push_warning("notice_from_dict: malformed shape")
+		return null
+	var ledger := NoticeLedger.new()
+	ledger.notice = int(data["notice"])
+	return ledger
+
+
 ## Upgrades an older save dict to the current version, or returns {} when no
 ## path exists. Migrations run in sequence: a v1 save chains v1 -> v2 -> v3 ->
 ## v4, each step adding the sections its target version expects.
@@ -381,6 +406,9 @@ static func _migrated(
 	if current == 3:
 		result = _migrate_v3_to_v4(result)
 		current = 4
+	if current == 4:
+		result = _migrate_v4_to_v5(result)
+		current = 5
 	if current != SAVE_VERSION:
 		return {}
 	return result
@@ -413,6 +441,14 @@ static func _migrate_v2_to_v3(data: Dictionary) -> Dictionary:
 static func _migrate_v3_to_v4(data: Dictionary) -> Dictionary:
 	data["bounty"] = bounty_to_dict(BountyLedger.new())
 	data["save_version"] = 4
+	return data
+
+
+## v4 had no notice section. Seed a clean ledger — a v4 save is a v5 save whose
+## player never drew unlicensed regard. The rest of the payload is untouched.
+static func _migrate_v4_to_v5(data: Dictionary) -> Dictionary:
+	data["notice"] = notice_to_dict(NoticeLedger.new())
+	data["save_version"] = 5
 	return data
 
 

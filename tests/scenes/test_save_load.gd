@@ -15,6 +15,7 @@ var _saved_journal: Journal
 var _saved_faction_standing: FactionStanding
 var _saved_stash: Inventory
 var _saved_bounty: BountyLedger
+var _saved_notice: NoticeLedger
 var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
@@ -29,6 +30,7 @@ func before_each() -> void:
 	_saved_faction_standing = _game.faction_standing
 	_saved_stash = _game.stash
 	_saved_bounty = _game.bounty
+	_saved_notice = _game.notice
 	_saved_world_parent = _game.world_parent
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
@@ -46,6 +48,7 @@ func before_each() -> void:
 	_game.faction_standing = FactionStanding.new()
 	_game.stash = Inventory.new()
 	_game.bounty = BountyLedger.new()
+	_game.notice = NoticeLedger.new()
 	_game.save_path = TEST_SAVE_PATH
 	_remove_scratch_file()
 
@@ -59,6 +62,7 @@ func after_each() -> void:
 	_game.faction_standing = _saved_faction_standing
 	_game.stash = _saved_stash
 	_game.bounty = _saved_bounty
+	_game.notice = _saved_notice
 	_game.world_parent = _saved_world_parent
 	_game.current_world = _saved_current_world
 	_game.player = _saved_player
@@ -208,6 +212,22 @@ func test_load_restores_the_bounty_ledger() -> void:
 	assert_eq(
 		_game.bounty.get_bounty(&"wardens"), 75, "the saved bounty is restored, not the drift"
 	)
+
+
+func test_load_restores_notice() -> void:
+	# The notice ledger (spec 018) is its own Game-owned save section — the
+	# never-clearing regard survives a save/load, and post-save drift is dropped.
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.notice.add(60)
+	assert_true(_game.save_game())
+
+	_game.notice.add(999)  # post-save drift, must be discarded
+
+	assert_true(_game.load_game())
+	await wait_process_frames(3)
+
+	assert_eq(_game.notice.get_notice(), 60, "the saved notice is restored, not the drift")
 
 
 func test_load_preserves_a_stolen_flag() -> void:

@@ -137,4 +137,4 @@ func test_created_sheet_round_trips_through_save_and_load() -> void:
 	assert_eq(_game.character_sheet.attributes[&"willpower"], cfg.attribute_favored_start)
 	assert_eq(_game.character_sheet.attributes[&"strength"], cfg.attribute_start)
 	assert_eq(_game.character_sheet.major_skills, CREATION_MAJORS)
-	assert_eq(SaveCodec.SAVE_VERSION, 4, "save schema is v4 as of the crime spec (017)")
+	assert_eq(SaveCodec.SAVE_VERSION, 5, "save schema is v5 as of the magic-v2 spec (018)")

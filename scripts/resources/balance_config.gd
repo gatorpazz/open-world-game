@@ -76,6 +76,16 @@ extends Resource
 @export var overcast_threshold: int = 100
 @export var unlicensed_working_fine: int = 15
 
+@export_group("Alchemy")
+## Brewing (spec 022). A brew yields output_count + alchemy_skill /
+## yield_skill_step draughts (skill scales quantity — potency is fixed by the
+## ConsumableDef). Ingredient inspection reveals base_discovery effects at skill
+## 0, +1 per discovery_step of skill. A brew grants xp_per_brew alchemy xp.
+@export var alchemy_yield_skill_step: int = 25
+@export var alchemy_base_discovery: int = 1
+@export var alchemy_discovery_step: int = 20
+@export var xp_per_brew: int = 5
+
 @export_group("Economy")
 ## Barter price spread (spec 016). The player buys at base_value * markup and
 ## sells at base_value * fraction; fraction < markup guarantees sell <= buy —

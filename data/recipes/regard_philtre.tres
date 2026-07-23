@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="RecipeDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="2"]
+[ext_resource type="Resource" path="res://data/items/lava_glass_grit.tres" id="3"]
+[ext_resource type="Resource" path="res://data/items/terrace_fungus.tres" id="4"]
+
+[sub_resource type="Resource" id="in_grit"]
+script = ExtResource("2")
+item = ExtResource("3")
+count = 1
+
+[sub_resource type="Resource" id="in_fungus"]
+script = ExtResource("2")
+item = ExtResource("4")
+count = 1
+
+[resource]
+script = ExtResource("1")
+id = &"regard_philtre"
+display_name = "Regard Philtre"
+inputs = Array[ExtResource("2")]([SubResource("in_grit"), SubResource("in_fungus")])
+output_id = &"mana_draught"
+output_count = 1
+min_skill = 25

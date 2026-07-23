@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="RecipeDef" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_def.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/resources/item_stack.gd" id="2"]
+[ext_resource type="Resource" path="res://data/items/terrace_fungus.tres" id="3"]
+[ext_resource type="Resource" path="res://data/items/salter_brine.tres" id="4"]
+
+[sub_resource type="Resource" id="in_fungus"]
+script = ExtResource("2")
+item = ExtResource("3")
+count = 1
+
+[sub_resource type="Resource" id="in_brine"]
+script = ExtResource("2")
+item = ExtResource("4")
+count = 1
+
+[resource]
+script = ExtResource("1")
+id = &"brine_tonic"
+display_name = "Brine Tonic"
+inputs = Array[ExtResource("2")]([SubResource("in_fungus"), SubResource("in_brine")])
+output_id = &"healing_draught"
+output_count = 1
+min_skill = 0

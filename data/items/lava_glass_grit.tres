@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="IngredientDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"lava_glass_grit"
+display_name = "Lava-Glass Grit"
+description = "Grindings of worked lava-glass, the stuff of lens and bead. Worked glass holds the charge best, the folk hold — so a brewer keeps a pinch of the grit close."
+weight = 0.1
+base_value = 8
+stackable = true
+max_stack = 20
+effects = Array[StringName]([&"restore_mana"])

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MiscDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/misc_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"brewing_kit"
+display_name = "Simpler's Kit"
+description = "A traveling roll of the simpler's trade — a stone mortar, a ladle worn thin at the lip, and strings for drying. Enough to work a draught wherever you unroll it."
+weight = 1.0
+base_value = 20

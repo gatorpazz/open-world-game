@@ -83,3 +83,7 @@ strangers.
   back to the hoard. (Hoard custom; director taste.)
 - Her supply arrangement with the terrace growers — share, coin, or
   kin? (Economy quest-level.)
+- The simpler's portable kit — mortar, worn ladle, drying-strings — that
+  spec 022 gives the player to brew a draught anywhere: is a traveling
+  simpler's roll its own named thing, or just the trade's tools carried?
+  (Content-introduced by 022; unfixed.)

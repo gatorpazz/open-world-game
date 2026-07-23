@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="IngredientDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"salter_brine"
+display_name = "Salter's Brine"
+description = "A stoppered flask of the Tide-work brine that makes a draught bitter and makes it keep. It is what the healing tonic tastes of."
+weight = 0.2
+base_value = 3
+stackable = true
+max_stack = 20
+effects = Array[StringName]([&"restore_health"])

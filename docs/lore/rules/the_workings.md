@@ -144,3 +144,7 @@ the same motion as the morning lamp-lighting.
 - The bead is worked, blessed glass, and worked glass holds regard
   ([[the_shares]]) — is a rich wrist a small gathering, and does
   wealth carry sky-risk? (Feature-shaped hole; director + spec 008.)
+  Spec 022 leans on the hold-claim for a brewer's ground lava-glass
+  ("Lava-Glass Grit", a mana reagent) but does not rule the give-back —
+  whether stored regard can be released back to a person stays reserved.
+  (Director.)

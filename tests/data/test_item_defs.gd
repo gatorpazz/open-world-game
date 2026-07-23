@@ -3,7 +3,7 @@ extends GutTest
 
 const ITEMS_DIR := "res://data/items"
 const SKILLS_DIR := "res://data/skills"
-const EXPECTED_ITEM_COUNT := 17  # 16 through spec 010 + 1 lockpick (017)
+const EXPECTED_ITEM_COUNT := 21  # 17 through spec 017 + 3 ingredients + 1 brewing kit (022)
 const VALID_ARMOR_SKILLS: Array[StringName] = [&"heavy_armor", &"light_armor"]
 const JEWELRY_SLOTS: Array[StringName] = [&"ring", &"amulet"]
 
@@ -22,6 +22,16 @@ func before_all() -> void:
 
 func test_exactly_twelve_items() -> void:
 	assert_eq(_items.size(), EXPECTED_ITEM_COUNT)
+
+
+func test_ingredient_effects_are_known_tags() -> void:
+	# Spec 022: every IngredientDef effect is in the closed alchemy vocabulary.
+	for item: ItemDef in _items:
+		if item is IngredientDef:
+			for effect: StringName in (item as IngredientDef).effects:
+				assert_has(
+					AlchemyRules.EFFECTS, effect, "%s effect %s is a known tag" % [item.id, effect]
+				)
 
 
 func test_ids_are_unique_and_match_filenames() -> void:

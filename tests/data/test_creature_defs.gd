@@ -52,6 +52,15 @@ func test_leash_radius_at_least_detect_radius() -> void:
 		assert_gte(def.leash_radius, def.detect_radius, "%s leash >= detect" % def.id)
 
 
+## Spec 024: attack_range is 0 (melee) or a spit distance no shorter than melee
+## reach (a spitter that has to close inside melee to fire is misconfigured).
+func test_attack_range_is_melee_or_a_valid_spit() -> void:
+	for def: CreatureDef in _defs:
+		assert_gte(def.attack_range, 0.0, "%s attack_range is non-negative" % def.id)
+		if def.attack_range > 0.0:
+			assert_gte(def.attack_range, def.attack_reach, "%s spit range >= melee reach" % def.id)
+
+
 func test_loot_entries_reference_valid_items_with_positive_counts() -> void:
 	for def: CreatureDef in _defs:
 		for stack: ItemStack in def.loot:

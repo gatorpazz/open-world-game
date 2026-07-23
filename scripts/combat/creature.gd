@@ -1,10 +1,12 @@
 class_name Creature
 extends CharacterBody3D
-## A def-driven melee creature (spec 004): one generic scene, many
-## CreatureDefs. Plain-enum state machine — IDLE -> WANDER -> CHASE
-## (detect radius + line of sight) -> ATTACK -> DEAD. Straight-line
-## pursuit; navmesh pathing is backlog. On death the creature leaves a
-## "<name> Remains" WorldContainer holding its authored loot.
+## A def-driven creature (spec 004; spec 024 adds ambient + ranged): one generic
+## scene, many CreatureDefs. Plain-enum state machine — IDLE -> WANDER -> CHASE
+## (detect radius + line of sight) -> ATTACK -> DEAD. Straight-line pursuit;
+## navmesh pathing is backlog. A non-aggressive def never leaves IDLE/WANDER
+## (ambient); a def with attack_range > 0 spits from range (a hitscan, LOS-gated)
+## instead of closing to melee. On death the creature leaves a "<name> Remains"
+## WorldContainer holding its authored loot.
 
 signal died
 
@@ -99,11 +101,17 @@ func _tick_wander() -> void:
 	_move_toward(_wander_target, def.move_speed * config.creature_wander_speed_multiplier)
 
 
+## How close the creature closes before attacking: its ranged spit distance
+## (spec 024) when it has one, else melee reach.
+func _attack_distance() -> float:
+	return def.attack_range if def.attack_range > 0.0 else def.attack_reach
+
+
 func _tick_chase() -> void:
 	if target == null or global_position.distance_to(_home) > def.leash_radius:
 		_give_up()
 		return
-	if _flat_distance_to(target.global_position) <= def.attack_reach:
+	if _flat_distance_to(target.global_position) <= _attack_distance():
 		state = State.ATTACK
 		return
 	_move_toward(target.global_position, def.move_speed)
@@ -114,14 +122,19 @@ func _tick_attack() -> void:
 	if target == null:
 		_give_up()
 		return
-	if _flat_distance_to(target.global_position) > def.attack_reach:
+	if _flat_distance_to(target.global_position) > _attack_distance():
+		state = State.CHASE
+		return
+	# A ranged spitter needs a clear line to spit (spec 024); a melee creature is
+	# already on top of its target and skips the check.
+	if def.attack_range > 0.0 and not _has_line_of_sight():
 		state = State.CHASE
 		return
 	if _cooldown_remaining > 0.0:
 		return
 	_cooldown_remaining = def.attack_cooldown
-	# Deliberately coarser than the player's sweep: the creature is already
-	# on top of its target, so it hits the HurtBox directly (spec 004).
+	# Deliberately coarser than the player's sweep: melee is on top of the
+	# target, the spit is a hitscan to it — both hit the HurtBox directly.
 	var hurt := _find_hurt_box(target)
 	if hurt != null:
 		hurt.take_hit(def.damage, self)
@@ -164,6 +177,8 @@ func _spawn_remains() -> void:
 ## sight, AND the creature itself inside its leash — so a creature that
 ## gave up cannot instantly re-aggro on the way home.
 func _can_aggro() -> bool:
+	if not def.aggressive:
+		return false
 	if target == null:
 		return false
 	if global_position.distance_to(_home) > def.leash_radius:

@@ -11,11 +11,20 @@ extends Resource
 @export var display_name: String
 @export_multiline var description: String
 @export var max_health: float = 1.0
+## False = ambient (spec 024): the creature never aggros — it drifts and ignores
+## the player (the hush-moths niche), and never joins the runtime &"hostile"
+## group. Named apart from that group (disposition, not current state). Every
+## existing creature is aggressive by default.
+@export var aggressive: bool = true
 ## Flat raw melee damage per hit.
 @export var damage: int = 1
 ## Flat armor rating against incoming damage.
 @export var armor: int = 0
 @export var attack_reach: float = 1.5
+## Ranged attack distance (spec 024): 0 = melee only (closes to attack_reach);
+## > 0 = a spitter that attacks from up to this range with a hitscan spit
+## (LOS-gated, the player-bolt shape). When set, should be >= attack_reach.
+@export var attack_range: float = 0.0
 ## Seconds between hits.
 @export var attack_cooldown: float = 1.5
 ## Chase speed; wandering uses BalanceConfig.creature_wander_speed_multiplier.

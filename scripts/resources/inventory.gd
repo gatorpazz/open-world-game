@@ -159,6 +159,15 @@ func get_total_armor_rating() -> int:
 	return total
 
 
+## Every equipped item (spec 023 bound-working aggregation), unordered — the
+## caller sums over them, so equip order is immaterial.
+func get_equipped_items() -> Array[ItemDef]:
+	var items: Array[ItemDef] = []
+	for slot: StringName in equipment:
+		items.append(equipment[slot])
+	return items
+
+
 ## Total carried weight: loose stacks plus equipped gear (worn items
 ## still weigh you down).
 func get_total_weight() -> float:

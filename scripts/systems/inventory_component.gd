@@ -111,6 +111,27 @@ func get_equipped_armor_skill_ids() -> Array[StringName]:
 	return inventory.get_equipped_armor_skill_ids()
 
 
+## The summed constant bound-working bonus of an effect (and, for fortify, a
+## subject) across every equipped item (spec 023) — the worn-charm aggregation.
+func bound_bonus(effect: StringName, subject := &"") -> float:
+	return EnchantRules.constant_bonus(
+		inventory.get_equipped_items(), effect, subject, stats.sheet, stats.sheet.config
+	)
+
+
+## Armor rating including worn `resist` charms (spec 023) — what the defense
+## pipeline actually mitigates with.
+func get_effective_armor_rating() -> int:
+	return get_total_armor_rating() + roundi(bound_bonus(&"resist"))
+
+
+## A skill's level including worn `fortify` charms (spec 023) — what the combat
+## reads scale with.
+func effective_skill(skill_id: StringName) -> int:
+	var base: int = stats.sheet.skills.get(skill_id, 0)
+	return base + roundi(bound_bonus(&"fortify", skill_id))
+
+
 func _refresh_encumbrance() -> void:
 	var encumbered := is_encumbered()
 	if encumbered == _was_encumbered:

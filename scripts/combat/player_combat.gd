@@ -67,7 +67,7 @@ func try_attack() -> void:
 		return  # whiffed: nothing in reach, or something solid was nearer
 	var raw := CombatMath.attack_damage(
 		weapon.damage,
-		stats.sheet.skills[weapon.skill_id],
+		inventory_component.effective_skill(weapon.skill_id),
 		stats.sheet.attributes[&"strength"],
 		exhausted,
 		config
@@ -116,9 +116,9 @@ func apply_ward(amount: float, duration: float) -> void:
 func _on_hit_taken(raw_damage: float, _attacker: Node3D) -> void:
 	var result := CombatMath.resolve_defense(
 		raw_damage,
-		inventory_component.get_total_armor_rating(),
+		inventory_component.get_effective_armor_rating(),
 		inventory_component.get_equipped_shield() != null,
-		stats.sheet.skills[&"block"],
+		inventory_component.effective_skill(&"block"),
 		_block_roll(),
 		config
 	)

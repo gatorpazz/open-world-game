@@ -69,6 +69,26 @@ func use_consumable(item: ConsumableDef) -> bool:
 	return true
 
 
+## Triggers an on-use bound working (spec 023) and consumes one — a single-use
+## charge. v1 handles `heal`, the ratified give-back: it restores health scaled
+## by the working's aspect (mending) skill. Returns false without consuming when
+## the item carries no on-use working or an unsupported effect (no charge wasted).
+func use_bound_working(item: ItemDef) -> bool:
+	if not EnchantRules.triggers(item, &"on_use"):
+		return false
+	var working := item.bound_working
+	if working.effect != &"heal":
+		push_warning("use_bound_working: unsupported on-use effect '%s'" % working.effect)
+		return false
+	if not inventory.remove_item(item, 1):
+		return false
+	var aspect_skill: int = stats.sheet.skills.get(working.skill_id, 0)
+	stats.apply_health_delta(EnchantRules.magnitude(working, aspect_skill, stats.sheet.config))
+	item_removed.emit(item, 1)
+	_refresh_encumbrance()
+	return true
+
+
 func add_gold(amount: int) -> void:
 	inventory.add_gold(amount)
 	gold_changed.emit(inventory.gold)

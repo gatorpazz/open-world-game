@@ -18,6 +18,7 @@ enum RowKind { STACK, EQUIPPED }
 
 const ACTION_LABELS: Dictionary[StringName, String] = {
 	&"use": "Use",
+	&"use_working": "Use",
 	&"equip": "Equip",
 	&"unequip": "Unequip",
 	&"none": "Use",
@@ -98,6 +99,8 @@ func selected_action() -> StringName:
 	if row[&"kind"] == RowKind.EQUIPPED:
 		return &"unequip"
 	var item: ItemDef = row[&"item"]
+	if EnchantRules.triggers(item, &"on_use"):
+		return &"use_working"
 	if item is ConsumableDef:
 		return &"use"
 	if item is WeaponDef or item is ArmorDef:
@@ -113,6 +116,8 @@ func primary_action() -> bool:
 	match selected_action():
 		&"use":
 			return _items.use_consumable(row[&"item"] as ConsumableDef)
+		&"use_working":
+			return _items.use_bound_working(row[&"item"] as ItemDef)
 		&"equip":
 			return _items.equip(row[&"item"] as ItemDef)
 		&"unequip":

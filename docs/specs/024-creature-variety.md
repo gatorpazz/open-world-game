@@ -1,6 +1,8 @@
 # Spec 024 — Creature variety pass
 
-**Status:** ready to implement
+**Status:** complete (2026-07-23)
+
+**Implementation notes:** the bestiary landed at exactly 6 — the 3 existing + **hush-moths** (ambient, no loot), a **spore-puffer** (the ranged spitter, grounded as a wild gallery fungus-thing), and a **chitin-crawler** (the melee kind, grounded as the wright-chitin source). The `hostile` def flag was named **`aggressive`** (to disambiguate from the runtime `&"hostile"` group, gdscript-conventions review). Drop materials: `raw_chitin` (sellable `MiscDef`) + `spore_sac` (a 022 `IngredientDef`, `effects [hide_regard]`). Two draft lore stubs (`spore_puffer.md`, `chitin_crawler.md`) flag the provisional grounding (a feral fungus *creature* is new; canon names "scout chitin" but not the source beast) as Open-questions; placement is all three in `scar_route`. Save-neutral as planned.
 **Depends on:** 004 (`CreatureDef`/`creature.gd` — the AI state machine + flat-stat defs this extends; `HurtBox`/`take_hit` the ranged spit reuses; `WitnessQuery`-adjacent LOS the spit checks), 016 (`base_value` — new drop materials price for sale; `MerchantDef` categories), 022 (`IngredientDef` — a drop doubles as an alchemy ingredient), 011 (`new-lore-entry` — the ~2 new canon-creature stubs + the hush-moths grounding)
 **Consumed by:** 010's exit-audit shape (a fuller bestiary for the slice); Phase 3 (more biomes/creatures as settlement scenes land; a real projectile visual for the spit)
 

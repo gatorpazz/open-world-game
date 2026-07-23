@@ -182,6 +182,13 @@ func _record_offense(jurisdiction: StringName, bounty_amount: int, reputation_do
 	faction_standing.adjust_reputation(jurisdiction, -reputation_dock)
 
 
+## Records the outcome of a persuasion move (spec 019): shifts the NPC's standing
+## disposition modifier. The Persuasion orchestrator computes the delta (a move's
+## gain, or an intimidate backfire). Game mutates only its own state.
+func report_persuasion(npc_id: StringName, delta: int) -> void:
+	disposition.adjust(npc_id, delta)
+
+
 ## Quicksave (spec 007): snapshots the identity resources, the current
 ## scene, and the player's transform and pools into save_path as
 ## human-readable JSON. The caller shows any notice — Game stays UI-free.

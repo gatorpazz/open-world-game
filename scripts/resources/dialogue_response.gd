@@ -47,6 +47,11 @@ extends Resource
 ## player's standing bounty — spends the fine and clears the ledger, or reports
 ## that nothing is owed / can't be covered. The "pay" branch of pay-or-refuse.
 @export var pay_fine: bool = false
+## Persuasion move (spec 019): admire / intimidate / bribe. A spoken response
+## with this set rolls the move against the NPC's disposition and shifts the
+## per-NPC modifier (bribe spends beads). Empty = no move. Authored as a
+## choice_gated commit behind a choice prompt (the 013 pattern).
+@export var persuade: StringName = &""
 
 
 ## True when every condition field is empty — an always-available fallback.

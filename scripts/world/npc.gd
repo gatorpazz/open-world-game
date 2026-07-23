@@ -70,7 +70,7 @@ func _on_interacted(by: Node) -> void:
 	add_child(_panel)
 	_panel.closed.connect(_on_panel_closed)
 	_panel.barter_requested.connect(_on_barter_requested)
-	_panel.open(def, player.journal, player.inventory_component)
+	_panel.open(def, player.journal, player.inventory_component, player.stats.sheet)
 
 
 func _on_panel_closed() -> void:

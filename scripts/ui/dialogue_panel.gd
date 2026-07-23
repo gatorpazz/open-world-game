@@ -21,6 +21,7 @@ var _inventory_component: InventoryComponent
 var _display_names: Dictionary[StringName, String] = {}
 var _available: Array[DialogueTopicDef] = []
 var _config: BalanceConfig
+var _sheet: CharacterSheet
 
 @onready var title_label: Label = $Dim/Panel/Layout/Title
 @onready var transcript: RichTextLabel = $Dim/Panel/Layout/Body/Transcript
@@ -35,12 +36,16 @@ func _ready() -> void:
 	transcript.meta_clicked.connect(_on_keyword_clicked)
 
 
-## Opens the conversation: greeting first, then the topic list. Operates on
-## the player's own Journal and Inventory — injected, never read ambiently.
-func open(npc: NPCDef, journal: Journal, inventory_component: InventoryComponent) -> void:
+## Opens the conversation: greeting first, then the topic list. Operates on the
+## player's own Journal, Inventory, and sheet — injected, never read ambiently.
+## The sheet supplies the persuasion skill for the 019 moves.
+func open(
+	npc: NPCDef, journal: Journal, inventory_component: InventoryComponent, sheet: CharacterSheet
+) -> void:
 	_npc = npc
 	_journal = journal
 	_inventory_component = inventory_component
+	_sheet = sheet
 	_config = load(StatsComponent.BALANCE_PATH) as BalanceConfig
 	var topics := DialogueLibrary.get_topics()
 	for topic_id: StringName in topics:
@@ -148,6 +153,21 @@ func _apply_effects(response: DialogueResponse) -> void:
 		_inventory_component.add_gold(response.give_gold)
 	if response.pay_fine:
 		_settle_fine()
+	if response.persuade != &"":
+		_attempt_persuade(response.persuade)
+
+
+## Runs a persuasion move (spec 019) through the orchestrator: it reads the
+## player's persuasion skill, rolls against the NPC's pre-move disposition,
+## shifts the modifier (bribe spends beads), and returns the outcome line. The
+## transcript speaks it — the HUD is hidden behind the paused dialogue — and the
+## show_topic caller rebuilds the topic list, so a warmed gate opens at once.
+func _attempt_persuade(move: StringName) -> void:
+	var skill: int = _sheet.skills.get(&"persuasion", 0)
+	var line := Persuasion.attempt(
+		move, _npc.id, skill, _current_disposition(), _inventory_component, _config
+	)
+	_append_notice(line)
 
 
 ## The warden confrontation's pay branch (spec 017): spends the standing fine

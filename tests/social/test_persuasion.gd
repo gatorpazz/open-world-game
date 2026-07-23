@@ -47,7 +47,9 @@ func test_a_certain_admire_lands_and_shifts_the_modifier() -> void:
 
 
 func test_a_certain_failed_intimidate_backfires() -> void:
-	# Zero skill + warm disposition ⇒ intimidate chance clamps to 0.0 ⇒ never lands.
+	# Force a certain miss: clamp the chance to exactly 0.0 (the real intimidate
+	# odds floor near 0.05, so inputs alone can't guarantee a failed roll).
+	_config.persuade_chance_max = 0.0
 	Persuasion.attempt(DispositionRules.INTIMIDATE, NPC, 0, 90, _inventory(), _config)
 	assert_eq(
 		_game.disposition.get_modifier(NPC),

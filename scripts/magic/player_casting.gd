@@ -13,6 +13,10 @@ signal selected_spell_changed(spell: SpellDef)
 signal spell_learned(spell: SpellDef)
 ## A cast was refused for lack of mana — nothing spent, no cooldown.
 signal cast_failed
+## A working was successfully cast (spec 018). Emitted after the mana spend and
+## effect so the Player can run licensing/notice/enforcement — this node reads no
+## Game state; it just reports the cast up (signals up, calls down).
+signal working_cast(spell: SpellDef)
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
 
@@ -103,6 +107,7 @@ func try_cast() -> void:
 			_cast_ward(power)
 		_:
 			push_warning("no cast handler for school %s" % _selected.skill_id)
+	working_cast.emit(_selected)
 
 
 ## Instant bolt: nearest HurtBox camera-forward within cast_range, walls

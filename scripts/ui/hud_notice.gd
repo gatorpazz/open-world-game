@@ -12,6 +12,12 @@ const NO_SAVE_TO_LOAD := "No save to load."
 ## draws — the pool noun stays deliberately unnamed in-world).
 const CAST_FAILED := "Nothing left to draw."
 const WORKING_LEARNED := "New working: %s"
+## Spec 018 — the license teeth. An unlicensed working draws regard (notice);
+## a witnessed one is also marked by the wardens; overcast is the permanent
+## failure state. Terminology from the_workings (regard / notice / overcast).
+const WORKING_NOTICED := "The working draws regard."
+const WORKING_SEEN := "A warden marks the working."
+const OVERCAST := "You are overcast — the sky has your measure."
 ## Spec 017 crime notices — the sneak stance toggle, a witnessed theft, and
 ## the locked/lockpick outcomes.
 const SNEAKING_ON := "Sneaking."

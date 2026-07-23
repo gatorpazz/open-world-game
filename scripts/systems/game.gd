@@ -122,6 +122,14 @@ func report_working(jurisdiction: StringName, bounty_amount: int, reputation_doc
 	_record_offense(jurisdiction, bounty_amount, reputation_dock)
 
 
+## Records crossing into overcast (spec 018): a one-time reputation dock with
+## the jurisdiction — being permanently remarkable is a standing mark. No bounty
+## (that is the witnessed-working path) and the notice is already on the ledger.
+## Game mutates its own state.
+func report_overcast(jurisdiction: StringName, reputation_dock: int) -> void:
+	faction_standing.adjust_reputation(jurisdiction, -reputation_dock)
+
+
 ## The shared legal consequence of a witnessed offense (theft or working): a
 ## jurisdiction bounty plus a reputation dock. Game mutates only its own state.
 func _record_offense(jurisdiction: StringName, bounty_amount: int, reputation_dock: int) -> void:

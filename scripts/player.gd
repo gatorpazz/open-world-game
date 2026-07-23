@@ -120,6 +120,12 @@ func _on_spell_learned(spell: SpellDef) -> void:
 	show_notice(HudNotice.WORKING_LEARNED % spell.display_name)
 
 
+## An unlicensed working draws notice and, if seen, a warden bounty (spec 018).
+## The casting node signals up; the Player (the Node3D actor) drives enforcement.
+func _on_working_cast(spell: SpellDef) -> void:
+	Working.report(self, spell)
+
+
 ## Queues a brief fading HUD line (spec 006) — for journal writes outside
 ## dialogue; the dialogue panel keeps its own inline transcript notices.
 func show_notice(text: String) -> void:
@@ -138,6 +144,7 @@ func _ready() -> void:
 	combat.died.connect(death_overlay.open)
 	casting.cast_failed.connect(_on_cast_failed)
 	casting.spell_learned.connect(_on_spell_learned)
+	casting.working_cast.connect(_on_working_cast)
 	casting.selected_spell_changed.connect(hud_spell.set_spell)
 	# Casting readied before us, so pull the selection it already made.
 	hud_spell.set_spell(casting.get_selected())

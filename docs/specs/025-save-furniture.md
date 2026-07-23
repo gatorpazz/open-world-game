@@ -1,6 +1,8 @@
 # Spec 025 — Save/load furniture (slots, pause menu, settings)
 
-**Status:** ready to implement
+**Status:** complete (2026-07-23) — **closes Phase 2**
+
+**Implementation notes (amendments):** the title-screen **Continue loads the most-recent slot** (`Game.continue_game` → `SaveSlots.most_recent` by file mtime) rather than opening the load menu on the title — a one-click resume that also covers a manual-only saver; the full slot picker is the in-game pause menu (simpler, and no title-flow test rework). `Player.mouse_sensitivity` (the `@export`) was **removed**; the look reads `GameSettings.mouse_sensitivity` live so a slider change applies at once (no per-player poke). `GameSettings` is a static holder (the `SaveSlots` shape), not an autoload. Quit-to-title's scene swap is playthrough-verified (a live `change_scene_to_file` breaks the headless runner).
 **Depends on:** 007 (`SaveCodec`/`Game.save_game`/`load_game`/`save_path` — the slot layer wraps the versioned payload; the migration machinery, proven across v2→v7, takes its eighth bump here), 020 (`Game.clock` — day/bell metadata; the `_process` tick playtime rides), 009 (the title screen — Continue routes into the load menu), 005/012 (`JournalPanel`/`InventoryPanel` — the panel lifecycle the menus mirror)
 **Consumed by:** Phase 2's exit audit (this closes the queue); Phase 3 (a richer settings surface; autosave if wanted)
 

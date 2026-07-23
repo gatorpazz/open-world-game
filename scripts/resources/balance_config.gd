@@ -76,6 +76,15 @@ extends Resource
 @export var overcast_threshold: int = 100
 @export var unlicensed_working_fine: int = 15
 
+@export_group("Time")
+## The real-time clock (spec 020). A day is bells_per_day bells; a circuit is
+## circuit_length days (canon: 9). One bell passes every real_seconds_per_bell
+## seconds of play. Resting restores rest_heal_per_bell health+stamina per bell.
+@export var bells_per_day: int = 12
+@export var circuit_length: int = 9
+@export var real_seconds_per_bell: float = 30.0
+@export var rest_heal_per_bell: float = 8.0
+
 @export_group("Alchemy")
 ## Brewing (spec 022). A brew yields output_count + alchemy_skill /
 ## yield_skill_step draughts (skill scales quantity — potency is fixed by the

@@ -9,6 +9,10 @@ extends Node
 ## Deliberately no class_name: it would collide with the autoload name.
 ## Tests preload this script by path instead.
 
+## Emitted when the whole bell or the day rolls over (not every frame) — the HUD
+## clock and scheduled NPCs listen (spec 020).
+signal time_changed(day: int, bell: int)
+
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const SPAWN_GROUP := &"spawn_points"
 const DEFAULT_SAVE_PATH := "user://save.json"
@@ -36,6 +40,10 @@ var bounty: BountyLedger
 ## past its threshold the caster is overcast. Identity — SaveCodec serializes it
 ## (its own section, SAVE_VERSION 5).
 var notice: NoticeLedger
+## The in-game clock (spec 020): circuit-day + bell-of-day, advanced in real time
+## by _process and by rest. Identity — SaveCodec serializes it (its own section,
+## SAVE_VERSION 6). time_changed fires on each bell/day rollover.
+var clock: WorldClock
 
 ## Where save_game/load_game read and write. Tests point this at a scratch
 ## file so they never touch a real save.
@@ -46,6 +54,11 @@ var save_path := DEFAULT_SAVE_PATH
 var world_parent: Node
 var current_world: Node = null
 var player: Player = null
+
+## The balance config, loaded once for the real-time clock tick (spec 020).
+var _config: BalanceConfig = null
+## The last whole bell emitted — the tick only signals on a change.
+var _last_bell := -1
 
 
 func _ready() -> void:
@@ -58,8 +71,22 @@ func _ready() -> void:
 	stash = Inventory.new()
 	bounty = BountyLedger.new()
 	notice = NoticeLedger.new()
+	clock = WorldClock.new()
+	_config = load(StatsComponent.BALANCE_PATH) as BalanceConfig
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
+
+
+## The real-time bell clock (spec 020): advances only during gameplay (a world +
+## player), so headless tests without a world never drift. Emits time_changed
+## when the whole bell or the day rolls over, not every frame.
+func _process(delta: float) -> void:
+	if current_world == null or player == null:
+		return
+	clock.advance(delta / _config.real_seconds_per_bell, _config)
+	if clock.get_bell() != _last_bell:
+		_last_bell = clock.get_bell()
+		time_changed.emit(clock.get_day(), clock.get_bell())
 
 
 ## Morrowind-style load-door transition. Deferred: it is triggered from
@@ -91,6 +118,8 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	stash = Inventory.new()
 	bounty = BountyLedger.new()
 	notice = NoticeLedger.new()
+	clock = WorldClock.new()
+	_last_bell = -1  # force a resync time_changed on the next tick
 	change_scene(MAIN_SCENE_PATH, &"default")
 
 
@@ -158,6 +187,7 @@ func save_game() -> bool:
 	state.stash = stash
 	state.bounty = bounty
 	state.notice = notice
+	state.clock = clock
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	if file == null:
 		push_warning("save_game: cannot open '%s' for writing" % save_path)
@@ -241,6 +271,8 @@ func _apply_load(state: SaveCodec.SaveState) -> void:
 	stash = state.stash
 	bounty = state.bounty
 	notice = state.notice
+	clock = state.clock
+	_last_bell = -1  # force a resync time_changed to the loaded time on the next tick
 	_change_scene_now(state.scene_path, &"default")
 	player.global_transform = state.player_transform
 	player.head.rotation.x = state.head_pitch

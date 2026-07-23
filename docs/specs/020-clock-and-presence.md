@@ -6,7 +6,7 @@
 
 ## Scope
 
-**In:** a **`Clock`** resource on `Game.clock` — an absolute `day` + a `bell`-of-day, advanced in **real time** by `Game._process` (rate from `BalanceConfig`), emitting `time_changed` on each bell/day rollover · **`SAVE_VERSION` → 6** + `_migrate_v5_to_v6` (seeds a start time) · **journal day-stamps** — `Journal` records the circuit-day each entry was written, `JournalPanel` shows "Day N" (**closes 005's deferral**) · **presence-lite** — an `NPCSchedule` sub-resource on `NPCDef` (the sanctioned amendment); a scheduled `Npc` shows/hides on scene entry and on `time_changed`, absent = shop closed for free (no pathing, no save blob) · **rest** — a `rest` input for wilderness rest (blocked by nearby hostiles) + a **bed** world-station for settlements; resting advances the clock and restores health/stamina · a **HUD clock** (bell + circuit-day) · a `BalanceConfig` **Time** group · canon-packet clock/rest strings + a **time lore stub** (bells / the 9-day circuit) · full GUT coverage.
+**In:** a **`WorldClock`** resource on `Game.clock` — an absolute `day` + a `bell`-of-day, advanced in **real time** by `Game._process` (rate from `BalanceConfig`), emitting `time_changed` on each bell/day rollover · **`SAVE_VERSION` → 6** + `_migrate_v5_to_v6` (seeds a start time) · **journal day-stamps** — `Journal` records the circuit-day each entry was written, `JournalPanel` shows "Day N" (**closes 005's deferral**) · **presence-lite** — an `NPCSchedule` sub-resource on `NPCDef` (the sanctioned amendment); a scheduled `Npc` shows/hides on scene entry and on `time_changed`, absent = shop closed for free (no pathing, no save blob) · **rest** — a `rest` input for wilderness rest (blocked by nearby hostiles) + a **bed** world-station for settlements; resting advances the clock and restores health/stamina · a **HUD clock** (bell + circuit-day) · a `BalanceConfig` **Time** group · canon-packet clock/rest strings + a **time lore stub** (bells / the 9-day circuit) · full GUT coverage.
 
 **Out (later specs / backlog):**
 - **High-sky season** → later. Canon flags its mechanics ("sky-gates only, or the roads too?") as **director-open**; the clock exposes `day`, a season layer reads it in a Phase-3 spec.
@@ -25,9 +25,9 @@
 3. **Rest is Morrowind-faithful.** In the **wilderness** you may rest anywhere via the `rest` key **unless a hostile creature is near**; in a **settlement** you need a **bed** (a rest-station). Resting **restores health and stamina** over the bells passed.
 4. **Presence-lite, a few NPCs.** Each scheduled NPC has one present bell-window; a handful of Lastdoor NPCs get schedules as the demo, everyone else stays always-present.
 
-### The clock — `Game.clock` (`scripts/resources/clock.gd`)
+### The clock — `Game.clock` (`scripts/resources/world_clock.gd`)
 
-**`Clock extends Resource`** (the `NoticeLedger` single-section shape): `@export var day: int = 1` (absolute circuit-day, for stamps), `@export var bell: float = START_BELL` (bell-of-day). Pure helpers:
+**`WorldClock extends Resource`** (the `NoticeLedger` single-section shape): `@export var day: int = 1` (absolute circuit-day, for stamps), `@export var bell: float = START_BELL` (bell-of-day). Pure helpers:
 - `advance(bells: float, config) -> void` — adds to `bell`; while `bell >= config.bells_per_day`, subtracts a day's worth and `day += 1`. Deterministic, unit-tested.
 - `get_day() -> int`, `get_bell() -> int` (floor), `circuit_day() -> int` (`(day - 1) % config.circuit_length + 1`, the 1–9 position).
 
@@ -35,7 +35,7 @@
 
 ### Save & migration — SAVE_VERSION → 6 (`scripts/systems/save_codec.gd`)
 
-`const SAVE_VERSION := 6`; `"clock"` in `_ROOT_KEYS`; `SaveState.clock`; `clock_to_dict`/`clock_from_dict` (`{"day": int, "bell": float}`, the `notice` single-section precedent + float/int coercion); `_migrate_v5_to_v6(data)` seeds `Clock.new()` (day 1, `START_BELL`) + stamps `save_version = 6`; `_migrated` chains v1→…→v6. The four `SAVE_VERSION`-guard tests flip `5 → 6`.
+`const SAVE_VERSION := 6`; `"clock"` in `_ROOT_KEYS`; `SaveState.clock`; `clock_to_dict`/`clock_from_dict` (`{"day": int, "bell": float}`, the `notice` single-section precedent + float/int coercion); `_migrate_v5_to_v6(data)` seeds `WorldClock.new()` (day 1, `START_BELL`) + stamps `save_version = 6`; `_migrated` chains v1→…→v6. The four `SAVE_VERSION`-guard tests flip `5 → 6`.
 
 ### Journal day-stamps (closes 005's deferral) — `scripts/resources/journal.gd`
 
@@ -43,7 +43,7 @@
 
 ### Presence-lite — `NPCSchedule` on `NPCDef` (`scripts/resources/npc_schedule.gd`, `scripts/world/npc.gd`)
 
-**`NPCSchedule extends Resource`** (a sub-resource in the `NPCDef.tres`, the `ItemStack`/`DialogueChoice` pattern): `@export var present_from_bell: int`, `@export var present_to_bell: int` — present when `from ≤ bell < to`. **`NPCDef` gains `@export var schedule: NPCSchedule`** (null = always present — the sanctioned amendment, the second after nothing; NPCDef otherwise stays minimal). `Npc` connects `Game.clock.time_changed` and calls `_update_presence()` on scene entry + each rollover: hides the mesh + disables the `Interactable`/collision when absent (world-state-derived-from-clock — no save blob, the merchant live-rebuild fence). Content: a few Lastdoor NPCs (e.g. Suddel/Tansy counter windows) get schedules; the demo shows a counter shuttering between bells.
+**`NPCSchedule extends Resource`** (a sub-resource in the `NPCDef.tres`, the `ItemStack`/`DialogueChoice` pattern): `@export var present_from_bell: int`, `@export var present_to_bell: int` — present when `from ≤ bell < to`. **`NPCDef` gains `@export var schedule: NPCSchedule`** (null = always present — the sanctioned amendment, the second after nothing; NPCDef otherwise stays minimal). `Npc` connects `Game.time_changed` and calls `_update_presence()` on scene entry + each rollover: hides the mesh + disables the `Interactable`/collision when absent (world-state-derived-from-clock — no save blob, the merchant live-rebuild fence). Content: a few Lastdoor NPCs (e.g. Suddel/Tansy counter windows) get schedules; the demo shows a counter shuttering between bells.
 
 ### Rest — the key + the bed (`scripts/player.gd`, `scripts/world/rest_point.gd`, `scripts/ui/rest_panel.gd`)
 
@@ -53,11 +53,11 @@
 
 ### HUD clock (`scripts/ui/hud_clock.gd` + player HUD)
 
-A small persistent HUD label bound to `Game.clock.time_changed` showing the current **bell** and **circuit-day** (e.g. "Circuit-day 3 · 5th bell"). The `HudBars` bind precedent; refreshed on scene entry and each rollover.
+A small persistent HUD label bound to `Game.time_changed` showing the current **bell** and **circuit-day** (e.g. "Circuit-day 3 · 5th bell"). The `HudBars` bind precedent; refreshed on scene entry and each rollover.
 
 ### `BalanceConfig` Time group (`scripts/resources/balance_config.gd` + `.tres`)
 
-`@export_group("Time")`: `bells_per_day: int` (e.g. 12), `circuit_length: int` (9 — canon), `real_seconds_per_bell: float` (e.g. 30 → a 12-bell day ≈ 6 min), `rest_heal_per_bell: float` (health+stamina restored per bell rested), plus a `Clock.START_BELL` const (a morning bell). Every number config-sourced.
+`@export_group("Time")`: `bells_per_day: int` (e.g. 12), `circuit_length: int` (9 — canon), `real_seconds_per_bell: float` (e.g. 30 → a 12-bell day ≈ 6 min), `rest_heal_per_bell: float` (health+stamina restored per bell rested), plus a `WorldClock.START_BELL` const (a morning bell). Every number config-sourced.
 
 ### Ripple check (why little else changes)
 
@@ -67,7 +67,7 @@ Additive. `Game.clock` is one new save section (v5 saves migrate); the tick is g
 
 | new file | role |
 |---|---|
-| `scripts/resources/clock.gd` | `Clock extends Resource` — day + bell, pure `advance` |
+| `scripts/resources/world_clock.gd` | `WorldClock extends Resource` — day + bell, pure `advance` |
 | `scripts/resources/npc_schedule.gd` | `NPCSchedule extends Resource` — a present bell-window |
 | `scripts/world/rest_point.gd` | `RestPoint extends StaticBody3D` — the settlement bed |
 | `scripts/ui/rest_panel.gd` + `scenes/ui/rest_panel.tscn` | `RestPanel` — pick bells → advance + heal |
@@ -95,7 +95,7 @@ Not machine-validated (human / canon-keeper review): the clock/rest prose + the 
 One commit each, full suite green (605 →) before each:
 
 1. This spec + master-plan status/queue note (+ 021 deferral row). (`docs: spec 020 begins — the telling of time`)
-2. `Clock` + `Game.clock` + `_process` tick + `time_changed` + `SaveCodec` v6 + `_migrate_v5_to_v6` + Time tunables; flip the four guards; clock + save tests (criteria 1, 2). (`clock: SAVE_VERSION 6 — the real-time bell clock`)
+2. `WorldClock` + `Game.clock` + `_process` tick + `time_changed` + `SaveCodec` v6 + `_migrate_v5_to_v6` + Time tunables; flip the four guards; clock + save tests (criteria 1, 2). (`clock: SAVE_VERSION 6 — the real-time bell clock`)
 3. Journal day-stamps (`Journal.entry_days` + `add_entry(id, day)` + evaluator/caller threading + codec + panel) (criterion 3). (`clock: day-stamped journal entries — closing 005's deferral`)
 4. `NPCSchedule` + `NPCDef.schedule` + `Npc` presence toggling on `time_changed` + a couple scheduled defs + `test_presence` (criterion 4). (`clock: presence-lite — the counter shutters between bells`)
 5. The `rest` input + `RestPoint` bed + `RestPanel` + wilderness/hostile gating + heal + `HudClock` + `test_rest` (criterion 5). (`clock: rest and the bell readout`)

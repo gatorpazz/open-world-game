@@ -14,9 +14,11 @@ extends RefCounted
 ## Bumped to 4 by the crime spec (017): a "bounty" section (the per-jurisdiction
 ## legal debt) + v3 -> v4 migration seeding an empty ledger.
 ## Bumped to 5 by the magic-v2 spec (018): a "notice" section (the never-clearing
-## regard ledger) + v4 -> v5 migration seeding notice 0. Migrations chain (a v1
-## save runs v1 -> v2 -> v3 -> v4 -> v5).
-const SAVE_VERSION := 5
+## regard ledger) + v4 -> v5 migration seeding notice 0.
+## Bumped to 6 by the clock spec (020): a "clock" section (circuit-day + bell) +
+## v5 -> v6 migration seeding a start time. Migrations chain (a v1 save runs
+## v1 -> v2 -> v3 -> v4 -> v5 -> v6).
+const SAVE_VERSION := 6
 
 const _SHEET_KEYS: Array[String] = [
 	"attributes",
@@ -38,6 +40,7 @@ const _ROOT_KEYS: Array[String] = [
 	"stash",
 	"bounty",
 	"notice",
+	"clock",
 ]
 const _PLAYER_KEYS: Array[String] = [
 	"transform",
@@ -69,6 +72,8 @@ class SaveState:
 	var bounty: BountyLedger
 	## The never-clearing notice ledger (spec 018), its own save section.
 	var notice: NoticeLedger
+	## The in-game clock (spec 020), its own save section.
+	var clock: WorldClock
 
 
 static func encode_save(state: SaveState) -> Dictionary:
@@ -90,6 +95,7 @@ static func encode_save(state: SaveState) -> Dictionary:
 		"stash": inventory_to_dict(state.stash),
 		"bounty": bounty_to_dict(state.bounty),
 		"notice": notice_to_dict(state.notice),
+		"clock": clock_to_dict(state.clock),
 	}
 
 
@@ -140,6 +146,7 @@ static func decode_save(
 		and data["stash"] is Dictionary
 		and data["bounty"] is Dictionary
 		and data["notice"] is Dictionary
+		and data["clock"] is Dictionary
 	)
 	if not sections_are_dicts:
 		push_warning("decode_save: malformed identity sections")
@@ -151,6 +158,7 @@ static func decode_save(
 	var stash := inventory_from_dict(data["stash"] as Dictionary, items)
 	var bounty := bounty_from_dict(data["bounty"] as Dictionary)
 	var notice := notice_from_dict(data["notice"] as Dictionary)
+	var clock := clock_from_dict(data["clock"] as Dictionary)
 	if (
 		sheet == null
 		or inventory == null
@@ -159,6 +167,7 @@ static func decode_save(
 		or stash == null
 		or bounty == null
 		or notice == null
+		or clock == null
 	):
 		return null
 	var player := data["player"] as Dictionary
@@ -176,6 +185,7 @@ static func decode_save(
 	state.stash = stash
 	state.bounty = bounty
 	state.notice = notice
+	state.clock = clock
 	return state
 
 
@@ -389,6 +399,27 @@ static func notice_from_dict(data: Dictionary) -> NoticeLedger:
 	return ledger
 
 
+static func clock_to_dict(clock: WorldClock) -> Dictionary:
+	return {"day": clock.day, "bell": clock.bell}
+
+
+## Rebuilds the clock (spec 020): an int day + a float bell, coerced from JSON's
+## floats. Null on any malformed shape.
+static func clock_from_dict(data: Dictionary) -> WorldClock:
+	var shape_valid := (
+		data.has_all(["day", "bell"])
+		and (data["day"] is float or data["day"] is int)
+		and (data["bell"] is float or data["bell"] is int)
+	)
+	if not shape_valid:
+		push_warning("clock_from_dict: malformed shape")
+		return null
+	var clock := WorldClock.new()
+	clock.day = int(data["day"])
+	clock.bell = float(data["bell"])
+	return clock
+
+
 ## Upgrades an older save dict to the current version, or returns {} when no
 ## path exists. Migrations run in sequence: a v1 save chains v1 -> v2 -> v3 ->
 ## v4, each step adding the sections its target version expects.
@@ -409,6 +440,9 @@ static func _migrated(
 	if current == 4:
 		result = _migrate_v4_to_v5(result)
 		current = 5
+	if current == 5:
+		result = _migrate_v5_to_v6(result)
+		current = 6
 	if current != SAVE_VERSION:
 		return {}
 	return result
@@ -449,6 +483,14 @@ static func _migrate_v3_to_v4(data: Dictionary) -> Dictionary:
 static func _migrate_v4_to_v5(data: Dictionary) -> Dictionary:
 	data["notice"] = notice_to_dict(NoticeLedger.new())
 	data["save_version"] = 5
+	return data
+
+
+## v5 had no clock section. Seed a start time — a v5 save is a v6 save that
+## predates the bells. The rest of the payload is untouched.
+static func _migrate_v5_to_v6(data: Dictionary) -> Dictionary:
+	data["clock"] = clock_to_dict(WorldClock.new())
+	data["save_version"] = 6
 	return data
 
 

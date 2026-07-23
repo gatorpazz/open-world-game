@@ -218,13 +218,14 @@ func test_v1_save_chains_through_to_v5() -> void:
 	var balance := load(BALANCE_PATH) as BalanceConfig
 	var items := _make_items()
 	var v1 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
-	# A genuine v1 save predates the factions, stash, bounty, and notice
-	# sections; membership lived only in the journal. Strip all four, drop the
-	# version to 1, and hold the join entry — decode must chain v1 -> ... -> v5.
+	# A genuine v1 save predates the factions, stash, bounty, notice, and clock
+	# sections; membership lived only in the journal. Strip all five, drop the
+	# version to 1, and hold the join entry — decode must chain v1 -> ... -> v6.
 	v1.erase("factions")
 	v1.erase("stash")
 	v1.erase("bounty")
 	v1.erase("notice")
+	v1.erase("clock")
 	v1["save_version"] = 1
 	(v1["journal"] as Dictionary)["entries"] = ["joined_the_wardens"]
 
@@ -244,6 +245,8 @@ func test_v1_save_chains_through_to_v5() -> void:
 	assert_eq(decoded.bounty.get_bounty(&"wardens"), 0, "the migrated ledger starts clean")
 	assert_not_null(decoded.notice, "v4->v5 added the notice section")
 	assert_eq(decoded.notice.get_notice(), 0, "the migrated notice starts clean")
+	assert_not_null(decoded.clock, "v5->v6 added the clock section")
+	assert_eq(decoded.clock.day, 1, "the seeded clock starts on the first circuit-day")
 
 
 func test_v4_save_migrates_seeding_clean_notice() -> void:
@@ -272,6 +275,35 @@ func test_notice_section_round_trips_through_json() -> void:
 
 	assert_not_null(decoded)
 	assert_eq(decoded.notice.get_notice(), 70, "notice survives the round-trip")
+
+
+func test_v5_save_migrates_seeding_a_start_clock() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var v5 := _json_round_trip(SaveCodec.encode_save(_make_state(balance, items)))
+	# A v5 save has notice but predates the clock section.
+	v5.erase("clock")
+	v5["save_version"] = 5
+
+	var decoded := SaveCodec.decode_save(v5, balance, items, _factions())
+
+	assert_not_null(decoded, "a v5 save migrates instead of failing the load")
+	assert_eq(decoded.clock.day, 1, "the seeded clock starts on day 1")
+	assert_eq(decoded.notice.get_notice(), 70, "the untouched v5 notice survives")
+
+
+func test_clock_section_round_trips_through_json() -> void:
+	var balance := load(BALANCE_PATH) as BalanceConfig
+	var items := _make_items()
+	var state := _make_state(balance, items)  # clock: day 4, bell 6.5
+
+	var decoded := SaveCodec.decode_save(
+		_json_round_trip(SaveCodec.encode_save(state)), balance, items, _factions()
+	)
+
+	assert_not_null(decoded)
+	assert_eq(decoded.clock.day, 4, "the day survives the round-trip")
+	assert_almost_eq(decoded.clock.bell, 6.5, 0.001, "the bell survives")
 
 
 func test_v3_save_migrates_seeding_an_empty_bounty() -> void:
@@ -432,6 +464,10 @@ func _make_state(
 	var notice := NoticeLedger.new()
 	notice.add(70)
 	state.notice = notice
+	var clock := WorldClock.new()
+	clock.day = 4
+	clock.bell = 6.5
+	state.clock = clock
 	return state
 
 

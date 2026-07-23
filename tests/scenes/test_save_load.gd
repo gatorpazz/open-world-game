@@ -16,6 +16,7 @@ var _saved_faction_standing: FactionStanding
 var _saved_stash: Inventory
 var _saved_bounty: BountyLedger
 var _saved_notice: NoticeLedger
+var _saved_clock: WorldClock
 var _saved_world_parent: Node
 var _saved_current_world: Node
 var _saved_player: Player
@@ -31,6 +32,7 @@ func before_each() -> void:
 	_saved_stash = _game.stash
 	_saved_bounty = _game.bounty
 	_saved_notice = _game.notice
+	_saved_clock = _game.clock
 	_saved_world_parent = _game.world_parent
 	_saved_current_world = _game.current_world
 	_saved_player = _game.player
@@ -49,6 +51,7 @@ func before_each() -> void:
 	_game.stash = Inventory.new()
 	_game.bounty = BountyLedger.new()
 	_game.notice = NoticeLedger.new()
+	_game.clock = WorldClock.new()
 	_game.save_path = TEST_SAVE_PATH
 	_remove_scratch_file()
 
@@ -63,6 +66,7 @@ func after_each() -> void:
 	_game.stash = _saved_stash
 	_game.bounty = _saved_bounty
 	_game.notice = _saved_notice
+	_game.clock = _saved_clock
 	_game.world_parent = _saved_world_parent
 	_game.current_world = _saved_current_world
 	_game.player = _saved_player
@@ -228,6 +232,23 @@ func test_load_restores_notice() -> void:
 	await wait_process_frames(3)
 
 	assert_eq(_game.notice.get_notice(), 60, "the saved notice is restored, not the drift")
+
+
+func test_load_restores_the_clock() -> void:
+	# The clock (spec 020) is its own Game-owned save section — the time of day
+	# survives a save/load.
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	_game.clock.day = 7
+	_game.clock.bell = 9.0
+	assert_true(_game.save_game())
+
+	_game.clock.day = 99  # post-save drift, must be discarded
+
+	assert_true(_game.load_game())
+	await wait_process_frames(3)
+
+	assert_eq(_game.clock.day, 7, "the saved circuit-day is restored, not the drift")
 
 
 func test_load_preserves_a_stolen_flag() -> void:

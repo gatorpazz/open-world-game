@@ -230,6 +230,6 @@ func test_skill_crossing_a_tier_announces_the_new_working() -> void:
 func test_casting_adds_no_player_save_state() -> void:
 	# Selection and ward live on player nodes and rebuild on scene load; the
 	# sheet's skills already persist via 007. The casting node joins nothing to
-	# the payload — later specs bump the version (magic v2's notice is Game
-	# identity, → 5), not the player casting node.
-	assert_eq(SaveCodec.SAVE_VERSION, 5)
+	# the payload — later specs bump the version (the clock is Game identity,
+	# → 6), not the player casting node.
+	assert_eq(SaveCodec.SAVE_VERSION, 6)

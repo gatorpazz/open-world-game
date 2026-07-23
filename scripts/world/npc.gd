@@ -27,6 +27,7 @@ var _last_player: Player = null
 var _opening_barter := false
 
 @onready var interactable: Interactable = $Interactable
+@onready var collision: CollisionShape3D = $Collision
 
 
 ## Before the child Interactable's _ready assert: prompt name per instance.
@@ -40,6 +41,22 @@ func _ready() -> void:
 	interactable.interacted.connect(_on_interacted)
 	if merchant_def != null:
 		_merchant_inventory = _build_merchant_inventory()
+	if def.schedule != null:
+		Game.time_changed.connect(_on_time_changed)
+	_update_presence()
+
+
+func _on_time_changed(_day: int, _bell: int) -> void:
+	_update_presence()
+
+
+## Presence-lite (spec 020): a scheduled NPC is visible + interactable only
+## inside its bell-window, shuttered (hidden, no collision → no interaction)
+## outside it. Derived from Game.clock each rollover — no save blob.
+func _update_presence() -> void:
+	var present: bool = def.schedule == null or def.schedule.is_present(Game.clock.get_bell())
+	visible = present
+	collision.disabled = not present
 
 
 func _on_interacted(by: Node) -> void:

@@ -73,7 +73,23 @@ func try_attack() -> void:
 		config
 	)
 	target.take_hit(raw, owner as Node3D)
+	_discharge_on_hit(weapon, target)
 	stats.gain_skill_xp(weapon.skill_id, config.xp_per_weapon_hit)
+
+
+## Discharges an enchanted weapon's on-hit bound working into the struck target
+## (spec 023): a second hit through the 004 defense pipeline, scaled by the
+## working's aspect skill. Outward only — the discharge, not a give-back. A
+## plain weapon (or a non-damage working) is a no-op. Notice-free by ruling: the
+## regard is the blade's, not the wielder's unlicensed working.
+func _discharge_on_hit(weapon: WeaponDef, target: HurtBox) -> void:
+	if not EnchantRules.triggers(weapon, &"on_hit"):
+		return
+	var working := weapon.bound_working
+	if working.effect != &"damage":
+		return
+	var aspect_skill: int = stats.sheet.skills.get(working.skill_id, 0)
+	target.take_hit(EnchantRules.magnitude(working, aspect_skill, config), owner as Node3D)
 
 
 func get_ward() -> float:

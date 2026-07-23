@@ -322,11 +322,14 @@ static func inventory_from_dict(
 static func journal_to_dict(journal: Journal) -> Dictionary:
 	return {
 		"entries": _array_to_strings(journal.entries),
+		"entry_days": journal.entry_days.duplicate(),
 		"known_topics": _array_to_strings(journal.known_topics),
 	}
 
 
 ## Rebuilds a journal; array order is preserved (order IS chronology).
+## entry_days (spec 020) is optional — a pre-020 save has none, so its entries
+## back-fill to day 0 (unstamped) and stay aligned for future add_entry calls.
 ## Null on any malformed shape.
 static func journal_from_dict(data: Dictionary) -> Journal:
 	var shape_valid := (
@@ -340,6 +343,13 @@ static func journal_from_dict(data: Dictionary) -> Journal:
 	var journal := Journal.new()
 	journal.entries = _strings_to_id_array(data["entries"])
 	journal.known_topics = _strings_to_id_array(data["known_topics"])
+	var days: Array[int] = []
+	if data.has("entry_days") and data["entry_days"] is Array:
+		for value: Variant in data["entry_days"] as Array:
+			days.append(int(value))
+	while days.size() < journal.entries.size():
+		days.append(0)  # pre-020 entries are unstamped
+	journal.entry_days = days
 	return journal
 
 

@@ -88,11 +88,13 @@ static func available_topics(
 ## encumbrance_changed) fire; a raw Inventory mutation would skip them.
 ## Callers only pass responses returned by pick_response, whose implicit
 ## take_items condition guarantees the exchange can never fail.
-static func apply_effects(response: DialogueResponse, journal: Journal) -> EffectReport:
+static func apply_effects(
+	response: DialogueResponse, journal: Journal, day: int = 0
+) -> EffectReport:
 	var report := EffectReport.new()
 	for topic_id: StringName in DialogueMarkup.extract_topic_ids(response.text):
 		if journal.learn_topic(topic_id):
 			report.new_topics.append(topic_id)
-	if response.journal_entry != &"" and journal.add_entry(response.journal_entry):
+	if response.journal_entry != &"" and journal.add_entry(response.journal_entry, day):
 		report.journal_entry_added = response.journal_entry
 	return report

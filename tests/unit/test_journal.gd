@@ -29,6 +29,22 @@ func test_has_entry() -> void:
 	assert_true(_journal.has_entry(&"a_thing"))
 
 
+# --- day stamps (spec 020) ---
+
+
+func test_add_entry_stamps_the_day() -> void:
+	_journal.add_entry(&"woke_in_the_square", 1)
+	_journal.add_entry(&"met_the_captain", 4)
+	assert_eq(_journal.day_of(0), 1, "the first entry carries its day")
+	assert_eq(_journal.day_of(1), 4, "the second its own")
+
+
+func test_unstamped_entry_reads_day_zero() -> void:
+	_journal.add_entry(&"a_thing")  # no day
+	assert_eq(_journal.day_of(0), 0, "an unstamped entry is day 0")
+	assert_eq(_journal.day_of(5), 0, "an out-of-range index is day 0")
+
+
 # --- known topics ---
 
 

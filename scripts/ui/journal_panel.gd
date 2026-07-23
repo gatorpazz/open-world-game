@@ -82,7 +82,10 @@ func _rebuild_chronicle() -> void:
 		var def := _load_entry(id)
 		if def == null:
 			continue
-		entries_label.append_text("[b]Entry %d[/b] — %s\n\n" % [index + 1, def.text])
+		# Day-stamped since spec 020; a pre-clock entry (day 0) keeps the sequence.
+		var day := _journal.day_of(index)
+		var heading := "Day %d" % day if day > 0 else "Entry %d" % (index + 1)
+		entries_label.append_text("[b]%s[/b] — %s\n\n" % [heading, def.text])
 
 
 func _rebuild_quests() -> void:

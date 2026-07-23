@@ -162,6 +162,34 @@ func test_journal_from_dict_refuses_malformed_shapes() -> void:
 	)
 
 
+func test_journal_day_stamps_round_trip() -> void:
+	# Spec 020: entry_days rides alongside entries.
+	var journal := Journal.new()
+	journal.add_entry(&"woke_in_the_square", 1)
+	journal.add_entry(&"met_the_captain", 4)
+
+	var restored := SaveCodec.journal_from_dict(
+		_json_round_trip(SaveCodec.journal_to_dict(journal))
+	)
+
+	assert_not_null(restored)
+	assert_eq(restored.day_of(0), 1, "the day survives the round-trip")
+	assert_eq(restored.day_of(1), 4, "each entry keeps its own day")
+
+
+func test_pre_020_journal_backfills_unstamped_days() -> void:
+	# A pre-020 journal dict has no entry_days — its entries back-fill to day 0
+	# and stay aligned for future stamped adds.
+	var restored := SaveCodec.journal_from_dict(
+		{"entries": ["arrival", "the_favor"], "known_topics": []}
+	)
+	assert_not_null(restored, "a day-less journal still decodes")
+	assert_eq(restored.day_of(0), 0, "old entries are unstamped")
+	assert_eq(restored.entry_days.size(), 2, "entry_days is padded to entries length")
+	restored.add_entry(&"a_new_thing", 3)
+	assert_eq(restored.day_of(2), 3, "a new stamped entry stays aligned")
+
+
 # --- Criterion 4: full payload — transform, pitch, pools ---
 
 

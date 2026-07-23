@@ -32,6 +32,6 @@ func _on_interacted(by: Node) -> void:
 	if player == null:
 		return
 	Theft.acquire(player, player.inventory_component, item, count, owner_faction)
-	if journal_entry != &"" and player.journal.add_entry(journal_entry):
+	if journal_entry != &"" and player.journal.add_entry(journal_entry, Game.clock.get_day()):
 		player.show_notice(HudNotice.JOURNAL_UPDATED)
 	queue_free()

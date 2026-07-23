@@ -26,7 +26,7 @@ func try_trigger(body: Node3D) -> void:
 		return
 	if not _conditions_pass(player.journal):
 		return
-	if player.journal.add_entry(journal_entry):
+	if player.journal.add_entry(journal_entry, Game.clock.get_day()):
 		player.show_notice(HudNotice.JOURNAL_UPDATED)
 
 

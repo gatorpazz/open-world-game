@@ -77,7 +77,7 @@ func show_topic(topic_id: StringName, from_choice: bool = false) -> void:
 		_append_notice("%s has nothing to say about that." % _npc.display_name)
 		return
 	transcript.append_text(DialogueMarkup.to_bbcode(response.text, _display_names) + "\n\n")
-	var report := DialogueEvaluator.apply_effects(response, _journal)
+	var report := DialogueEvaluator.apply_effects(response, _journal, Game.clock.get_day())
 	_apply_effects(response)
 	_append_notices(response, report)
 	_rebuild_topic_list()

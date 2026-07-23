@@ -4,6 +4,14 @@ extends GutTest
 ## spec 009 adds attribute_favored_start).
 
 const BALANCE_PATH := "res://data/balance/balance_config.tres"
+## Tunables that are legitimately zero or negative (spec 019): a clamp floor of
+## 0, a zero baseline persuade difficulty, and a negative (easier) bribe
+## difficulty. Everything else must be strictly positive.
+const NON_POSITIVE_OK: Array[StringName] = [
+	&"disposition_min",
+	&"persuade_difficulty_admire",
+	&"persuade_difficulty_bribe",
+]
 
 var _config: BalanceConfig
 
@@ -19,6 +27,8 @@ func test_loads_as_balance_config() -> void:
 func test_every_tunable_is_positive() -> void:
 	for prop: Dictionary in _config.get_property_list():
 		if prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE == 0:
+			continue
+		if NON_POSITIVE_OK.has(StringName(prop.name)):
 			continue
 		var value: Variant = _config.get(prop.name)
 		if value is int:

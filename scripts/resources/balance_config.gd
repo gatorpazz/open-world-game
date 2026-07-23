@@ -134,6 +134,43 @@ extends Resource
 @export var fine_multiplier: float = 1.0
 @export var crime_reputation_dock: int = 5
 
+@export_group("Disposition")
+## Disposition (spec 019) = base + weighted faction reputation + the persistent
+## per-NPC modifier − the overcast penalty, clamped [min, max]. neutral is the
+## no-effect midpoint rapport and the price factor pivot around.
+@export var disposition_base_default: int = 40
+@export var disposition_min: int = 0
+@export var disposition_max: int = 100
+@export var disposition_neutral: int = 50
+@export var disposition_faction_weight: float = 0.5
+@export var disposition_overcast_penalty: int = 20
+## Persuade odds (spec 019): base + skill·weight + rapport·weight − the move's
+## difficulty, clamped [chance_min, chance_max]. Rapport = (disposition −
+## neutral). The caller rolls randf() < chance (the LockRules pattern — the one
+## dice in the social layer). Intimidate is dearer, bribe cheaper (negative).
+@export var persuade_base: float = 0.4
+@export var persuade_skill_weight: float = 0.006
+@export var persuade_disposition_weight: float = 0.004
+@export var persuade_chance_min: float = 0.05
+@export var persuade_chance_max: float = 0.95
+@export var persuade_difficulty_admire: float = 0.0
+@export var persuade_difficulty_intimidate: float = 0.15
+@export var persuade_difficulty_bribe: float = -0.1
+## Modifier shift on a landed move; a failed intimidate backfires by this much.
+@export var persuade_gain_admire: int = 6
+@export var persuade_gain_intimidate: int = 12
+@export var persuade_gain_bribe: int = 8
+@export var intimidate_backfire: int = 10
+## Beads to attempt a bribe: base + disposition·per — dearer off a friendly NPC.
+@export var bribe_cost_base: int = 10
+@export var bribe_cost_per_disposition: float = 0.4
+## Barter nudge (spec 019): factor = 1 − (disposition − neutral)·swing, clamped
+## [price_factor_min, price_factor_max]. A friendly merchant slides cheaper;
+## symmetric on buy and sell (the single-factor ruling; buy/sell split backlog).
+@export var disposition_price_swing: float = 0.004
+@export var price_factor_min: float = 0.8
+@export var price_factor_max: float = 1.2
+
 @export_group("Creatures")
 @export var creature_wander_speed_multiplier: float = 0.4
 @export var creature_wander_radius: float = 5.0

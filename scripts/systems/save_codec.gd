@@ -16,9 +16,11 @@ extends RefCounted
 ## Bumped to 5 by the magic-v2 spec (018): a "notice" section (the never-clearing
 ## regard ledger) + v4 -> v5 migration seeding notice 0.
 ## Bumped to 6 by the clock spec (020): a "clock" section (circuit-day + bell) +
-## v5 -> v6 migration seeding a start time. Migrations chain (a v1 save runs
-## v1 -> v2 -> v3 -> v4 -> v5 -> v6).
-const SAVE_VERSION := 6
+## v5 -> v6 migration seeding a start time.
+## Bumped to 7 by the persuasion spec (019): a "disposition" section (the per-NPC
+## modifier ledger) + v6 -> v7 migration seeding an empty ledger. Migrations
+## chain (a v1 save runs v1 -> v2 -> ... -> v7).
+const SAVE_VERSION := 7
 
 const _SHEET_KEYS: Array[String] = [
 	"attributes",
@@ -41,6 +43,7 @@ const _ROOT_KEYS: Array[String] = [
 	"bounty",
 	"notice",
 	"clock",
+	"disposition",
 ]
 const _PLAYER_KEYS: Array[String] = [
 	"transform",
@@ -74,6 +77,8 @@ class SaveState:
 	var notice: NoticeLedger
 	## The in-game clock (spec 020), its own save section.
 	var clock: WorldClock
+	## The per-NPC disposition modifier ledger (spec 019), its own save section.
+	var disposition: DispositionLedger
 
 
 static func encode_save(state: SaveState) -> Dictionary:
@@ -96,6 +101,7 @@ static func encode_save(state: SaveState) -> Dictionary:
 		"bounty": bounty_to_dict(state.bounty),
 		"notice": notice_to_dict(state.notice),
 		"clock": clock_to_dict(state.clock),
+		"disposition": disposition_to_dict(state.disposition),
 	}
 
 
@@ -147,6 +153,7 @@ static func decode_save(
 		and data["bounty"] is Dictionary
 		and data["notice"] is Dictionary
 		and data["clock"] is Dictionary
+		and data["disposition"] is Dictionary
 	)
 	if not sections_are_dicts:
 		push_warning("decode_save: malformed identity sections")
@@ -159,6 +166,7 @@ static func decode_save(
 	var bounty := bounty_from_dict(data["bounty"] as Dictionary)
 	var notice := notice_from_dict(data["notice"] as Dictionary)
 	var clock := clock_from_dict(data["clock"] as Dictionary)
+	var disposition := disposition_from_dict(data["disposition"] as Dictionary)
 	if (
 		sheet == null
 		or inventory == null
@@ -168,6 +176,7 @@ static func decode_save(
 		or bounty == null
 		or notice == null
 		or clock == null
+		or disposition == null
 	):
 		return null
 	var player := data["player"] as Dictionary
@@ -186,6 +195,7 @@ static func decode_save(
 	state.bounty = bounty
 	state.notice = notice
 	state.clock = clock
+	state.disposition = disposition
 	return state
 
 
@@ -394,6 +404,22 @@ static func bounty_from_dict(data: Dictionary) -> BountyLedger:
 	return ledger
 
 
+static func disposition_to_dict(ledger: DispositionLedger) -> Dictionary:
+	return {"modifier": _ids_to_strings(ledger.modifier)}
+
+
+## Rebuilds the disposition ledger (spec 019): one npc_id -> int modifier map,
+## coerced from JSON's String keys / float numbers like the bounty map. Null on
+## any malformed shape.
+static func disposition_from_dict(data: Dictionary) -> DispositionLedger:
+	if not (data.has("modifier") and _is_id_number_dict(data["modifier"])):
+		push_warning("disposition_from_dict: malformed shape")
+		return null
+	var ledger := DispositionLedger.new()
+	ledger.modifier = _strings_to_id_ints(data["modifier"])
+	return ledger
+
+
 static func notice_to_dict(ledger: NoticeLedger) -> Dictionary:
 	return {"notice": ledger.notice}
 
@@ -453,6 +479,9 @@ static func _migrated(
 	if current == 5:
 		result = _migrate_v5_to_v6(result)
 		current = 6
+	if current == 6:
+		result = _migrate_v6_to_v7(result)
+		current = 7
 	if current != SAVE_VERSION:
 		return {}
 	return result
@@ -501,6 +530,14 @@ static func _migrate_v4_to_v5(data: Dictionary) -> Dictionary:
 static func _migrate_v5_to_v6(data: Dictionary) -> Dictionary:
 	data["clock"] = clock_to_dict(WorldClock.new())
 	data["save_version"] = 6
+	return data
+
+
+## v6 had no disposition section. Seed an empty ledger — a v6 save is a v7 save
+## whose player never moved a stranger's regard. The rest is untouched.
+static func _migrate_v6_to_v7(data: Dictionary) -> Dictionary:
+	data["disposition"] = disposition_to_dict(DispositionLedger.new())
+	data["save_version"] = 7
 	return data
 
 

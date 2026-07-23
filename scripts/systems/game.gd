@@ -44,6 +44,11 @@ var notice: NoticeLedger
 ## by _process and by rest. Identity — SaveCodec serializes it (its own section,
 ## SAVE_VERSION 6). time_changed fires on each bell/day rollover.
 var clock: WorldClock
+## Per-NPC disposition modifier (spec 019): the regard a persuasion move shifts,
+## one term of the effective disposition (DispositionRules composes it with base,
+## faction reputation, and overcast). Identity — SaveCodec serializes it (its own
+## section, SAVE_VERSION 7).
+var disposition: DispositionLedger
 
 ## Where save_game/load_game read and write. Tests point this at a scratch
 ## file so they never touch a real save.
@@ -72,6 +77,7 @@ func _ready() -> void:
 	bounty = BountyLedger.new()
 	notice = NoticeLedger.new()
 	clock = WorldClock.new()
+	disposition = DispositionLedger.new()
 	_config = load(StatsComponent.BALANCE_PATH) as BalanceConfig
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
@@ -128,6 +134,7 @@ func start_new_game(sheet: CharacterSheet) -> void:
 	bounty = BountyLedger.new()
 	notice = NoticeLedger.new()
 	clock = WorldClock.new()
+	disposition = DispositionLedger.new()
 	_last_bell = -1  # force a resync time_changed on the next tick
 	change_scene(MAIN_SCENE_PATH, &"default")
 
@@ -197,6 +204,7 @@ func save_game() -> bool:
 	state.bounty = bounty
 	state.notice = notice
 	state.clock = clock
+	state.disposition = disposition
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	if file == null:
 		push_warning("save_game: cannot open '%s' for writing" % save_path)
@@ -281,6 +289,7 @@ func _apply_load(state: SaveCodec.SaveState) -> void:
 	bounty = state.bounty
 	notice = state.notice
 	clock = state.clock
+	disposition = state.disposition
 	_last_bell = -1  # force a resync time_changed to the loaded time on the next tick
 	_change_scene_now(state.scene_path, &"default")
 	player.global_transform = state.player_transform

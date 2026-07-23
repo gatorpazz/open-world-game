@@ -69,6 +69,21 @@ static func delete(dir: String, slot_id: StringName) -> void:
 		DirAccess.remove_absolute(slot_path(dir, slot_id))
 
 
+## The most-recently-written slot id (by file modification time), or &"" when no
+## slot exists — the title's one-click Continue target (spec 025).
+static func most_recent(dir: String) -> StringName:
+	var best := &""
+	var best_time := -1
+	for slot_id: StringName in SLOT_IDS:
+		if not exists(dir, slot_id):
+			continue
+		var modified := FileAccess.get_modified_time(slot_path(dir, slot_id))
+		if modified >= best_time:
+			best_time = modified
+			best = slot_id
+	return best
+
+
 ## One-time back-compat: an old bare save.json is moved into the quicksave slot
 ## if that slot is empty. read_payload's bare-file fallback then loads it; its
 ## metadata reads empty (a legacy save carries none). Idempotent.

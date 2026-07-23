@@ -41,9 +41,10 @@ func _on_new_game_pressed() -> void:
 
 
 func _on_continue_pressed() -> void:
-	# Decode-before-touch (007): a corrupt file returns false with Game
-	# untouched, so the title simply stays up with a notice.
-	if not Game.load_game():
+	# Continue loads the most-recent slot (spec 025). Decode-before-touch (007):
+	# a corrupt file returns false with Game untouched, so the title simply stays
+	# up with a notice. The full slot picker lives in the in-game pause menu.
+	if not Game.continue_game():
 		notice_label.text = SAVE_UNREADABLE
 		notice_label.show()
 

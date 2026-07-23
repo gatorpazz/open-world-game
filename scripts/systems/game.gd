@@ -88,6 +88,8 @@ func _ready() -> void:
 	clock = WorldClock.new()
 	disposition = DispositionLedger.new()
 	_config = load(StatsComponent.BALANCE_PATH) as BalanceConfig
+	GameSettings.load_from_disk()  # spec 025: apply the player's saved settings at boot
+	GameSettings.apply()
 	world_parent = get_tree().root
 	_adopt_boot_scene.call_deferred()
 
@@ -158,6 +160,14 @@ func quit_to_title() -> void:
 	current_world = null
 	player = null
 	get_tree().change_scene_to_file.call_deferred(TITLE_SCENE_PATH)
+
+
+## The title's Continue (spec 025): loads the most-recently-saved slot. False
+## when there is nothing to load (a corrupt most-recent save fails the decode).
+func continue_game() -> bool:
+	SaveSlots.adopt_legacy(saves_dir, save_path)
+	var slot := SaveSlots.most_recent(saves_dir)
+	return slot != &"" and load_game(slot)
 
 
 ## Whether any save slot exists (spec 025) — Continue is offered when so. Adopts

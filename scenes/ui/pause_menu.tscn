@@ -54,6 +54,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Load"
 
+[node name="Settings" type="Button" parent="Dim/Panel/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Settings"
+
 [node name="QuitToTitle" type="Button" parent="Dim/Panel/Layout"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20

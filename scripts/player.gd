@@ -19,7 +19,6 @@ const WILD_REST_GROUP := &"wild_rest"
 
 @export var speed := 6.0
 @export var jump_velocity := 4.8
-@export var mouse_sensitivity := 0.002
 @export var config: BalanceConfig
 
 ## The crouch stance (spec 017): slows movement and shrinks the radius within
@@ -243,8 +242,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		# Yaw rotates the whole body, pitch only the head.
-		rotate_y(-event.relative.x * mouse_sensitivity)
-		head.rotate_x(-event.relative.y * mouse_sensitivity)
+		# Read live so a SettingsPanel change applies at once (spec 025).
+		rotate_y(-event.relative.x * GameSettings.mouse_sensitivity)
+		head.rotate_x(-event.relative.y * GameSettings.mouse_sensitivity)
 		head.rotation.x = clampf(head.rotation.x, deg_to_rad(-89.0), deg_to_rad(89.0))
 	elif event.is_action_pressed("interact"):
 		detector.try_interact()

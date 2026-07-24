@@ -149,6 +149,8 @@ static func _place(scene_path: String) -> String:
 ## Seconds -> "2h 14m" / "14m" / "0m".
 static func _played(seconds: float) -> String:
 	var total := int(seconds)
+	@warning_ignore("integer_division")
 	var hours := total / 3600
+	@warning_ignore("integer_division")
 	var minutes := (total % 3600) / 60
 	return "%dh %dm" % [hours, minutes] if hours > 0 else "%dm" % minutes

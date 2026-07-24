@@ -67,6 +67,7 @@ func test_closing_a_sub_panel_restores_the_menu() -> void:
 			(child as SettingsPanel).close()
 
 	assert_true(_menu.dim.visible, "the menu reappears when the sub-panel closes")
+	assert_true(get_tree().paused, "the tree stays paused (the sub-panel's unpause is re-asserted)")
 
 
 func test_open_slots_is_idempotent() -> void:

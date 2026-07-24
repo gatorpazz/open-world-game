@@ -322,6 +322,25 @@ func test_slot_metadata_carries_the_live_game() -> void:
 	assert_almost_eq(float(meta.get("playtime")), 100.0, 5.0, "metadata carries playtime")
 
 
+func test_quit_to_title_frees_the_world_and_tracks_the_title() -> void:
+	# The world is freed and the title becomes current_world, so a later Continue
+	# frees the title instead of leaving it over the loaded game (spec 025).
+	_game.change_scene(MAIN_SCENE, &"default")
+	await wait_process_frames(3)
+	var world: Node = _game.current_world
+	assert_not_null(world, "a world is up before quitting")
+
+	_game.quit_to_title()
+	await wait_process_frames(3)
+
+	assert_null(_game.player, "the player ref is cleared so the real-time tick stops")
+	assert_false(is_instance_valid(world), "the world was freed")
+	assert_true(
+		String(_game.current_world.scene_file_path).ends_with("title_screen.tscn"),
+		"the title is tracked as current_world so the next load frees it"
+	)
+
+
 func test_load_preserves_a_stolen_flag() -> void:
 	# The per-stack stolen flag (spec 017) rides in the inventory codec, so a hot
 	# item stays hot across a save/load.

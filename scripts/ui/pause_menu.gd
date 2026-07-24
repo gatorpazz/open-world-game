@@ -62,7 +62,7 @@ func open_slots(mode: SaveLoadPanel.Mode) -> void:
 
 func _on_slots_closed() -> void:
 	_slots = null
-	dim.show()
+	_reassert_paused()
 
 
 ## Opens the settings sub-panel (spec 025). Idempotent while one is up.
@@ -78,7 +78,16 @@ func open_settings() -> void:
 
 func _on_settings_closed() -> void:
 	_settings = null
+	_reassert_paused()
+
+
+## A sub-panel's close() unpauses and recaptures the mouse for gameplay — but we
+## are the pause menu it returns to, so re-establish our own paused + mouse-free
+## state and reveal ourselves again.
+func _reassert_paused() -> void:
 	dim.show()
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 ## A slot was chosen to load: hand off to Game (it defers the scene swap) and

@@ -153,13 +153,26 @@ func start_new_game(sheet: CharacterSheet) -> void:
 
 
 ## Returns to the title screen (spec 025 pause menu → Quit to Title). Clears the
-## play refs so the real-time tick stops, then swaps the whole scene to the title
-## — a menu, not a world, so it spawns no player. Deferred (a scene swap from an
-## input handler must not run mid-frame); the caller unpauses.
+## player ref so the real-time tick stops, then swaps to the title. Deferred (a
+## scene swap from an input handler must not run mid-frame); the caller unpauses.
 func quit_to_title() -> void:
-	current_world = null
 	player = null
-	get_tree().change_scene_to_file.call_deferred(TITLE_SCENE_PATH)
+	_swap_to_title.call_deferred()
+
+
+## Swaps the world out for the title screen — a menu, not a world, so no player
+## is spawned. Goes through the world_parent mechanism (not change_scene_to_file)
+## and tracks the title as current_world, exactly like a boot adoption, so the
+## next load or New Game frees it cleanly instead of leaving it over the world.
+func _swap_to_title() -> void:
+	var title := (load(TITLE_SCENE_PATH) as PackedScene).instantiate()
+	if current_world != null and current_world.get_parent() == world_parent:
+		world_parent.remove_child(current_world)
+		current_world.queue_free()
+	world_parent.add_child(title)
+	if world_parent == get_tree().root:
+		get_tree().current_scene = title
+	current_world = title
 
 
 ## The title's Continue (spec 025): loads the most-recently-saved slot. False

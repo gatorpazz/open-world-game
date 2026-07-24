@@ -25,6 +25,11 @@ const EQUIPMENT_SLOTS: Array[StringName] = [
 @export var gold: int = 0
 ## Only occupied slots are keyed.
 @export var equipment: Dictionary[StringName, ItemDef] = {}
+## Per-slot stolen provenance (spec 017 fix): whether the item worn in a slot was
+## stolen. Equipment stores the shared ItemDef, which cannot carry the per-stack
+## stolen flag, so without this a stolen item would launder clean on
+## equip -> unequip. Restored onto the stack on unequip; only stolen slots keyed.
+@export var equipment_stolen: Dictionary[StringName, bool] = {}
 ## The faction that owns this inventory's contents (spec 017); empty = yours.
 ## Runtime-only on a merchant's live stock (rebuilt each session); the take
 ## paths read it to decide whether an acquisition is theft.
@@ -102,22 +107,48 @@ func equip(item: ItemDef, requested_slot: StringName = &"") -> bool:
 		return false
 	if target == &"off_hand" and _holds_two_handed_weapon():
 		return false
-	var taken := _drain_stacks(item, 1)
-	assert(taken == 0)
+	var stolen := _drain_one_for_equip(item)
 	if item is WeaponDef and (item as WeaponDef).two_handed:
 		unequip(&"off_hand")
 	if equipment.has(target):
 		unequip(target)  # old item returns to stacks
 	equipment[target] = item
+	if stolen:
+		equipment_stolen[target] = true
 	return true
+
+
+## Drains one copy of item for equipping, preferring a clean copy so a stolen one
+## is only worn (and its slot flagged) when no clean copy exists. Returns whether
+## the drained copy was stolen (spec 017: equipping must not launder a stolen
+## item — the flag rides the slot and returns to the stack on unequip).
+func _drain_one_for_equip(item: ItemDef) -> bool:
+	var stolen_index := -1
+	for i: int in range(stacks.size() - 1, -1, -1):
+		if stacks[i].item != item:
+			continue
+		if not stacks[i].stolen:
+			_take_one(i)
+			return false
+		if stolen_index == -1:
+			stolen_index = i
+	_take_one(stolen_index)  # only stolen copies exist (count_of > 0 guaranteed)
+	return true
+
+
+func _take_one(index: int) -> void:
+	stacks[index].count -= 1
+	if stacks[index].count == 0:
+		stacks.remove_at(index)
 
 
 ## Moves the item in slot back to the stacks. False when the slot is empty.
 func unequip(slot: StringName) -> bool:
 	if not equipment.has(slot):
 		return false
-	add_item(equipment[slot], 1)
+	add_item(equipment[slot], 1, equipment_stolen.get(slot, false))
 	equipment.erase(slot)
+	equipment_stolen.erase(slot)
 	return true
 
 

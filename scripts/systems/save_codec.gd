@@ -282,7 +282,15 @@ static func inventory_to_dict(inventory: Inventory) -> Dictionary:
 	var equipment := {}
 	for slot: StringName in inventory.equipment:
 		equipment[String(slot)] = String(inventory.equipment[slot].id)
-	return {"gold": inventory.gold, "stacks": stacks, "equipment": equipment}
+	var equipment_stolen := {}
+	for slot: StringName in inventory.equipment_stolen:
+		equipment_stolen[String(slot)] = inventory.equipment_stolen[slot]
+	return {
+		"gold": inventory.gold,
+		"stacks": stacks,
+		"equipment": equipment,
+		"equipment_stolen": equipment_stolen,
+	}
 
 
 ## Rebuilds an inventory, resolving item ids through the given map. Fields
@@ -332,10 +340,19 @@ static func inventory_from_dict(
 			push_warning("inventory_from_dict: unknown item '%s' skipped" % item_id)
 			continue
 		equipment[slot] = items[item_id]
+	# Optional (spec 017 fix) — pre-fix saves have no equipment_stolen; those
+	# equipped items decode clean, and only keyed (stolen) slots survive.
+	var equipment_stolen: Dictionary[StringName, bool] = {}
+	var raw_stolen: Variant = data.get("equipment_stolen", {})
+	if raw_stolen is Dictionary:
+		for raw_slot: Variant in raw_stolen as Dictionary:
+			if raw_slot is String and bool((raw_stolen as Dictionary)[raw_slot]):
+				equipment_stolen[StringName(raw_slot as String)] = true
 	var inventory := Inventory.new()
 	inventory.gold = int(data["gold"])
 	inventory.stacks = stacks
 	inventory.equipment = equipment
+	inventory.equipment_stolen = equipment_stolen
 	return inventory
 
 

@@ -109,6 +109,32 @@ func test_armor_rejected_from_wrong_slot() -> void:
 	assert_true(_inventory.equipment.is_empty())
 
 
+func _sole_stack() -> ItemStack:
+	return _inventory.stacks[0]
+
+
+func test_equipping_a_stolen_item_then_unequipping_keeps_it_stolen() -> void:
+	# The launder-your-loot exploit (spec 017 fix): equipment stores the shared
+	# ItemDef, so a stolen helm must not come back clean from the slot.
+	_inventory.add_item(IRON_HELM, 1, true)  # stolen
+	assert_true(_inventory.equip(IRON_HELM))
+	assert_true(_inventory.equipment_stolen.get(&"head", false), "the worn slot is flagged stolen")
+
+	assert_true(_inventory.unequip(&"head"))
+	assert_true(_sole_stack().stolen, "the helm returns to the stack still stolen")
+	assert_true(_inventory.equipment_stolen.is_empty(), "the slot flag is cleared")
+
+
+func test_equip_prefers_a_clean_copy_when_both_are_held() -> void:
+	# A clean copy should be worn (and stay unflagged) while the stolen copy waits.
+	_inventory.add_item(IRON_HELM, 1, false)  # clean
+	_inventory.add_item(IRON_HELM, 1, true)  # stolen
+	assert_true(_inventory.equip(IRON_HELM))
+
+	assert_false(_inventory.equipment_stolen.has(&"head"), "the clean copy was worn")
+	assert_true(_sole_stack().stolen, "the stolen copy stays in the stacks")
+
+
 func test_equip_requires_a_loose_copy() -> void:
 	assert_false(_inventory.equip(IRON_SWORD))
 

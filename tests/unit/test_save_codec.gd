@@ -122,6 +122,22 @@ func test_unknown_item_and_slot_skip_without_failing_the_load() -> void:
 	assert_same(restored.get_equipped(&"ring_1"), items[&"band"])
 
 
+func test_equipment_stolen_round_trips() -> void:
+	# A stolen worn slot's provenance survives (spec 017 fix) so equip -> save ->
+	# load -> unequip cannot launder it clean.
+	var items := _make_items()
+	var inv := Inventory.new()
+	inv.equipment[&"ring_1"] = items[&"band"]
+	inv.equipment_stolen[&"ring_1"] = true
+
+	var restored := SaveCodec.inventory_from_dict(
+		_json_round_trip(SaveCodec.inventory_to_dict(inv)), items
+	)
+
+	assert_not_null(restored)
+	assert_true(restored.equipment_stolen.get(&"ring_1", false), "the stolen slot survives")
+
+
 func test_inventory_from_dict_refuses_malformed_shapes() -> void:
 	var items := _make_items()
 	assert_null(SaveCodec.inventory_from_dict({}, items), "missing fields")

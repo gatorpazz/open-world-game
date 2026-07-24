@@ -13,6 +13,7 @@ const SETTINGS_SCENE := preload("res://scenes/ui/settings_panel.tscn")
 var _slots: SaveLoadPanel = null
 var _settings: SettingsPanel = null
 
+@onready var dim: ColorRect = $Dim
 @onready var resume_button: Button = $Dim/Panel/Layout/Resume
 @onready var save_button: Button = $Dim/Panel/Layout/Save
 @onready var load_button: Button = $Dim/Panel/Layout/Load
@@ -51,6 +52,7 @@ func close() -> void:
 func open_slots(mode: SaveLoadPanel.Mode) -> void:
 	if _slots != null:
 		return
+	dim.hide()  # the sub-panel is a translucent overlay; hide our menu behind it
 	_slots = SAVE_LOAD_SCENE.instantiate()
 	add_child(_slots)
 	_slots.closed.connect(_on_slots_closed)
@@ -60,12 +62,14 @@ func open_slots(mode: SaveLoadPanel.Mode) -> void:
 
 func _on_slots_closed() -> void:
 	_slots = null
+	dim.show()
 
 
 ## Opens the settings sub-panel (spec 025). Idempotent while one is up.
 func open_settings() -> void:
 	if _settings != null:
 		return
+	dim.hide()  # the sub-panel is a translucent overlay; hide our menu behind it
 	_settings = SETTINGS_SCENE.instantiate()
 	add_child(_settings)
 	_settings.closed.connect(_on_settings_closed)
@@ -74,6 +78,7 @@ func open_settings() -> void:
 
 func _on_settings_closed() -> void:
 	_settings = null
+	dim.show()
 
 
 ## A slot was chosen to load: hand off to Game (it defers the scene swap) and

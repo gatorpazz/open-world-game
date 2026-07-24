@@ -54,6 +54,19 @@ func test_save_opens_the_slot_panel_in_save_mode() -> void:
 	_menu.open()
 	_menu.open_slots(SaveLoadPanel.Mode.SAVE)
 	assert_not_null(_sub_panel(), "a SaveLoadPanel sub-panel opened")
+	assert_false(_menu.dim.visible, "the menu hides behind the sub-panel")
+
+
+func test_closing_a_sub_panel_restores_the_menu() -> void:
+	_menu.open()
+	_menu.open_settings()
+	assert_false(_menu.dim.visible, "the menu is hidden while settings are up")
+
+	for child: Node in _menu.get_children():
+		if child is SettingsPanel:
+			(child as SettingsPanel).close()
+
+	assert_true(_menu.dim.visible, "the menu reappears when the sub-panel closes")
 
 
 func test_open_slots_is_idempotent() -> void:

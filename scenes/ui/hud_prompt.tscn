@@ -26,3 +26,4 @@ anchor_bottom = 0.62
 grow_horizontal = 2
 horizontal_alignment = 1
 label_settings = SubResource("prompt_label_settings")
+mouse_filter = 2

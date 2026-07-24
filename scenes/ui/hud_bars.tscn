@@ -23,6 +23,7 @@ offset_right = 216.0
 offset_bottom = -36.0
 grow_vertical = 0
 show_percentage = false
+mouse_filter = 2
 
 [node name="Stamina" type="ProgressBar" parent="."]
 modulate = Color(0.3, 0.8, 0.35, 1)
@@ -35,6 +36,7 @@ offset_right = 216.0
 offset_bottom = -12.0
 grow_vertical = 0
 show_percentage = false
+mouse_filter = 2
 
 [node name="Mana" type="ProgressBar" parent="."]
 modulate = Color(0.35, 0.55, 0.95, 1)
@@ -47,6 +49,7 @@ offset_right = 216.0
 offset_bottom = -60.0
 grow_vertical = 0
 show_percentage = false
+mouse_filter = 2
 
 [node name="Ward" type="ProgressBar" parent="."]
 modulate = Color(0.75, 0.72, 0.6, 1)
@@ -60,6 +63,7 @@ offset_right = 216.0
 offset_bottom = -84.0
 grow_vertical = 0
 show_percentage = false
+mouse_filter = 2
 
 [node name="Notice" type="ProgressBar" parent="."]
 modulate = Color(0.7, 0.4, 0.9, 1)
@@ -73,6 +77,7 @@ offset_right = 216.0
 offset_bottom = -96.0
 grow_vertical = 0
 show_percentage = false
+mouse_filter = 2
 
 [node name="Overcast" type="Label" parent="."]
 modulate = Color(0.85, 0.4, 0.95, 1)
@@ -86,3 +91,4 @@ offset_right = 424.0
 offset_bottom = -88.0
 grow_vertical = 0
 text = "OVERCAST"
+mouse_filter = 2

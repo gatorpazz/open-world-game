@@ -28,3 +28,4 @@ offset_right = 216.0
 offset_bottom = -96.0
 grow_vertical = 0
 label_settings = SubResource("spell_label_settings")
+mouse_filter = 2

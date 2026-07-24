@@ -44,6 +44,7 @@ func show_notice(text: String) -> void:
 	var label := Label.new()
 	label.text = text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE  # display-only; never eat panel clicks
 	add_child(label)
 	var tween := label.create_tween()
 	tween.tween_interval(display_seconds)

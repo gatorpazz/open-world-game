@@ -1,7 +1,7 @@
 ---
 title: The Bellworks
 type: location
-status: reviewed
+status: canon
 region: undervault
 kind: landmark
 pitch: "Half foundry, half temple at Embershare's vent — where every bell on the island is born, and one recent bell rings wrong."
@@ -9,6 +9,8 @@ spoiler: none
 surface:
   - environment
   - dialogue
+game_ids:
+  - item:sack_of_ore
 ---
 
 ## Function
@@ -28,8 +30,9 @@ rhythm, and a bell's first strike is witnessed and recorded in the
 Bell Rolls, the island's most complete civic ledger. Bell-bronze is the
 island's one metal that matters: a finite pre-Coming stock, recast bell
 to bell, never mined, never grown — every bell is made of older bells.
-A bell that sours in service is recast; a bell that rings wrong from
-birth is a scandal, and there has just been one.
+Bronze that leaves the Rolls — a bell soured past recasting, scrap that
+never held a voice — goes unrolled to the blade stream. A bell that sours in service is recast; a bell that rings
+wrong from birth is a scandal, and there has just been one.
 
 ## Visible traits
 

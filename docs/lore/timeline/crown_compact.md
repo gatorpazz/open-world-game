@@ -1,7 +1,7 @@
 ---
 title: The Crown Compact
 type: timeline_event
-status: reviewed
+status: canon
 region: undervault
 era: the_roofed_years
 order: 10

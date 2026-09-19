@@ -1,7 +1,7 @@
 ---
 title: Dossun
 type: npc
-status: reviewed
+status: canon
 region: undervault
 culture: underfirst
 pitch: "The gate reciter who keeps a shrine of borrowed tablets for the ones the order won't say are dead."

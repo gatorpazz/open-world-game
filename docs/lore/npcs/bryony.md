@@ -1,7 +1,7 @@
 ---
 title: Bryony
 type: npc
-status: reviewed
+status: canon
 region: undervault
 culture: lastlight
 pitch: "The young warden who tends the moth cages — and tells the stranger, quietly, what half of the request is."

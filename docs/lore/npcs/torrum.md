@@ -1,7 +1,7 @@
 ---
 title: Torrum
 type: npc
-status: reviewed
+status: canon
 region: undervault
 culture: underfirst
 pitch: "The Gate-captain whose square stopped adding up — and who asks the impossible arrival to stand still long enough to count."

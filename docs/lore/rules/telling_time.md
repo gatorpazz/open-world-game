@@ -1,7 +1,7 @@
 ---
 title: Telling Time
 type: world_rule
-status: draft
+status: canon
 region: world
 pitch: "No sun to read, so the roofed world keeps time by bells within the day and the nine-day circuit across it."
 spoiler: none

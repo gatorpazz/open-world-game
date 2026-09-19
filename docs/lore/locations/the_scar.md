@@ -51,8 +51,8 @@ The galleries are the island's black market ([[the_shares]]).
 Severs the [[last_road]]; crossed by the [[chitin_bridge]]; holds the
 [[drowned_stair]]. Denning ground of the [[scar_hound]] packs, and the
 unlit galleries below shelter [[spore_puffer|spore-puffers]] and the
-plated [[chitin_crawler|chitin-crawlers]] the wrights cut their stock
-from. The exposed older masonry predates the Coming and belongs to no
+plated [[chitin_crawler|chitin-crawlers]] whose dull plate the crews buy
+for patching — never the wrights' stock. The exposed older masonry predates the Coming and belongs to no
 era — reserved with the [[deep_roads]].
 
 ## Quest hooks

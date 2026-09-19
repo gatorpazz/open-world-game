@@ -1,7 +1,7 @@
 ---
 title: The Crown
 type: faction
-status: reviewed
+status: canon
 region: undervault
 pitch: "The office everyone wants kept weak — an arbiter, a roll of assents, a purse for sounds, and now a stranger to file."
 spoiler: low
@@ -80,8 +80,9 @@ beside the seal.
 
 - Which telling of the compact's why is true — ruled: neither; the
   dispute is canon and both are recited.
-- The current arbiter: name, age, and what a Lastlight crown quietly
-  changes — flagged as a drafted invention for director veto; casting
-  lands with spec 006/010.
+- ~~The current arbiter — a drafted invention for director veto~~ —
+  ruled (2026-09-19, lore audit M5): ratified. The current crown is
+  Lastlight-descended, the first in living memory; the folded sky-scarf
+  stands. Name, age, and casting stay deferred until a quest needs them.
 - What does the struck clause say, and what happens when it is
   invoked? (Reserved until a quest needs it.)

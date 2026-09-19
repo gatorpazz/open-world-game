@@ -1,7 +1,7 @@
 ---
 title: Hush-Moths
 type: wildlife
-status: reviewed
+status: canon
 region: undervault
 pitch: "Pale moths that swarm to freshly spent regard — the roofed world's living proof that something was worked nearby."
 spoiler: none

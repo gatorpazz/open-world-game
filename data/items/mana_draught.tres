@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = &"mana_draught"
 display_name = "Mana Draught"
-description = "A shimmering blue philtre that restores magical reserves."
+description = "A brewer's philtre, cloudy with lava-glass grit and steeped on terrace fungus. Worked glass holds the charge, the folk hold — a swallow, and a worker can work again."
 weight = 0.5
 base_value = 20
 stackable = true

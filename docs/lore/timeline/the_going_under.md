@@ -1,7 +1,7 @@
 ---
 title: The Going-Under
 type: timeline_event
-status: reviewed
+status: canon
 region: undervault
 era: the_coming
 order: 20

@@ -1,7 +1,7 @@
 ---
 title: Wester
 type: npc
-status: reviewed
+status: canon
 region: undervault
 culture: lastlight
 pitch: "The crew boss with a roof-shaped rumor and a partner-shaped offer — shares out at the gate, questions extra."

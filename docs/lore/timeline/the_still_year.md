@@ -1,7 +1,7 @@
 ---
 title: The Still Year
 type: timeline_event
-status: reviewed
+status: canon
 region: undervault
 era: the_daylight
 order: 30

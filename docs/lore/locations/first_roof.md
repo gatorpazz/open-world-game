@@ -1,7 +1,7 @@
 ---
 title: The First Roof
 type: location
-status: reviewed
+status: canon
 region: undervault
 kind: dungeon
 pitch: "The refuge cavern of the Coming, fossilized under the city it became — where the first names were kept before keeping had rules."

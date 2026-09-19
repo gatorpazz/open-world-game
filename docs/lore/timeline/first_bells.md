@@ -1,7 +1,7 @@
 ---
 title: The First Bells
 type: timeline_event
-status: reviewed
+status: canon
 region: undervault
 era: the_daylight
 order: 20
@@ -71,8 +71,8 @@ the bronze's family album.
   outside world existed to trade with. When did the sea close, and is
   its closing the Coming's sea-half? (An unwritten fifteenth event;
   director ruling; candidate spoiler: high.)
-- Gear-bronze (ruled, spec 014: blades and scrap are recast bell-bronze
-  salvage) sits outside the Bell Rolls' voice-into-voice genealogy —
-  does the blade stream keep its own ledger, or is unrolled bronze the
-  founders' quiet scandal? (Reconcile with "every bell is made of older
-  bells" at [[bellworks]] in a future pass.)
+- ~~Gear-bronze sits outside the Bell Rolls' genealogy — a second
+  ledger, or the founders' scandal?~~ — ruled (2026-09-19, lore audit
+  M2): soured bronze feeds blades. Bells recast bell to bell; a bell
+  soured past recasting, or scrap that never held a voice, leaves the
+  Rolls for the blade stream, unrolled and unmourned ([[bellworks]]).

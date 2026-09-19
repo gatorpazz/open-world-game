@@ -132,7 +132,7 @@ wildlife of the dark: [[hush_moths]], [[scar_hound]], [[vault_rat]].
   names say what a thing *is* (closed compounds: Highroof, Embershare;
   roll-names + hearth-names), [[lastlight]] names say what it *was like
   in the light* (open bright syllables; the daylight word-hoard) — and
-  **only the High Register is untranslated**: the old formal tongue of
+  **only the [[high_register|High Register]] is untranslated**: the old formal tongue of
   the unreadable columns, the named bells, seal-texts, and the
   reciters' rite forms. Its vocabulary is reserved; its flavor is
   formulaic pairs, never explained in dialogue. No real-language
@@ -208,6 +208,11 @@ consequences (flag for a future spec), levitation as a gated ability
   required. Does any thread want it?
 - The ants' logic: how much is ever revealed, and where does the reveal
   live? (All of it `spoiler: high`.)
+- ~~Hive species~~ — ruled (2026-09-19, lore audit): never named
+  in-world. Player-facing text says the Above, the hives, scouts; "ants"
+  stays director shorthand in design notes only, and the wasp-nest and
+  wingbeat refs stand as art direction. The species is reserved with the
+  high-spoiler hive lore.
 - ~~Lava's status~~ — ruled (magic pass): both, and disputed — the
   parishes hold the veins are the Flame's living attention, deed-law
   holds them property, and the island keeps both readings on purpose

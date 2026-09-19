@@ -9,6 +9,7 @@ spoiler: low
 surface:
   - rumor
   - environment
+  - dialogue
 game_ids:
   - topic:drowned_stair
   - journal:heard_of_the_stair

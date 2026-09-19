@@ -11,6 +11,11 @@ surface:
   - environment
 game_ids:
   - npc:tansy
+  - item:kindled_blade
+  - item:tide_bead
+  - item:steadying_bead
+  - item:terrace_fungus
+  - item:brewing_kit
 ---
 
 ## Function

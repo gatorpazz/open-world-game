@@ -44,7 +44,7 @@ Law: the roof-law is liturgical — enforced by rite and warden alike.
 
 ## Relationships
 
-Defines life in [[undervault]]. The hives, the ant castes, and what the
+Defines life in [[undervault]]. The hives, their castes, and what the
 Taking is *for* are their own future entries (high spoiler).
 
 ## Quest hooks

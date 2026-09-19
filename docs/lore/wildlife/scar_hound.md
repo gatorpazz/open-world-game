@@ -13,6 +13,7 @@ game_ids:
   - creature:scar_hound
   - topic:scar_hounds
   - journal:hounds_near_the_covers
+  - item:hound_fang
 ---
 
 ## Function

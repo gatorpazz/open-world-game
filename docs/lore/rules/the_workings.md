@@ -11,6 +11,9 @@ surface:
   - journal
 tags:
   - magic
+game_ids:
+  - item:lava_glass_grit
+  - item:flawed_gem
 ---
 
 ## Function

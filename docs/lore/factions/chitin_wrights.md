@@ -1,7 +1,7 @@
 ---
 title: The Chitin-Wrights
 type: faction
-status: reviewed
+status: canon
 region: undervault
 pitch: "The small guild that maintains the enemy's bones — under an oath never to ask where they came from."
 spoiler: low

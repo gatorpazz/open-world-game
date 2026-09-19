@@ -1,7 +1,7 @@
 ---
 title: The Vent-Parishes
 type: faction
-status: reviewed
+status: canon
 region: undervault
 pitch: "One umbrella over every flame — the chapters that feed the island, bless its ovens, and keep one tier swept."
 spoiler: low

@@ -1,7 +1,7 @@
 ---
 title: Wren
 type: npc
-status: reviewed
+status: canon
 region: undervault
 culture: lastlight
 pitch: "The awning-mender who knows all three versions of the stranger's legend — and believes a fourth she isn't telling."

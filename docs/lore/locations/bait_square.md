@@ -1,7 +1,7 @@
 ---
 title: The Bait Square of Lastdoor
 type: location
-status: reviewed
+status: canon
 region: undervault
 kind: landmark
 pitch: "The scorched plaza where wardens measure the sky's attention — and where the island's one impossible arrival lay untaken."

@@ -1,7 +1,7 @@
 ---
 title: The Open Fields
 type: location
-status: reviewed
+status: canon
 region: undervault
 kind: danger_zone
 pitch: "The abandoned surface terraces — everything the island was, perfectly preserved by the one law nobody breaks."

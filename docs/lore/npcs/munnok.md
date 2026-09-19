@@ -1,7 +1,7 @@
 ---
 title: Munnok
 type: npc
-status: reviewed
+status: canon
 region: undervault
 culture: underfirst
 pitch: "The warehouse hand who counts what comes through the gate — and recounts the legend in the version with the fewest words."

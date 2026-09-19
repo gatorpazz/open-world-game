@@ -10,6 +10,7 @@ surface:
   - dialogue
 game_ids:
   - creature:vault_rat
+  - item:rat_pelt
 ---
 
 ## Function

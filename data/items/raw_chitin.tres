@@ -6,7 +6,7 @@
 script = ExtResource("1")
 id = &"raw_chitin"
 display_name = "Raw Chitin"
-description = "A plate of amber-black chitin prised from a crawler's back — the wrights' offcut stock before it is oiled and worked. It sells by the plate at any crew counter."
+description = "A plate of dull gallery-chitin prised from a crawler's back — soft enough to cut with a crew knife, and no kin to the shell the wrights swear by. Crews buy it by the plate for patching; a wright won't touch it."
 weight = 1.5
 base_value = 10
 stackable = true

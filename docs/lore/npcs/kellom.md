@@ -1,7 +1,7 @@
 ---
 title: Kellom
 type: npc
-status: reviewed
+status: canon
 region: undervault
 culture: underfirst
 pitch: "The old Column-Reader who petitioned to read the untaken stranger aloud — sponsor, teacher, and the door the chain's choice walks through."

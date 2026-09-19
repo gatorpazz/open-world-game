@@ -1,7 +1,7 @@
 ---
 title: Tidegate
 type: location
-status: reviewed
+status: canon
 region: undervault
 kind: settlement
 pitch: "The sea-cave port that fishes a sea nobody sails, through the ribs of a leviathan that beached itself fleeing something."
@@ -82,6 +82,8 @@ own trade.
   Systems impact.)
 - What was the leviathan fleeing? (Never answered casually; ban — no
   mindless swarm — applies to the sea as much as the sky.)
-- The port's net-bosses and salters carry guild-shaped weight with no
-  charter — does a fourth guild ever form here, or does the port stay
-  crew-law? (A factions-pass gap, held open; director/Phase 2.)
+- ~~Does a fourth guild ever form here, or does the port stay
+  crew-law?~~ — ruled (2026-09-19, lore audit M6): no fourth guild;
+  Tidegate stays crew-law. The net-bosses and salters carry their weight
+  uncharted, the wardens keep arguing jurisdiction weekly, and a charter
+  petition is a quest hook, never an institution.

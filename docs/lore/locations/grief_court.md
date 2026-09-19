@@ -1,7 +1,7 @@
 ---
 title: The Grief-Court of the Highroof
 type: location
-status: reviewed
+status: canon
 region: undervault
 kind: landmark
 pitch: "The island's great open courtyard — thousands of kept names offered to the sky like an accusation."

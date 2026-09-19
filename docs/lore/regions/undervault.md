@@ -46,8 +46,9 @@ The traversal loop: roofed arteries (safe, slow, watched, tolled) against
 open-ground crossings (fast, silent-rule, sky-priced) — depth vs. sky
 made mechanical. Travel constraints: no open water, no flight outside
 enclosed shafts, gates that seal for high-sky season. Exploration is
-directed by landmark and rumor; there are no maps of the surface younger
-than the Coming.
+directed by landmark and rumor; there are no surveys of the surface
+younger than the Coming — the crews' cover-maps are route-marks between
+roofs, not maps of the ground.
 
 ## Relationships
 

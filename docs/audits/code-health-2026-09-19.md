@@ -24,6 +24,7 @@ Whole-codebase review, not a diff review. Baseline: 712/712 GUT tests, gdlint cl
 - `scripts/ui/hud_clock.gd:16,26` — binds to `Game` directly; `bind(clock, config)` like `HudBars`.
 - No tests reference `HudClock` or `HudBars`.
 - Transactional UI panels holding rules a unit test cannot reach: `barter_panel.gd:79-123`, `brewing_panel.gd:49-63`, `dialogue_panel.gd:147-189`. Extract `Barter.buy/sell`, `Alchemy.brew`, and the fine/persuade side of effects into orchestrators (the `Theft` shape).
+- `data/creatures/spore_puffer.tres` + `creature.gd` — canon now rules the spore-puffer a *rooted* hazard-growth (2026-09-19), but the creature wanders and chases like any other and `test_creature_defs.gd:46` asserts `move_speed > 0`. Add a rooted behaviour (never leaves IDLE, spits when in range; `move_speed` 0 is untested and the data test forbids it today) and set the puffer to it.
 - `scripts/combat/creature.gd:65-233` — the whole state machine is scene-test-only; a pure `CreatureRules` (`can_aggro`, `attack_distance`, `next_state`) would unit-test the transitions.
 
 ## Judgment calls (recorded, not queued)

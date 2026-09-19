@@ -35,3 +35,7 @@ Contradicts the region brief: H1, M1 only. Naming: clean. Mechanic vs rules limi
 **Not ready**: `the_crown` (M5), `tidegate` (M6), `bellworks`/`first_bells` (M2), `shell_year`/`chitin_bridge`/`chitin_wrights`/`the_scar` (H1, L1), `chitin_crawler`/`spore_puffer` (H1, M4).
 
 **Defer** the far geography (`highroof`, `embershare`, `ember_road`, `tide_road`, `last_road`, `leviathan_ribs`, `sealed_reaches`, `undersun_galleries`, `sealing_of_the_reaches`, `scar_night`, `the_beaching`, `terrace_centuries`, `cold_tier_hush`) until Phase 3 builds those scenes — canonizing places no scene has tested invites a second retrofit.
+
+## Dispositions (director session, same day)
+
+All eight ruling/canon-edit findings were ruled, the recommended option each time; see the Decision Log rows dated 2026-09-19. H1, H2, M1, M2, M4, M5, M6, L2, L3, L4, L5, L7 are closed in the same commit. **M3** (canon entries surfacing `dialogue` with no topic behind them) stays open for the Phase 3 dialogue pass. **L1** (`the_scar`) stays reviewed until its two draft neighbours are re-read. **L6** stays an open question. The batch was ratified in full plus the four ruling-unblocked clusters: 29 entries, canon 19 → 48. One new drift recorded: the shipped spore-puffer wanders and chases while canon now says rooted (polish pass).

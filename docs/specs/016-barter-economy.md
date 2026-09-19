@@ -1,6 +1,6 @@
 # Spec 016 — Barter Economy v1
 
-**Status:** ready to implement
+**Status:** complete (2026-07-22)
 **Depends on:** 002 (`Inventory`/`ItemStack`/`ItemDef` — `gold`, `add_gold`/`spend_gold`, `base_value`; the item subclasses the price categories derive from), 003 (`WorldItem` pickup — drop-to-world spawns one; the `Interactable` verb the stash chest reuses), 005 (`DialogueResponse` effects + `DialoguePanel` — the barter entry and `give_gold` amend the effect path), 007 (`SaveCodec` — this spec bumps it to v3 and gives it its second migration; `Game`-held identity the stash joins), 012 (`InventoryPanel` — Drop closes its deferred encumbered-no-drop debt; `ContainerPanel` the stash reuses), 013 (the barter entry reads best as a choice), 015 (the `SaveCodec` migration chain this spec extends; `persuasion` is the price lever 019 later drives)
 **Consumed by:** 017 (crime/stealth/locks — the merchant's live `Inventory` is the ownable seam theft flags; "stolen-flag → merchant refusal" consumes this barter path), 018 (no direct dep), 019 (persuasion & disposition — `BarterRules`' `persuasion_factor` param, pinned 1.0 here, is where the price nudge lands), 021 (fast-travel — gold fares spend this currency), 023 (enchanting — rare stock is merchant stock), 024 (creatures — loot is priced against `base_value` at these merchants)
 

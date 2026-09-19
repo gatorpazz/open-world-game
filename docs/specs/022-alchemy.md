@@ -1,6 +1,6 @@
 # Spec 022 — Alchemy v1 (Brewing Fixed Recipes)
 
-**Status:** ready to implement
+**Status:** complete (2026-07-23)
 **Depends on:** 001 (the `alchemy` skill already ships — intellect/magic archetype, "Brewing potions and identifying ingredients"; `sheet.skills.get(&"alchemy", 0)` + `gain_skill_xp` are the read/grant), 002 (`ItemDef`/`ConsumableDef`/`Inventory`/`ItemStack` — ingredients and the brewing kit are items; the outputs are existing `ConsumableDef`s; `ItemLibrary` resolves ids), 008 (`PlayerCasting.filter_castable` — the derived, never-stored skill-gated list `AlchemyRules.known_recipes` mirrors; `gain_skill_xp`-per-action), 012 (`InventoryPanel` — the key-opened, tree-pausing panel lifecycle the brewing panel follows; the context action precedent), 016 (`BarterPanel` — the two-sided panel + `process_mode = ALWAYS` while paused; merchants could stock ingredients later)
 **Consumed by:** Phase 3 (spell/service vendors could teach recipes; regional ingredients), 024 (creatures — creature drops become ingredients; the `hound_fang` precedent), 023 (enchanting — the sibling "fixed recipes, no dynamic items" craft; shares the `AlchemyRules` shape)
 

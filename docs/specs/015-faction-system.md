@@ -1,6 +1,6 @@
 # Spec 015 — Faction System
 
-**Status:** ready to implement
+**Status:** complete (2026-07-22)
 **Depends on:** 003 (the `Game` autoload the numeric layer lands on), 005 (the `Journal` + `DialogueResponse` effect that membership rides today; the `DialogueEvaluator`/`DialoguePanel` the join retrofit amends), 007 (the `SaveCodec` this spec bumps to v2 and gives its first migration), 013 (the `DialogueChoice` prompt mechanism the join commits retrofit into)
 **Consumed by:** 017 (crime docks per-faction reputation — the currency this spec makes able to go *down*), 018 (`is_chartered_under()` gates the 008 casting tiers), 019 (persuasion reads reputation; NPC faction tags land there when consumed), 025 (the save-slot furniture floats after this first `SAVE_VERSION` bump so migration and menu land proven together)
 

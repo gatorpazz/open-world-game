@@ -1,6 +1,6 @@
 # Spec 018 — Magic v2 (Notice, Overcast & the License Teeth)
 
-**Status:** ready to implement
+**Status:** complete (2026-07-23)
 **Depends on:** 008 (`SpellDef`/`SpellLibrary`/`PlayerCasting` — the casting spine this amends; `min_skill` is the tier ladder the license gate reads; the `try_cast` mana-spend path notice hangs off), 015 (`FactionRules.is_chartered_under` / `Game.is_chartered_under` — the charter query this spec finally applies to casting; charter = member at ≥ `charter_rank`), 017 (`WitnessQuery.is_witnessed` — the observation query built once there and consumed here for witnessed unlicensed workings; `Theft`/`CrimeRules`/`Game.report_theft`/`BountyLedger`/`Game.bounty` — the orchestrator + ledger patterns this spec mirrors for casting; the `SaveCodec` migration chain this spec extends; Torrum's `the_reckoning` — a witnessed working's warden bounty settles there, no new dialogue)
 **Consumed by:** 019 (persuasion & disposition — the overcast "permanently remarkable" social penalty deepens into disposition reactions; 019 owns NPC attitude), 022 (alchemy — no direct dep), 023 (enchanting-analog — priced in *this* spec's notice economy; a worked thing "holds regard"), 024 (creatures — creature casters are a later concern; player-only here as in 008)
 

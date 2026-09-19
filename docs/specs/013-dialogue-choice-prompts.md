@@ -1,6 +1,6 @@
 # Spec 013 — Dialogue Choice Prompts
 
-**Status:** ready to implement
+**Status:** complete (2026-07-22)
 **Depends on:** 005 (`DialogueResponse` / `DialogueEvaluator` / `DialoguePanel` — the models this spec amends), 010 (the two shipped decision points that get retrofitted)
 **Consumed by:** 015 (advancement/promotion beats and the guild join commits read best as choice prompts — the join retrofit is 015's work), 016 (the barter entry point from dialogue), 019 (persuasion attempts render as choice prompts — admire / intimidate / bribe — and per-choice condition fields land there)
 

@@ -68,3 +68,4 @@ Any asset entering `assets/` gets a line in `assets/LICENSES.md` in the same com
 - **Save invariant**: any new `Game` field must join the save payload and bump `SAVE_VERSION` with a chained migration.
 - **House pattern**: a `class_name` content type + a library + pure static rules + an impure orchestrator calling `Game`'s own `report_*` APIs + a save section + the three-gate review ritual.
 - Per-spec history, the Decision Log, and the wave queue live in `docs/master-plan.md` (§2, §4) — read it for detail rather than duplicating it here.
+- Deferred ideas live in `docs/backlog.md`; dated review reports (code health, lore audit) live in `docs/audits/`. The 2026-09-19 pair seeds the Phase 3 polish pass and the next canonization batch.
